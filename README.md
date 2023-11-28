@@ -1,6 +1,6 @@
 <div align="center">
   <a href="/"> 
-    <img src="https://i.ibb.co/vcdm2QC/0968c405e4368c0230f40bca135fa870f9d9669f-s2-n3-y2.png" height="110">
+    <img src="https://i.ibb.co/NZR6hXb/12e4b4c606577bf0e4e7e5e27c941b3579329192-s2-n3-y2.png" height="110">
     <h1 align="center">Pixelarium</h1>
   </a>
 </div>
@@ -29,6 +29,21 @@ The platform's user-friendly interface caters to both beginners and seasoned use
 ## Why?
 
 The idea behind **Pixelarium** is to simplify the image hosting process with just one click. Pixelarium serves as a user-friendly platform designed to streamline the uploading and sharing of images.
+
+## Features
+
+| Feature                  | Description                                                                                         |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| Easy Sharing             | Share your images with ease using the provided shareable links.                                     |
+| Customizable             | Customize your image uploads with tags, descriptions, and other metadata.                           |
+| Easy Image Upload        | Quickly upload images to the platform with a straightforward interface.                             |
+| Image Management         | Organize and manage your uploaded images effortlessly with intuitive tools.                         |
+| Flexible Sharing Options | Share images with unique URLs, making it easy to embed images on websites or share on social media. |
+| Secure and Private       | Your images are hosted securely with encryption and access controls.                                |
+
+## Developers Tools (API)
+
+Visit [Pixelarium Developers tools](/) documentation for more information.
 
 ## Authors
 
