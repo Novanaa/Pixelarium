@@ -79,8 +79,8 @@ model Picture {
 model Subcription {
   id Int @id @default(autoincrement())  
   user_id Int
-  start_date DateTime
-  end_date DateTime
+  start_date DateTime @default(now())
+  end_date DateTime 
   status status @default(deactive)
   user User @relation(fields: [user_id], references: [id])
 }
