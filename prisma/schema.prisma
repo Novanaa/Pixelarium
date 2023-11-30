@@ -24,11 +24,13 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   client_keys ClientKey[]
+  gallery Gallery[]
 }
 
 enum UserType {
   User 
   Admin
+  Owner
 }
 
 model ClientKey {
@@ -37,4 +39,24 @@ model ClientKey {
   client_id String
   client_secret String
   user User @relation(fields: [user_id], references: [id])
+}
+
+model Gallery {
+  id Int @id @default(autoincrement())
+  user_id Int
+  pictures Picture[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [user_id], references: [id])
+}
+
+model Picture {
+  id Int @id @default(autoincrement())  
+  title   String
+  description   String
+  url       String
+  gallery_id Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  gallery   Gallery  @relation(fields: [gallery_id], references: [id])
 }
