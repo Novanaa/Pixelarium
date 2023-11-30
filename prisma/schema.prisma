@@ -26,6 +26,7 @@ model User {
   client_keys ClientKey[]
   gallery Gallery[]
   album Album[]
+  subcription Subcription[]
 }
 
 enum UserType {
@@ -73,4 +74,18 @@ model Picture {
   updatedAt DateTime @updatedAt
   gallery   Gallery  @relation(fields: [gallery_id], references: [id])
   alubm Album @relation(fields: [album_id], references: [id])
+}
+
+model Subcription {
+  id Int @id @default(autoincrement())  
+  user_id Int
+  start_date DateTime
+  end_date DateTime
+  status status @default(deactive)
+  user User @relation(fields: [user_id], references: [id])
+}
+
+enum status {
+  deactive
+  active
 }
