@@ -3,6 +3,13 @@
   "description": "The simplest image hosting ever.",
   "module": "server.ts",
   "type": "module",
+  "scripts": {
+    "start": "bun run ./src/server.ts",
+    "dev": "env-cmd -f .env.dev bun run --watch ./src/server.ts",
+    "staging": "env-cmd -f .env.staging bun run --watch ./src/server.ts",
+    "test:dev": "env-cmd -f .env.dev bun test --watch --timeout 8000",
+    "test:staging": "env-cmd -f .env.staging bun test --watch --timeout 8000"
+  },
   "devDependencies": {
     "bun-types": "latest"
   },
@@ -12,6 +19,7 @@
   "dependencies": {
     "@prisma/client": "^5.6.0",
     "@prisma/extension-accelerate": "^0.6.2",
+    "env-cmd": "^10.1.0",
     "prisma": "^5.6.0"
   }
 }
