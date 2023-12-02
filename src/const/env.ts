@@ -3,6 +3,8 @@ import process from "process";
 
 export const {
   PORT,
+  SUPABASE_ANON_KEY,
+  SUPABASE_URL,
   DATABASE_URL,
   DIRECT_URL,
   JWT_ACCESS_TOKEN,
