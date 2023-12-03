@@ -12,8 +12,10 @@ app.use(fileUpload());
 app.use(cookieParser());
 app.set("trust proxy", 1);
 app.use(requestErrorValidation);
+app.use(rateLimitter);
 
 // Application Routes
 import requestErrorValidation from "./middlewares/requestErrorValidation";
+import rateLimitter from "./middlewares/rateLimitter";
 
 export default app;
