@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { JWT_ACCESS_TOKEN, JWT_REFRESH_TOKEN } from "../const/env";
 
 export default class JsonWebToken {
-  sign(payload: { name: string; email: string; id: string }): {
+  sign(payload: { name: string; email: string; picture: string }): {
     accessToken: string;
     refreshToken: string;
   } {
