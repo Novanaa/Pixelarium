@@ -11,7 +11,9 @@ app.use(cors());
 app.use(fileUpload());
 app.use(cookieParser());
 app.set("trust proxy", 1);
+app.use(requestErrorValidation);
 
 // Application Routes
+import requestErrorValidation from "./middlewares/requestErrorValidation";
 
 export default app;
