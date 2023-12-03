@@ -18,5 +18,8 @@ app.use(rateLimitter);
 import { CLIENT_FRONTEND_URL } from "./const/env";
 import requestErrorValidation from "./middlewares/requestErrorValidation";
 import rateLimitter from "./middlewares/rateLimitter";
+import authRoutes from "./apps/v1/auth/routes/auth.routes";
+
+app.use("/v1/auth", authRoutes);
 
 export default app;
