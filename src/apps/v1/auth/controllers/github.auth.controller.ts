@@ -11,6 +11,7 @@ import type TGithubUser from "../interfaces/types/GithubUserTypes";
 import client from "../../../../libs/configs/prisma";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import { CLIENT_FRONTEND_URL } from "../../../../const/env";
+import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 
 export async function redirectGithubLogin(
   req: Request,
@@ -60,7 +61,7 @@ export async function loginWithGithub(
         data: {
           name: user.login! || user.name!,
           email: user.email || null,
-          picture: user.avatar_url,
+          picture: user.avatar_url || defaultUserImage,
           type: "User",
           site_admin: false,
           bio: user.bio,

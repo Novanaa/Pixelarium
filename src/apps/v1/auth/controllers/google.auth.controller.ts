@@ -6,6 +6,7 @@ import { OAuth2Client, authUrl } from "../../../../libs/configs/google";
 import { google } from "googleapis";
 import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import JsonWebToken from "../../../../services/JsonWebToken";
+import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -46,7 +47,7 @@ export async function loginWithGoogle(
         data: {
           name: data.name!,
           email: data.email,
-          picture: data.picture!,
+          picture: data.picture! || defaultUserImage,
           type: "User",
           site_admin: false,
           bio: "",
