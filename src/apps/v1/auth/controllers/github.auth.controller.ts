@@ -83,7 +83,7 @@ export async function loginWithGithub(
     });
 
     return res.redirect(
-      `${CLIENT_FRONTEND_URL}/auth/login?token=${accessToken}&type=success`
+      `${CLIENT_FRONTEND_URL}/auth/login/success?token=${accessToken}&type=success`
     );
   } catch (err) {
     logger.error(err);
