@@ -21,4 +21,5 @@ export const authUrl = OAuth2Client.generateAuthUrl({
   access_type: "offline",
   scope: scopes,
   include_granted_scopes: true,
+  prompt: "consent",
 });
