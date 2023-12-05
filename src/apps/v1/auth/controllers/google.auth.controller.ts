@@ -7,6 +7,7 @@ import { google } from "googleapis";
 import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
+import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -61,12 +62,7 @@ export async function loginWithGoogle(
       picture: data.picture!,
     });
 
-    const isSecured = process.env.NODE_ENV == "production" ? true : false;
-    res.cookie("refreshToken", refreshToken, {
-      maxAge: 24 * 60 * 60 * 1000,
-      secure: isSecured,
-      httpOnly: true,
-    });
+    generateTokenResponseCookie(res, refreshToken);
 
     return res.redirect(
       `${CLIENT_FRONTEND_URL}/auth/login/success?token=${accessToken}&type=success`
