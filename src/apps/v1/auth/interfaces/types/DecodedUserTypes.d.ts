@@ -1,4 +1,4 @@
-type TDecodedUser = {
+export type TDecodedUser = {
   email: string;
   name: string;
   picture: string;
@@ -6,4 +6,8 @@ type TDecodedUser = {
   exp: number;
 };
 
-export default TDecodedUser;
+export interface TDecodedToken extends TDecodedUser {
+  sub: string;
+  iat: number;
+  exp: number;
+}
