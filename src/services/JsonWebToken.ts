@@ -7,14 +7,14 @@ export default class JsonWebToken {
     refreshToken: string;
   } {
     const accessToken: string = jwt.sign(payload, JWT_ACCESS_TOKEN as string, {
-      expiresIn: "120s",
+      expiresIn: "1800s",
     });
 
     const refreshToken: string = jwt.sign(
       payload,
       JWT_REFRESH_TOKEN as string,
       {
-        expiresIn: "1d",
+        expiresIn: "15d",
       }
     );
 
