@@ -7,7 +7,13 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.static("./public"));
-app.use(cors({ origin: CLIENT_FRONTEND_URL, optionsSuccessStatus: 200 }));
+app.use(
+  cors({
+    origin: CLIENT_FRONTEND_URL,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 app.use(fileUpload());
 app.use(cookieParser());
 app.set("trust proxy", 1);

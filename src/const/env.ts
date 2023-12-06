@@ -16,4 +16,6 @@ export const {
   CLIENT_URL,
   CLIENT_FRONTEND_URL,
   NODE_ENV,
+  BITBUCKET_CLIENT_ID,
+  BITBUCKET_CLIENT_SECRET,
 } = process.env;
