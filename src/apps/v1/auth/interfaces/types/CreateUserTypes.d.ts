@@ -1,4 +1,4 @@
-enum UserType {
+export enum UserType {
   User = "User",
   Admin = "Admin",
   Owner = "Owner",
@@ -6,7 +6,7 @@ enum UserType {
 
 type TCreateUser = {
   name: string;
-  email: string;
+  email: string | null;
   picture: string;
   type: UserType;
   site_admin: boolean;
