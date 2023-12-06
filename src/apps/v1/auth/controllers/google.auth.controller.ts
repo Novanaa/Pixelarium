@@ -8,6 +8,7 @@ import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
+import isUserExists from "../services/isUserExist";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -39,11 +40,12 @@ export async function loginWithGoogle(
 
     if (!data) return res.redirect(`${CLIENT_FRONTEND_URL}/auth/login`);
 
-    const user = await client.user.findMany({
-      where: { email: data.email!, name: data.name! },
+    const isUser = await isUserExists({
+      name: data.name || data.given_name!,
+      email: data.email!,
     });
 
-    if (!user[0]) {
+    if (!isUser[0]) {
       await client.user.create({
         data: {
           name: data.name!,

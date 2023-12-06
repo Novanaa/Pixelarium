@@ -13,6 +13,7 @@ import JsonWebToken from "../../../../services/JsonWebToken";
 import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
+import isUserExists from "../services/isUserExist";
 
 export async function redirectGithubLogin(
   req: Request,
@@ -53,8 +54,9 @@ export async function loginWithGithub(
 
     if (!user) return Error.badRequest(res, "The Login Session Was Failed.");
 
-    const isUser = await client.user.findMany({
-      where: { name: user?.login || user?.name },
+    const isUser = await isUserExists({
+      name: user.login || user.name,
+      email: user.email!,
     });
 
     if (!isUser[0]) {
