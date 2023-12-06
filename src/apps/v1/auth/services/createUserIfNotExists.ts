@@ -5,8 +5,6 @@ export default async function createUserIfNotExists({
   name,
   email,
   picture,
-  type,
-  site_admin,
   bio,
 }: TCreateUser): Promise<void> {
   await client.user.create({
@@ -14,8 +12,8 @@ export default async function createUserIfNotExists({
       name,
       email,
       picture,
-      type,
-      site_admin,
+      type: "User",
+      site_admin: false,
       bio,
     },
   });
