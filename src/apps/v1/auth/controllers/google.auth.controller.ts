@@ -9,6 +9,7 @@ import JsonWebToken from "../../../../services/JsonWebToken";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
 import isUserExists from "../services/isUserExist";
+import createUserIfNotExists from "../services/createUserIfNotExists";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -46,15 +47,11 @@ export async function loginWithGoogle(
     });
 
     if (!isUser[0]) {
-      await client.user.create({
-        data: {
-          name: data.name!,
-          email: data.email,
-          picture: data.picture! || defaultUserImage,
-          type: "User",
-          site_admin: false,
-          bio: "",
-        },
+      await createUserIfNotExists({
+        name: data.name!,
+        email: data.email!,
+        picture: data.picture! || defaultUserImage,
+        bio: "",
       });
     }
 

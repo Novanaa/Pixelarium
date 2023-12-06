@@ -14,6 +14,7 @@ import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
 import isUserExists from "../services/isUserExist";
+import createUserIfNotExists from "../services/createUserIfNotExists";
 
 export async function redirectGithubLogin(
   req: Request,
@@ -60,15 +61,11 @@ export async function loginWithGithub(
     });
 
     if (!isUser[0]) {
-      await client.user.create({
-        data: {
-          name: user.login! || user.name!,
-          email: user.email || null,
-          picture: user.avatar_url || defaultUserImage,
-          type: "User",
-          site_admin: false,
-          bio: user.bio,
-        },
+      await createUserIfNotExists({
+        name: user.login! || user.name!,
+        email: user.email || null,
+        picture: user.avatar_url || defaultUserImage,
+        bio: user.bio,
       });
     }
 
@@ -86,5 +83,7 @@ export async function loginWithGithub(
   } catch (err) {
     logger.error(err);
     Error.badRequest(res);
+  } finally {
+    await client.$disconnect();
   }
 }
