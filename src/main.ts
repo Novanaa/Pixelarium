@@ -25,7 +25,9 @@ import { CLIENT_FRONTEND_URL } from "./const/env";
 import requestErrorValidation from "./middlewares/requestErrorValidation";
 import rateLimitter from "./middlewares/rateLimitter";
 import authRoutes from "./apps/v1/auth/routes/auth.routes";
+import userRoutes from "./apps/v1/users/routes/user.routes";
 
 app.use("/v1/auth", authRoutes);
+app.use("/v1/users", userRoutes);
 
 export default app;
