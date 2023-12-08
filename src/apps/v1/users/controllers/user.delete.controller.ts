@@ -2,13 +2,12 @@ import { Request, Response } from "express";
 import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import { ErrorsRespones, SuccessRespones } from "../../../../utils/Response";
-import validator from "validator";
-import messege from "../../../../const/readonly/messege";
 import FilesSystem from "../../../../services/FilesSystem";
 import { User } from "../../../../../generated/client";
 import checkIfPictureIsInternalPicture from "../../../../utils/checkIfPictureIsInternalPicture";
 import getFilename from "../../../../utils/getFilename";
 import getPictureFilepath from "../../../../utils/getPictureFilepath";
+import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
 
 export default async function deleteUser(
   req: Request,
@@ -19,11 +18,10 @@ export default async function deleteUser(
   try {
     const { id } = req.params;
 
-    if (!validator.isNumeric(id))
-      return Error.badRequest(res, messege.wrongRequestID);
+    validateRequestIDParams({ id, response: res });
 
     const user: Awaited<User | null> = await client.user.findUnique({
-      where: { id: Number(id) },
+      where: { id: Number(id) || 0 },
     });
 
     if (!user) return Error.notFound(res);
