@@ -1,4 +1,4 @@
-type UsageType = "users" | "galleries" | "albums";
+import type UsageType from "../interfaces/types/UsageTypes";
 
 export default function getPictureFilepath({
   usage,
