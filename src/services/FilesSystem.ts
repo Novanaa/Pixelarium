@@ -12,13 +12,17 @@ class FilesSystem {
       return null;
     }
   }
-  deleteFile(path: string): void | null {
+  deleteFile(path: string): boolean | null {
     try {
       const isExistFile: boolean | null = this.isExist(path);
 
       if (isExistFile) {
         fs.unlinkSync(path);
+
+        return true;
       }
+
+      return false;
     } catch (err) {
       logger.error(err);
       return null;
