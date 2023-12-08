@@ -6,11 +6,12 @@ import { ErrorsRespones } from "./Response";
 export default function validateRequestIDParams({
   id,
   response,
+  except,
 }: {
   id: string;
   response: Response;
+  except: ErrorsRespones;
 }): void | Response {
-  const Error: ErrorsRespones = new ErrorsRespones();
   if (!validator.isNumeric(id))
-    return Error.badRequest(response, messege.wrongRequestID);
+    return except.badRequest(response, messege.wrongRequestID);
 }
