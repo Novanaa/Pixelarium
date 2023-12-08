@@ -79,7 +79,7 @@ model Picture {
 model Subcription {
   id Int @id @default(autoincrement())  
   user_id Int @unique
-  start_date DateTime? @default(now())
+  start_date DateTime? 
   end_date DateTime?
   status status @default(deactive)
   plan plan @default(none)
