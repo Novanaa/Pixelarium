@@ -18,7 +18,7 @@ export default async function deleteUser(
   try {
     const { id } = req.params;
 
-    validateRequestIDParams({ id, response: res });
+    validateRequestIDParams({ id, response: res, except: Error });
 
     const user: Awaited<User | null> = await client.user.findUnique({
       where: { id: Number(id) || 0 },
