@@ -38,7 +38,6 @@ export default async function deleteUser(
       const pictureFilePath: string = getPictureFilepath({ usage: "users" });
       const fileName: string | null = getFilename(picture);
       const filePath: string = `./public/${pictureFilePath}/${fileName}`;
-      console.log(filePath);
 
       filesSystem.deleteFile(filePath);
     }
