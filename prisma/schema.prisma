@@ -23,10 +23,10 @@ model User {
   site_admin Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  client_keys ClientKey[]
+  client_keys ClientKey?
   gallery Gallery[]
   album Album[]
-  subcription Subcription[]
+  subcription Subcription?
 }
 
 enum UserType {
@@ -37,7 +37,7 @@ enum UserType {
 
 model ClientKey {
   id Int @id @default(autoincrement())
-  user_id Int
+  user_id Int @unique
   client_id String
   client_secret String
   user User @relation(fields: [user_id], references: [id])
@@ -78,11 +78,19 @@ model Picture {
 
 model Subcription {
   id Int @id @default(autoincrement())  
-  user_id Int
-  start_date DateTime @default(now())
-  end_date DateTime 
+  user_id Int @unique
+  start_date DateTime? @default(now())
+  end_date DateTime?
   status status @default(deactive)
+  plan plan @default(none)
   user User @relation(fields: [user_id], references: [id])
+}
+
+enum plan {
+  none
+  Gold
+  Diamond
+  Netherite
 }
 
 enum status {
