@@ -159,7 +159,8 @@ exports.Prisma.SubcriptionScalarFieldEnum = {
   user_id: 'user_id',
   start_date: 'start_date',
   end_date: 'end_date',
-  status: 'status'
+  status: 'status',
+  plan: 'plan'
 };
 
 exports.Prisma.SortOrder = {
@@ -185,6 +186,13 @@ exports.UserType = exports.$Enums.UserType = {
 exports.status = exports.$Enums.status = {
   deactive: 'deactive',
   active: 'active'
+};
+
+exports.plan = exports.$Enums.plan = {
+  none: 'none',
+  Gold: 'Gold',
+  Diamond: 'Diamond',
+  Netherite: 'Netherite'
 };
 
 exports.Prisma.ModelName = {
