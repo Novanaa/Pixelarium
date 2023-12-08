@@ -15,6 +15,12 @@ export default async function createUserIfNotExists({
       type: "User",
       site_admin: false,
       bio,
+      subcription: {
+        create: {
+          status: "deactive",
+          plan: "none",
+        },
+      },
     },
   });
 }
