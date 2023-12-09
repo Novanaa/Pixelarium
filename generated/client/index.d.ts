@@ -7661,10 +7661,10 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     picture?: StringFilter<"User"> | string
@@ -7677,7 +7677,7 @@ export namespace Prisma {
     gallery?: GalleryListRelationFilter
     album?: AlbumListRelationFilter
     subcription?: XOR<SubcriptionNullableRelationFilter, SubcriptionWhereInput> | null
-  }, "id">
+  }, "id" | "name">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
