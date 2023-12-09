@@ -10,6 +10,7 @@ import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
 import isUserExists from "../services/isUserExist";
 import createUserIfNotExists from "../services/createUserIfNotExists";
+import { User } from "../../../../../generated/client";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -41,13 +42,16 @@ export async function loginWithGoogle(
 
     if (!data) return res.redirect(`${CLIENT_FRONTEND_URL}/auth/login`);
 
-    const isUser = await isUserExists({
-      name: data.name || data.given_name!,
-      email: data.email!,
+    const bigNumber: bigint = BigInt(String(data.id));
+    const userId: bigint = bigNumber / BigInt(100)
+
+    const isUser: Awaited<User | null> = await isUserExists({
+      providerId: userId,
     });
 
-    if (!isUser[0]) {
+    if (!isUser) {
       await createUserIfNotExists({
+        providerId: userId,
         name: data.name!,
         email: data.email!,
         picture: data.picture! || defaultUserImage,
