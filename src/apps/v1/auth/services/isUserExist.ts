@@ -14,3 +14,11 @@ export default async function isUserExists({
 
   return isUser;
 }
+
+export async function isUser(id: string): Promise<User | null> {
+  const isUser: Awaited<User | null> = await client.user.findUnique({
+    where: { id: Number(id) || 0 },
+  });
+
+  return isUser;
+}

@@ -23,10 +23,10 @@ model User {
   site_admin Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  client_keys ClientKey[]
+  client_keys ClientKey?
   gallery Gallery[]
   album Album[]
-  subcription Subcription[]
+  subcription Subcription?
 }
 
 enum UserType {
@@ -37,10 +37,10 @@ enum UserType {
 
 model ClientKey {
   id Int @id @default(autoincrement())
-  user_id Int
+  user_id Int @unique
   client_id String
   client_secret String
-  user User @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Gallery {
@@ -49,7 +49,7 @@ model Gallery {
   pictures Picture[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user User @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Album {
@@ -60,7 +60,7 @@ model Album {
   user_id Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user User @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Picture {
@@ -72,17 +72,25 @@ model Picture {
   album_id Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  gallery   Gallery  @relation(fields: [gallery_id], references: [id])
-  alubm Album @relation(fields: [album_id], references: [id])
+  gallery   Gallery  @relation(fields: [gallery_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  alubm Album @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Subcription {
   id Int @id @default(autoincrement())  
-  user_id Int
-  start_date DateTime @default(now())
-  end_date DateTime 
+  user_id Int @unique
+  start_date DateTime? 
+  end_date DateTime?
   status status @default(deactive)
-  user User @relation(fields: [user_id], references: [id])
+  plan plan @default(none)
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+enum plan {
+  none
+  Gold
+  Diamond
+  Netherite
 }
 
 enum status {

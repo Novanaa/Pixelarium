@@ -64,6 +64,16 @@ export const status: {
 
 export type status = (typeof status)[keyof typeof status]
 
+
+export const plan: {
+  none: 'none',
+  Gold: 'Gold',
+  Diamond: 'Diamond',
+  Netherite: 'Netherite'
+};
+
+export type plan = (typeof plan)[keyof typeof plan]
+
 }
 
 export type UserType = $Enums.UserType
@@ -73,6 +83,10 @@ export const UserType: typeof $Enums.UserType
 export type status = $Enums.status
 
 export const status: typeof $Enums.status
+
+export type plan = $Enums.plan
+
+export const plan: typeof $Enums.plan
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1296,17 +1310,13 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    client_keys: number
     gallery: number
     album: number
-    subcription: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client_keys?: boolean | UserCountOutputTypeCountClient_keysArgs
     gallery?: boolean | UserCountOutputTypeCountGalleryArgs
     album?: boolean | UserCountOutputTypeCountAlbumArgs
-    subcription?: boolean | UserCountOutputTypeCountSubcriptionArgs
   }
 
   // Custom InputTypes
@@ -1325,14 +1335,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountClient_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ClientKeyWhereInput
-  }
-
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountGalleryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GalleryWhereInput
   }
@@ -1343,14 +1345,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAlbumArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AlbumWhereInput
-  }
-
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountSubcriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SubcriptionWhereInput
   }
 
 
@@ -1697,10 +1691,10 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      client_keys: Prisma.$ClientKeyPayload<ExtArgs>[]
+      client_keys: Prisma.$ClientKeyPayload<ExtArgs> | null
       gallery: Prisma.$GalleryPayload<ExtArgs>[]
       album: Prisma.$AlbumPayload<ExtArgs>[]
-      subcription: Prisma.$SubcriptionPayload<ExtArgs>[]
+      subcription: Prisma.$SubcriptionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2078,13 +2072,13 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    client_keys<T extends User$client_keysArgs<ExtArgs> = {}>(args?: Subset<T, User$client_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientKeyPayload<ExtArgs>, T, 'findMany'> | Null>;
+    client_keys<T extends User$client_keysArgs<ExtArgs> = {}>(args?: Subset<T, User$client_keysArgs<ExtArgs>>): Prisma__ClientKeyClient<$Result.GetResult<Prisma.$ClientKeyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     gallery<T extends User$galleryArgs<ExtArgs> = {}>(args?: Subset<T, User$galleryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     album<T extends User$albumArgs<ExtArgs> = {}>(args?: Subset<T, User$albumArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlbumPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    subcription<T extends User$subcriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$subcriptionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubcriptionPayload<ExtArgs>, T, 'findMany'> | Null>;
+    subcription<T extends User$subcriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$subcriptionArgs<ExtArgs>>): Prisma__SubcriptionClient<$Result.GetResult<Prisma.$SubcriptionPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2448,11 +2442,6 @@ export namespace Prisma {
      */
     include?: ClientKeyInclude<ExtArgs> | null
     where?: ClientKeyWhereInput
-    orderBy?: ClientKeyOrderByWithRelationInput | ClientKeyOrderByWithRelationInput[]
-    cursor?: ClientKeyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ClientKeyScalarFieldEnum | ClientKeyScalarFieldEnum[]
   }
 
 
@@ -2511,11 +2500,6 @@ export namespace Prisma {
      */
     include?: SubcriptionInclude<ExtArgs> | null
     where?: SubcriptionWhereInput
-    orderBy?: SubcriptionOrderByWithRelationInput | SubcriptionOrderByWithRelationInput[]
-    cursor?: SubcriptionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SubcriptionScalarFieldEnum | SubcriptionScalarFieldEnum[]
   }
 
 
@@ -6474,6 +6458,7 @@ export namespace Prisma {
     start_date: Date | null
     end_date: Date | null
     status: $Enums.status | null
+    plan: $Enums.plan | null
   }
 
   export type SubcriptionMaxAggregateOutputType = {
@@ -6482,6 +6467,7 @@ export namespace Prisma {
     start_date: Date | null
     end_date: Date | null
     status: $Enums.status | null
+    plan: $Enums.plan | null
   }
 
   export type SubcriptionCountAggregateOutputType = {
@@ -6490,6 +6476,7 @@ export namespace Prisma {
     start_date: number
     end_date: number
     status: number
+    plan: number
     _all: number
   }
 
@@ -6510,6 +6497,7 @@ export namespace Prisma {
     start_date?: true
     end_date?: true
     status?: true
+    plan?: true
   }
 
   export type SubcriptionMaxAggregateInputType = {
@@ -6518,6 +6506,7 @@ export namespace Prisma {
     start_date?: true
     end_date?: true
     status?: true
+    plan?: true
   }
 
   export type SubcriptionCountAggregateInputType = {
@@ -6526,6 +6515,7 @@ export namespace Prisma {
     start_date?: true
     end_date?: true
     status?: true
+    plan?: true
     _all?: true
   }
 
@@ -6618,9 +6608,10 @@ export namespace Prisma {
   export type SubcriptionGroupByOutputType = {
     id: number
     user_id: number
-    start_date: Date
-    end_date: Date
+    start_date: Date | null
+    end_date: Date | null
     status: $Enums.status
+    plan: $Enums.plan
     _count: SubcriptionCountAggregateOutputType | null
     _avg: SubcriptionAvgAggregateOutputType | null
     _sum: SubcriptionSumAggregateOutputType | null
@@ -6648,6 +6639,7 @@ export namespace Prisma {
     start_date?: boolean
     end_date?: boolean
     status?: boolean
+    plan?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["subcription"]>
 
@@ -6657,6 +6649,7 @@ export namespace Prisma {
     start_date?: boolean
     end_date?: boolean
     status?: boolean
+    plan?: boolean
   }
 
   export type SubcriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6672,9 +6665,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_id: number
-      start_date: Date
-      end_date: Date
+      start_date: Date | null
+      end_date: Date | null
       status: $Enums.status
+      plan: $Enums.plan
     }, ExtArgs["result"]["subcription"]>
     composites: {}
   }
@@ -7075,6 +7069,7 @@ export namespace Prisma {
     readonly start_date: FieldRef<"Subcription", 'DateTime'>
     readonly end_date: FieldRef<"Subcription", 'DateTime'>
     readonly status: FieldRef<"Subcription", 'status'>
+    readonly plan: FieldRef<"Subcription", 'plan'>
   }
     
 
@@ -7483,7 +7478,8 @@ export namespace Prisma {
     user_id: 'user_id',
     start_date: 'start_date',
     end_date: 'end_date',
-    status: 'status'
+    status: 'status',
+    plan: 'plan'
   };
 
   export type SubcriptionScalarFieldEnum = (typeof SubcriptionScalarFieldEnum)[keyof typeof SubcriptionScalarFieldEnum]
@@ -7596,6 +7592,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'plan'
+   */
+  export type EnumplanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'plan'>
+    
+
+
+  /**
+   * Reference to a field of type 'plan[]'
+   */
+  export type ListEnumplanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'plan[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -7626,10 +7636,10 @@ export namespace Prisma {
     site_admin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    client_keys?: ClientKeyListRelationFilter
+    client_keys?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
     gallery?: GalleryListRelationFilter
     album?: AlbumListRelationFilter
-    subcription?: SubcriptionListRelationFilter
+    subcription?: XOR<SubcriptionNullableRelationFilter, SubcriptionWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7643,10 +7653,10 @@ export namespace Prisma {
     site_admin?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    client_keys?: ClientKeyOrderByRelationAggregateInput
+    client_keys?: ClientKeyOrderByWithRelationInput
     gallery?: GalleryOrderByRelationAggregateInput
     album?: AlbumOrderByRelationAggregateInput
-    subcription?: SubcriptionOrderByRelationAggregateInput
+    subcription?: SubcriptionOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7663,10 +7673,10 @@ export namespace Prisma {
     site_admin?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    client_keys?: ClientKeyListRelationFilter
+    client_keys?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
     gallery?: GalleryListRelationFilter
     album?: AlbumListRelationFilter
-    subcription?: SubcriptionListRelationFilter
+    subcription?: XOR<SubcriptionNullableRelationFilter, SubcriptionWhereInput> | null
   }, "id">
 
   export type UserOrderByWithAggregationInput = {
@@ -7724,14 +7734,14 @@ export namespace Prisma {
 
   export type ClientKeyWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id?: number
     AND?: ClientKeyWhereInput | ClientKeyWhereInput[]
     OR?: ClientKeyWhereInput[]
     NOT?: ClientKeyWhereInput | ClientKeyWhereInput[]
-    user_id?: IntFilter<"ClientKey"> | number
     client_id?: StringFilter<"ClientKey"> | string
     client_secret?: StringFilter<"ClientKey"> | string
     user?: XOR<UserRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id">
 
   export type ClientKeyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7956,39 +7966,43 @@ export namespace Prisma {
     NOT?: SubcriptionWhereInput | SubcriptionWhereInput[]
     id?: IntFilter<"Subcription"> | number
     user_id?: IntFilter<"Subcription"> | number
-    start_date?: DateTimeFilter<"Subcription"> | Date | string
-    end_date?: DateTimeFilter<"Subcription"> | Date | string
+    start_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
+    end_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
     status?: EnumstatusFilter<"Subcription"> | $Enums.status
+    plan?: EnumplanFilter<"Subcription"> | $Enums.plan
     user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
   export type SubcriptionOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    start_date?: SortOrderInput | SortOrder
+    end_date?: SortOrderInput | SortOrder
     status?: SortOrder
+    plan?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
   export type SubcriptionWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id?: number
     AND?: SubcriptionWhereInput | SubcriptionWhereInput[]
     OR?: SubcriptionWhereInput[]
     NOT?: SubcriptionWhereInput | SubcriptionWhereInput[]
-    user_id?: IntFilter<"Subcription"> | number
-    start_date?: DateTimeFilter<"Subcription"> | Date | string
-    end_date?: DateTimeFilter<"Subcription"> | Date | string
+    start_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
+    end_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
     status?: EnumstatusFilter<"Subcription"> | $Enums.status
+    plan?: EnumplanFilter<"Subcription"> | $Enums.plan
     user?: XOR<UserRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id">
 
   export type SubcriptionOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    start_date?: SortOrderInput | SortOrder
+    end_date?: SortOrderInput | SortOrder
     status?: SortOrder
+    plan?: SortOrder
     _count?: SubcriptionCountOrderByAggregateInput
     _avg?: SubcriptionAvgOrderByAggregateInput
     _max?: SubcriptionMaxOrderByAggregateInput
@@ -8002,9 +8016,10 @@ export namespace Prisma {
     NOT?: SubcriptionScalarWhereWithAggregatesInput | SubcriptionScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Subcription"> | number
     user_id?: IntWithAggregatesFilter<"Subcription"> | number
-    start_date?: DateTimeWithAggregatesFilter<"Subcription"> | Date | string
-    end_date?: DateTimeWithAggregatesFilter<"Subcription"> | Date | string
+    start_date?: DateTimeNullableWithAggregatesFilter<"Subcription"> | Date | string | null
+    end_date?: DateTimeNullableWithAggregatesFilter<"Subcription"> | Date | string | null
     status?: EnumstatusWithAggregatesFilter<"Subcription"> | $Enums.status
+    plan?: EnumplanWithAggregatesFilter<"Subcription"> | $Enums.plan
   }
 
   export type UserCreateInput = {
@@ -8017,10 +8032,10 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyCreateNestedOneWithoutUserInput
     gallery?: GalleryCreateNestedManyWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8034,10 +8049,10 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyUncheckedCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionUncheckedCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8050,10 +8065,10 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
     gallery?: GalleryUpdateManyWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8067,10 +8082,10 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUncheckedUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUncheckedUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8341,55 +8356,62 @@ export namespace Prisma {
   }
 
   export type SubcriptionCreateInput = {
-    start_date?: Date | string
-    end_date: Date | string
+    start_date?: Date | string | null
+    end_date?: Date | string | null
     status?: $Enums.status
+    plan?: $Enums.plan
     user: UserCreateNestedOneWithoutSubcriptionInput
   }
 
   export type SubcriptionUncheckedCreateInput = {
     id?: number
     user_id: number
-    start_date?: Date | string
-    end_date: Date | string
+    start_date?: Date | string | null
+    end_date?: Date | string | null
     status?: $Enums.status
+    plan?: $Enums.plan
   }
 
   export type SubcriptionUpdateInput = {
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
     user?: UserUpdateOneRequiredWithoutSubcriptionNestedInput
   }
 
   export type SubcriptionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
 
   export type SubcriptionCreateManyInput = {
     id?: number
     user_id: number
-    start_date?: Date | string
-    end_date: Date | string
+    start_date?: Date | string | null
+    end_date?: Date | string | null
     status?: $Enums.status
+    plan?: $Enums.plan
   }
 
   export type SubcriptionUpdateManyMutationInput = {
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
 
   export type SubcriptionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -8456,10 +8478,9 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type ClientKeyListRelationFilter = {
-    every?: ClientKeyWhereInput
-    some?: ClientKeyWhereInput
-    none?: ClientKeyWhereInput
+  export type ClientKeyNullableRelationFilter = {
+    is?: ClientKeyWhereInput | null
+    isNot?: ClientKeyWhereInput | null
   }
 
   export type GalleryListRelationFilter = {
@@ -8474,10 +8495,9 @@ export namespace Prisma {
     none?: AlbumWhereInput
   }
 
-  export type SubcriptionListRelationFilter = {
-    every?: SubcriptionWhereInput
-    some?: SubcriptionWhereInput
-    none?: SubcriptionWhereInput
+  export type SubcriptionNullableRelationFilter = {
+    is?: SubcriptionWhereInput | null
+    isNot?: SubcriptionWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -8485,19 +8505,11 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type ClientKeyOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type GalleryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type AlbumOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type SubcriptionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8801,11 +8813,29 @@ export namespace Prisma {
     album_id?: SortOrder
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type EnumstatusFilter<$PrismaModel = never> = {
     equals?: $Enums.status | EnumstatusFieldRefInput<$PrismaModel>
     in?: $Enums.status[] | ListEnumstatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.status[] | ListEnumstatusFieldRefInput<$PrismaModel>
     not?: NestedEnumstatusFilter<$PrismaModel> | $Enums.status
+  }
+
+  export type EnumplanFilter<$PrismaModel = never> = {
+    equals?: $Enums.plan | EnumplanFieldRefInput<$PrismaModel>
+    in?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    notIn?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    not?: NestedEnumplanFilter<$PrismaModel> | $Enums.plan
   }
 
   export type SubcriptionCountOrderByAggregateInput = {
@@ -8814,6 +8844,7 @@ export namespace Prisma {
     start_date?: SortOrder
     end_date?: SortOrder
     status?: SortOrder
+    plan?: SortOrder
   }
 
   export type SubcriptionAvgOrderByAggregateInput = {
@@ -8827,6 +8858,7 @@ export namespace Prisma {
     start_date?: SortOrder
     end_date?: SortOrder
     status?: SortOrder
+    plan?: SortOrder
   }
 
   export type SubcriptionMinOrderByAggregateInput = {
@@ -8835,11 +8867,26 @@ export namespace Prisma {
     start_date?: SortOrder
     end_date?: SortOrder
     status?: SortOrder
+    plan?: SortOrder
   }
 
   export type SubcriptionSumOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumstatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -8852,11 +8899,20 @@ export namespace Prisma {
     _max?: NestedEnumstatusFilter<$PrismaModel>
   }
 
-  export type ClientKeyCreateNestedManyWithoutUserInput = {
-    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput> | ClientKeyCreateWithoutUserInput[] | ClientKeyUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput | ClientKeyCreateOrConnectWithoutUserInput[]
-    createMany?: ClientKeyCreateManyUserInputEnvelope
-    connect?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
+  export type EnumplanWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.plan | EnumplanFieldRefInput<$PrismaModel>
+    in?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    notIn?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    not?: NestedEnumplanWithAggregatesFilter<$PrismaModel> | $Enums.plan
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumplanFilter<$PrismaModel>
+    _max?: NestedEnumplanFilter<$PrismaModel>
+  }
+
+  export type ClientKeyCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput
+    connect?: ClientKeyWhereUniqueInput
   }
 
   export type GalleryCreateNestedManyWithoutUserInput = {
@@ -8873,18 +8929,16 @@ export namespace Prisma {
     connect?: AlbumWhereUniqueInput | AlbumWhereUniqueInput[]
   }
 
-  export type SubcriptionCreateNestedManyWithoutUserInput = {
-    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput> | SubcriptionCreateWithoutUserInput[] | SubcriptionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput | SubcriptionCreateOrConnectWithoutUserInput[]
-    createMany?: SubcriptionCreateManyUserInputEnvelope
-    connect?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
+  export type SubcriptionCreateNestedOneWithoutUserInput = {
+    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput
+    connect?: SubcriptionWhereUniqueInput
   }
 
-  export type ClientKeyUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput> | ClientKeyCreateWithoutUserInput[] | ClientKeyUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput | ClientKeyCreateOrConnectWithoutUserInput[]
-    createMany?: ClientKeyCreateManyUserInputEnvelope
-    connect?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
+  export type ClientKeyUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput
+    connect?: ClientKeyWhereUniqueInput
   }
 
   export type GalleryUncheckedCreateNestedManyWithoutUserInput = {
@@ -8901,11 +8955,10 @@ export namespace Prisma {
     connect?: AlbumWhereUniqueInput | AlbumWhereUniqueInput[]
   }
 
-  export type SubcriptionUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput> | SubcriptionCreateWithoutUserInput[] | SubcriptionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput | SubcriptionCreateOrConnectWithoutUserInput[]
-    createMany?: SubcriptionCreateManyUserInputEnvelope
-    connect?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
+  export type SubcriptionUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput
+    connect?: SubcriptionWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8928,18 +8981,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type ClientKeyUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput> | ClientKeyCreateWithoutUserInput[] | ClientKeyUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput | ClientKeyCreateOrConnectWithoutUserInput[]
-    upsert?: ClientKeyUpsertWithWhereUniqueWithoutUserInput | ClientKeyUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ClientKeyCreateManyUserInputEnvelope
-    set?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    disconnect?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    delete?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    connect?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    update?: ClientKeyUpdateWithWhereUniqueWithoutUserInput | ClientKeyUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ClientKeyUpdateManyWithWhereWithoutUserInput | ClientKeyUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ClientKeyScalarWhereInput | ClientKeyScalarWhereInput[]
+  export type ClientKeyUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput
+    upsert?: ClientKeyUpsertWithoutUserInput
+    disconnect?: ClientKeyWhereInput | boolean
+    delete?: ClientKeyWhereInput | boolean
+    connect?: ClientKeyWhereUniqueInput
+    update?: XOR<XOR<ClientKeyUpdateToOneWithWhereWithoutUserInput, ClientKeyUpdateWithoutUserInput>, ClientKeyUncheckedUpdateWithoutUserInput>
   }
 
   export type GalleryUpdateManyWithoutUserNestedInput = {
@@ -8970,18 +9019,14 @@ export namespace Prisma {
     deleteMany?: AlbumScalarWhereInput | AlbumScalarWhereInput[]
   }
 
-  export type SubcriptionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput> | SubcriptionCreateWithoutUserInput[] | SubcriptionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput | SubcriptionCreateOrConnectWithoutUserInput[]
-    upsert?: SubcriptionUpsertWithWhereUniqueWithoutUserInput | SubcriptionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SubcriptionCreateManyUserInputEnvelope
-    set?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    disconnect?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    delete?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    connect?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    update?: SubcriptionUpdateWithWhereUniqueWithoutUserInput | SubcriptionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SubcriptionUpdateManyWithWhereWithoutUserInput | SubcriptionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SubcriptionScalarWhereInput | SubcriptionScalarWhereInput[]
+  export type SubcriptionUpdateOneWithoutUserNestedInput = {
+    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput
+    upsert?: SubcriptionUpsertWithoutUserInput
+    disconnect?: SubcriptionWhereInput | boolean
+    delete?: SubcriptionWhereInput | boolean
+    connect?: SubcriptionWhereUniqueInput
+    update?: XOR<XOR<SubcriptionUpdateToOneWithWhereWithoutUserInput, SubcriptionUpdateWithoutUserInput>, SubcriptionUncheckedUpdateWithoutUserInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -8992,18 +9037,14 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ClientKeyUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput> | ClientKeyCreateWithoutUserInput[] | ClientKeyUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput | ClientKeyCreateOrConnectWithoutUserInput[]
-    upsert?: ClientKeyUpsertWithWhereUniqueWithoutUserInput | ClientKeyUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ClientKeyCreateManyUserInputEnvelope
-    set?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    disconnect?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    delete?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    connect?: ClientKeyWhereUniqueInput | ClientKeyWhereUniqueInput[]
-    update?: ClientKeyUpdateWithWhereUniqueWithoutUserInput | ClientKeyUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ClientKeyUpdateManyWithWhereWithoutUserInput | ClientKeyUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ClientKeyScalarWhereInput | ClientKeyScalarWhereInput[]
+  export type ClientKeyUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput
+    upsert?: ClientKeyUpsertWithoutUserInput
+    disconnect?: ClientKeyWhereInput | boolean
+    delete?: ClientKeyWhereInput | boolean
+    connect?: ClientKeyWhereUniqueInput
+    update?: XOR<XOR<ClientKeyUpdateToOneWithWhereWithoutUserInput, ClientKeyUpdateWithoutUserInput>, ClientKeyUncheckedUpdateWithoutUserInput>
   }
 
   export type GalleryUncheckedUpdateManyWithoutUserNestedInput = {
@@ -9034,18 +9075,14 @@ export namespace Prisma {
     deleteMany?: AlbumScalarWhereInput | AlbumScalarWhereInput[]
   }
 
-  export type SubcriptionUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput> | SubcriptionCreateWithoutUserInput[] | SubcriptionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput | SubcriptionCreateOrConnectWithoutUserInput[]
-    upsert?: SubcriptionUpsertWithWhereUniqueWithoutUserInput | SubcriptionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SubcriptionCreateManyUserInputEnvelope
-    set?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    disconnect?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    delete?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    connect?: SubcriptionWhereUniqueInput | SubcriptionWhereUniqueInput[]
-    update?: SubcriptionUpdateWithWhereUniqueWithoutUserInput | SubcriptionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SubcriptionUpdateManyWithWhereWithoutUserInput | SubcriptionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SubcriptionScalarWhereInput | SubcriptionScalarWhereInput[]
+  export type SubcriptionUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SubcriptionCreateOrConnectWithoutUserInput
+    upsert?: SubcriptionUpsertWithoutUserInput
+    disconnect?: SubcriptionWhereInput | boolean
+    delete?: SubcriptionWhereInput | boolean
+    connect?: SubcriptionWhereUniqueInput
+    update?: XOR<XOR<SubcriptionUpdateToOneWithWhereWithoutUserInput, SubcriptionUpdateWithoutUserInput>, SubcriptionUncheckedUpdateWithoutUserInput>
   }
 
   export type UserCreateNestedOneWithoutClient_keysInput = {
@@ -9208,8 +9245,16 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type EnumstatusFieldUpdateOperationsInput = {
     set?: $Enums.status
+  }
+
+  export type EnumplanFieldUpdateOperationsInput = {
+    set?: $Enums.plan
   }
 
   export type UserUpdateOneRequiredWithoutSubcriptionNestedInput = {
@@ -9386,11 +9431,43 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedEnumstatusFilter<$PrismaModel = never> = {
     equals?: $Enums.status | EnumstatusFieldRefInput<$PrismaModel>
     in?: $Enums.status[] | ListEnumstatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.status[] | ListEnumstatusFieldRefInput<$PrismaModel>
     not?: NestedEnumstatusFilter<$PrismaModel> | $Enums.status
+  }
+
+  export type NestedEnumplanFilter<$PrismaModel = never> = {
+    equals?: $Enums.plan | EnumplanFieldRefInput<$PrismaModel>
+    in?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    notIn?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    not?: NestedEnumplanFilter<$PrismaModel> | $Enums.plan
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumstatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -9401,6 +9478,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumstatusFilter<$PrismaModel>
     _max?: NestedEnumstatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumplanWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.plan | EnumplanFieldRefInput<$PrismaModel>
+    in?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    notIn?: $Enums.plan[] | ListEnumplanFieldRefInput<$PrismaModel>
+    not?: NestedEnumplanWithAggregatesFilter<$PrismaModel> | $Enums.plan
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumplanFilter<$PrismaModel>
+    _max?: NestedEnumplanFilter<$PrismaModel>
   }
 
   export type ClientKeyCreateWithoutUserInput = {
@@ -9417,11 +9504,6 @@ export namespace Prisma {
   export type ClientKeyCreateOrConnectWithoutUserInput = {
     where: ClientKeyWhereUniqueInput
     create: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
-  }
-
-  export type ClientKeyCreateManyUserInputEnvelope = {
-    data: ClientKeyCreateManyUserInput | ClientKeyCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type GalleryCreateWithoutUserInput = {
@@ -9475,16 +9557,18 @@ export namespace Prisma {
   }
 
   export type SubcriptionCreateWithoutUserInput = {
-    start_date?: Date | string
-    end_date: Date | string
+    start_date?: Date | string | null
+    end_date?: Date | string | null
     status?: $Enums.status
+    plan?: $Enums.plan
   }
 
   export type SubcriptionUncheckedCreateWithoutUserInput = {
     id?: number
-    start_date?: Date | string
-    end_date: Date | string
+    start_date?: Date | string | null
+    end_date?: Date | string | null
     status?: $Enums.status
+    plan?: $Enums.plan
   }
 
   export type SubcriptionCreateOrConnectWithoutUserInput = {
@@ -9492,35 +9576,26 @@ export namespace Prisma {
     create: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput>
   }
 
-  export type SubcriptionCreateManyUserInputEnvelope = {
-    data: SubcriptionCreateManyUserInput | SubcriptionCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ClientKeyUpsertWithWhereUniqueWithoutUserInput = {
-    where: ClientKeyWhereUniqueInput
+  export type ClientKeyUpsertWithoutUserInput = {
     update: XOR<ClientKeyUpdateWithoutUserInput, ClientKeyUncheckedUpdateWithoutUserInput>
     create: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
+    where?: ClientKeyWhereInput
   }
 
-  export type ClientKeyUpdateWithWhereUniqueWithoutUserInput = {
-    where: ClientKeyWhereUniqueInput
+  export type ClientKeyUpdateToOneWithWhereWithoutUserInput = {
+    where?: ClientKeyWhereInput
     data: XOR<ClientKeyUpdateWithoutUserInput, ClientKeyUncheckedUpdateWithoutUserInput>
   }
 
-  export type ClientKeyUpdateManyWithWhereWithoutUserInput = {
-    where: ClientKeyScalarWhereInput
-    data: XOR<ClientKeyUpdateManyMutationInput, ClientKeyUncheckedUpdateManyWithoutUserInput>
+  export type ClientKeyUpdateWithoutUserInput = {
+    client_id?: StringFieldUpdateOperationsInput | string
+    client_secret?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ClientKeyScalarWhereInput = {
-    AND?: ClientKeyScalarWhereInput | ClientKeyScalarWhereInput[]
-    OR?: ClientKeyScalarWhereInput[]
-    NOT?: ClientKeyScalarWhereInput | ClientKeyScalarWhereInput[]
-    id?: IntFilter<"ClientKey"> | number
-    user_id?: IntFilter<"ClientKey"> | number
-    client_id?: StringFilter<"ClientKey"> | string
-    client_secret?: StringFilter<"ClientKey"> | string
+  export type ClientKeyUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    client_id?: StringFieldUpdateOperationsInput | string
+    client_secret?: StringFieldUpdateOperationsInput | string
   }
 
   export type GalleryUpsertWithWhereUniqueWithoutUserInput = {
@@ -9577,31 +9652,30 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Album"> | Date | string
   }
 
-  export type SubcriptionUpsertWithWhereUniqueWithoutUserInput = {
-    where: SubcriptionWhereUniqueInput
+  export type SubcriptionUpsertWithoutUserInput = {
     update: XOR<SubcriptionUpdateWithoutUserInput, SubcriptionUncheckedUpdateWithoutUserInput>
     create: XOR<SubcriptionCreateWithoutUserInput, SubcriptionUncheckedCreateWithoutUserInput>
+    where?: SubcriptionWhereInput
   }
 
-  export type SubcriptionUpdateWithWhereUniqueWithoutUserInput = {
-    where: SubcriptionWhereUniqueInput
+  export type SubcriptionUpdateToOneWithWhereWithoutUserInput = {
+    where?: SubcriptionWhereInput
     data: XOR<SubcriptionUpdateWithoutUserInput, SubcriptionUncheckedUpdateWithoutUserInput>
   }
 
-  export type SubcriptionUpdateManyWithWhereWithoutUserInput = {
-    where: SubcriptionScalarWhereInput
-    data: XOR<SubcriptionUpdateManyMutationInput, SubcriptionUncheckedUpdateManyWithoutUserInput>
+  export type SubcriptionUpdateWithoutUserInput = {
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
 
-  export type SubcriptionScalarWhereInput = {
-    AND?: SubcriptionScalarWhereInput | SubcriptionScalarWhereInput[]
-    OR?: SubcriptionScalarWhereInput[]
-    NOT?: SubcriptionScalarWhereInput | SubcriptionScalarWhereInput[]
-    id?: IntFilter<"Subcription"> | number
-    user_id?: IntFilter<"Subcription"> | number
-    start_date?: DateTimeFilter<"Subcription"> | Date | string
-    end_date?: DateTimeFilter<"Subcription"> | Date | string
-    status?: EnumstatusFilter<"Subcription"> | $Enums.status
+  export type SubcriptionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
 
   export type UserCreateWithoutClient_keysInput = {
@@ -9616,7 +9690,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     gallery?: GalleryCreateNestedManyWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutClient_keysInput = {
@@ -9632,7 +9706,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionUncheckedCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutClient_keysInput = {
@@ -9663,7 +9737,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     gallery?: GalleryUpdateManyWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClient_keysInput = {
@@ -9679,7 +9753,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUncheckedUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type PictureCreateWithoutGalleryInput = {
@@ -9721,9 +9795,9 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGalleryInput = {
@@ -9737,9 +9811,9 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyUncheckedCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionUncheckedCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGalleryInput = {
@@ -9798,9 +9872,9 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGalleryInput = {
@@ -9814,9 +9888,9 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUncheckedUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUncheckedUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type PictureCreateWithoutAlubmInput = {
@@ -9858,9 +9932,9 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyCreateNestedOneWithoutUserInput
     gallery?: GalleryCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAlbumInput = {
@@ -9874,9 +9948,9 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyUncheckedCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
-    subcription?: SubcriptionUncheckedCreateNestedManyWithoutUserInput
+    subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAlbumInput = {
@@ -9921,9 +9995,9 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
     gallery?: GalleryUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlbumInput = {
@@ -9937,9 +10011,9 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUncheckedUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
-    subcription?: SubcriptionUncheckedUpdateManyWithoutUserNestedInput
+    subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type GalleryCreateWithoutPicturesInput = {
@@ -10044,7 +10118,7 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyCreateNestedOneWithoutUserInput
     gallery?: GalleryCreateNestedManyWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
   }
@@ -10060,7 +10134,7 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    client_keys?: ClientKeyUncheckedCreateNestedManyWithoutUserInput
+    client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
   }
@@ -10091,7 +10165,7 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
     gallery?: GalleryUpdateManyWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
   }
@@ -10107,15 +10181,9 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client_keys?: ClientKeyUncheckedUpdateManyWithoutUserNestedInput
+    client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type ClientKeyCreateManyUserInput = {
-    id?: number
-    client_id: string
-    client_secret: string
   }
 
   export type GalleryCreateManyUserInput = {
@@ -10130,30 +10198,6 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
-  }
-
-  export type SubcriptionCreateManyUserInput = {
-    id?: number
-    start_date?: Date | string
-    end_date: Date | string
-    status?: $Enums.status
-  }
-
-  export type ClientKeyUpdateWithoutUserInput = {
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ClientKeyUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ClientKeyUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
   }
 
   export type GalleryUpdateWithoutUserInput = {
@@ -10198,26 +10242,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SubcriptionUpdateWithoutUserInput = {
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-  }
-
-  export type SubcriptionUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-  }
-
-  export type SubcriptionUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
   }
 
   export type PictureCreateManyGalleryInput = {
