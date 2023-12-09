@@ -72,9 +72,10 @@ export async function loginWithGithub(
     }
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
-      name: user.name! || user.login,
-      email: user.email! || "",
-      picture: user.avatar_url!,
+      providerId: Number(isUser?.provider_id) || Number(userId),
+      name: isUser?.name || user.login,
+      email: isUser?.email || user.email!,
+      picture: isUser?.picture || user.avatar_url,
     });
 
     generateTokenResponseCookie(res, refreshToken);

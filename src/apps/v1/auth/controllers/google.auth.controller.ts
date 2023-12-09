@@ -43,7 +43,7 @@ export async function loginWithGoogle(
     if (!data) return res.redirect(`${CLIENT_FRONTEND_URL}/auth/login`);
 
     const bigNumber: bigint = BigInt(String(data.id));
-    const userId: bigint = bigNumber / BigInt(100)
+    const userId: bigint = bigNumber / BigInt(100);
 
     const isUser: Awaited<User | null> = await isUserExists({
       providerId: userId,
@@ -60,9 +60,10 @@ export async function loginWithGoogle(
     }
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
-      name: data.name!,
-      email: data.email!,
-      picture: data.picture!,
+      providerId: Number(isUser?.provider_id) || Number(userId),
+      name: isUser?.name || data.name!,
+      email: isUser?.email || data.email!,
+      picture: isUser?.picture || data.picture!,
     });
 
     generateTokenResponseCookie(res, refreshToken);
