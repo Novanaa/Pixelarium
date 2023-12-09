@@ -15,6 +15,7 @@ import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
 import isUserExists from "../services/isUserExist";
 import createUserIfNotExists from "../services/createUserIfNotExists";
+import { User } from "../../../../../generated/client";
 
 export async function redirectGithubLogin(
   req: Request,
@@ -55,13 +56,14 @@ export async function loginWithGithub(
 
     if (!user) return Error.badRequest(res, "The Login Session Was Failed.");
 
-    const isUser = await isUserExists({
-      name: user.login || user.name,
-      email: user.email!,
+    const userId: bigint = BigInt(String(user.id));
+    const isUser: Awaited<User | null> = await isUserExists({
+      providerId: userId,
     });
 
-    if (!isUser[0]) {
+    if (!isUser) {
       await createUserIfNotExists({
+        providerId: userId,
         name: user.login! || user.name!,
         email: user.email || null,
         picture: user.avatar_url || defaultUserImage,
@@ -70,9 +72,10 @@ export async function loginWithGithub(
     }
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
-      name: user.name! || user.login,
-      email: user.email! || "",
-      picture: user.avatar_url!,
+      providerId: Number(isUser?.provider_id) || Number(userId),
+      name: isUser?.name || user.login,
+      email: isUser?.email || user.email!,
+      picture: isUser?.picture || user.avatar_url,
     });
 
     generateTokenResponseCookie(res, refreshToken);
