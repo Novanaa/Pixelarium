@@ -2,14 +2,12 @@ import client from "../../../../libs/configs/prisma";
 import { User } from "../../../../../generated/client";
 
 export default async function isUserExists({
-  name,
-  email,
+  providerId,
 }: {
-  name: string;
-  email: string;
-}): Promise<User[]> {
-  const isUser: Awaited<User[]> = await client.user.findMany({
-    where: { name, email },
+  providerId: bigint;
+}): Promise<User | null> {
+  const isUser: Awaited<User | null> = await client.user.findUnique({
+    where: { provider_id: providerId },
   });
 
   return isUser;
