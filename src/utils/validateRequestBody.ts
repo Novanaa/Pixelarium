@@ -8,13 +8,17 @@ export default function validateRequestBody({
   value,
   error,
   except,
+  usage,
 }: {
   res: Response;
   value: Joi.ValidationResult;
   error: Joi.ValidationError | undefined;
   except: ErrorsRespones;
-}) {
-  if (Object.keys(value).length == 0)
-    return except.badRequest(res, messege.emptyFields);
+  usage?: "update";
+}): void | Response {
+  if (usage !== "update") {
+    if (Object.keys(value).length == 0)
+      return except.badRequest(res, messege.emptyFields);
+  }
   if (error) return except.unprocessable(res, error.message.replace(/"/g, ""));
 }

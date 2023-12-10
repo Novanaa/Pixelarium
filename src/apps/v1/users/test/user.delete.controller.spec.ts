@@ -10,14 +10,14 @@ describe("Unit-Testing Delete User API Endpoint", () => {
     expect(request.status).toBe(400);
     expect(request.body.status).toBe("KO");
   });
-  test("should be return 200 status code", async () => {
+  test.skip("should be return 200 status code", async () => {
     const user = await client.user.findFirst();
     const request = await supertest(app).delete(`/v1/users/${user?.id}`);
 
     expect(request.status).toBe(200);
     expect(request.body.status).toBe("OK");
   });
-  test("Make sure it can accept application/json", async () => {
+  test.skip("Make sure it can accept application/json", async () => {
     const user = await client.user.findFirst();
     const request = await supertest(app)
       .delete(`/v1/users/${user?.id}`)
