@@ -5,17 +5,17 @@ import { Request } from "express";
 export default function getPictureUrlpath({
   request,
   usage,
-  filenName,
+  filename,
 }: {
   request: Request;
   usage: UsageType;
-  filenName: string;
+  filename: string;
 }): string {
   const pictureFilepath: string = getPictureFilepath({ usage: usage });
 
   const urlpath: string = `${request.protocol}://${request.get(
     "host"
-  )}/${pictureFilepath}/${filenName}`;
+  )}/${pictureFilepath}/${filename}`;
 
   return urlpath;
 }
