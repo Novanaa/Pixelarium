@@ -9,13 +9,16 @@
     "staging": "env-cmd -f .env.staging bun run --watch ./src/server.ts",
     "test:dev": "env-cmd -f .env.dev bun test --watch --timeout 8000",
     "test:staging": "env-cmd -f .env.staging bun test --watch --timeout 8000",
-    "lint": "bun eslint ./src --ext .ts"
+    "lint": "bun eslint ./src --ext .ts",
+    "lint:fix": "bun eslint ./src --ext .ts --fix",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "bun-types": "latest",
-    "eslint": "^8.54.0"
+    "eslint": "^8.54.0",
+    "husky": "^8.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
