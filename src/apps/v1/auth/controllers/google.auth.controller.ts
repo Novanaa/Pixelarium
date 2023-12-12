@@ -42,8 +42,8 @@ export async function loginWithGoogle(
 
     if (!data) return res.redirect(`${CLIENT_FRONTEND_URL}/auth/login`);
 
-    const bigNumber: bigint = BigInt(String(data.id));
-    const userId: bigint = bigNumber / BigInt(100);
+    const bigNumber: number = Number(data.id);
+    const userId: number = bigNumber / Number(10n ** 13n);
 
     const isUser: Awaited<User | null> = await isUserExists({
       providerId: userId,

@@ -4,7 +4,7 @@ import { User } from "../../../../../generated/client";
 export default async function isUserExists({
   providerId,
 }: {
-  providerId: bigint;
+  providerId: number;
 }): Promise<User | null> {
   const isUser: Awaited<User | null> = await client.user.findUnique({
     where: { provider_id: providerId },
