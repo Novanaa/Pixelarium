@@ -13,8 +13,8 @@ datasource db {
 }
 
 model User {
-  id BigInt @id @default(autoincrement())
-  provider_id BigInt @unique
+  id Int @id @default(autoincrement())
+  provider_id Int @unique
   name String @unique
   email String?
   password String?
@@ -38,7 +38,7 @@ enum UserType {
 
 model ClientKey {
   id Int @id @default(autoincrement())
-  user_id BigInt @unique
+  user_id Int @unique
   client_id String
   client_secret String
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -46,7 +46,7 @@ model ClientKey {
 
 model Gallery {
   id Int @id @default(autoincrement())
-  user_id BigInt
+  user_id Int
   pictures Picture[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -58,7 +58,7 @@ model Album {
   title   String
   description   String
   pictures Picture[]
-  user_id BigInt
+  user_id Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -79,7 +79,7 @@ model Picture {
 
 model Subcription {
   id Int @id @default(autoincrement())  
-  user_id BigInt @unique
+  user_id Int @unique
   start_date DateTime? 
   end_date DateTime?
   status status @default(deactive)
