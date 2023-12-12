@@ -1,6 +1,9 @@
 import "dotenv/config";
 import process from "process";
 
+/* The code is using destructuring assignment to extract the values of the specified environment
+variables from the `process.env` object. Each variable is assigned to a corresponding constant,
+allowing easy access to the values throughout the code. */
 export const {
   PORT,
   SUPABASE_ANON_KEY,
