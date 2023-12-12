@@ -1,3 +1,7 @@
+/* The code defines a constant variable named `message` which is an object containing various error
+messages. Each error message is assigned to a specific key, such as `notFound`, `badRequest`,
+`cannotDelete`, etc. These error messages are meant to be used in error handling scenarios, where
+they can be accessed and displayed to the user based on the specific error that occurred. */
 const messege = {
   notFound: "Oops! The data you are looking for could not be found.",
   badRequest:
