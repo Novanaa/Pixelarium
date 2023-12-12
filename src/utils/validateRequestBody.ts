@@ -3,6 +3,24 @@ import messege from "../const/readonly/messege";
 import Joi from "joi";
 import { ErrorsRespones } from "./Response";
 
+/**
+ * The function validates a request body and returns an error response if the validation fails.
+ * @export
+ * @param {({
+ *   res: Response;
+ *   value: Joi.ValidationResult;
+ *   error: Joi.ValidationError | undefined;
+ *   except: ErrorsRespones;
+ *   usage?: "update";
+ * })} {
+ *   res,
+ *   value,
+ *   error,
+ *   except,
+ *   usage,
+ * }
+ * @returns either `void` or a `Response` object.
+ */
 export default function validateRequestBody({
   res,
   value,
