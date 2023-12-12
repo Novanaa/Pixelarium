@@ -1,5 +1,5 @@
 type TCreateUser = {
-  providerId: bigint;
+  providerId: number;
   name: string;
   email: string | null;
   picture: string;
