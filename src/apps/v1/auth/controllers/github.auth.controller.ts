@@ -56,7 +56,7 @@ export async function loginWithGithub(
 
     if (!user) return Error.badRequest(res, "The Login Session Was Failed.");
 
-    const userId: bigint = BigInt(String(user.id));
+    const userId: number = Number(user.id);
     const isUser: Awaited<User | null> = await isUserExists({
       providerId: userId,
     });
