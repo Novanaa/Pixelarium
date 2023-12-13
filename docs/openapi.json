@@ -1,0 +1,245 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Pixelarium API",
+    "description": "The Infinite Pixels Experience.",
+    "version": "1.0",
+    "license": {
+      "name": "MIT license",
+      "url": "https://opensource.org/license/mit/"
+    },
+    "contact": {
+      "name": "Kadek Nova (ItsNvaa)",
+      "email": "kadeknovacahayaputra@gmail.com"
+    }
+  },
+  "servers": [
+    { "url": "http://localhost:8000", "description": "Development" },
+    { "url": "http://localhost:8000", "description": "Staging" },
+    { "url": "https://api.pixelarium.com", "description": "Production" }
+  ],
+  "paths": {
+    "/v1/users/{name}": {
+      "summary": "Get Single User API Endpoint",
+      "description": "This endpoint provide you to get single user data",
+      "parameters": [
+        {
+          "name": "name",
+          "in": "path",
+          "deprecated": false,
+          "allowEmptyValue": false,
+          "description": "Value of existing username",
+          "required": true,
+          "schema": {
+            "deprecated": false,
+            "type": "string",
+            "nullable": false
+          }
+        }
+      ],
+      "get": {
+        "operationId": "singleUser",
+        "summary": "Get Single User",
+        "description": "This endpoint provide you to get single user data",
+        "callbacks": {},
+        "deprecated": false,
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "user": {
+                    "id": 2,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "email": null,
+                    "bio": "wleee",
+                    "picture": "http://127.0.0.1:49291/img/users/profiles/pictures/96d2e1a01cec3ba3eedd59cdacdfe5cb.avif",
+                    "type": "User",
+                    "site_admin": false,
+                    "createdAt": "2023-12-12T02:11:42.773Z",
+                    "updatedAt": "2023-12-12T02:48:46.484Z"
+                  },
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{id}": {
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "Delete Existing User",
+        "description": "Provide You to Delete Existing User",
+        "tags": ["Users"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "id",
+            "description": "User ID",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "in": "path",
+            "required": true,
+            "schema": {
+              "deprecated": false,
+              "type": "integer",
+              "description": "Value of existing user ID",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateUser",
+        "summary": "Update Existing User",
+        "description": "Provide You to Update Existing User",
+        "tags": ["Users"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "id",
+            "description": "User ID",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "in": "path",
+            "required": true,
+            "schema": {
+              "deprecated": false,
+              "type": "integer",
+              "description": "Value of existing user ID",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The name has already taken",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "Update User Field Payload",
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "ItsNvaa (Updated)",
+                "picture": "https://i.ibb.co/vC9jN2s/IMG-mths7.jpg",
+                "bio": "The real losers is you..."
+              }
+            }
+          },
+          "required": false
+        }
+      }
+    }
+  }
+}
