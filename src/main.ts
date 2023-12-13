@@ -11,13 +11,7 @@ const app = express();
 /* The code block is setting up and using various middleware functions in an Express.js application. */
 app.use(express.json());
 app.use(express.static("./public"));
-app.use(
-  cors({
-    origin: CLIENT_FRONTEND_URL,
-    optionsSuccessStatus: 200,
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(cookieParser());
 app.set("trust proxy", 1);
@@ -28,7 +22,7 @@ app.use(rateLimitter);
 /* The code block is importing various modules and routes and using them in the Express.js application. */
 import docs from "../docs/openapi.json";
 import swaggerOptions from "../docs/configs/SwaggerThemes.config";
-import { CLIENT_FRONTEND_URL } from "./const/env";
+import corsOptions from "../configs/cors.config";
 import requestErrorValidation from "./middlewares/requestErrorValidation";
 import rateLimitter from "./middlewares/rateLimitter";
 import authRoutes from "./apps/v1/auth/routes/auth.routes";
