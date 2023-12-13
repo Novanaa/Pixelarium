@@ -40,7 +40,8 @@ export async function loginWithGoogle(
 
     const { data } = await oAuth2Config.userinfo.get();
 
-    if (!data) return res.redirect(`${CLIENT_FRONTEND_URL}/auth/login`);
+    if (!data)
+      return res.redirect(`${CLIENT_FRONTEND_URL}/auth/login?type=failed`);
 
     const bigNumber: number = Number(data.id);
     const userId: number = bigNumber / Number(10n ** 13n);
@@ -69,7 +70,7 @@ export async function loginWithGoogle(
     generateTokenResponseCookie(res, refreshToken);
 
     return res.redirect(
-      `${CLIENT_FRONTEND_URL}/auth/login/success?token=${accessToken}&type=success`
+      `${CLIENT_FRONTEND_URL}/auth/login/callback?token=${accessToken}&type=success`
     );
   } catch (err) {
     logger.error(err);

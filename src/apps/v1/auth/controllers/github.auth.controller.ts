@@ -81,7 +81,7 @@ export async function loginWithGithub(
     generateTokenResponseCookie(res, refreshToken);
 
     return res.redirect(
-      `${CLIENT_FRONTEND_URL}/auth/login/success?token=${accessToken}&type=success`
+      `${CLIENT_FRONTEND_URL}/auth/login/callback?token=${accessToken}&type=success`
     );
   } catch (err) {
     logger.error(err);
