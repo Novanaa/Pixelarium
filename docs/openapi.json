@@ -521,6 +521,186 @@
           }
         }
       }
+    },
+    "/v1/client-key/generate": {
+      "summary": "Generate Client Secrect key",
+      "post": {
+        "summary": "Generate Client Secrect key",
+        "operationId": "generateSecretKey",
+        "tags": ["Client Keys"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "required": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..",
+            "schema": {
+              "type": "string",
+              "deprecated": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/client-key": {
+      "summary": "Remove Existing Secrect Client User Key",
+      "delete": {
+        "operationId": "removeClientKey",
+        "deprecated": false,
+        "tags": ["Client Keys"],
+        "summary": "Remove Existing Secrect Client User Key",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "required": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..",
+            "schema": {
+              "type": "string",
+              "deprecated": false
+            }
+          }
+        ]
+      }
+    },
+    "/v1/client-key/{name}": {
+      "summary": "Get Secrect Client User Key",
+      "get": {
+        "summary": "Get Secrect Client User Key",
+        "operationId": "getClientSecret",
+        "deprecated": false,
+        "tags": ["Client Keys"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "required": true,
+            "example": "ItsNvaa",
+            "schema": {
+              "type": "string",
+              "deprecated": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "secret_key": "0d375c317aa0ea970ded0b1e6bc5d889f657d81...",
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
