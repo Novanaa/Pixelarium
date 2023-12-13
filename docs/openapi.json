@@ -240,6 +240,287 @@
           "required": false
         }
       }
+    },
+    "/v1/auth/google": {
+      "summary": "Google OAuth Authentication",
+      "description": "Login/register with Google",
+      "get": {
+        "operationId": "loginWihGoogle",
+        "summary": "Google OAuth Authentication",
+        "description": "Login with Google",
+        "deprecated": false,
+        "tags": ["Authentication"],
+        "callbacks": {
+          "OnSuccess": {
+            "{$client_url}/auth/login": {
+              "summary": "Callback after on success login",
+              "description": "Callback to notify about successful login",
+              "get": {
+                "deprecated": false,
+                "summary": "Callback after on success login",
+                "parameters": [
+                  {
+                    "name": "token",
+                    "in": "query",
+                    "description": "JWT Token callback",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "name": "type",
+                    "in": "query",
+                    "description": "Type callback",
+                    "required": true,
+                    "schema": {
+                      "enum": ["success", "failed"],
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "302": {
+            "description": "Redirect to Login Pages",
+            "headers": {
+              "Location": {
+                "description": "The URL to redirect to http://localhost:3000/auth/login (Client Side)",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Redirect/Success",
+            "headers": {
+              "Location": {
+                "description": "The URL to redirect to http://localhost:3000/auth/login/callback (Client Side)",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/github": {
+      "summary": "Github OAuth Authentication",
+      "description": "Login/register with Github",
+      "get": {
+        "tags": ["Authentication"],
+        "operationId": "loginWithGithub",
+        "deprecated": false,
+        "summary": "Github OAuth Authentication",
+        "callbacks": {
+          "OnSuccess": {
+            "{$client_url}/auth/login": {
+              "summary": "Callback after on success login",
+              "description": "Callback to notify about successful login",
+              "get": {
+                "deprecated": false,
+                "summary": "Callback after on success login",
+                "parameters": [
+                  {
+                    "name": "token",
+                    "in": "query",
+                    "description": "JWT Token callback",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "name": "type",
+                    "in": "query",
+                    "description": "Type callback",
+                    "required": true,
+                    "schema": {
+                      "enum": ["success", "failed"],
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Redirect/Success",
+            "headers": {
+              "Location": {
+                "description": "The URL to redirect to http://localhost:3000/auth/login/callback (Client Side)",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "The Login Session Was Failed.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/logout": {
+      "summary": "Logout User Authentication",
+      "description": "User Logout",
+      "post": {
+        "summary": "Logout User Authentication",
+        "operationId": "logoutUser",
+        "deprecated": false,
+        "tags": ["Authentication"],
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "required": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..",
+            "schema": {
+              "type": "string",
+              "deprecated": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "logout": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unauthorized",
+                  "messege": "The Logout Session was Failed.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/token": {
+      "summary": "Refresh Token Rotation",
+      "get": {
+        "summary": "Refresh Token Rotation",
+        "operationId": "tokenRotation",
+        "deprecated": false,
+        "tags": ["Authentication"],
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "allowEmptyValue": false,
+            "deprecated": false,
+            "required": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..",
+            "schema": {
+              "type": "string",
+              "deprecated": false
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unauthorized",
+                  "messege": "The user must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The refresh token is invalid!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
