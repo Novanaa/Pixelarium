@@ -34,6 +34,7 @@
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/supertest": "^2.0.16",
+    "@types/swagger-ui-express": "^4.1.6",
     "@types/validator": "^13.11.7",
     "@types/winston": "^2.4.4",
     "cookie-parser": "^1.4.6",
@@ -52,6 +53,8 @@
     "prettier": "^3.1.1",
     "prisma": "^5.6.0",
     "supertest": "^6.3.3",
+    "swagger-themes": "^1.2.30",
+    "swagger-ui-express": "^5.0.0",
     "validator": "^13.11.0",
     "winston": "^3.11.0"
   }
