@@ -1310,12 +1310,10 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    gallery: number
     album: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    gallery?: boolean | UserCountOutputTypeCountGalleryArgs
     album?: boolean | UserCountOutputTypeCountAlbumArgs
   }
 
@@ -1329,14 +1327,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
-  }
-
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountGalleryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: GalleryWhereInput
   }
 
 
@@ -1705,7 +1695,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       client_keys: Prisma.$ClientKeyPayload<ExtArgs> | null
-      gallery: Prisma.$GalleryPayload<ExtArgs>[]
+      gallery: Prisma.$GalleryPayload<ExtArgs> | null
       album: Prisma.$AlbumPayload<ExtArgs>[]
       subcription: Prisma.$SubcriptionPayload<ExtArgs> | null
     }
@@ -2088,7 +2078,7 @@ export namespace Prisma {
 
     client_keys<T extends User$client_keysArgs<ExtArgs> = {}>(args?: Subset<T, User$client_keysArgs<ExtArgs>>): Prisma__ClientKeyClient<$Result.GetResult<Prisma.$ClientKeyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
-    gallery<T extends User$galleryArgs<ExtArgs> = {}>(args?: Subset<T, User$galleryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, 'findMany'> | Null>;
+    gallery<T extends User$galleryArgs<ExtArgs> = {}>(args?: Subset<T, User$galleryArgs<ExtArgs>>): Prisma__GalleryClient<$Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     album<T extends User$albumArgs<ExtArgs> = {}>(args?: Subset<T, User$albumArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlbumPayload<ExtArgs>, T, 'findMany'> | Null>;
 
@@ -2473,11 +2463,6 @@ export namespace Prisma {
      */
     include?: GalleryInclude<ExtArgs> | null
     where?: GalleryWhereInput
-    orderBy?: GalleryOrderByWithRelationInput | GalleryOrderByWithRelationInput[]
-    cursor?: GalleryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: GalleryScalarFieldEnum | GalleryScalarFieldEnum[]
   }
 
 
@@ -7654,7 +7639,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     client_keys?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
-    gallery?: GalleryListRelationFilter
+    gallery?: XOR<GalleryNullableRelationFilter, GalleryWhereInput> | null
     album?: AlbumListRelationFilter
     subcription?: XOR<SubcriptionNullableRelationFilter, SubcriptionWhereInput> | null
   }
@@ -7672,7 +7657,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     client_keys?: ClientKeyOrderByWithRelationInput
-    gallery?: GalleryOrderByRelationAggregateInput
+    gallery?: GalleryOrderByWithRelationInput
     album?: AlbumOrderByRelationAggregateInput
     subcription?: SubcriptionOrderByWithRelationInput
   }
@@ -7693,7 +7678,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     client_keys?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
-    gallery?: GalleryListRelationFilter
+    gallery?: XOR<GalleryNullableRelationFilter, GalleryWhereInput> | null
     album?: AlbumListRelationFilter
     subcription?: XOR<SubcriptionNullableRelationFilter, SubcriptionWhereInput> | null
   }, "id" | "provider_id" | "name">
@@ -7809,15 +7794,15 @@ export namespace Prisma {
 
   export type GalleryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id?: number
     AND?: GalleryWhereInput | GalleryWhereInput[]
     OR?: GalleryWhereInput[]
     NOT?: GalleryWhereInput | GalleryWhereInput[]
-    user_id?: IntFilter<"Gallery"> | number
     createdAt?: DateTimeFilter<"Gallery"> | Date | string
     updatedAt?: DateTimeFilter<"Gallery"> | Date | string
     pictures?: PictureListRelationFilter
     user?: XOR<UserRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id">
 
   export type GalleryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -8055,7 +8040,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
-    gallery?: GalleryCreateNestedManyWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
     subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
@@ -8073,7 +8058,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
-    gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
     subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
@@ -8090,7 +8075,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
-    gallery?: GalleryUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
     subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
@@ -8108,7 +8093,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
-    gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
     subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -8511,10 +8496,9 @@ export namespace Prisma {
     isNot?: ClientKeyWhereInput | null
   }
 
-  export type GalleryListRelationFilter = {
-    every?: GalleryWhereInput
-    some?: GalleryWhereInput
-    none?: GalleryWhereInput
+  export type GalleryNullableRelationFilter = {
+    is?: GalleryWhereInput | null
+    isNot?: GalleryWhereInput | null
   }
 
   export type AlbumListRelationFilter = {
@@ -8531,10 +8515,6 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
-  }
-
-  export type GalleryOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type AlbumOrderByRelationAggregateInput = {
@@ -8948,11 +8928,10 @@ export namespace Prisma {
     connect?: ClientKeyWhereUniqueInput
   }
 
-  export type GalleryCreateNestedManyWithoutUserInput = {
-    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput> | GalleryCreateWithoutUserInput[] | GalleryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput | GalleryCreateOrConnectWithoutUserInput[]
-    createMany?: GalleryCreateManyUserInputEnvelope
-    connect?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
+  export type GalleryCreateNestedOneWithoutUserInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    connect?: GalleryWhereUniqueInput
   }
 
   export type AlbumCreateNestedManyWithoutUserInput = {
@@ -8974,11 +8953,10 @@ export namespace Prisma {
     connect?: ClientKeyWhereUniqueInput
   }
 
-  export type GalleryUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput> | GalleryCreateWithoutUserInput[] | GalleryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput | GalleryCreateOrConnectWithoutUserInput[]
-    createMany?: GalleryCreateManyUserInputEnvelope
-    connect?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
+  export type GalleryUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    connect?: GalleryWhereUniqueInput
   }
 
   export type AlbumUncheckedCreateNestedManyWithoutUserInput = {
@@ -9032,18 +9010,14 @@ export namespace Prisma {
     update?: XOR<XOR<ClientKeyUpdateToOneWithWhereWithoutUserInput, ClientKeyUpdateWithoutUserInput>, ClientKeyUncheckedUpdateWithoutUserInput>
   }
 
-  export type GalleryUpdateManyWithoutUserNestedInput = {
-    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput> | GalleryCreateWithoutUserInput[] | GalleryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput | GalleryCreateOrConnectWithoutUserInput[]
-    upsert?: GalleryUpsertWithWhereUniqueWithoutUserInput | GalleryUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: GalleryCreateManyUserInputEnvelope
-    set?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    disconnect?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    delete?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    connect?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    update?: GalleryUpdateWithWhereUniqueWithoutUserInput | GalleryUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: GalleryUpdateManyWithWhereWithoutUserInput | GalleryUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: GalleryScalarWhereInput | GalleryScalarWhereInput[]
+  export type GalleryUpdateOneWithoutUserNestedInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    upsert?: GalleryUpsertWithoutUserInput
+    disconnect?: GalleryWhereInput | boolean
+    delete?: GalleryWhereInput | boolean
+    connect?: GalleryWhereUniqueInput
+    update?: XOR<XOR<GalleryUpdateToOneWithWhereWithoutUserInput, GalleryUpdateWithoutUserInput>, GalleryUncheckedUpdateWithoutUserInput>
   }
 
   export type AlbumUpdateManyWithoutUserNestedInput = {
@@ -9080,18 +9054,14 @@ export namespace Prisma {
     update?: XOR<XOR<ClientKeyUpdateToOneWithWhereWithoutUserInput, ClientKeyUpdateWithoutUserInput>, ClientKeyUncheckedUpdateWithoutUserInput>
   }
 
-  export type GalleryUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput> | GalleryCreateWithoutUserInput[] | GalleryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput | GalleryCreateOrConnectWithoutUserInput[]
-    upsert?: GalleryUpsertWithWhereUniqueWithoutUserInput | GalleryUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: GalleryCreateManyUserInputEnvelope
-    set?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    disconnect?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    delete?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    connect?: GalleryWhereUniqueInput | GalleryWhereUniqueInput[]
-    update?: GalleryUpdateWithWhereUniqueWithoutUserInput | GalleryUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: GalleryUpdateManyWithWhereWithoutUserInput | GalleryUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: GalleryScalarWhereInput | GalleryScalarWhereInput[]
+  export type GalleryUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    upsert?: GalleryUpsertWithoutUserInput
+    disconnect?: GalleryWhereInput | boolean
+    delete?: GalleryWhereInput | boolean
+    connect?: GalleryWhereUniqueInput
+    update?: XOR<XOR<GalleryUpdateToOneWithWhereWithoutUserInput, GalleryUpdateWithoutUserInput>, GalleryUncheckedUpdateWithoutUserInput>
   }
 
   export type AlbumUncheckedUpdateManyWithoutUserNestedInput = {
@@ -9557,11 +9527,6 @@ export namespace Prisma {
     create: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
   }
 
-  export type GalleryCreateManyUserInputEnvelope = {
-    data: GalleryCreateManyUserInput | GalleryCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AlbumCreateWithoutUserInput = {
     title: string
     description: string
@@ -9631,30 +9596,28 @@ export namespace Prisma {
     client_secret?: StringFieldUpdateOperationsInput | string
   }
 
-  export type GalleryUpsertWithWhereUniqueWithoutUserInput = {
-    where: GalleryWhereUniqueInput
+  export type GalleryUpsertWithoutUserInput = {
     update: XOR<GalleryUpdateWithoutUserInput, GalleryUncheckedUpdateWithoutUserInput>
     create: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    where?: GalleryWhereInput
   }
 
-  export type GalleryUpdateWithWhereUniqueWithoutUserInput = {
-    where: GalleryWhereUniqueInput
+  export type GalleryUpdateToOneWithWhereWithoutUserInput = {
+    where?: GalleryWhereInput
     data: XOR<GalleryUpdateWithoutUserInput, GalleryUncheckedUpdateWithoutUserInput>
   }
 
-  export type GalleryUpdateManyWithWhereWithoutUserInput = {
-    where: GalleryScalarWhereInput
-    data: XOR<GalleryUpdateManyMutationInput, GalleryUncheckedUpdateManyWithoutUserInput>
+  export type GalleryUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pictures?: PictureUpdateManyWithoutGalleryNestedInput
   }
 
-  export type GalleryScalarWhereInput = {
-    AND?: GalleryScalarWhereInput | GalleryScalarWhereInput[]
-    OR?: GalleryScalarWhereInput[]
-    NOT?: GalleryScalarWhereInput | GalleryScalarWhereInput[]
-    id?: IntFilter<"Gallery"> | number
-    user_id?: IntFilter<"Gallery"> | number
-    createdAt?: DateTimeFilter<"Gallery"> | Date | string
-    updatedAt?: DateTimeFilter<"Gallery"> | Date | string
+  export type GalleryUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pictures?: PictureUncheckedUpdateManyWithoutGalleryNestedInput
   }
 
   export type AlbumUpsertWithWhereUniqueWithoutUserInput = {
@@ -9722,7 +9685,7 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    gallery?: GalleryCreateNestedManyWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
     subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
@@ -9739,7 +9702,7 @@ export namespace Prisma {
     site_admin: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
     subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
@@ -9771,7 +9734,7 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gallery?: GalleryUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
     subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
@@ -9788,7 +9751,7 @@ export namespace Prisma {
     site_admin?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
     subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -9975,7 +9938,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
-    gallery?: GalleryCreateNestedManyWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     subcription?: SubcriptionCreateNestedOneWithoutUserInput
   }
 
@@ -9992,7 +9955,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
-    gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     subcription?: SubcriptionUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -10040,7 +10003,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
-    gallery?: GalleryUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     subcription?: SubcriptionUpdateOneWithoutUserNestedInput
   }
 
@@ -10057,7 +10020,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
-    gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -10165,7 +10128,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
-    gallery?: GalleryCreateNestedManyWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
   }
 
@@ -10182,7 +10145,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
-    gallery?: GalleryUncheckedCreateNestedManyWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -10214,7 +10177,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
-    gallery?: GalleryUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
   }
 
@@ -10231,14 +10194,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
-    gallery?: GalleryUncheckedUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type GalleryCreateManyUserInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type AlbumCreateManyUserInput = {
@@ -10247,25 +10204,6 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
-  }
-
-  export type GalleryUpdateWithoutUserInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    pictures?: PictureUpdateManyWithoutGalleryNestedInput
-  }
-
-  export type GalleryUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    pictures?: PictureUncheckedUpdateManyWithoutGalleryNestedInput
-  }
-
-  export type GalleryUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AlbumUpdateWithoutUserInput = {
