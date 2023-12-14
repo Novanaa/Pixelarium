@@ -704,38 +704,6 @@
     },
     "/v1/galleries": {
       "summary": "Galleries",
-      "get": {
-        "summary": "Get All Galleries",
-        "deprecated": false,
-        "operationId": "galleries",
-        "description": "Provide to get all galleries",
-        "tags": ["Galleries"],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "albums": [],
-                  "status": "OK"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "example": {
-                  "TypeError": "Bad Request",
-                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
-                  "status": "KO"
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "summary": "Add Gallery",
         "operationId": "addGallery",
