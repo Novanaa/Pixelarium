@@ -701,6 +701,293 @@
           }
         }
       }
+    },
+    "/v1/galleries": {
+      "summary": "Galleries",
+      "get": {
+        "summary": "Get All Galleries",
+        "deprecated": false,
+        "operationId": "galleries",
+        "description": "Provide to get all galleries",
+        "tags": ["Galleries"],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "albums": [],
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add Gallery",
+        "operationId": "addGallery",
+        "tags": ["Galleries"],
+        "deprecated": false,
+        "requestBody": {
+          "required": true,
+          "description": "Request Body",
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "This is title.",
+                "pictures": "Files Upload Pictures"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The image file size must be less than 5mb.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/galleries/{id}": {
+      "summary": "Gallery",
+      "get": {
+        "summary": "Get Single Gallery",
+        "deprecated": false,
+        "operationId": "singleGallery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "tags": ["Galleries"],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "gallery": {},
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Gallery",
+        "deprecated": false,
+        "operationId": "updateGallery",
+        "tags": ["Galleries"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request Body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "This is a title (Updated)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The image file size must be less than 5mb.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteGallery",
+        "deprecated": false,
+        "tags": ["Galleries"],
+        "summary": "Delete Existing Gallery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
