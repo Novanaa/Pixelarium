@@ -844,7 +844,7 @@
           "content": {
             "application/json": {
               "example": {
-                "title": "This is a title (Updated)"
+                "picture": "...."
               }
             }
           }
@@ -956,6 +956,7 @@
           }
         }
       }
-    }
+    },
+    "/v1/albums": {}
   }
 }
