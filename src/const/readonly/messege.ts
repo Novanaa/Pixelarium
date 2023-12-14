@@ -10,7 +10,7 @@ const messege = {
   wrongRequestID: "The ID was not valid.",
   emptyFields: "The input fields must be filled.",
   unsupportedImageExt: "The image file extension was not supported.",
-  unsupportedImageFileSize: "The image file size must be less than 5mb.",
+  unsupportedImageFileSize: "The image file size must be less than 15mb.",
   unprocessable:
     "The content you provided could not be processed due to errors in the data. Please review your input and make sure it meets the required format and criteria.",
   unauth:
