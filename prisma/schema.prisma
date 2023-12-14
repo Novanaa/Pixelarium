@@ -25,7 +25,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   client_keys ClientKey?
-  gallery Gallery[]
+  gallery Gallery?
   album Album[]
   subcription Subcription?
 }
@@ -46,7 +46,7 @@ model ClientKey {
 
 model Gallery {
   id Int @id @default(autoincrement())
-  user_id Int
+  user_id Int @unique
   pictures Picture[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
