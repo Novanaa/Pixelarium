@@ -787,7 +787,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "gallery": {},
+                  "gallery": [],
                   "status": "OK"
                 }
               }
@@ -957,6 +957,274 @@
         }
       }
     },
-    "/v1/albums": {}
+    "/v1/albums/{id}": {
+      "summary": "Get Single Existing Album",
+      "get": {
+        "deprecated": false,
+        "operationId": "singleAlbum",
+        "summary": "Get Single Existing Album",
+        "tags": ["Albums"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "albums": [],
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Existing User Album",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "deleteAlbum",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Albums"],
+        "deprecated": false,
+        "operationId": "updateAlbum",
+        "summary": "Update Existing User Album",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The image file size must be less than 5mb.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "This is a title (Updated)",
+                "picture": "...."
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v1/albums": {
+      "summary": "Add Album",
+      "post": {
+        "summary": "Add Album",
+        "tags": ["Albums"],
+        "deprecated": false,
+        "operationId": "addAlbum",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing user ID",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "This is a title",
+                "description": "This is a description",
+                "picture": "...."
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unprocessable Content",
+                  "messege": "The image file size must be less than 5mb.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

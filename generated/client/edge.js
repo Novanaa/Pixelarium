@@ -194,7 +194,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/asus/Desktop/pixelarium/generated/client",
+      "value": "/home/asus/Desktop/Pixelarium/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -221,7 +221,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
