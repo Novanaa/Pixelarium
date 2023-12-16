@@ -471,6 +471,11 @@
             }
           }
         ],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "responses": {
           "401": {
             "description": "Unauthorized",
@@ -529,6 +534,11 @@
         "operationId": "generateSecretKey",
         "tags": ["Client Keys"],
         "deprecated": false,
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "refreshToken",
@@ -589,6 +599,11 @@
         "deprecated": false,
         "tags": ["Client Keys"],
         "summary": "Remove Existing Secrect Client User Key",
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -760,20 +775,19 @@
         }
       }
     },
-    "/v1/galleries/{id}": {
-      "summary": "Gallery",
+    "/v1/galleries/{name}": {
       "get": {
         "summary": "Get Single Gallery",
         "deprecated": false,
         "operationId": "singleGallery",
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "allowEmptyValue": false,
             "required": true,
             "deprecated": false,
-            "description": "Existing user ID",
+            "description": "Existing username",
             "schema": {
               "deprecated": false,
               "type": "integer"
@@ -818,7 +832,10 @@
             }
           }
         }
-      },
+      }
+    },
+    "/v1/galleries/{id}": {
+      "summary": "Gallery",
       "patch": {
         "summary": "Update Gallery",
         "deprecated": false,
@@ -957,7 +974,7 @@
         }
       }
     },
-    "/v1/albums/{id}": {
+    "/v1/albums/{name}": {
       "summary": "Get Single Existing Album",
       "get": {
         "deprecated": false,
@@ -966,15 +983,15 @@
         "tags": ["Albums"],
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "allowEmptyValue": false,
             "required": true,
             "deprecated": false,
-            "description": "Existing user ID",
+            "description": "Existing username",
             "schema": {
               "deprecated": false,
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
@@ -1015,7 +1032,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/v1/albums/{id}": {
       "delete": {
         "summary": "Delete Existing User Album",
         "deprecated": false,
@@ -1224,6 +1243,17 @@
             }
           }
         }
+      },
+      "/v1/subscription/{id}": {}
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Authentication": {
+        "scheme": "bearer",
+        "bearerFormat": "Bearer",
+        "description": "Authentication for User",
+        "type": "http"
       }
     }
   }
