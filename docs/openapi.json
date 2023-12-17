@@ -397,6 +397,11 @@
         "operationId": "logoutUser",
         "deprecated": false,
         "tags": ["Authentication"],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "refreshToken",
@@ -664,6 +669,11 @@
         "operationId": "getClientSecret",
         "deprecated": false,
         "tags": ["Client Keys"],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "name",
@@ -921,6 +931,7 @@
         "deprecated": false,
         "tags": ["Galleries"],
         "summary": "Delete Existing Gallery",
+        "security": [{ "Authentication": [] }],
         "parameters": [
           {
             "name": "id",
@@ -1040,6 +1051,7 @@
         "deprecated": false,
         "tags": ["Albums"],
         "operationId": "deleteAlbum",
+        "security": [{ "Authentication": [] }],
         "parameters": [
           {
             "name": "id",
@@ -1243,8 +1255,7 @@
             }
           }
         }
-      },
-      "/v1/subscription/{id}": {}
+      }
     }
   },
   "components": {
