@@ -397,6 +397,11 @@
         "operationId": "logoutUser",
         "deprecated": false,
         "tags": ["Authentication"],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "refreshToken",
@@ -471,6 +476,11 @@
             }
           }
         ],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "responses": {
           "401": {
             "description": "Unauthorized",
@@ -529,6 +539,11 @@
         "operationId": "generateSecretKey",
         "tags": ["Client Keys"],
         "deprecated": false,
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "refreshToken",
@@ -589,6 +604,11 @@
         "deprecated": false,
         "tags": ["Client Keys"],
         "summary": "Remove Existing Secrect Client User Key",
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -649,6 +669,11 @@
         "operationId": "getClientSecret",
         "deprecated": false,
         "tags": ["Client Keys"],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "name",
@@ -760,20 +785,19 @@
         }
       }
     },
-    "/v1/galleries/{id}": {
-      "summary": "Gallery",
+    "/v1/galleries/{name}": {
       "get": {
         "summary": "Get Single Gallery",
         "deprecated": false,
         "operationId": "singleGallery",
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "allowEmptyValue": false,
             "required": true,
             "deprecated": false,
-            "description": "Existing user ID",
+            "description": "Existing username",
             "schema": {
               "deprecated": false,
               "type": "integer"
@@ -818,7 +842,10 @@
             }
           }
         }
-      },
+      }
+    },
+    "/v1/galleries/{id}": {
+      "summary": "Gallery",
       "patch": {
         "summary": "Update Gallery",
         "deprecated": false,
@@ -904,6 +931,7 @@
         "deprecated": false,
         "tags": ["Galleries"],
         "summary": "Delete Existing Gallery",
+        "security": [{ "Authentication": [] }],
         "parameters": [
           {
             "name": "id",
@@ -957,7 +985,7 @@
         }
       }
     },
-    "/v1/albums/{id}": {
+    "/v1/albums/{name}": {
       "summary": "Get Single Existing Album",
       "get": {
         "deprecated": false,
@@ -966,15 +994,15 @@
         "tags": ["Albums"],
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "allowEmptyValue": false,
             "required": true,
             "deprecated": false,
-            "description": "Existing user ID",
+            "description": "Existing username",
             "schema": {
               "deprecated": false,
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
@@ -1015,12 +1043,15 @@
             }
           }
         }
-      },
+      }
+    },
+    "/v1/albums/{id}": {
       "delete": {
         "summary": "Delete Existing User Album",
         "deprecated": false,
         "tags": ["Albums"],
         "operationId": "deleteAlbum",
+        "security": [{ "Authentication": [] }],
         "parameters": [
           {
             "name": "id",
@@ -1224,6 +1255,451 @@
             }
           }
         }
+      }
+    },
+    "/v1/subscription/prices": {
+      "summary": "Get All List Prices",
+      "get": {
+        "deprecated": false,
+        "operationId": "subscriptionPrices",
+        "summary": "Get All List Prices",
+        "tags": ["Subscriptions"],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "lists": [],
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/payments/tokenizer": {
+      "summary": "Pixelarium Payments Plans",
+      "post": {
+        "deprecated": false,
+        "summary": "Pixelarium Payments Plans",
+        "operationId": "tokenizer",
+        "tags": ["Subscriptions"],
+        "security": [{ "Authentication": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "transactionDetails": {
+                  "orderId": "Pixelarium OrderID",
+                  "grossAmount": 145000
+                },
+                "item_details": [
+                  {
+                    "id": "UUID",
+                    "price": 145000,
+                    "name": "Diamond Plans",
+                    "quantity": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "token": "66e4fa55-fdac-4ef9-91b5-733b97d1b862",
+                  "redirect_url": "https://app.sandbox.midtrans.com/snap/v2/vtweb/66e4fa55-fdac-4ef9-91b5-733b97d1b862",
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unauthorized",
+                  "messege": "The user must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/payments/callback": {
+      "summary": "Payments Callback Url",
+      "get": {
+        "operationId": "paymentsCallback",
+        "summary": "Payments Callbacks",
+        "deprecated": false,
+        "tags": ["Subscriptions"],
+        "security": [{ "Authentication": [] }],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Transaction Types",
+            "schema": {
+              "deprecated": false,
+              "type": "string",
+              "enum": ["success", "failed"]
+            }
+          },
+          {
+            "name": "order_id",
+            "in": "query",
+            "allowEmptyValue": true,
+            "required": false,
+            "deprecated": false,
+            "description": "Order Id",
+            "schema": {
+              "deprecated": false,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status_code",
+            "in": "query",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Transaction Status Code",
+            "schema": {
+              "deprecated": false,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Redirect/Success",
+            "headers": {
+              "Location": {
+                "description": "The URL to redirect to http://localhost:3000/payments/finished?order_id=.... (Client Side)",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Failed",
+            "headers": {
+              "Location": {
+                "description": "The URL to redirect to http://localhost:3000/payments/failed?order_id=..... (Client Side)",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unauthorized",
+                  "messege": "The user must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/deactive/{name}": {
+      "summary": "Deactive User Subscription",
+      "delete": {
+        "deprecated": false,
+        "summary": "Deactive User Subscription",
+        "operationId": "deactiveSubscription",
+        "tags": ["Subscriptions"],
+        "security": [{ "Authentication": [] }],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing username",
+            "schema": {
+              "deprecated": false,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deactivated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unauthorized",
+                  "messege": "The user must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/active/{name}": {
+      "summary": "Active User Subscription",
+      "post": {
+        "deprecated": false,
+        "summary": "Active User Subscription",
+        "operationId": "activeSubscription",
+        "tags": ["Subscriptions"],
+        "security": [{ "Authentication": [] }],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing username",
+            "schema": {
+              "deprecated": false,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "status": "OK",
+                "subscription": {
+                  "plan": "Diamond",
+                  "intervalCount": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "activated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Unauthorized",
+                  "messege": "The user must be login first!",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/status/{name}": {
+      "summary": "Subscription Status",
+      "get": {
+        "deprecated": false,
+        "summary": "Subscription Status",
+        "operationId": "subscriptionStatus",
+        "tags": ["Subscriptions"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "allowEmptyValue": false,
+            "required": true,
+            "deprecated": false,
+            "description": "Existing username",
+            "schema": {
+              "deprecated": false,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "subscription": {
+                    "plan": "Diamond",
+                    "activated": false
+                  },
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Bad Request",
+                  "messege": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again.",
+                  "status": "KO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "TypeError": "Not Found",
+                  "messege": "Oops! The data you are looking for could not be found.",
+                  "status": "KO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Authentication": {
+        "scheme": "bearer",
+        "bearerFormat": "Bearer",
+        "description": "Authentication for User",
+        "type": "http"
       }
     }
   }
