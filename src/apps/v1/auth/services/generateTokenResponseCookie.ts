@@ -10,5 +10,6 @@ export default function generateTokenResponseCookie(
     maxAge: 24 * 60 * 60 * 1000,
     secure: isSecured,
     httpOnly: true,
+    sameSite: "strict",
   });
 }
