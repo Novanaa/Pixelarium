@@ -397,11 +397,6 @@
         "operationId": "logoutUser",
         "deprecated": false,
         "tags": ["Authentication"],
-        "security": [
-          {
-            "Authentication": []
-          }
-        ],
         "parameters": [
           {
             "name": "refreshToken",
