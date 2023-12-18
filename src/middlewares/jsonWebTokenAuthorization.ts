@@ -23,13 +23,13 @@ export default function jsonWebTokenAuthorization(
       token
     ) as TDecodedUser;
 
-    if (!decoded) return Error.unprocessable(res, "Invalid Signature!");
-
     const expirationTimestamp: number | undefined = decoded.exp;
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
     if (expirationTimestamp! < currentTimestamp)
       return Error.unauth(res, "The Token has been expired");
+
+    if (!decoded) return Error.unprocessable(res, "Invalid Signature!");
 
     req.decoded = decoded;
 
