@@ -1,5 +1,6 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_ACCESS_TOKEN, JWT_REFRESH_TOKEN } from "../const/env";
+import logger from "../libs/configs/logger";
 
 /* The JsonWebToken class provides a method to sign a payload and generate an access token and a
 refresh token. */
@@ -33,5 +34,24 @@ export default class JsonWebToken {
     );
 
     return { accessToken, refreshToken };
+  }
+
+  public verify(token: string): string | JwtPayload | null {
+    try {
+      if (!token) throw new Error("Undefined Function Params: token");
+
+      const decoded: string | JwtPayload = jwt.verify(
+        token,
+        JWT_ACCESS_TOKEN as string,
+        {
+          algorithms: ["HS256"],
+        }
+      );
+
+      return decoded;
+    } catch (err) {
+      logger.error(err);
+      return null;
+    }
   }
 }
