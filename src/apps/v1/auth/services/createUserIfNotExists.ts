@@ -14,8 +14,6 @@ export default async function createUserIfNotExists({
       name,
       email,
       picture,
-      type: "User",
-      site_admin: false,
       bio,
       subcription: {
         create: {
