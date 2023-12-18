@@ -8036,7 +8036,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -8054,7 +8054,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -8107,7 +8107,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9682,7 +9682,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     gallery?: GalleryCreateNestedOneWithoutUserInput
@@ -9699,7 +9699,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
@@ -9793,7 +9793,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -9810,7 +9810,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -9934,7 +9934,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -9951,7 +9951,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -10124,7 +10124,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -10141,7 +10141,7 @@ export namespace Prisma {
     picture: string
     type?: $Enums.UserType
     bio: string
-    site_admin: boolean
+    site_admin?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput

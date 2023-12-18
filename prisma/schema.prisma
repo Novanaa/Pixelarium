@@ -21,7 +21,7 @@ model User {
   picture String
   type UserType @default(User)
   bio String
-  site_admin Boolean
+  site_admin Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   client_keys ClientKey?

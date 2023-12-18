@@ -1,4 +1,5 @@
 export type TDecodedUser = {
+  providerId: number;
   email: string;
   name: string;
   picture: string;

@@ -8,7 +8,7 @@ import checkIfPictureIsInternalPicture from "../../../../utils/checkIfPictureIsI
 import getFilename from "../../../../utils/getFilename";
 import getPictureFilepath from "../../../../utils/getPictureFilepath";
 import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
-import { isUser } from "../../auth/services/isUserExist";
+import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 
 export default async function deleteUser(
   req: Request,
@@ -21,7 +21,10 @@ export default async function deleteUser(
 
     validateRequestIDParams({ id, response: res, except: Error });
 
-    const user: Awaited<User | null> = await isUser(id);
+    const user: Awaited<User | null> = await isUserExistByIdOrProviderId({
+      value: id,
+      field: "id",
+    });
 
     if (!user) return Error.notFound(res);
 
