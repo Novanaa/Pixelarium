@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_ACCESS_TOKEN, JWT_REFRESH_TOKEN } from "../const/env";
 import logger from "../libs/configs/logger";
+import type TJwtUserPayload from "../interfaces/types/JwtUserPayloadTypes";
 
 /* The JsonWebToken class provides a method to sign a payload and generate an access token and a
 refresh token. */
@@ -12,12 +13,7 @@ export default class JsonWebToken {
    * @returns an object with two properties: accessToken and refreshToken. The values of these
    * properties are strings.
    */
-  public sign(payload: {
-    providerId: number;
-    name: string;
-    email: string;
-    picture: string;
-  }): {
+  public sign(payload: TJwtUserPayload): {
     accessToken: string;
     refreshToken: string;
   } {
