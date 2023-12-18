@@ -7,7 +7,7 @@ import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
 import userValidation from "../../../../validations/userValidation";
 import validateRequestBody from "../../../../utils/validateRequestBody";
 import { User } from "../../../../../generated/client";
-import { isUser } from "../../auth/services/isUserExist";
+import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import checkIfUsernameHasBeenTaken from "../../../../utils/checkIfUsernameHasBeenTaken";
 import type TUserValidation from "../interfaces/types/UserValidationTypes";
 import updateUserData from "../services/updateUserData";
@@ -47,7 +47,10 @@ export default async function updateUser(
 
     if (validateResult) return;
 
-    const user: Awaited<User | null> = await isUser(id);
+    const user: Awaited<User | null> = await isUserExistByIdOrProviderId({
+      field: "id",
+      value: id,
+    });
 
     if (!user) return Error.notFound(res);
 
