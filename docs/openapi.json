@@ -101,6 +101,11 @@
         "description": "Provide You to Delete Existing User",
         "tags": ["Users"],
         "deprecated": false,
+        "security": [
+          {
+            "Authentication": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
