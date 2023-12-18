@@ -8,9 +8,9 @@ import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
-import isUserExists from "../services/isUserExist";
 import createUserIfNotExists from "../services/createUserIfNotExists";
 import { User } from "../../../../../generated/client";
+import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -46,8 +46,9 @@ export async function loginWithGoogle(
     const bigNumber: number = Number(data.id);
     const userId: number = bigNumber / Number(10n ** 13n);
 
-    const isUser: Awaited<User | null> = await isUserExists({
-      providerId: userId,
+    const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
+      field: "provider_id",
+      value: userId,
     });
 
     if (!isUser) {

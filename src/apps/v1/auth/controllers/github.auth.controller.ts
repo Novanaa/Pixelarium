@@ -13,9 +13,9 @@ import JsonWebToken from "../../../../services/JsonWebToken";
 import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import defaultUserImage from "../../../../const/readonly/defaultUserProfile";
 import generateTokenResponseCookie from "../services/generateTokenResponseCookie";
-import isUserExists from "../services/isUserExist";
 import createUserIfNotExists from "../services/createUserIfNotExists";
 import { User } from "../../../../../generated/client";
+import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 
 export async function redirectGithubLogin(
   req: Request,
@@ -57,8 +57,9 @@ export async function loginWithGithub(
     if (!user) return Error.badRequest(res, "The Login Session Was Failed.");
 
     const userId: number = Number(user.id);
-    const isUser: Awaited<User | null> = await isUserExists({
-      providerId: userId,
+    const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
+      value: userId,
+      field: "provider_id",
     });
 
     if (!isUser) {
