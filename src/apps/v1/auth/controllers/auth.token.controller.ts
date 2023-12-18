@@ -9,6 +9,7 @@ import type {
 } from "../interfaces/types/DecodedUserTypes";
 import { JWT_REFRESH_TOKEN, JWT_ACCESS_TOKEN } from "../../../../const/env";
 import jwt, { VerifyErrors } from "jsonwebtoken";
+import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 
 export default async function tokenRotation(req: Request, res: Response) {
   const Error = new ErrorsRespones();
@@ -20,11 +21,12 @@ export default async function tokenRotation(req: Request, res: Response) {
 
     const decode: TDecodedUser = jwtDecode(refreshToken);
 
-    const isUser = await client.user.findMany({
-      where: { email: decode.email },
+    const isUser = await isUserExistByIdOrProviderId({
+      field: "provider_id",
+      value: decode.providerId,
     });
 
-    if (!isUser[0]) return Error.unauth(res, "Unauthorized User");
+    if (!isUser) return Error.unauth(res, "Unauthorized User");
 
     jwt.verify(
       refreshToken,
@@ -52,5 +54,7 @@ export default async function tokenRotation(req: Request, res: Response) {
   } catch (err) {
     logger.error(err);
     return Error.badRequest(res);
+  } finally {
+    await client.$disconnect();
   }
 }
