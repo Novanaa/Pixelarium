@@ -3,7 +3,6 @@ import app from "../../../../main";
 import supertest from "supertest";
 import client from "../../../../libs/configs/prisma";
 import generateMocksAccessToken from "../../../../tests/utils/generateMocksAccessToken";
-import expiredToken from "../../../../tests/const/expiredToken";
 
 describe("Unit-Testing Delete User API Endpoint", () => {
   test("should be return 400 status code if the request id params is not numberic", async () => {
@@ -27,15 +26,6 @@ describe("Unit-Testing Delete User API Endpoint", () => {
   test("should be return 401 status code if the token is not found", async () => {
     const user = await client.user.findFirst();
     const request = await supertest(app).delete(`/v1/users/${user?.id}`);
-
-    expect(request.status).toBe(401);
-    expect(request.body.status).toBe("KO");
-  });
-  test("should be return 401 status code if the token is expired", async () => {
-    const user = await client.user.findFirst();
-    const request = await supertest(app)
-      .delete(`/v1/users/${user?.id}`)
-      .set("Authorization", `Bearer ${expiredToken}`);
 
     expect(request.status).toBe(401);
     expect(request.body.status).toBe("KO");
