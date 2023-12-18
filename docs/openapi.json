@@ -471,11 +471,6 @@
             }
           }
         ],
-        "security": [
-          {
-            "Authentication": []
-          }
-        ],
         "responses": {
           "401": {
             "description": "Unauthorized",
