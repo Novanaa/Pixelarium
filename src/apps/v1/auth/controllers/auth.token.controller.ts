@@ -36,9 +36,9 @@ export default async function tokenRotation(req: Request, res: Response) {
         if (err)
           return Error.unprocessable(res, "The refresh token is invalid!");
 
-        const { name, email, picture } = decoded as TDecodedToken;
+        const { providerId, name, email, picture } = decoded as TDecodedToken;
         const accessToken: string = jwt.sign(
-          { email, name, picture },
+          { providerId, email, name, picture },
           JWT_ACCESS_TOKEN as string,
           {
             expiresIn: "1800s",
