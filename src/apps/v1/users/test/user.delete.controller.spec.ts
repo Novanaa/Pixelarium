@@ -2,11 +2,11 @@ import { expect, test, describe } from "bun:test";
 import app from "../../../../main";
 import supertest from "supertest";
 import client from "../../../../libs/configs/prisma";
-import generateMocksAccessToken from "../../../../tests/utils/generateMocksAccessToken";
+import generateMocksJWTToken from "../../../../tests/utils/generateMocksJWTToken";
 
 describe("Unit-Testing Delete User API Endpoint", () => {
   test("should be return 400 status code if the request id params is not numberic", async () => {
-    const token: string = generateMocksAccessToken();
+    const { accessToken: token } = generateMocksJWTToken();
     const request = await supertest(app)
       .delete("/v1/users/test")
       .set("Authorization", `Bearer ${token}`);
