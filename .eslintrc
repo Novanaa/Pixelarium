@@ -9,7 +9,8 @@
   "plugins": ["@typescript-eslint", "prettier"],
   "root": true,
   "rules": {
-    "prettier/prettier": ["off", { "semi": false }]
+    "prettier/prettier": ["off", { "semi": false }],
+    "no-console": "warn"
   },
   "settings": {}
 }
