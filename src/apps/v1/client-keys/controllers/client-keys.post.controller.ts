@@ -16,9 +16,9 @@ export default async function generateSecretKey(
 ): Promise<void | Response> {
   const Error: ErrorsRespones = new ErrorsRespones();
   try {
-    const { refreshToken } = req.cookies;
+    const { session } = req.cookies;
 
-    if (!refreshToken)
+    if (!session)
       return Error.unprocessable(res, "The user must be login first!");
 
     const hasher: CryptoHasher = newHasher("sha256");
@@ -27,7 +27,7 @@ export default async function generateSecretKey(
 
     const clientSecretPattern: string = createSecretClientPattern({
       name: decoded.name,
-      token: refreshToken,
+      token: session,
     });
 
     const clientSecret: string = hasher
