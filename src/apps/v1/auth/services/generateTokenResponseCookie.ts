@@ -6,7 +6,7 @@ export default function generateTokenResponseCookie(
   refreshToken: string
 ) {
   const isSecured = NODE_ENV == "production" ? true : false;
-  res.cookie("refreshToken", refreshToken, {
+  res.cookie("session", refreshToken, {
     maxAge: 24 * 60 * 60 * 1000,
     secure: isSecured,
     httpOnly: true,
