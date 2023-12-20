@@ -9,7 +9,7 @@ describe("Unit-Testing Refresh Token Rotation API Endpoint", () => {
     const { refreshToken } = generateMocksJWTToken();
     const request: Awaited<Request> = await supertest(app)
       .get("/v1/auth/token")
-      .set("Cookie", `refreshToken=${refreshToken}`);
+      .set("Cookie", `session=${refreshToken}`);
 
     console.log(request.body);
     expect(request.status).toBe(200);
@@ -19,7 +19,7 @@ describe("Unit-Testing Refresh Token Rotation API Endpoint", () => {
     const { refreshToken } = generateMocksJWTToken();
     const request: Awaited<Request> = await supertest(app)
       .get("/v1/auth/token")
-      .set("Cookie", `refreshToken=${refreshToken}`)
+      .set("Cookie", `session=${refreshToken}`)
       .set("Content-Type", "application/json");
 
     expect(request.status).toBe(200);
@@ -48,7 +48,7 @@ describe("Unit-Testing Refresh Token Rotation API Endpoint", () => {
 
     const request: Awaited<Request> = await supertest(app)
       .get("/v1/auth/token")
-      .set("Cookie", `refreshToken=${refreshToken}`)
+      .set("Cookie", `session=${refreshToken}`)
       .set("Content-Type", "application/json");
 
     expect(request.status).toBe(401);
