@@ -8,12 +8,11 @@ export default async function logout(
 ): Promise<void | Response> {
   const Error = new ErrorsRespones();
   try {
-    const { refreshToken } = req.cookies;
+    const { session } = req.cookies;
 
-    if (!refreshToken)
-      return Error.unauth(res, "The Logout Session was Failed.");
+    if (!session) return Error.unauth(res, "The Logout Session was Failed.");
 
-    if (refreshToken) res.clearCookie("refreshToken");
+    if (session) res.clearCookie("session");
 
     return new SuccessRespones().success(res, "logout");
   } catch (err) {

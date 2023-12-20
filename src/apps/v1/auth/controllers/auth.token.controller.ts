@@ -14,12 +14,11 @@ import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 export default async function tokenRotation(req: Request, res: Response) {
   const Error = new ErrorsRespones();
   try {
-    const { refreshToken } = req.cookies;
+    const { session } = req.cookies;
 
-    if (!refreshToken)
-      return Error.unauth(res, "The user must be login first!");
+    if (!session) return Error.unauth(res, "The user must be login first!");
 
-    const decode: TDecodedUser = jwtDecode(refreshToken);
+    const decode: TDecodedUser = jwtDecode(session);
 
     const isUser = await isUserExistByIdOrProviderId({
       field: "provider_id",
@@ -29,7 +28,7 @@ export default async function tokenRotation(req: Request, res: Response) {
     if (!isUser) return Error.unauth(res, "Unauthorized User");
 
     jwt.verify(
-      refreshToken,
+      session,
       JWT_REFRESH_TOKEN as string,
       // @ts-expect-error Types doesn't match
       (err: VerifyErrors | null, decoded: TDecodedToken | undefined) => {

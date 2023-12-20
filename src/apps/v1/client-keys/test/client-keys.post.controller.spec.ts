@@ -11,7 +11,7 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
     const request: Awaited<Request> = await supertest(app)
       .post("/v1/client-keys/generate")
       .set("Authorization", `Bearer ${accessToken}`)
-      .set("Cookie", `refreshToken=${refreshToken}`);
+      .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(201);
     expect(request.body.status).toBe("OK");
@@ -22,7 +22,7 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
     const request: Awaited<Request> = await supertest(app)
       .post("/v1/client-keys/generate")
       .set("Authorization", `Bearer ${accessToken}`)
-      .set("Cookie", `refreshToken=${refreshToken}`)
+      .set("Cookie", `session=${refreshToken}`)
       .set("Content-Type", "application/json");
 
     expect(request.status).toBe(201);
@@ -45,7 +45,7 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
     const request: Awaited<Request> = await supertest(app)
       .post("/v1/client-keys/generate")
       .set("Content-Type", "application/json")
-      .set("Cookie", `refreshToken=${refreshToken}`);
+      .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(401);
     expect(request.body.status).toBe("KO");
@@ -57,7 +57,7 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
       .post("/v1/client-keys/generate")
       .set("Content-Type", "application/json")
       .set("Authorization", `Bearer ${accessToken.toUpperCase()}`)
-      .set("Cookie", `refreshToken=${refreshToken}`);
+      .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(422);
     expect(request.body.status).toBe("KO");
@@ -75,7 +75,7 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
       .post("/v1/client-keys/generate")
       .set("Content-Type", "application/json")
       .set("Authorization", `Bearer ${accessToken}`)
-      .set("Cookie", `refreshToken=${refreshToken}`);
+      .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(400);
     expect(request.body.status).toBe("KO");

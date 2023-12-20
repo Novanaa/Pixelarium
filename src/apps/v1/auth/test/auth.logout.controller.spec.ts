@@ -8,7 +8,7 @@ describe("Unit-Testing Logout User API Endpoint", () => {
     const { refreshToken } = generateMocksJWTToken();
     const request: Awaited<Request> = await supertest(app)
       .post("/v1/auth/logout")
-      .set("Cookie", `refreshToken=${refreshToken}`);
+      .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(200);
     expect(request.body.status).toBe("OK");
@@ -17,7 +17,7 @@ describe("Unit-Testing Logout User API Endpoint", () => {
     const { refreshToken } = generateMocksJWTToken();
     const request: Awaited<Request> = await supertest(app)
       .post("/v1/auth/logout")
-      .set("Cookie", `refreshToken=${refreshToken}`)
+      .set("Cookie", `session=${refreshToken}`)
       .set("Content-Type", "application/json");
 
     expect(request.status).toBe(200);
