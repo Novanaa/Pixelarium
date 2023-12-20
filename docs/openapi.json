@@ -404,7 +404,7 @@
         "tags": ["Authentication"],
         "parameters": [
           {
-            "name": "refreshToken",
+            "name": "session",
             "in": "cookie",
             "allowEmptyValue": false,
             "deprecated": false,
@@ -464,7 +464,7 @@
         "tags": ["Authentication"],
         "parameters": [
           {
-            "name": "refreshToken",
+            "name": "session",
             "in": "cookie",
             "allowEmptyValue": false,
             "deprecated": false,
@@ -541,7 +541,7 @@
         ],
         "parameters": [
           {
-            "name": "refreshToken",
+            "name": "session",
             "in": "cookie",
             "allowEmptyValue": false,
             "deprecated": false,
@@ -643,7 +643,7 @@
         },
         "parameters": [
           {
-            "name": "refreshToken",
+            "name": "session",
             "in": "cookie",
             "allowEmptyValue": false,
             "deprecated": false,
