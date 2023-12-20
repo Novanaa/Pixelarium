@@ -39,8 +39,8 @@ enum UserType {
 model ClientKey {
   id Int @id @default(autoincrement())
   user_id Int @unique
-  client_id String
-  client_secret String
+  client_id String?
+  client_secret String?
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 

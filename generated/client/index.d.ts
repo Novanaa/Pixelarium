@@ -2685,8 +2685,8 @@ export namespace Prisma {
   export type ClientKeyGroupByOutputType = {
     id: number
     user_id: number
-    client_id: string
-    client_secret: string
+    client_id: string | null
+    client_secret: string | null
     _count: ClientKeyCountAggregateOutputType | null
     _avg: ClientKeyAvgAggregateOutputType | null
     _sum: ClientKeySumAggregateOutputType | null
@@ -2736,8 +2736,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_id: number
-      client_id: string
-      client_secret: string
+      client_id: string | null
+      client_secret: string | null
     }, ExtArgs["result"]["clientKey"]>
     composites: {}
   }
@@ -7725,16 +7725,16 @@ export namespace Prisma {
     NOT?: ClientKeyWhereInput | ClientKeyWhereInput[]
     id?: IntFilter<"ClientKey"> | number
     user_id?: IntFilter<"ClientKey"> | number
-    client_id?: StringFilter<"ClientKey"> | string
-    client_secret?: StringFilter<"ClientKey"> | string
+    client_id?: StringNullableFilter<"ClientKey"> | string | null
+    client_secret?: StringNullableFilter<"ClientKey"> | string | null
     user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
   export type ClientKeyOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    client_id?: SortOrder
-    client_secret?: SortOrder
+    client_id?: SortOrderInput | SortOrder
+    client_secret?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -7744,16 +7744,16 @@ export namespace Prisma {
     AND?: ClientKeyWhereInput | ClientKeyWhereInput[]
     OR?: ClientKeyWhereInput[]
     NOT?: ClientKeyWhereInput | ClientKeyWhereInput[]
-    client_id?: StringFilter<"ClientKey"> | string
-    client_secret?: StringFilter<"ClientKey"> | string
+    client_id?: StringNullableFilter<"ClientKey"> | string | null
+    client_secret?: StringNullableFilter<"ClientKey"> | string | null
     user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id" | "user_id">
 
   export type ClientKeyOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    client_id?: SortOrder
-    client_secret?: SortOrder
+    client_id?: SortOrderInput | SortOrder
+    client_secret?: SortOrderInput | SortOrder
     _count?: ClientKeyCountOrderByAggregateInput
     _avg?: ClientKeyAvgOrderByAggregateInput
     _max?: ClientKeyMaxOrderByAggregateInput
@@ -7767,8 +7767,8 @@ export namespace Prisma {
     NOT?: ClientKeyScalarWhereWithAggregatesInput | ClientKeyScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ClientKey"> | number
     user_id?: IntWithAggregatesFilter<"ClientKey"> | number
-    client_id?: StringWithAggregatesFilter<"ClientKey"> | string
-    client_secret?: StringWithAggregatesFilter<"ClientKey"> | string
+    client_id?: StringNullableWithAggregatesFilter<"ClientKey"> | string | null
+    client_secret?: StringNullableWithAggregatesFilter<"ClientKey"> | string | null
   }
 
   export type GalleryWhereInput = {
@@ -8140,48 +8140,48 @@ export namespace Prisma {
   }
 
   export type ClientKeyCreateInput = {
-    client_id: string
-    client_secret: string
+    client_id?: string | null
+    client_secret?: string | null
     user: UserCreateNestedOneWithoutClient_keysInput
   }
 
   export type ClientKeyUncheckedCreateInput = {
     id?: number
     user_id: number
-    client_id: string
-    client_secret: string
+    client_id?: string | null
+    client_secret?: string | null
   }
 
   export type ClientKeyUpdateInput = {
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
+    client_id?: NullableStringFieldUpdateOperationsInput | string | null
+    client_secret?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutClient_keysNestedInput
   }
 
   export type ClientKeyUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
+    client_id?: NullableStringFieldUpdateOperationsInput | string | null
+    client_secret?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ClientKeyCreateManyInput = {
     id?: number
     user_id: number
-    client_id: string
-    client_secret: string
+    client_id?: string | null
+    client_secret?: string | null
   }
 
   export type ClientKeyUpdateManyMutationInput = {
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
+    client_id?: NullableStringFieldUpdateOperationsInput | string | null
+    client_secret?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ClientKeyUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
+    client_id?: NullableStringFieldUpdateOperationsInput | string | null
+    client_secret?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GalleryCreateInput = {
@@ -9494,14 +9494,14 @@ export namespace Prisma {
   }
 
   export type ClientKeyCreateWithoutUserInput = {
-    client_id: string
-    client_secret: string
+    client_id?: string | null
+    client_secret?: string | null
   }
 
   export type ClientKeyUncheckedCreateWithoutUserInput = {
     id?: number
-    client_id: string
-    client_secret: string
+    client_id?: string | null
+    client_secret?: string | null
   }
 
   export type ClientKeyCreateOrConnectWithoutUserInput = {
@@ -9586,14 +9586,14 @@ export namespace Prisma {
   }
 
   export type ClientKeyUpdateWithoutUserInput = {
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
+    client_id?: NullableStringFieldUpdateOperationsInput | string | null
+    client_secret?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ClientKeyUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    client_id?: StringFieldUpdateOperationsInput | string
-    client_secret?: StringFieldUpdateOperationsInput | string
+    client_id?: NullableStringFieldUpdateOperationsInput | string | null
+    client_secret?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GalleryUpsertWithoutUserInput = {

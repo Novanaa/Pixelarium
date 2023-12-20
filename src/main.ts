@@ -27,9 +27,11 @@ import requestErrorValidation from "./middlewares/requestErrorValidation";
 import rateLimitter from "./middlewares/rateLimitter";
 import authRoutes from "./apps/v1/auth/routes/auth.routes";
 import userRoutes from "./apps/v1/users/routes/user.routes";
+import clientKeysRoutes from "./apps/v1/client-keys/routes/clientKeys.routes";
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(docs, swaggerOptions));
 app.use("/v1/auth", authRoutes);
 app.use("/v1/users", userRoutes);
+app.use("/v1/client-keys", clientKeysRoutes);
 
 export default app;
