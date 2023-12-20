@@ -23,7 +23,8 @@ export default async function insertUserClientSecret({
    * The `connect` keyword is used to establish a relationship between the user and the client key.
    * The `client_secret` is set to the secret passed to the function.
    */
-  await client.clientKey.create({
+  await client.clientKey.update({
+    where: { user_id: userId },
     data: {
       user: { connect: { id: userId } },
       client_secret: secret,
