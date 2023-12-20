@@ -11,6 +11,5 @@
   "rules": {
     "prettier/prettier": ["off", { "semi": false }],
     "no-console": "warn"
-  },
-  "settings": {}
+  }
 }
