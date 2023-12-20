@@ -5,6 +5,6 @@ import getClientSecret from "../controllers/client-keys.get.controller";
 const router = express.Router();
 
 router.post("/generate", jsonWebTokenAuthorization, generateSecretKey);
-router.post("/:name", jsonWebTokenAuthorization, getClientSecret);
+router.get("/:name", jsonWebTokenAuthorization, getClientSecret);
 
 export default router;
