@@ -689,7 +689,8 @@
             "content": {
               "application/json": {
                 "example": {
-                  "secret_key": "0d375c317aa0ea970ded0b1e6bc5d889f657d81...",
+                  "client_id": "pxlmid-dcecad2f74326893cbadc...",
+                  "client_secret": "0d375c317aa0ea970ded0b1e6bc5d889f657d81...",
                   "status": "OK"
                 }
               }
