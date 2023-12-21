@@ -6,7 +6,7 @@ import singleUser from "../controllers/user.get.controller";
 import jsonWebTokenAuthorization from "../../../../middlewares/jsonWebTokenAuthorization";
 import apiGrantAccess from "../../../../middlewares/apiGrantAccess";
 
-router.get("/:name", apiGrantAccess, singleUser);
+router.get("/:name", singleUser);
 router.patch("/:id", apiGrantAccess, updateUser);
 router.delete("/:id", [jsonWebTokenAuthorization, apiGrantAccess], deleteUser);
 
