@@ -39,8 +39,8 @@ export default async function apiGrantAccess(
       if (!userSubs)
         return Error.notFound(res, "The user subscription cannot be found");
 
-      const premiumUserPlans: string | undefined = userPlans.shift();
-      const includedPremiumUserPlans: boolean = premiumUserPlans!.includes(
+      const premiumUserPlans: string | undefined = userPlans.shift() || "none";
+      const includedPremiumUserPlans: boolean = premiumUserPlans.includes(
         userSubs.plan
       );
 

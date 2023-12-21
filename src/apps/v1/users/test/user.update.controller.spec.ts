@@ -3,6 +3,9 @@ import app from "../../../../main";
 import supertest from "supertest";
 import client from "../../../../libs/configs/prisma";
 import { User } from "../../../../../generated/client";
+import payload from "../../../../tests/const/payload";
+import JsonWebToken from "../../../../services/JsonWebToken";
+import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
 
 describe("Unit-Testing User Update API Endpoint", () => {
   test("should be return 400 status code if the request id is not a number", async () => {
@@ -40,9 +43,11 @@ describe("Unit-Testing User Update API Endpoint", () => {
   });
   test("should be return 200 status code", async () => {
     const user: Awaited<User | null> = await client.user.findFirst();
-    const request = await supertest(app).patch(`/v1/users/${user?.id}`).field({
-      bio: "wleee",
-    });
+    const request = await supertest(app)
+      .patch(`/v1/users/${user?.id}`)
+      .field({
+        bio: "wleee",
+      });
 
     expect(request.status).toBe(200);
     expect(request.body.status).toBe("OK");
@@ -110,5 +115,48 @@ describe("Unit-Testing User Update API Endpoint", () => {
 
     expect(request.status).toBe(200);
     expect(request.body.status).toBe("OK");
+  });
+});
+
+describe("Unit-Testing Private Access User Update API Endpoint", () => {
+  test("should be return 401 status code if the user doesn't have a session token", async () => {
+    const user: Awaited<User | null> = await client.user.findFirst();
+    const request = await supertest(app)
+      .patch(`/v1/plxm/users/${user?.id}`)
+      .field("bio", "test");
+
+    expect(request.status).toBe(401);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the subs plan is none", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
+
+    const user: Awaited<User | null> = await client.user.findUnique({
+      where: { provider_id: 898 },
+    });
+    const { refreshToken } = jwt.sign(userPayload);
+    const request = await supertest(app)
+      .patch(`/v1/plxm/users/${user?.id}`)
+      .field("bio", "test")
+      .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the subs plan is deactive", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+
+    const user: Awaited<User | null> = await client.user.findUnique({
+      where: { provider_id: 123 },
+    });
+    const { refreshToken } = jwt.sign(userPayload);
+    const request = await supertest(app)
+      .patch(`/v1/plxm/users/${user?.id}`)
+      .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
   });
 });

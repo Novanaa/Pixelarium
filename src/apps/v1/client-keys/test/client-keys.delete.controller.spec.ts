@@ -4,6 +4,7 @@ import supertest, { Request } from "supertest";
 import generateMocksJWTToken from "../../../../tests/utils/generateMocksJWTToken";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
+import payload from "../../../../tests/const/payload";
 
 describe("Unit-Testing Delete/Remove User Client Secret API Endpoint", () => {
   test("should be return 401 status code if the user doesn't have access token session", async () => {
@@ -74,5 +75,43 @@ describe("Unit-Testing Delete/Remove User Client Secret API Endpoint", () => {
     console.log(request.body);
     expect(request.status).toBe(200);
     expect(request.body.status).toBe("OK");
+  });
+});
+
+describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpoint", () => {
+  test("should be return 401 status code if the user doesn't have a session token", async () => {
+    const { accessToken: token } = generateMocksJWTToken();
+    const request = await supertest(app)
+      .delete(`/v1/plxm/client-keys`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(request.status).toBe(401);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the subs plan is none", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
+    const { accessToken: token, refreshToken } = jwt.sign(userPayload);
+
+    const request = await supertest(app)
+      .delete(`/v1/plxm/client-keys`)
+      .set("Authorization", `Bearer ${token}`)
+      .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the subs plan is deactive", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+    const { accessToken: token, refreshToken } = jwt.sign(userPayload);
+
+    const request = await supertest(app)
+      .delete(`/v1/plxm/client-keys`)
+      .set("Authorization", `Bearer ${token}`)
+      .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
   });
 });
