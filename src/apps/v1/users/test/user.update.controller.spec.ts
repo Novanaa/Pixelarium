@@ -132,7 +132,9 @@ describe("Unit-Testing Private Access User Update API Endpoint", () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
 
-    const user: Awaited<User | null> = await client.user.findFirst();
+    const user: Awaited<User | null> = await client.user.findUnique({
+      where: { provider_id: 898 },
+    });
     const { refreshToken } = jwt.sign(userPayload);
     const request = await supertest(app)
       .patch(`/v1/plxm/users/${user?.id}`)
@@ -146,7 +148,9 @@ describe("Unit-Testing Private Access User Update API Endpoint", () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
 
-    const user: Awaited<User | null> = await client.user.findFirst();
+    const user: Awaited<User | null> = await client.user.findUnique({
+      where: { provider_id: 123 },
+    });
     const { refreshToken } = jwt.sign(userPayload);
     const request = await supertest(app)
       .patch(`/v1/plxm/users/${user?.id}`)
