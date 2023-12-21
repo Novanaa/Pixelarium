@@ -7,6 +7,7 @@ import client from "../libs/configs/prisma";
 import { TDecodedUser } from "../apps/v1/auth/interfaces/types/DecodedUserTypes";
 import userPlans from "../const/readonly/userPlans";
 import { jwtDecode } from "jwt-decode";
+import validateSessionToken from "../utils/validateSessionToken";
 
 export default async function apiGrantAccess(
   req: Request,
@@ -17,8 +18,13 @@ export default async function apiGrantAccess(
   try {
     const { session } = req.cookies;
 
-    if (!session)
-      return Error.unauth(res, "This operation required a session token!");
+    const validateSessionResult: void | Response = validateSessionToken({
+      session,
+      except: Error,
+      response: res,
+    });
+
+    if (!validateSessionResult) return;
 
     const decoded: TDecodedUser = jwtDecode(session) as TDecodedUser;
 
