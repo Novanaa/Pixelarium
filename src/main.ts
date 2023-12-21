@@ -37,6 +37,6 @@ app.use("/v1/client-keys", clientKeysRoutes);
 // Private Access API Endpoint
 import privateClientKeysRoutes from "./apps/v1/client-keys/routes/private.clientKeys.routes";
 
-app.use("/v1/plxm/client-keys", privateClientKeysRoutes);
+app.use("/v1/plxm/client-keys", cors(), privateClientKeysRoutes);
 
 export default app;
