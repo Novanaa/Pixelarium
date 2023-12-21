@@ -3,6 +3,8 @@ import generateMocksJWTToken from "../../../../tests/utils/generateMocksJWTToken
 import { describe, test, expect } from "bun:test";
 import supertest, { Request } from "supertest";
 import JsonWebToken from "../../../../services/JsonWebToken";
+import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
+import payload from "../../../../tests/const/payload";
 
 describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
   test("should be return 201 status code", async () => {
@@ -78,6 +80,44 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
       .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+});
+
+describe("Unit-Testing Private Access Generate User Client Secret API Endpoint", () => {
+  test("should be return 401 status code if the user doesn't have a session token", async () => {
+    const { accessToken: token } = generateMocksJWTToken();
+    const request = await supertest(app)
+      .post(`/v1/plxm/client-keys/generate`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(request.status).toBe(401);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the subs plan is none", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
+    const { accessToken: token, refreshToken } = jwt.sign(userPayload);
+
+    const request = await supertest(app)
+      .post(`/v1/plxm/client-keys/generate`)
+      .set("Authorization", `Bearer ${token}`)
+      .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the subs plan is deactive", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+    const { accessToken: token, refreshToken } = jwt.sign(userPayload);
+
+    const request = await supertest(app)
+      .post(`/v1/plxm/client-keys/generate`)
+      .set("Authorization", `Bearer ${token}`)
+      .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
     expect(request.body.status).toBe("KO");
   });
 });
