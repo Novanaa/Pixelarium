@@ -67,7 +67,11 @@ describe("Unit-Testing Private Access - Delete User API Endpoint", () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
 
-    const user: Awaited<User | null> = await client.user.findFirst();
+    console.log(userPayload);
+    const user: Awaited<User | null> = await client.user.findUnique({
+      where: { provider_id: 898 },
+    });
+    console.log(user);
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
     const request = await supertest(app)
       .delete(`/v1/plxm/users/${user?.id}`)
@@ -81,7 +85,9 @@ describe("Unit-Testing Private Access - Delete User API Endpoint", () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
 
-    const user: Awaited<User | null> = await client.user.findFirst();
+    const user: Awaited<User | null> = await client.user.findUnique({
+      where: { provider_id: 123 },
+    });
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
     const request = await supertest(app)
       .delete(`/v1/plxm/users/${user?.id}`)
