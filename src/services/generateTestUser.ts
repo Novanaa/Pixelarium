@@ -1,7 +1,6 @@
 import client from "../libs/configs/prisma";
 import logger from "../libs/configs/logger";
 import { User } from "../../generated/client";
-import { isUserExistByIdOrProviderId } from "../utils/isUser";
 
 /**
  * A function to generate a test user in the database.
@@ -31,23 +30,21 @@ export default async function generateTestUser(): Promise<void> {
           picture: "https://example.com/john-doe.jpg",
           type: "User",
           bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          client_keys: {
+            create: {
+              client_id: "pxlmid-dcecad2f74326893cbadcc572eb8efdb",
+              client_secret:
+                "a93efc24cf7b6783b87a7487afe2de9035125f66257da682f8b10dc6544a63c2",
+            },
+          },
+          subcription: {
+            create: {
+              plan: "Netherite",
+              status: "active",
+            },
+          },
         },
       });
-
-      const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
-        field: "provider_id",
-        value: userProviderId,
-      });
-
-      if (isUser) {
-        await client.subcription.create({
-          data: {
-            user: { connect: { id: isUser.id } },
-            plan: "Netherite",
-            status: "active",
-          },
-        });
-      }
     }
   } catch (err) {
     logger.error(err);
