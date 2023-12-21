@@ -1,6 +1,7 @@
 import client from "../libs/configs/prisma";
 import logger from "../libs/configs/logger";
 import { User } from "../../generated/client";
+import createTestUser from "../tests/utils/createTestUser";
 
 /**
  * A function to generate a test user in the database.
@@ -21,29 +22,22 @@ export default async function generateTestUser(): Promise<void> {
 
     // If a user with the given provider ID does not exist, create a new user
     if (!user) {
-      await client.user.create({
-        data: {
-          provider_id: userProviderId,
-          name: "John Doe",
-          email: "john.doe@example.com",
-          password: null,
-          picture: "https://example.com/john-doe.jpg",
-          type: "User",
-          bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          client_keys: {
-            create: {
-              client_id: "pxlmid-dcecad2f74326893cbadcc572eb8efdb",
-              client_secret:
-                "a93efc24cf7b6783b87a7487afe2de9035125f66257da682f8b10dc6544a63c2",
-            },
-          },
-          subcription: {
-            create: {
-              plan: "Netherite",
-              status: "active",
-            },
-          },
-        },
+      await createTestUser({
+        providerId: 321,
+        plan: "Netherite",
+        status: "active",
+      });
+
+      await createTestUser({
+        providerId: 123,
+        plan: "Netherite",
+        status: "deactive",
+      });
+
+      await createTestUser({
+        providerId: 898,
+        plan: "none",
+        status: "deactive",
       });
     }
   } catch (err) {
