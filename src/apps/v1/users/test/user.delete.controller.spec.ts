@@ -3,10 +3,11 @@ import app from "../../../../main";
 import supertest from "supertest";
 import client from "../../../../libs/configs/prisma";
 import generateMocksJWTToken from "../../../../tests/utils/generateMocksJWTToken";
-import { User } from "../../../../../generated/client";
+import { ClientKey, User } from "../../../../../generated/client";
 import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import payload from "../../../../tests/const/payload";
+import getTestUser from "../../../../tests/utils/getTestUser";
 
 describe("Unit-Testing Delete User API Endpoint", () => {
   test("should be return 400 status code if the request id params is not numberic", async () => {
@@ -54,10 +55,16 @@ describe("Unit-Testing Delete User API Endpoint", () => {
 
 describe("Unit-Testing Private Access - Delete User API Endpoint", () => {
   test("should be return 401 status code if the user doesn't have a session token", async () => {
-    const user: Awaited<User | null> = await client.user.findFirst();
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user?.id },
+      });
     const { accessToken: token } = generateMocksJWTToken();
     const request = await supertest(app)
-      .delete(`/v1/plxm/users/${user?.id}`)
+      .delete(
+        `/v1/plxm/users/${user?.id}?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`);
 
     expect(request.status).toBe(401);
@@ -68,13 +75,18 @@ describe("Unit-Testing Private Access - Delete User API Endpoint", () => {
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
 
     console.log(userPayload);
-    const user: Awaited<User | null> = await client.user.findUnique({
-      where: { provider_id: 898 },
-    });
-    console.log(user);
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user?.id },
+      });
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
     const request = await supertest(app)
-      .delete(`/v1/plxm/users/${user?.id}`)
+      .delete(
+        `/v1/plxm/users/${user?.id}?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`)
       .set("Cookie", `session=${refreshToken}`);
 
@@ -85,12 +97,18 @@ describe("Unit-Testing Private Access - Delete User API Endpoint", () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
 
-    const user: Awaited<User | null> = await client.user.findUnique({
-      where: { provider_id: 123 },
-    });
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user?.id },
+      });
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
     const request = await supertest(app)
-      .delete(`/v1/plxm/users/${user?.id}`)
+      .delete(
+        `/v1/plxm/users/${user?.id}?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`)
       .set("Cookie", `session=${refreshToken}`);
 
