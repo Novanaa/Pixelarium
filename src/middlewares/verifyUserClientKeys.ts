@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import logger from "../libs/configs/logger";
 import client from "../libs/configs/prisma";
 import { ErrorsRespones } from "../utils/Response";
-import validateSessionToken from "../utils/validateSessionToken";
 import { jwtDecode } from "jwt-decode";
 import { TDecodedUser } from "../apps/v1/auth/interfaces/types/DecodedUserTypes";
 import { isUserExistByIdOrProviderId } from "../utils/isUser";
@@ -36,13 +35,8 @@ export default async function verifyUserClientKeys(
     if (typeof client_id !== "string" || !client_id.includes("pxlmid"))
       return Error.unprocessable(res, "The Client ID isn't valid!");
 
-    const validateSessionResult: void | Response = validateSessionToken({
-      session,
-      except: Error,
-      response: res,
-    });
-
-    if (!validateSessionResult) return;
+    if (!session)
+      return Error.unauth(res, "This operation required a session token!");
 
     const decoded: TDecodedUser = jwtDecode(session) as TDecodedUser;
 
@@ -53,25 +47,24 @@ export default async function verifyUserClientKeys(
 
     if (!user) return Error.notFound(res, "The user request cannot be found!");
 
-    if (user) {
-      const userClientKeys: Awaited<ClientKey | null> =
-        await client.clientKey.findUnique({
-          where: { user_id: user.id },
-        });
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user.id },
+      });
 
-      if (!userClientKeys)
-        return Error.notFound(res, "You doesn't have a client keys!");
+    if (!userClientKeys)
+      return Error.notFound(res, "You doesn't have a client keys!");
 
-      if (client_id !== userClientKeys.client_id)
-        return Error.badRequest(res, "Client ID has invalid signature!");
+    if (client_id !== userClientKeys.client_id)
+      return Error.badRequest(res, "Client ID has invalid signature!");
 
-      if (client_secret !== userClientKeys.client_secret)
-        return Error.badRequest(res, "Client Secret has invalid signature!");
-    }
+    if (client_secret !== userClientKeys.client_secret)
+      return Error.badRequest(res, "Client Secret has invalid signature!");
 
     return next();
   } catch (err) {
     logger.error(err);
+    next();
     return Error.badRequest(res);
   } finally {
     await client.$disconnect();
