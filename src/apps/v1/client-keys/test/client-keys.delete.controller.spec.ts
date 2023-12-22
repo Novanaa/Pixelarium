@@ -5,6 +5,9 @@ import generateMocksJWTToken from "../../../../tests/utils/generateMocksJWTToken
 import JsonWebToken from "../../../../services/JsonWebToken";
 import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
 import payload from "../../../../tests/const/payload";
+import { ClientKey, User } from "../../../../../generated/client";
+import client from "../../../../libs/configs/prisma";
+import getTestUser from "../../../../tests/utils/getTestUser";
 
 describe("Unit-Testing Delete/Remove User Client Secret API Endpoint", () => {
   test("should be return 401 status code if the user doesn't have access token session", async () => {
@@ -80,9 +83,17 @@ describe("Unit-Testing Delete/Remove User Client Secret API Endpoint", () => {
 
 describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpoint", () => {
   test("should be return 401 status code if the user doesn't have a session token", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user?.id },
+      });
+
     const { accessToken: token } = generateMocksJWTToken();
     const request = await supertest(app)
-      .delete(`/v1/plxm/client-keys`)
+      .delete(
+        `/v1/plxm/client-keys?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`);
 
     expect(request.status).toBe(401);
@@ -93,8 +104,18 @@ describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpo
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
 
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user?.id },
+      });
+
     const request = await supertest(app)
-      .delete(`/v1/plxm/client-keys`)
+      .delete(
+        `/v1/plxm/client-keys?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`)
       .set("Cookie", `session=${refreshToken}`);
 
@@ -106,8 +127,18 @@ describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpo
     const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
 
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const userClientKeys: Awaited<ClientKey | null> =
+      await client.clientKey.findUnique({
+        where: { user_id: user?.id },
+      });
+
     const request = await supertest(app)
-      .delete(`/v1/plxm/client-keys`)
+      .delete(
+        `/v1/plxm/client-keys?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`)
       .set("Cookie", `session=${refreshToken}`);
 
