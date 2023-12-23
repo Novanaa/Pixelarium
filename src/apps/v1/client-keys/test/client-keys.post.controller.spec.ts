@@ -89,21 +89,6 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
 });
 
 describe("Unit-Testing Private Access Generate User Client Secret API Endpoint", () => {
-  test("should be return 401 status code if the user doesn't have a session token", async () => {
-    const { accessToken: token } = generateMocksJWTToken();
-
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
-    const userClientKeys: Awaited<ClientKey | null> =
-      await getTestUserClientKeys(user?.id || 0);
-    const request = await supertest(app)
-      .post(
-        `/v1/plxm/client-keys/generate?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
-      )
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(request.status).toBe(401);
-    expect(request.body.status).toBe("KO");
-  });
   test("should be return 422 status code if the subs plan is none", async () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };

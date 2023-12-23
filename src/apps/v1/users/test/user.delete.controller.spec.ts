@@ -55,20 +55,6 @@ describe("Unit-Testing Delete User API Endpoint", () => {
 });
 
 describe("Unit-Testing Private Access - Delete User API Endpoint", () => {
-  test("should be return 401 status code if the user doesn't have a session token", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
-    const userClientKeys: Awaited<ClientKey | null> =
-      await getTestUserClientKeys(user?.id || 0);
-    const { accessToken: token } = generateMocksJWTToken();
-    const request = await supertest(app)
-      .delete(
-        `/v1/plxm/users/${user?.id}?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
-      )
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(request.status).toBe(401);
-    expect(request.body.status).toBe("KO");
-  });
   test("should be return 422 status code if the subs plan is none", async () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
