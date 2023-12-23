@@ -1,27 +1,19 @@
 import { ClientKey } from "../../../generated/client";
 import client from "../../libs/configs/prisma";
 
-type TGetTestUserClientKeysRetunedType = {
-  clien_id: string | null;
-  client_secret: string | null;
-};
-
 /**
- * getTestUserClientKeys is an async function that retrieves the client keys (client_id and client_secret) for a user with a specific userId.
+ * Retrieve the ClientKey object associated with a specific user ID.
  *
- * @param userId - The unique identifier for the user.
- * @returns {TGetTestUserClientKeysRetunedType | null} - Returns an object containing the client_id and client_secret if found, otherwise returns null.
+ * @param {number} userId - The ID of the user whose ClientKey to retrieve.
+ * @returns {Promise<ClientKey | null>} A Promise that resolves to the retrieved ClientKey object, or null if no such object exists.
  */
 export default async function getTestUserClientKeys(
   userId: number
-): Promise<TGetTestUserClientKeysRetunedType | null> {
+): Promise<ClientKey | null> {
   const userClientKeys: Awaited<ClientKey | null> =
     await client.clientKey.findUnique({
       where: { user_id: userId },
     });
 
-  return {
-    clien_id: userClientKeys?.client_id || null,
-    client_secret: userClientKeys?.client_secret || null,
-  };
+  return userClientKeys;
 }
