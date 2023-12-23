@@ -120,7 +120,7 @@ describe("Unit-Testing User Update API Endpoint", () => {
   });
 });
 
-describe("Unit-Testing Private Access User Update API Endpoint", () => {
+describe("API Grant Access - Unit-Testing Private Access User Update API Endpoint", () => {
   test("should be return 422 status code if the subs plan is none", async () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
@@ -158,6 +158,83 @@ describe("Unit-Testing Private Access User Update API Endpoint", () => {
       .set("Cookie", `session=${refreshToken}`);
 
     expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+});
+
+describe("Verify User Client Keys - Unit-Testing Private Access User Update API Endpoint", () => {
+  test("should be return 401 status code if the client id and client secret not provided", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const { refreshToken } = jwt.sign(userPayload);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .patch(`/v1/plxm/users/${user?.id}`)
+        .set("Content-Type", "application/json")
+        .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(401);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the client id is not valid", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const { refreshToken } = jwt.sign(userPayload);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .patch(`/v1/plxm/users/${user?.id}?client_id=782&client_secret=2683`)
+        .set("Content-Type", "application/json")
+        .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the user client id has invalid signature", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const { refreshToken } = jwt.sign(userPayload);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .patch(
+          `/v1/plxm/users/${user?.id}?client_id=pxlmid-7263&client_secret=2683`
+        )
+        .set("Content-Type", "application/json")
+        .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the user client secret has invalid signature", async () => {
+    const jwt: JsonWebToken = new JsonWebToken();
+    const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
+
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const { refreshToken } = jwt.sign(userPayload);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .patch(
+          `/v1/plxm/users/${user?.id}?client_id=${userClientKeys?.client_id}&client_secret=2683`
+        )
+        .set("Content-Type", "application/json")
+        .set("Cookie", `session=${refreshToken}`);
+
+    expect(request.status).toBe(400);
     expect(request.body.status).toBe("KO");
   });
 });
