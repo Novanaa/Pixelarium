@@ -57,7 +57,7 @@ model Album {
   id Int @id @default(autoincrement())  
   title   String
   description   String
-  pictures Picture[]
+  pictures AlbumPicture[]
   user_id Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,11 +70,20 @@ model Picture {
   description   String
   url       String
   gallery_id Int
-  album_id Int
+  album_picture_id Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   gallery   Gallery  @relation(fields: [gallery_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  alubm Album @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  album AlbumPicture @relation(fields: [album_picture_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model AlbumPicture {
+  id Int @id @default(autoincrement())  
+  album_id Int
+  pictures Picture[]
+  album Album @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Subcription {

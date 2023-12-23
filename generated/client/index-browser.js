@@ -150,6 +150,13 @@ exports.Prisma.PictureScalarFieldEnum = {
   description: 'description',
   url: 'url',
   gallery_id: 'gallery_id',
+  album_picture_id: 'album_picture_id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AlbumPictureScalarFieldEnum = {
+  id: 'id',
   album_id: 'album_id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -202,6 +209,7 @@ exports.Prisma.ModelName = {
   Gallery: 'Gallery',
   Album: 'Album',
   Picture: 'Picture',
+  AlbumPicture: 'AlbumPicture',
   Subcription: 'Subcription'
 };
 
