@@ -7741,13 +7741,13 @@ export namespace Prisma {
   export type ClientKeyWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     user_id?: number
+    client_id?: string
     AND?: ClientKeyWhereInput | ClientKeyWhereInput[]
     OR?: ClientKeyWhereInput[]
     NOT?: ClientKeyWhereInput | ClientKeyWhereInput[]
-    client_id?: StringNullableFilter<"ClientKey"> | string | null
     client_secret?: StringNullableFilter<"ClientKey"> | string | null
     user?: XOR<UserRelationFilter, UserWhereInput>
-  }, "id" | "user_id">
+  }, "id" | "user_id" | "client_id">
 
   export type ClientKeyOrderByWithAggregationInput = {
     id?: SortOrder
