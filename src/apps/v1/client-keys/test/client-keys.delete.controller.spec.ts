@@ -8,6 +8,7 @@ import payload from "../../../../tests/const/payload";
 import { ClientKey, User } from "../../../../../generated/client";
 import client from "../../../../libs/configs/prisma";
 import getTestUser from "../../../../tests/utils/getTestUser";
+import getTestUserClientKeys from "../../../../tests/utils/getTestUserClientKeys";
 
 describe("Unit-Testing Delete/Remove User Client Secret API Endpoint", () => {
   test("should be return 401 status code if the user doesn't have access token session", async () => {
@@ -85,9 +86,7 @@ describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpo
   test("should be return 401 status code if the user doesn't have a session token", async () => {
     const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userClientKeys: Awaited<ClientKey | null> =
-      await client.clientKey.findUnique({
-        where: { user_id: user?.id },
-      });
+      await getTestUserClientKeys(user?.id || 0);
 
     const { accessToken: token } = generateMocksJWTToken();
     const request = await supertest(app)
@@ -108,10 +107,7 @@ describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpo
       userPayload.providerId
     );
     const userClientKeys: Awaited<ClientKey | null> =
-      await client.clientKey.findUnique({
-        where: { user_id: user?.id },
-      });
-
+      await getTestUserClientKeys(user?.id || 0);
     const request = await supertest(app)
       .delete(
         `/v1/plxm/client-keys?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
@@ -131,9 +127,7 @@ describe("Unit-Testing Private Access Delete/Remove User Client Secret API Endpo
       userPayload.providerId
     );
     const userClientKeys: Awaited<ClientKey | null> =
-      await client.clientKey.findUnique({
-        where: { user_id: user?.id },
-      });
+      await getTestUserClientKeys(user?.id || 0);
 
     const request = await supertest(app)
       .delete(
