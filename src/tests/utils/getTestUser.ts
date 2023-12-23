@@ -6,16 +6,18 @@ import logger from "../../libs/configs/logger";
 import client from "../../libs/configs/prisma";
 
 /**
- * Function to retrieve a test user from the database
+ * Retrieves a test user by their provider ID.
  *
- * @returns A promise resolving to a User object or null if not found
- * @throws Error if the test user is not found
+ * @param providerId - The provider ID of the test user to retrieve.
+ * @returns A Promise resolving to the retrieved test user or null if not found.
  */
-export default async function getTestUser(): Promise<User | null> {
+export default async function getTestUser(
+  providerId: number
+): Promise<User | null> {
   try {
-    // Attempt to find a unique user with a provider_id of 123
+    // Query the database for a user with the specified provider ID
     const testUser: Awaited<User | null> = await client.user.findUnique({
-      where: { provider_id: 123 },
+      where: { provider_id: providerId },
     });
 
     // If no user is found, throw an error

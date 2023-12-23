@@ -24,6 +24,7 @@ import docs from "../docs/openapi.json";
 import swaggerOptions from "../docs/configs/SwaggerThemes.config";
 import corsOptions from "../configs/cors.config";
 import requestErrorValidation from "./middlewares/requestErrorValidation";
+import verifyUserClientKeys from "./middlewares/verifyUserClientKeys";
 import rateLimitter from "./middlewares/rateLimitter";
 import authRoutes from "./apps/v1/auth/routes/auth.routes";
 import userRoutes from "./apps/v1/users/routes/user.routes";
@@ -38,7 +39,11 @@ app.use("/v1/client-keys", clientKeysRoutes);
 import privateClientKeysRoutes from "./apps/v1/client-keys/routes/private.clientKeys.routes";
 import privateUserRoutes from "./apps/v1/users/routes/private.user.routes";
 
-app.use("/v1/plxm/client-keys", cors(), privateClientKeysRoutes);
-app.use("/v1/plxm/users", cors(), privateUserRoutes);
+app.use(
+  "/v1/plxm/client-keys",
+  [cors(), verifyUserClientKeys],
+  privateClientKeysRoutes
+);
+app.use("/v1/plxm/users", [cors(), verifyUserClientKeys], privateUserRoutes);
 
 export default app;

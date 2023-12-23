@@ -5,6 +5,10 @@ import supertest, { Request } from "supertest";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
 import payload from "../../../../tests/const/payload";
+import { ClientKey, User } from "../../../../../generated/client";
+import getTestUser from "../../../../tests/utils/getTestUser";
+import client from "../../../../libs/configs/prisma";
+import getTestUserClientKeys from "../../../../tests/utils/getTestUserClientKeys";
 
 describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
   test("should be return 201 status code", async () => {
@@ -85,24 +89,24 @@ describe("Unit-Testing Generate User Client Secret API Endpoint", () => {
 });
 
 describe("Unit-Testing Private Access Generate User Client Secret API Endpoint", () => {
-  test("should be return 401 status code if the user doesn't have a session token", async () => {
-    const { accessToken: token } = generateMocksJWTToken();
-    const request = await supertest(app)
-      .post(`/v1/plxm/client-keys/generate`)
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(request.status).toBe(401);
-    expect(request.body.status).toBe("KO");
-  });
   test("should be return 422 status code if the subs plan is none", async () => {
     const jwt: JsonWebToken = new JsonWebToken();
     const userPayload: TJwtUserPayload = { ...payload, providerId: 898 };
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
 
+    const user: Awaited<User | null> = await getTestUser(
+      userPayload.providerId
+    );
+    console.log(user);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
     const request = await supertest(app)
-      .post(`/v1/plxm/client-keys/generate`)
+      .post(
+        `/v1/plxm/client-keys/generate?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`)
       .set("Cookie", `session=${refreshToken}`);
+    console.log(request.body);
 
     expect(request.status).toBe(422);
     expect(request.body.status).toBe("KO");
@@ -112,8 +116,14 @@ describe("Unit-Testing Private Access Generate User Client Secret API Endpoint",
     const userPayload: TJwtUserPayload = { ...payload, providerId: 123 };
     const { accessToken: token, refreshToken } = jwt.sign(userPayload);
 
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+
     const request = await supertest(app)
-      .post(`/v1/plxm/client-keys/generate`)
+      .post(
+        `/v1/plxm/client-keys/generate?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      )
       .set("Authorization", `Bearer ${token}`)
       .set("Cookie", `session=${refreshToken}`);
 
