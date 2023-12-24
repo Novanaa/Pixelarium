@@ -22,23 +22,23 @@ export default async function generateTestUser(): Promise<void> {
 
     // If a user with the given provider ID does not exist, create a new user
     if (!user) {
-      await createTestUser({
-        providerId: 321,
-        plan: "Netherite",
-        status: "active",
-      });
-
-      await createTestUser({
-        providerId: 123,
-        plan: "Netherite",
-        status: "deactive",
-      });
-
-      await createTestUser({
-        providerId: 898,
-        plan: "none",
-        status: "deactive",
-      });
+      Promise.all([
+        createTestUser({
+          providerId: 321,
+          plan: "Netherite",
+          status: "active",
+        }),
+        createTestUser({
+          providerId: 123,
+          plan: "Netherite",
+          status: "deactive",
+        }),
+        createTestUser({
+          providerId: 898,
+          plan: "none",
+          status: "deactive",
+        }),
+      ]);
     }
   } catch (err) {
     logger.error(err);

@@ -36,6 +36,11 @@ export default async function createTestUser({
           status,
         },
       },
+      gallery: {
+        create: {
+          pictures: {},
+        },
+      },
     },
   });
 }

@@ -29,15 +29,23 @@ import rateLimitter from "./middlewares/rateLimitter";
 import authRoutes from "./apps/v1/auth/routes/auth.routes";
 import userRoutes from "./apps/v1/users/routes/user.routes";
 import clientKeysRoutes from "./apps/v1/client-keys/routes/clientKeys.routes";
+import galleriesRoutes from "./apps/v1/galleries/routes/galleries.routes";
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(docs, swaggerOptions));
 app.use("/v1/auth", authRoutes);
 app.use("/v1/users", userRoutes);
 app.use("/v1/client-keys", clientKeysRoutes);
+app.use("/v1/galleries", galleriesRoutes);
 
 // Private Access API Endpoint
 import privateUserRoutes from "./apps/v1/users/routes/private.user.routes";
+import privateGalleriesRoutes from "./apps/v1/galleries/routes/private.galleriesroutes";
 
 app.use("/v1/plxm/users", [cors(), verifyUserClientKeys], privateUserRoutes);
+app.use(
+  "/v1/plxm/galleries",
+  [cors(), verifyUserClientKeys],
+  privateGalleriesRoutes
+);
 
 export default app;

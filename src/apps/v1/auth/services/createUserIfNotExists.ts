@@ -36,6 +36,11 @@ export default async function createUserIfNotExists({
           client_id: clientId,
         },
       },
+      gallery: {
+        create: {
+          pictures: {},
+        },
+      },
     },
   });
 }
