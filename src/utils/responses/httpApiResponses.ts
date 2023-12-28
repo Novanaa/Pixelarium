@@ -1,4 +1,5 @@
 import { Response } from "express";
+import http from "../../const/readonly/httpStatusCode";
 
 /**
  * Defines the shape of the httpFailedResponse function argument
@@ -52,7 +53,7 @@ export function jsonResult<T>({
   dataKey,
 }: JsonResultType): Response {
   // Return the response with the specified status code, containing a JSON object with the data and resultKey
-  return response.status(statusCode).json({
+  return response.status(statusCode || http.StatusOk).json({
     [dataKey]: data as T,
     [resultKey]: true,
     status: "OK",
