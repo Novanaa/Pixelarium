@@ -29,3 +29,32 @@ export function httpFailedResponse({
     status: "KO",
   });
 }
+
+type JsonResultType = {
+  response: Response;
+  statusCode: number;
+  resultKey: string;
+  data: unknown;
+  dataKey: string;
+};
+
+/**
+ * A utility function to generate a JSON response with the provided data and resultKey.
+ *
+ * @param {JsonResultType} options - Options for the JSON response.
+ * @returns {Response} The JSON response with the provided data and resultKey.
+ */
+export function jsonResult<T>({
+  response,
+  statusCode,
+  resultKey,
+  data,
+  dataKey,
+}: JsonResultType): Response {
+  // Return the response with the specified status code, containing a JSON object with the data and resultKey
+  return response.status(statusCode).json({
+    [dataKey]: data as T,
+    [resultKey]: true,
+    status: "OK",
+  });
+}
