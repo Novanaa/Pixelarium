@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import { TDecodedUser } from "../interfaces/types/DecodedUserTypes";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
+import http from "../../../../const/readonly/httpStatusCode";
 
 export default async function logout(
   req: Request,
@@ -40,7 +41,7 @@ export default async function logout(
 
     return jsonResult<UserWithOptionalChaining>({
       response: res,
-      statusCode: 200,
+      statusCode: http.StatusOk,
       resultKey: "logouted",
       dataKey: "logutedUser",
       data: user,
