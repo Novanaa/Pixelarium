@@ -1,22 +1,52 @@
 import { Request, Response } from "express";
 import logger from "../../../../libs/configs/logger";
-import { ErrorsRespones, SuccessRespones } from "../../../../utils/Response";
+import {
+  httpBadRequestResponse,
+  httpUnauthorizedResponse,
+} from "../../../../utils/responses/httpErrorsResponses";
+import { jsonResult } from "../../../../utils/responses/httpApiResponses";
+import { jwtDecode } from "jwt-decode";
+import { TDecodedUser } from "../interfaces/types/DecodedUserTypes";
+import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 
 export default async function logout(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error = new ErrorsRespones();
   try {
     const { session } = req.cookies;
 
-    if (!session) return Error.unauth(res, "The Logout Session was Failed.");
+    if (!session) return httpUnauthorizedResponse({ response: res });
 
     if (session) res.clearCookie("session");
 
-    return new SuccessRespones().success(res, "logout");
+    const decoded: TDecodedUser = jwtDecode(session);
+
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await isUserExistByIdOrProviderId({
+        field: "provider_id",
+        value: decoded.providerId,
+      });
+
+    if (!user)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Cannot find user request!",
+      });
+
+    delete user.password;
+    delete user.email;
+
+    return jsonResult<UserWithOptionalChaining>({
+      response: res,
+      statusCode: 200,
+      resultKey: "logouted",
+      dataKey: "logutedUser",
+      data: user,
+    });
   } catch (err) {
     logger.error(err);
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   }
 }
