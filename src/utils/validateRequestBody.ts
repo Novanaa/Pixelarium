@@ -1,7 +1,10 @@
+import Joi from "joi";
 import { Response } from "express";
 import messege from "../const/readonly/messege";
-import Joi from "joi";
-import { ErrorsRespones } from "./Response";
+import {
+  httpBadRequestResponse,
+  httpUnprocessableContentResponse,
+} from "./responses/httpErrorsResponses";
 
 /**
  * The function validates a request body and returns an error response if the validation fails.
@@ -25,18 +28,23 @@ export default function validateRequestBody({
   res,
   value,
   error,
-  except,
-  usage,
+  usage = "update",
 }: {
   res: Response;
   value: Joi.ValidationResult;
   error: Joi.ValidationError | undefined;
-  except: ErrorsRespones;
-  usage?: "update";
+  usage?: string;
 }): void | Response {
   if (usage !== "update") {
     if (Object.keys(value).length == 0)
-      return except.badRequest(res, messege.emptyFields);
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: messege.emptyFields,
+      });
   }
-  if (error) return except.unprocessable(res, error.message.replace(/"/g, ""));
+  if (error)
+    return httpUnprocessableContentResponse({
+      response: res,
+      errorMessage: error.message.replace(/"/g, ""),
+    });
 }
