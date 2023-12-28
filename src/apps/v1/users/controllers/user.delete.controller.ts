@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
-import { ErrorsRespones, SuccessRespones } from "../../../../utils/Response";
 import FilesSystem from "../../../../services/FilesSystem";
 import { User } from "../../../../../generated/client";
 import checkIfPictureIsInternalPicture from "../../../../utils/checkIfPictureIsInternalPicture";
@@ -9,24 +8,30 @@ import getFilename from "../../../../utils/getFilename";
 import getPictureFilepath from "../../../../utils/getPictureFilepath";
 import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import {
+  httpBadRequestResponse,
+  httpNotFoundResponse,
+} from "../../../../utils/responses/httpErrorsResponses";
+import { jsonResult } from "../../../../utils/responses/httpApiResponses";
+import http from "../../../../const/readonly/httpStatusCode";
+import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 
 export default async function deleteUser(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error = new ErrorsRespones();
   const filesSystem = new FilesSystem();
   try {
     const { id } = req.params;
 
-    validateRequestIDParams({ id, response: res, except: Error });
+    validateRequestIDParams({ id, response: res });
 
     const user: Awaited<User | null> = await isUserExistByIdOrProviderId({
       value: id,
       field: "id",
     });
 
-    if (!user) return Error.notFound(res);
+    if (!user) return httpNotFoundResponse({ response: res });
 
     const picture: string = user.picture;
     const isInternalPicture: boolean | null = checkIfPictureIsInternalPicture({
@@ -42,14 +47,26 @@ export default async function deleteUser(
       filesSystem.deleteFile(filePath);
     }
 
+    const responseData: UserWithOptionalChaining = { ...user };
+
+    delete responseData.email;
+
+    delete responseData.password;
+
     await client.user.delete({
       where: { id: Number(id) },
     });
 
-    return new SuccessRespones().success(res, "deleted");
+    return jsonResult({
+      statusCode: http.StatusOk,
+      resultKey: "deleted",
+      dataKey: "deletedUser",
+      response: res,
+      data: responseData,
+    });
   } catch (err) {
     logger.error(err);
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   } finally {
     await client.$disconnect();
   }
