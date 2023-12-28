@@ -2,7 +2,6 @@ import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import { Request, Response } from "express";
 import { UploadedFile } from "express-fileupload";
-import { ErrorsRespones, SuccessRespones } from "../../../../utils/Response";
 import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
 import userValidation from "../../../../validations/userValidation";
 import validateRequestBody from "../../../../utils/validateRequestBody";
@@ -21,17 +20,24 @@ import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryP
 import validateRequestFilesField from "../../../../utils/validateRequestFilesField";
 import getLatestUserProfilePicture from "../services/getLatestUserProfilePicture";
 import getFilename from "../../../../utils/getFilename";
+import {
+  httpBadRequestResponse,
+  httpNotFoundResponse,
+  httpUnprocessableContentResponse,
+} from "../../../../utils/responses/httpErrorsResponses";
+import { jsonResult } from "../../../../utils/responses/httpApiResponses";
+import http from "../../../../const/readonly/httpStatusCode";
+import type { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 
 export default async function updateUser(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error: ErrorsRespones = new ErrorsRespones();
   const filesSystem: FilesSystem = new FilesSystem();
   try {
     const { id } = req.params;
 
-    validateRequestIDParams({ id, response: res, except: Error });
+    validateRequestIDParams({ id, response: res });
 
     const { error, value } = userValidation<TUserValidation>({
       payload: req.body,
@@ -41,7 +47,6 @@ export default async function updateUser(
       res,
       value,
       error,
-      except: Error,
       usage: "update",
     });
 
@@ -52,7 +57,7 @@ export default async function updateUser(
       value: id,
     });
 
-    if (!user) return Error.notFound(res);
+    if (!user) return httpNotFoundResponse({ response: res });
 
     const keys: string[] = Object.keys(value);
     if (keys.includes("name")) {
@@ -60,7 +65,10 @@ export default async function updateUser(
         await checkIfUsernameHasBeenTaken(value.name);
 
       if (isUsernameTaken)
-        return Error.unprocessable(res, "The name has already taken");
+        return httpUnprocessableContentResponse({
+          response: res,
+          errorMessage: "The name is already taken",
+        });
     }
 
     if (!req.files) {
@@ -71,7 +79,6 @@ export default async function updateUser(
       const picture: UploadedFile = req.files.picture as UploadedFile;
 
       const validateFieldResult: void | Response = validateRequestFilesField({
-        except: Error,
         request: req,
         response: res,
         field: "picture",
@@ -80,7 +87,6 @@ export default async function updateUser(
       if (validateFieldResult) return;
 
       const validateImagesresult: void | Response = validateImagesUpload({
-        except: Error,
         file: picture,
         response: res,
       });
@@ -98,7 +104,7 @@ export default async function updateUser(
         usage: "users",
       });
 
-      saveFile({ except: Error, file: picture, path: pathname, response: res });
+      saveFile({ file: picture, path: pathname, response: res });
 
       const isInternalPicture: boolean | null = checkIfPictureIsInternalPicture(
         { usage: "users", picturePath: pathname }
@@ -124,10 +130,21 @@ export default async function updateUser(
       await updateUserData({ id, data: value, picture: urlpath });
     }
 
-    return new SuccessRespones().success(res, "updated");
+    const responseData: UserWithOptionalChaining = { ...user };
+
+    delete responseData.password;
+    delete responseData.email;
+
+    return jsonResult({
+      response: res,
+      statusCode: http.StatusOk,
+      dataKey: "updatedUser",
+      resultKey: "updated",
+      data: responseData,
+    });
   } catch (err) {
     logger.error(err);
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   } finally {
     await client.$disconnect();
   }

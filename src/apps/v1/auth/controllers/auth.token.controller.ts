@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import logger from "../../../../libs/configs/logger";
-import { ErrorsRespones } from "../../../../utils/Response";
+import {
+  httpBadRequestResponse,
+  httpUnauthorizedResponse,
+  httpUnprocessableContentResponse,
+} from "../../../../utils/responses/httpErrorsResponses";
 import { jwtDecode } from "jwt-decode";
 import client from "../../../../libs/configs/prisma";
 import type {
@@ -10,13 +14,20 @@ import type {
 import { JWT_REFRESH_TOKEN, JWT_ACCESS_TOKEN } from "../../../../const/env";
 import jwt, { VerifyErrors } from "jsonwebtoken";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import { jsonResult } from "../../../../utils/responses/httpApiResponses";
+import http from "../../../../const/readonly/httpStatusCode";
+import getFutureDateTime from "../../../../utils/getFutureDateTime";
+import type TokenRotationResponseData from "../interfaces/types/TokenRotationResponseDataTypes";
 
 export default async function tokenRotation(req: Request, res: Response) {
-  const Error = new ErrorsRespones();
   try {
     const { session } = req.cookies;
 
-    if (!session) return Error.unauth(res, "The user must be login first!");
+    if (!session)
+      return httpUnauthorizedResponse({
+        response: res,
+        errorMessage: "The user must be login first!",
+      });
 
     const decode: TDecodedUser = jwtDecode(session);
 
@@ -25,7 +36,11 @@ export default async function tokenRotation(req: Request, res: Response) {
       value: decode.providerId,
     });
 
-    if (!isUser) return Error.unauth(res, "Unauthorized User");
+    if (!isUser)
+      return httpUnauthorizedResponse({
+        response: res,
+        errorMessage: "Unauthorized User",
+      });
 
     jwt.verify(
       session,
@@ -33,7 +48,10 @@ export default async function tokenRotation(req: Request, res: Response) {
       // @ts-expect-error Types doesn't match
       (err: VerifyErrors | null, decoded: TDecodedToken | undefined) => {
         if (err)
-          return Error.unprocessable(res, "The refresh token is invalid!");
+          return httpUnprocessableContentResponse({
+            response: res,
+            errorMessage: "The session token is invalid",
+          });
 
         const { providerId, name, email, picture } = decoded as TDecodedToken;
         const accessToken: string = jwt.sign(
@@ -44,15 +62,27 @@ export default async function tokenRotation(req: Request, res: Response) {
           }
         );
 
-        return res.status(200).json({
-          token: accessToken,
-          status: "OK",
+        const accessTokenExpiresDate: Date = getFutureDateTime({
+          futureDateTimeInSecond: 1800,
+        });
+        const responseData: TokenRotationResponseData = {
+          accessToken,
+          expiresInSecond: 1800,
+          expiresDate: accessTokenExpiresDate,
+        };
+
+        return jsonResult({
+          response: res,
+          resultKey: "generated",
+          statusCode: http.StatusOk,
+          dataKey: "token",
+          data: responseData,
         });
       }
     );
   } catch (err) {
     logger.error(err);
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   } finally {
     await client.$disconnect();
   }

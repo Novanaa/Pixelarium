@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import logger from "../../../../libs/configs/logger";
-import { ErrorsRespones } from "../../../../utils/Response";
 import {
   OAuthGithubUrl,
   OAuthGithubAccessTokenUrl,
@@ -16,17 +15,17 @@ import generateTokenResponseCookie from "../services/generateTokenResponseCookie
 import createUserIfNotExists from "../services/createUserIfNotExists";
 import { User } from "../../../../../generated/client";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import { httpBadRequestResponse } from "../../../../utils/responses/httpErrorsResponses";
 
 export async function redirectGithubLogin(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error = new ErrorsRespones();
   try {
     return res.redirect(OAuthGithubUrl);
   } catch (err) {
     logger.error(err);
-    Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   }
 }
 
@@ -34,7 +33,6 @@ export async function loginWithGithub(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error = new ErrorsRespones();
   try {
     const { code } = req.query;
 
@@ -54,7 +52,11 @@ export async function loginWithGithub(
       auth
     );
 
-    if (!user) return Error.badRequest(res, "The Login Session Was Failed.");
+    if (!user)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "The Login Session Was Failed.",
+      });
 
     const userId: number = Number(user.id);
     const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
@@ -86,7 +88,7 @@ export async function loginWithGithub(
     );
   } catch (err) {
     logger.error(err);
-    Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   } finally {
     await client.$disconnect();
   }

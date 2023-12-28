@@ -1,11 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import logger from "../libs/configs/logger";
 import client from "../libs/configs/prisma";
-import { ErrorsRespones } from "../utils/Response";
 import { jwtDecode } from "jwt-decode";
 import { TDecodedUser } from "../apps/v1/auth/interfaces/types/DecodedUserTypes";
 import { isUserExistByIdOrProviderId } from "../utils/isUser";
 import { ClientKey, User } from "../../generated/client";
+import {
+  httpBadRequestResponse,
+  httpNotFoundResponse,
+  httpUnauthorizedResponse,
+  httpUnprocessableContentResponse,
+} from "../utils/responses/httpErrorsResponses";
 
 /**
  * Middleware function to verify if a user's client keys are valid.
@@ -21,22 +26,27 @@ export default async function verifyUserClientKeys(
   res: Response,
   next: NextFunction
 ): Promise<NextFunction | void | Response> {
-  const Error: ErrorsRespones = new ErrorsRespones();
   try {
     const { session } = req.cookies;
     const { client_id, client_secret } = req.query;
 
     if (!client_id || !client_secret)
-      return Error.unauth(
-        res,
-        "This API Calls Required Client ID or Client Secret"
-      );
+      return httpUnauthorizedResponse({
+        response: res,
+        errorMessage: "This API Calls Required Client ID or Client Secret",
+      });
 
     if (typeof client_id !== "string" || !client_id.includes("pxlmid"))
-      return Error.unprocessable(res, "The Client ID isn't valid!");
+      return httpUnprocessableContentResponse({
+        response: res,
+        errorMessage: "The Client ID isn't valid!",
+      });
 
     if (!session)
-      return Error.unauth(res, "This operation required a session token!");
+      return httpUnauthorizedResponse({
+        response: res,
+        errorMessage: "This operation required a session token!",
+      });
 
     const decoded: TDecodedUser = jwtDecode(session) as TDecodedUser;
 
@@ -45,7 +55,11 @@ export default async function verifyUserClientKeys(
       value: decoded.providerId,
     });
 
-    if (!user) return Error.notFound(res, "The user request cannot be found!");
+    if (!user)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The user request cannot be found!",
+      });
 
     const userClientKeys: Awaited<ClientKey | null> =
       await client.clientKey.findUnique({
@@ -53,19 +67,28 @@ export default async function verifyUserClientKeys(
       });
 
     if (!userClientKeys)
-      return Error.notFound(res, "You doesn't have a client keys!");
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "You doesn't have a client keys!",
+      });
 
     if (client_id !== userClientKeys.client_id)
-      return Error.badRequest(res, "Client ID has invalid signature!");
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Client ID has invalid signature!",
+      });
 
     if (client_secret !== userClientKeys.client_secret)
-      return Error.badRequest(res, "Client Secret has invalid signature!");
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Client Secret has invalid signature!",
+      });
 
     return next();
   } catch (err) {
     logger.error(err);
     next();
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   } finally {
     await client.$disconnect();
   }

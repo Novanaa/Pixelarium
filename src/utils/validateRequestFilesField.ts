@@ -1,13 +1,12 @@
 import { Response, Request } from "express";
 import validator from "validator";
-import { ErrorsRespones } from "./Response";
+import { httpBadRequestResponse } from "./responses/httpErrorsResponses";
 /**
  * The function validates if a specific field is present in the files object of a request and returns
  * an error response if it is not.
  * @export
  * @param {{
  *   request: Request;
- *   except: ErrorsRespones;
  *   response: Response;
  *   field: string;
  * }} {
@@ -22,17 +21,18 @@ export default function validateRequestFilesField({
   response,
   request,
   field,
-  except,
 }: {
   request: Request;
-  except: ErrorsRespones;
   response: Response;
   field: string;
 }) {
   const keys: string[] = Object.keys(request.files!);
+  const errorMessage: string = `'${
+    keys[0].charAt(0).toUpperCase() + keys[0].slice(1)
+  }' doesn't allowed`;
   if (!validator.contains(field, keys))
-    return except.badRequest(
+    return httpBadRequestResponse({
       response,
-      `'${keys[0].charAt(0).toUpperCase() + keys[0].slice(1)}' doesn't allowed`
-    );
+      errorMessage,
+    });
 }
