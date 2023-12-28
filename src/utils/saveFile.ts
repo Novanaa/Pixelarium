@@ -1,6 +1,6 @@
 import { UploadedFile } from "express-fileupload";
-import { ErrorsRespones } from "./Response";
 import { Response } from "express";
+import { httpBadRequestResponse } from "./responses/httpErrorsResponses";
 
 /**
  * The saveFile function saves an uploaded file to a specified path and handles any errors that occur
@@ -9,7 +9,6 @@ import { Response } from "express";
  * @param {{
  *   file: UploadedFile;
  *   path: string;
- *   except: ErrorsRespones;
  *   response: Response;
  * }} {
  *   file,
@@ -23,19 +22,18 @@ import { Response } from "express";
 export default function saveFile({
   file,
   path,
-  except,
   response,
 }: {
   file: UploadedFile;
   path: string;
-  except: ErrorsRespones;
   response: Response;
 }) {
   file.mv(path, (err) => {
     if (err)
-      return except.badRequest(
+      return httpBadRequestResponse({
         response,
-        "The pictures was unsuccessfully saved, please try again."
-      );
+        errorMessage:
+          "The pictures was unsuccessfully saved, please try again.",
+      });
   });
 }
