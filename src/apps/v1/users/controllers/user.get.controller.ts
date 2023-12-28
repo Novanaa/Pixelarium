@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import getUserByName from "../services/getUserByName";
-import UserWithoutPassword from "../interfaces/types/UserWithoutPasswordTypes";
 import { jsonResult } from "../../../../utils/responses/httpApiResponses";
 import {
   httpBadRequestResponse,
@@ -18,7 +17,8 @@ export default async function singleUser(
   try {
     const { name } = req.params;
 
-    const user: Awaited<UserWithoutPassword | null> = await getUserByName(name);
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await getUserByName(name);
 
     if (!user) return httpNotFoundResponse({ response: res });
 
