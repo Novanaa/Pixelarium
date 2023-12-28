@@ -1,5 +1,4 @@
 import { Response, Request } from "express";
-import { ErrorsRespones } from "../../../../utils/Response";
 import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import { OAuth2Client, authUrl } from "../../../../libs/configs/google";
@@ -11,17 +10,17 @@ import generateTokenResponseCookie from "../services/generateTokenResponseCookie
 import createUserIfNotExists from "../services/createUserIfNotExists";
 import { User } from "../../../../../generated/client";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import { httpBadRequestResponse } from "../../../../utils/responses/httpErrorsResponses";
 
 export async function redirectGoogleLogin(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error = new ErrorsRespones();
   try {
     return res.redirect(authUrl);
   } catch (err) {
     logger.error(err);
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   }
 }
 
@@ -29,12 +28,15 @@ export async function loginWithGoogle(
   req: Request,
   res: Response
 ): Promise<void | Response> {
-  const Error = new ErrorsRespones();
   try {
     const { code } = req.query;
     const { tokens } = await OAuth2Client.getToken(code as string);
 
-    if (!tokens) return Error.badRequest(res, "The Login Session Was Failed.");
+    if (!tokens)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "The Login Session Was Failed.",
+      });
     if (tokens) OAuth2Client.setCredentials(tokens);
     const oAuth2Config = google.oauth2({ version: "v2", auth: OAuth2Client });
 
@@ -75,7 +77,7 @@ export async function loginWithGoogle(
     );
   } catch (err) {
     logger.error(err);
-    return Error.badRequest(res);
+    return httpBadRequestResponse({ response: res });
   } finally {
     await client.$disconnect();
   }
