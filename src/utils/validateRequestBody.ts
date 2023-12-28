@@ -33,7 +33,7 @@ export default function validateRequestBody({
   res: Response;
   value: Joi.ValidationResult;
   error: Joi.ValidationError | undefined;
-  usage?: string;
+  usage?: string | "update";
 }): void | Response {
   if (usage !== "update") {
     if (Object.keys(value).length == 0)
