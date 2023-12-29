@@ -34,6 +34,11 @@ export type Gallery = $Result.DefaultSelection<Prisma.$GalleryPayload>
  */
 export type Album = $Result.DefaultSelection<Prisma.$AlbumPayload>
 /**
+ * Model Favorite
+ * 
+ */
+export type Favorite = $Result.DefaultSelection<Prisma.$FavoritePayload>
+/**
  * Model Picture
  * 
  */
@@ -48,6 +53,11 @@ export type AlbumPicture = $Result.DefaultSelection<Prisma.$AlbumPicturePayload>
  * 
  */
 export type Subcription = $Result.DefaultSelection<Prisma.$SubcriptionPayload>
+/**
+ * Model EmbedLinks
+ * 
+ */
+export type EmbedLinks = $Result.DefaultSelection<Prisma.$EmbedLinksPayload>
 
 /**
  * Enums
@@ -256,6 +266,16 @@ export class PrismaClient<
   get album(): Prisma.AlbumDelegate<ExtArgs>;
 
   /**
+   * `prisma.favorite`: Exposes CRUD operations for the **Favorite** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Favorites
+    * const favorites = await prisma.favorite.findMany()
+    * ```
+    */
+  get favorite(): Prisma.FavoriteDelegate<ExtArgs>;
+
+  /**
    * `prisma.picture`: Exposes CRUD operations for the **Picture** model.
     * Example usage:
     * ```ts
@@ -284,6 +304,16 @@ export class PrismaClient<
     * ```
     */
   get subcription(): Prisma.SubcriptionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.embedLinks`: Exposes CRUD operations for the **EmbedLinks** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EmbedLinks
+    * const embedLinks = await prisma.embedLinks.findMany()
+    * ```
+    */
+  get embedLinks(): Prisma.EmbedLinksDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -758,9 +788,11 @@ export namespace Prisma {
     ClientKey: 'ClientKey',
     Gallery: 'Gallery',
     Album: 'Album',
+    Favorite: 'Favorite',
     Picture: 'Picture',
     AlbumPicture: 'AlbumPicture',
-    Subcription: 'Subcription'
+    Subcription: 'Subcription',
+    EmbedLinks: 'EmbedLinks'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -777,7 +809,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user' | 'clientKey' | 'gallery' | 'album' | 'picture' | 'albumPicture' | 'subcription'
+      modelProps: 'user' | 'clientKey' | 'gallery' | 'album' | 'favorite' | 'picture' | 'albumPicture' | 'subcription' | 'embedLinks'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -1045,6 +1077,72 @@ export namespace Prisma {
           }
         }
       }
+      Favorite: {
+        payload: Prisma.$FavoritePayload<ExtArgs>
+        fields: Prisma.FavoriteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FavoriteFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FavoriteFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          findFirst: {
+            args: Prisma.FavoriteFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FavoriteFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          findMany: {
+            args: Prisma.FavoriteFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          create: {
+            args: Prisma.FavoriteCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          createMany: {
+            args: Prisma.FavoriteCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.FavoriteDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          update: {
+            args: Prisma.FavoriteUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          deleteMany: {
+            args: Prisma.FavoriteDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FavoriteUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.FavoriteUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          aggregate: {
+            args: Prisma.FavoriteAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateFavorite>
+          }
+          groupBy: {
+            args: Prisma.FavoriteGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<FavoriteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FavoriteCountArgs<ExtArgs>,
+            result: $Utils.Optional<FavoriteCountAggregateOutputType> | number
+          }
+        }
+      }
       Picture: {
         payload: Prisma.$PicturePayload<ExtArgs>
         fields: Prisma.PictureFieldRefs
@@ -1240,6 +1338,72 @@ export namespace Prisma {
           count: {
             args: Prisma.SubcriptionCountArgs<ExtArgs>,
             result: $Utils.Optional<SubcriptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      EmbedLinks: {
+        payload: Prisma.$EmbedLinksPayload<ExtArgs>
+        fields: Prisma.EmbedLinksFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EmbedLinksFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EmbedLinksFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>
+          }
+          findFirst: {
+            args: Prisma.EmbedLinksFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EmbedLinksFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>
+          }
+          findMany: {
+            args: Prisma.EmbedLinksFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>[]
+          }
+          create: {
+            args: Prisma.EmbedLinksCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>
+          }
+          createMany: {
+            args: Prisma.EmbedLinksCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.EmbedLinksDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>
+          }
+          update: {
+            args: Prisma.EmbedLinksUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>
+          }
+          deleteMany: {
+            args: Prisma.EmbedLinksDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EmbedLinksUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.EmbedLinksUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$EmbedLinksPayload>
+          }
+          aggregate: {
+            args: Prisma.EmbedLinksAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateEmbedLinks>
+          }
+          groupBy: {
+            args: Prisma.EmbedLinksGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<EmbedLinksGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EmbedLinksCountArgs<ExtArgs>,
+            result: $Utils.Optional<EmbedLinksCountAggregateOutputType> | number
           }
         }
       }
@@ -1450,6 +1614,40 @@ export namespace Prisma {
    * GalleryCountOutputType without action
    */
   export type GalleryCountOutputTypeCountPicturesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PictureWhereInput
+  }
+
+
+
+  /**
+   * Count Type FavoriteCountOutputType
+   */
+
+  export type FavoriteCountOutputType = {
+    pictures: number
+  }
+
+  export type FavoriteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    pictures?: boolean | FavoriteCountOutputTypeCountPicturesArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * FavoriteCountOutputType without action
+   */
+  export type FavoriteCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavoriteCountOutputType
+     */
+    select?: FavoriteCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * FavoriteCountOutputType without action
+   */
+  export type FavoriteCountOutputTypeCountPicturesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PictureWhereInput
   }
 
@@ -5508,6 +5706,989 @@ export namespace Prisma {
 
 
   /**
+   * Model Favorite
+   */
+
+  export type AggregateFavorite = {
+    _count: FavoriteCountAggregateOutputType | null
+    _avg: FavoriteAvgAggregateOutputType | null
+    _sum: FavoriteSumAggregateOutputType | null
+    _min: FavoriteMinAggregateOutputType | null
+    _max: FavoriteMaxAggregateOutputType | null
+  }
+
+  export type FavoriteAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    favorited_pictures: number | null
+  }
+
+  export type FavoriteSumAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    favorited_pictures: number | null
+  }
+
+  export type FavoriteMinAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    favorited_pictures: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FavoriteMaxAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    favorited_pictures: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FavoriteCountAggregateOutputType = {
+    id: number
+    user_id: number
+    favorited_pictures: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FavoriteAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+    favorited_pictures?: true
+  }
+
+  export type FavoriteSumAggregateInputType = {
+    id?: true
+    user_id?: true
+    favorited_pictures?: true
+  }
+
+  export type FavoriteMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    favorited_pictures?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FavoriteMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    favorited_pictures?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FavoriteCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    favorited_pictures?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FavoriteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorite to aggregate.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Favorites
+    **/
+    _count?: true | FavoriteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FavoriteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FavoriteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FavoriteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FavoriteMaxAggregateInputType
+  }
+
+  export type GetFavoriteAggregateType<T extends FavoriteAggregateArgs> = {
+        [P in keyof T & keyof AggregateFavorite]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFavorite[P]>
+      : GetScalarType<T[P], AggregateFavorite[P]>
+  }
+
+
+
+
+  export type FavoriteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithAggregationInput | FavoriteOrderByWithAggregationInput[]
+    by: FavoriteScalarFieldEnum[] | FavoriteScalarFieldEnum
+    having?: FavoriteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FavoriteCountAggregateInputType | true
+    _avg?: FavoriteAvgAggregateInputType
+    _sum?: FavoriteSumAggregateInputType
+    _min?: FavoriteMinAggregateInputType
+    _max?: FavoriteMaxAggregateInputType
+  }
+
+  export type FavoriteGroupByOutputType = {
+    id: number
+    user_id: number
+    favorited_pictures: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FavoriteCountAggregateOutputType | null
+    _avg: FavoriteAvgAggregateOutputType | null
+    _sum: FavoriteSumAggregateOutputType | null
+    _min: FavoriteMinAggregateOutputType | null
+    _max: FavoriteMaxAggregateOutputType | null
+  }
+
+  type GetFavoriteGroupByPayload<T extends FavoriteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FavoriteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FavoriteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FavoriteGroupByOutputType[P]>
+            : GetScalarType<T[P], FavoriteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FavoriteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    favorited_pictures?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    pictures?: boolean | Favorite$picturesArgs<ExtArgs>
+    _count?: boolean | FavoriteCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    favorited_pictures?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FavoriteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    pictures?: boolean | Favorite$picturesArgs<ExtArgs>
+    _count?: boolean | FavoriteCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+
+  export type $FavoritePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Favorite"
+    objects: {
+      pictures: Prisma.$PicturePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      user_id: number
+      favorited_pictures: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["favorite"]>
+    composites: {}
+  }
+
+
+  type FavoriteGetPayload<S extends boolean | null | undefined | FavoriteDefaultArgs> = $Result.GetResult<Prisma.$FavoritePayload, S>
+
+  type FavoriteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FavoriteFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: FavoriteCountAggregateInputType | true
+    }
+
+  export interface FavoriteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Favorite'], meta: { name: 'Favorite' } }
+    /**
+     * Find zero or one Favorite that matches the filter.
+     * @param {FavoriteFindUniqueArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FavoriteFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, FavoriteFindUniqueArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Favorite that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FavoriteFindUniqueOrThrowArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FavoriteFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, FavoriteFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Favorite that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindFirstArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FavoriteFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, FavoriteFindFirstArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Favorite that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindFirstOrThrowArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FavoriteFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, FavoriteFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Favorites that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Favorites
+     * const favorites = await prisma.favorite.findMany()
+     * 
+     * // Get first 10 Favorites
+     * const favorites = await prisma.favorite.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FavoriteFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, FavoriteFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Favorite.
+     * @param {FavoriteCreateArgs} args - Arguments to create a Favorite.
+     * @example
+     * // Create one Favorite
+     * const Favorite = await prisma.favorite.create({
+     *   data: {
+     *     // ... data to create a Favorite
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FavoriteCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, FavoriteCreateArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Favorites.
+     *     @param {FavoriteCreateManyArgs} args - Arguments to create many Favorites.
+     *     @example
+     *     // Create many Favorites
+     *     const favorite = await prisma.favorite.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FavoriteCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, FavoriteCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Favorite.
+     * @param {FavoriteDeleteArgs} args - Arguments to delete one Favorite.
+     * @example
+     * // Delete one Favorite
+     * const Favorite = await prisma.favorite.delete({
+     *   where: {
+     *     // ... filter to delete one Favorite
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FavoriteDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, FavoriteDeleteArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Favorite.
+     * @param {FavoriteUpdateArgs} args - Arguments to update one Favorite.
+     * @example
+     * // Update one Favorite
+     * const favorite = await prisma.favorite.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FavoriteUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, FavoriteUpdateArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Favorites.
+     * @param {FavoriteDeleteManyArgs} args - Arguments to filter Favorites to delete.
+     * @example
+     * // Delete a few Favorites
+     * const { count } = await prisma.favorite.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FavoriteDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, FavoriteDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Favorites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Favorites
+     * const favorite = await prisma.favorite.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FavoriteUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, FavoriteUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Favorite.
+     * @param {FavoriteUpsertArgs} args - Arguments to update or create a Favorite.
+     * @example
+     * // Update or create a Favorite
+     * const favorite = await prisma.favorite.upsert({
+     *   create: {
+     *     // ... data to create a Favorite
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Favorite we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FavoriteUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, FavoriteUpsertArgs<ExtArgs>>
+    ): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Favorites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteCountArgs} args - Arguments to filter Favorites to count.
+     * @example
+     * // Count the number of Favorites
+     * const count = await prisma.favorite.count({
+     *   where: {
+     *     // ... the filter for the Favorites we want to count
+     *   }
+     * })
+    **/
+    count<T extends FavoriteCountArgs>(
+      args?: Subset<T, FavoriteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FavoriteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Favorite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FavoriteAggregateArgs>(args: Subset<T, FavoriteAggregateArgs>): Prisma.PrismaPromise<GetFavoriteAggregateType<T>>
+
+    /**
+     * Group by Favorite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FavoriteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FavoriteGroupByArgs['orderBy'] }
+        : { orderBy?: FavoriteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FavoriteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFavoriteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Favorite model
+   */
+  readonly fields: FavoriteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Favorite.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FavoriteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    pictures<T extends Favorite$picturesArgs<ExtArgs> = {}>(args?: Subset<T, Favorite$picturesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PicturePayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Favorite model
+   */ 
+  interface FavoriteFieldRefs {
+    readonly id: FieldRef<"Favorite", 'Int'>
+    readonly user_id: FieldRef<"Favorite", 'Int'>
+    readonly favorited_pictures: FieldRef<"Favorite", 'Int'>
+    readonly createdAt: FieldRef<"Favorite", 'DateTime'>
+    readonly updatedAt: FieldRef<"Favorite", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Favorite findUnique
+   */
+  export type FavoriteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+
+  /**
+   * Favorite findUniqueOrThrow
+   */
+  export type FavoriteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+
+  /**
+   * Favorite findFirst
+   */
+  export type FavoriteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Favorite findFirstOrThrow
+   */
+  export type FavoriteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Favorite findMany
+   */
+  export type FavoriteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorites to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Favorite create
+   */
+  export type FavoriteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Favorite.
+     */
+    data: XOR<FavoriteCreateInput, FavoriteUncheckedCreateInput>
+  }
+
+
+  /**
+   * Favorite createMany
+   */
+  export type FavoriteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Favorites.
+     */
+    data: FavoriteCreateManyInput | FavoriteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Favorite update
+   */
+  export type FavoriteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Favorite.
+     */
+    data: XOR<FavoriteUpdateInput, FavoriteUncheckedUpdateInput>
+    /**
+     * Choose, which Favorite to update.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+
+  /**
+   * Favorite updateMany
+   */
+  export type FavoriteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Favorites.
+     */
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyInput>
+    /**
+     * Filter which Favorites to update
+     */
+    where?: FavoriteWhereInput
+  }
+
+
+  /**
+   * Favorite upsert
+   */
+  export type FavoriteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Favorite to update in case it exists.
+     */
+    where: FavoriteWhereUniqueInput
+    /**
+     * In case the Favorite found by the `where` argument doesn't exist, create a new Favorite with this data.
+     */
+    create: XOR<FavoriteCreateInput, FavoriteUncheckedCreateInput>
+    /**
+     * In case the Favorite was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FavoriteUpdateInput, FavoriteUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Favorite delete
+   */
+  export type FavoriteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter which Favorite to delete.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+
+  /**
+   * Favorite deleteMany
+   */
+  export type FavoriteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorites to delete
+     */
+    where?: FavoriteWhereInput
+  }
+
+
+  /**
+   * Favorite.pictures
+   */
+  export type Favorite$picturesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Picture
+     */
+    select?: PictureSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PictureInclude<ExtArgs> | null
+    where?: PictureWhereInput
+    orderBy?: PictureOrderByWithRelationInput | PictureOrderByWithRelationInput[]
+    cursor?: PictureWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PictureScalarFieldEnum | PictureScalarFieldEnum[]
+  }
+
+
+  /**
+   * Favorite without action
+   */
+  export type FavoriteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Model Picture
    */
 
@@ -5523,12 +6704,14 @@ export namespace Prisma {
     id: number | null
     gallery_id: number | null
     album_picture_id: number | null
+    favorite_id: number | null
   }
 
   export type PictureSumAggregateOutputType = {
     id: number | null
     gallery_id: number | null
     album_picture_id: number | null
+    favorite_id: number | null
   }
 
   export type PictureMinAggregateOutputType = {
@@ -5536,8 +6719,12 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
+    is_favorited: boolean | null
+    filename: string | null
+    extension: string | null
     gallery_id: number | null
     album_picture_id: number | null
+    favorite_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5547,8 +6734,12 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
+    is_favorited: boolean | null
+    filename: string | null
+    extension: string | null
     gallery_id: number | null
     album_picture_id: number | null
+    favorite_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5558,8 +6749,12 @@ export namespace Prisma {
     title: number
     description: number
     url: number
+    is_favorited: number
+    filename: number
+    extension: number
     gallery_id: number
     album_picture_id: number
+    favorite_id: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5570,12 +6765,14 @@ export namespace Prisma {
     id?: true
     gallery_id?: true
     album_picture_id?: true
+    favorite_id?: true
   }
 
   export type PictureSumAggregateInputType = {
     id?: true
     gallery_id?: true
     album_picture_id?: true
+    favorite_id?: true
   }
 
   export type PictureMinAggregateInputType = {
@@ -5583,8 +6780,12 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
+    is_favorited?: true
+    filename?: true
+    extension?: true
     gallery_id?: true
     album_picture_id?: true
+    favorite_id?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5594,8 +6795,12 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
+    is_favorited?: true
+    filename?: true
+    extension?: true
     gallery_id?: true
     album_picture_id?: true
+    favorite_id?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5605,8 +6810,12 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
+    is_favorited?: true
+    filename?: true
+    extension?: true
     gallery_id?: true
     album_picture_id?: true
+    favorite_id?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5703,8 +6912,12 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     gallery_id: number
     album_picture_id: number | null
+    favorite_id: number
     createdAt: Date
     updatedAt: Date
     _count: PictureCountAggregateOutputType | null
@@ -5733,10 +6946,16 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
+    is_favorited?: boolean
+    filename?: boolean
+    extension?: boolean
     gallery_id?: boolean
     album_picture_id?: boolean
+    favorite_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    embed_link?: boolean | Picture$embed_linkArgs<ExtArgs>
+    favorite?: boolean | FavoriteDefaultArgs<ExtArgs>
     gallery?: boolean | GalleryDefaultArgs<ExtArgs>
     album?: boolean | Picture$albumArgs<ExtArgs>
   }, ExtArgs["result"]["picture"]>
@@ -5746,13 +6965,19 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
+    is_favorited?: boolean
+    filename?: boolean
+    extension?: boolean
     gallery_id?: boolean
     album_picture_id?: boolean
+    favorite_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
   export type PictureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    embed_link?: boolean | Picture$embed_linkArgs<ExtArgs>
+    favorite?: boolean | FavoriteDefaultArgs<ExtArgs>
     gallery?: boolean | GalleryDefaultArgs<ExtArgs>
     album?: boolean | Picture$albumArgs<ExtArgs>
   }
@@ -5761,6 +6986,8 @@ export namespace Prisma {
   export type $PicturePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Picture"
     objects: {
+      embed_link: Prisma.$EmbedLinksPayload<ExtArgs> | null
+      favorite: Prisma.$FavoritePayload<ExtArgs>
       gallery: Prisma.$GalleryPayload<ExtArgs>
       album: Prisma.$AlbumPicturePayload<ExtArgs> | null
     }
@@ -5769,8 +6996,12 @@ export namespace Prisma {
       title: string
       description: string
       url: string
+      is_favorited: boolean
+      filename: string
+      extension: string
       gallery_id: number
       album_picture_id: number | null
+      favorite_id: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["picture"]>
@@ -6138,6 +7369,10 @@ export namespace Prisma {
   export interface Prisma__PictureClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    embed_link<T extends Picture$embed_linkArgs<ExtArgs> = {}>(args?: Subset<T, Picture$embed_linkArgs<ExtArgs>>): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    favorite<T extends FavoriteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FavoriteDefaultArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
     gallery<T extends GalleryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GalleryDefaultArgs<ExtArgs>>): Prisma__GalleryClient<$Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
     album<T extends Picture$albumArgs<ExtArgs> = {}>(args?: Subset<T, Picture$albumArgs<ExtArgs>>): Prisma__AlbumPictureClient<$Result.GetResult<Prisma.$AlbumPicturePayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
@@ -6174,8 +7409,12 @@ export namespace Prisma {
     readonly title: FieldRef<"Picture", 'String'>
     readonly description: FieldRef<"Picture", 'String'>
     readonly url: FieldRef<"Picture", 'String'>
+    readonly is_favorited: FieldRef<"Picture", 'Boolean'>
+    readonly filename: FieldRef<"Picture", 'String'>
+    readonly extension: FieldRef<"Picture", 'String'>
     readonly gallery_id: FieldRef<"Picture", 'Int'>
     readonly album_picture_id: FieldRef<"Picture", 'Int'>
+    readonly favorite_id: FieldRef<"Picture", 'Int'>
     readonly createdAt: FieldRef<"Picture", 'DateTime'>
     readonly updatedAt: FieldRef<"Picture", 'DateTime'>
   }
@@ -6486,6 +7725,22 @@ export namespace Prisma {
      * Filter which Pictures to delete
      */
     where?: PictureWhereInput
+  }
+
+
+  /**
+   * Picture.embed_link
+   */
+  export type Picture$embed_linkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    where?: EmbedLinksWhereInput
   }
 
 
@@ -8462,6 +9717,950 @@ export namespace Prisma {
 
 
   /**
+   * Model EmbedLinks
+   */
+
+  export type AggregateEmbedLinks = {
+    _count: EmbedLinksCountAggregateOutputType | null
+    _avg: EmbedLinksAvgAggregateOutputType | null
+    _sum: EmbedLinksSumAggregateOutputType | null
+    _min: EmbedLinksMinAggregateOutputType | null
+    _max: EmbedLinksMaxAggregateOutputType | null
+  }
+
+  export type EmbedLinksAvgAggregateOutputType = {
+    id: number | null
+    picture_id: number | null
+  }
+
+  export type EmbedLinksSumAggregateOutputType = {
+    id: number | null
+    picture_id: number | null
+  }
+
+  export type EmbedLinksMinAggregateOutputType = {
+    id: number | null
+    picture_id: number | null
+  }
+
+  export type EmbedLinksMaxAggregateOutputType = {
+    id: number | null
+    picture_id: number | null
+  }
+
+  export type EmbedLinksCountAggregateOutputType = {
+    id: number
+    html_link: number
+    direct_link: number
+    markdown_link: number
+    picture_id: number
+    _all: number
+  }
+
+
+  export type EmbedLinksAvgAggregateInputType = {
+    id?: true
+    picture_id?: true
+  }
+
+  export type EmbedLinksSumAggregateInputType = {
+    id?: true
+    picture_id?: true
+  }
+
+  export type EmbedLinksMinAggregateInputType = {
+    id?: true
+    picture_id?: true
+  }
+
+  export type EmbedLinksMaxAggregateInputType = {
+    id?: true
+    picture_id?: true
+  }
+
+  export type EmbedLinksCountAggregateInputType = {
+    id?: true
+    html_link?: true
+    direct_link?: true
+    markdown_link?: true
+    picture_id?: true
+    _all?: true
+  }
+
+  export type EmbedLinksAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmbedLinks to aggregate.
+     */
+    where?: EmbedLinksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmbedLinks to fetch.
+     */
+    orderBy?: EmbedLinksOrderByWithRelationInput | EmbedLinksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EmbedLinksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmbedLinks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmbedLinks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EmbedLinks
+    **/
+    _count?: true | EmbedLinksCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EmbedLinksAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EmbedLinksSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EmbedLinksMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EmbedLinksMaxAggregateInputType
+  }
+
+  export type GetEmbedLinksAggregateType<T extends EmbedLinksAggregateArgs> = {
+        [P in keyof T & keyof AggregateEmbedLinks]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEmbedLinks[P]>
+      : GetScalarType<T[P], AggregateEmbedLinks[P]>
+  }
+
+
+
+
+  export type EmbedLinksGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmbedLinksWhereInput
+    orderBy?: EmbedLinksOrderByWithAggregationInput | EmbedLinksOrderByWithAggregationInput[]
+    by: EmbedLinksScalarFieldEnum[] | EmbedLinksScalarFieldEnum
+    having?: EmbedLinksScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EmbedLinksCountAggregateInputType | true
+    _avg?: EmbedLinksAvgAggregateInputType
+    _sum?: EmbedLinksSumAggregateInputType
+    _min?: EmbedLinksMinAggregateInputType
+    _max?: EmbedLinksMaxAggregateInputType
+  }
+
+  export type EmbedLinksGroupByOutputType = {
+    id: number
+    html_link: JsonValue
+    direct_link: JsonValue
+    markdown_link: JsonValue
+    picture_id: number
+    _count: EmbedLinksCountAggregateOutputType | null
+    _avg: EmbedLinksAvgAggregateOutputType | null
+    _sum: EmbedLinksSumAggregateOutputType | null
+    _min: EmbedLinksMinAggregateOutputType | null
+    _max: EmbedLinksMaxAggregateOutputType | null
+  }
+
+  type GetEmbedLinksGroupByPayload<T extends EmbedLinksGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EmbedLinksGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EmbedLinksGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EmbedLinksGroupByOutputType[P]>
+            : GetScalarType<T[P], EmbedLinksGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EmbedLinksSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    html_link?: boolean
+    direct_link?: boolean
+    markdown_link?: boolean
+    picture_id?: boolean
+    picture?: boolean | PictureDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["embedLinks"]>
+
+  export type EmbedLinksSelectScalar = {
+    id?: boolean
+    html_link?: boolean
+    direct_link?: boolean
+    markdown_link?: boolean
+    picture_id?: boolean
+  }
+
+  export type EmbedLinksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    picture?: boolean | PictureDefaultArgs<ExtArgs>
+  }
+
+
+  export type $EmbedLinksPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EmbedLinks"
+    objects: {
+      picture: Prisma.$PicturePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      html_link: Prisma.JsonValue
+      direct_link: Prisma.JsonValue
+      markdown_link: Prisma.JsonValue
+      picture_id: number
+    }, ExtArgs["result"]["embedLinks"]>
+    composites: {}
+  }
+
+
+  type EmbedLinksGetPayload<S extends boolean | null | undefined | EmbedLinksDefaultArgs> = $Result.GetResult<Prisma.$EmbedLinksPayload, S>
+
+  type EmbedLinksCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<EmbedLinksFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: EmbedLinksCountAggregateInputType | true
+    }
+
+  export interface EmbedLinksDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EmbedLinks'], meta: { name: 'EmbedLinks' } }
+    /**
+     * Find zero or one EmbedLinks that matches the filter.
+     * @param {EmbedLinksFindUniqueArgs} args - Arguments to find a EmbedLinks
+     * @example
+     * // Get one EmbedLinks
+     * const embedLinks = await prisma.embedLinks.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends EmbedLinksFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, EmbedLinksFindUniqueArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one EmbedLinks that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {EmbedLinksFindUniqueOrThrowArgs} args - Arguments to find a EmbedLinks
+     * @example
+     * // Get one EmbedLinks
+     * const embedLinks = await prisma.embedLinks.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends EmbedLinksFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, EmbedLinksFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first EmbedLinks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksFindFirstArgs} args - Arguments to find a EmbedLinks
+     * @example
+     * // Get one EmbedLinks
+     * const embedLinks = await prisma.embedLinks.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends EmbedLinksFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, EmbedLinksFindFirstArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first EmbedLinks that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksFindFirstOrThrowArgs} args - Arguments to find a EmbedLinks
+     * @example
+     * // Get one EmbedLinks
+     * const embedLinks = await prisma.embedLinks.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends EmbedLinksFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, EmbedLinksFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more EmbedLinks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EmbedLinks
+     * const embedLinks = await prisma.embedLinks.findMany()
+     * 
+     * // Get first 10 EmbedLinks
+     * const embedLinks = await prisma.embedLinks.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const embedLinksWithIdOnly = await prisma.embedLinks.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends EmbedLinksFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, EmbedLinksFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a EmbedLinks.
+     * @param {EmbedLinksCreateArgs} args - Arguments to create a EmbedLinks.
+     * @example
+     * // Create one EmbedLinks
+     * const EmbedLinks = await prisma.embedLinks.create({
+     *   data: {
+     *     // ... data to create a EmbedLinks
+     *   }
+     * })
+     * 
+    **/
+    create<T extends EmbedLinksCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, EmbedLinksCreateArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many EmbedLinks.
+     *     @param {EmbedLinksCreateManyArgs} args - Arguments to create many EmbedLinks.
+     *     @example
+     *     // Create many EmbedLinks
+     *     const embedLinks = await prisma.embedLinks.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends EmbedLinksCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, EmbedLinksCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a EmbedLinks.
+     * @param {EmbedLinksDeleteArgs} args - Arguments to delete one EmbedLinks.
+     * @example
+     * // Delete one EmbedLinks
+     * const EmbedLinks = await prisma.embedLinks.delete({
+     *   where: {
+     *     // ... filter to delete one EmbedLinks
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends EmbedLinksDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, EmbedLinksDeleteArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one EmbedLinks.
+     * @param {EmbedLinksUpdateArgs} args - Arguments to update one EmbedLinks.
+     * @example
+     * // Update one EmbedLinks
+     * const embedLinks = await prisma.embedLinks.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends EmbedLinksUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, EmbedLinksUpdateArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more EmbedLinks.
+     * @param {EmbedLinksDeleteManyArgs} args - Arguments to filter EmbedLinks to delete.
+     * @example
+     * // Delete a few EmbedLinks
+     * const { count } = await prisma.embedLinks.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends EmbedLinksDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, EmbedLinksDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EmbedLinks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EmbedLinks
+     * const embedLinks = await prisma.embedLinks.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends EmbedLinksUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, EmbedLinksUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one EmbedLinks.
+     * @param {EmbedLinksUpsertArgs} args - Arguments to update or create a EmbedLinks.
+     * @example
+     * // Update or create a EmbedLinks
+     * const embedLinks = await prisma.embedLinks.upsert({
+     *   create: {
+     *     // ... data to create a EmbedLinks
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EmbedLinks we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends EmbedLinksUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, EmbedLinksUpsertArgs<ExtArgs>>
+    ): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of EmbedLinks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksCountArgs} args - Arguments to filter EmbedLinks to count.
+     * @example
+     * // Count the number of EmbedLinks
+     * const count = await prisma.embedLinks.count({
+     *   where: {
+     *     // ... the filter for the EmbedLinks we want to count
+     *   }
+     * })
+    **/
+    count<T extends EmbedLinksCountArgs>(
+      args?: Subset<T, EmbedLinksCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EmbedLinksCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EmbedLinks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EmbedLinksAggregateArgs>(args: Subset<T, EmbedLinksAggregateArgs>): Prisma.PrismaPromise<GetEmbedLinksAggregateType<T>>
+
+    /**
+     * Group by EmbedLinks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmbedLinksGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EmbedLinksGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EmbedLinksGroupByArgs['orderBy'] }
+        : { orderBy?: EmbedLinksGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EmbedLinksGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmbedLinksGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EmbedLinks model
+   */
+  readonly fields: EmbedLinksFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EmbedLinks.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EmbedLinksClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    picture<T extends PictureDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PictureDefaultArgs<ExtArgs>>): Prisma__PictureClient<$Result.GetResult<Prisma.$PicturePayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the EmbedLinks model
+   */ 
+  interface EmbedLinksFieldRefs {
+    readonly id: FieldRef<"EmbedLinks", 'Int'>
+    readonly html_link: FieldRef<"EmbedLinks", 'Json'>
+    readonly direct_link: FieldRef<"EmbedLinks", 'Json'>
+    readonly markdown_link: FieldRef<"EmbedLinks", 'Json'>
+    readonly picture_id: FieldRef<"EmbedLinks", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * EmbedLinks findUnique
+   */
+  export type EmbedLinksFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * Filter, which EmbedLinks to fetch.
+     */
+    where: EmbedLinksWhereUniqueInput
+  }
+
+
+  /**
+   * EmbedLinks findUniqueOrThrow
+   */
+  export type EmbedLinksFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * Filter, which EmbedLinks to fetch.
+     */
+    where: EmbedLinksWhereUniqueInput
+  }
+
+
+  /**
+   * EmbedLinks findFirst
+   */
+  export type EmbedLinksFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * Filter, which EmbedLinks to fetch.
+     */
+    where?: EmbedLinksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmbedLinks to fetch.
+     */
+    orderBy?: EmbedLinksOrderByWithRelationInput | EmbedLinksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmbedLinks.
+     */
+    cursor?: EmbedLinksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmbedLinks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmbedLinks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmbedLinks.
+     */
+    distinct?: EmbedLinksScalarFieldEnum | EmbedLinksScalarFieldEnum[]
+  }
+
+
+  /**
+   * EmbedLinks findFirstOrThrow
+   */
+  export type EmbedLinksFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * Filter, which EmbedLinks to fetch.
+     */
+    where?: EmbedLinksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmbedLinks to fetch.
+     */
+    orderBy?: EmbedLinksOrderByWithRelationInput | EmbedLinksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmbedLinks.
+     */
+    cursor?: EmbedLinksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmbedLinks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmbedLinks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmbedLinks.
+     */
+    distinct?: EmbedLinksScalarFieldEnum | EmbedLinksScalarFieldEnum[]
+  }
+
+
+  /**
+   * EmbedLinks findMany
+   */
+  export type EmbedLinksFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * Filter, which EmbedLinks to fetch.
+     */
+    where?: EmbedLinksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmbedLinks to fetch.
+     */
+    orderBy?: EmbedLinksOrderByWithRelationInput | EmbedLinksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EmbedLinks.
+     */
+    cursor?: EmbedLinksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmbedLinks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmbedLinks.
+     */
+    skip?: number
+    distinct?: EmbedLinksScalarFieldEnum | EmbedLinksScalarFieldEnum[]
+  }
+
+
+  /**
+   * EmbedLinks create
+   */
+  export type EmbedLinksCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EmbedLinks.
+     */
+    data: XOR<EmbedLinksCreateInput, EmbedLinksUncheckedCreateInput>
+  }
+
+
+  /**
+   * EmbedLinks createMany
+   */
+  export type EmbedLinksCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EmbedLinks.
+     */
+    data: EmbedLinksCreateManyInput | EmbedLinksCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * EmbedLinks update
+   */
+  export type EmbedLinksUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EmbedLinks.
+     */
+    data: XOR<EmbedLinksUpdateInput, EmbedLinksUncheckedUpdateInput>
+    /**
+     * Choose, which EmbedLinks to update.
+     */
+    where: EmbedLinksWhereUniqueInput
+  }
+
+
+  /**
+   * EmbedLinks updateMany
+   */
+  export type EmbedLinksUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EmbedLinks.
+     */
+    data: XOR<EmbedLinksUpdateManyMutationInput, EmbedLinksUncheckedUpdateManyInput>
+    /**
+     * Filter which EmbedLinks to update
+     */
+    where?: EmbedLinksWhereInput
+  }
+
+
+  /**
+   * EmbedLinks upsert
+   */
+  export type EmbedLinksUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EmbedLinks to update in case it exists.
+     */
+    where: EmbedLinksWhereUniqueInput
+    /**
+     * In case the EmbedLinks found by the `where` argument doesn't exist, create a new EmbedLinks with this data.
+     */
+    create: XOR<EmbedLinksCreateInput, EmbedLinksUncheckedCreateInput>
+    /**
+     * In case the EmbedLinks was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EmbedLinksUpdateInput, EmbedLinksUncheckedUpdateInput>
+  }
+
+
+  /**
+   * EmbedLinks delete
+   */
+  export type EmbedLinksDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+    /**
+     * Filter which EmbedLinks to delete.
+     */
+    where: EmbedLinksWhereUniqueInput
+  }
+
+
+  /**
+   * EmbedLinks deleteMany
+   */
+  export type EmbedLinksDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmbedLinks to delete
+     */
+    where?: EmbedLinksWhereInput
+  }
+
+
+  /**
+   * EmbedLinks without action
+   */
+  export type EmbedLinksDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmbedLinks
+     */
+    select?: EmbedLinksSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: EmbedLinksInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -8524,13 +10723,28 @@ export namespace Prisma {
   export type AlbumScalarFieldEnum = (typeof AlbumScalarFieldEnum)[keyof typeof AlbumScalarFieldEnum]
 
 
+  export const FavoriteScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    favorited_pictures: 'favorited_pictures',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
+
+
   export const PictureScalarFieldEnum: {
     id: 'id',
     title: 'title',
     description: 'description',
     url: 'url',
+    is_favorited: 'is_favorited',
+    filename: 'filename',
+    extension: 'extension',
     gallery_id: 'gallery_id',
     album_picture_id: 'album_picture_id',
+    favorite_id: 'favorite_id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8560,12 +10774,30 @@ export namespace Prisma {
   export type SubcriptionScalarFieldEnum = (typeof SubcriptionScalarFieldEnum)[keyof typeof SubcriptionScalarFieldEnum]
 
 
+  export const EmbedLinksScalarFieldEnum: {
+    id: 'id',
+    html_link: 'html_link',
+    direct_link: 'direct_link',
+    markdown_link: 'markdown_link',
+    picture_id: 'picture_id'
+  };
+
+  export type EmbedLinksScalarFieldEnum = (typeof EmbedLinksScalarFieldEnum)[keyof typeof EmbedLinksScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -8582,6 +10814,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -8677,6 +10918,13 @@ export namespace Prisma {
    * Reference to a field of type 'plan[]'
    */
   export type ListEnumplanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'plan[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
@@ -8965,6 +11213,63 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Album"> | Date | string
   }
 
+  export type FavoriteWhereInput = {
+    AND?: FavoriteWhereInput | FavoriteWhereInput[]
+    OR?: FavoriteWhereInput[]
+    NOT?: FavoriteWhereInput | FavoriteWhereInput[]
+    id?: IntFilter<"Favorite"> | number
+    user_id?: IntFilter<"Favorite"> | number
+    favorited_pictures?: IntFilter<"Favorite"> | number
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+    updatedAt?: DateTimeFilter<"Favorite"> | Date | string
+    pictures?: PictureListRelationFilter
+  }
+
+  export type FavoriteOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    pictures?: PictureOrderByRelationAggregateInput
+  }
+
+  export type FavoriteWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    user_id?: number
+    AND?: FavoriteWhereInput | FavoriteWhereInput[]
+    OR?: FavoriteWhereInput[]
+    NOT?: FavoriteWhereInput | FavoriteWhereInput[]
+    favorited_pictures?: IntFilter<"Favorite"> | number
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+    updatedAt?: DateTimeFilter<"Favorite"> | Date | string
+    pictures?: PictureListRelationFilter
+  }, "id" | "user_id">
+
+  export type FavoriteOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FavoriteCountOrderByAggregateInput
+    _avg?: FavoriteAvgOrderByAggregateInput
+    _max?: FavoriteMaxOrderByAggregateInput
+    _min?: FavoriteMinOrderByAggregateInput
+    _sum?: FavoriteSumOrderByAggregateInput
+  }
+
+  export type FavoriteScalarWhereWithAggregatesInput = {
+    AND?: FavoriteScalarWhereWithAggregatesInput | FavoriteScalarWhereWithAggregatesInput[]
+    OR?: FavoriteScalarWhereWithAggregatesInput[]
+    NOT?: FavoriteScalarWhereWithAggregatesInput | FavoriteScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Favorite"> | number
+    user_id?: IntWithAggregatesFilter<"Favorite"> | number
+    favorited_pictures?: IntWithAggregatesFilter<"Favorite"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Favorite"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Favorite"> | Date | string
+  }
+
   export type PictureWhereInput = {
     AND?: PictureWhereInput | PictureWhereInput[]
     OR?: PictureWhereInput[]
@@ -8973,10 +11278,16 @@ export namespace Prisma {
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
+    is_favorited?: BoolFilter<"Picture"> | boolean
+    filename?: StringFilter<"Picture"> | string
+    extension?: StringFilter<"Picture"> | string
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
+    favorite_id?: IntFilter<"Picture"> | number
     createdAt?: DateTimeFilter<"Picture"> | Date | string
     updatedAt?: DateTimeFilter<"Picture"> | Date | string
+    embed_link?: XOR<EmbedLinksNullableRelationFilter, EmbedLinksWhereInput> | null
+    favorite?: XOR<FavoriteRelationFilter, FavoriteWhereInput>
     gallery?: XOR<GalleryRelationFilter, GalleryWhereInput>
     album?: XOR<AlbumPictureNullableRelationFilter, AlbumPictureWhereInput> | null
   }
@@ -8986,10 +11297,16 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    is_favorited?: SortOrder
+    filename?: SortOrder
+    extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrderInput | SortOrder
+    favorite_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    embed_link?: EmbedLinksOrderByWithRelationInput
+    favorite?: FavoriteOrderByWithRelationInput
     gallery?: GalleryOrderByWithRelationInput
     album?: AlbumPictureOrderByWithRelationInput
   }
@@ -9002,10 +11319,16 @@ export namespace Prisma {
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
+    is_favorited?: BoolFilter<"Picture"> | boolean
+    filename?: StringFilter<"Picture"> | string
+    extension?: StringFilter<"Picture"> | string
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
+    favorite_id?: IntFilter<"Picture"> | number
     createdAt?: DateTimeFilter<"Picture"> | Date | string
     updatedAt?: DateTimeFilter<"Picture"> | Date | string
+    embed_link?: XOR<EmbedLinksNullableRelationFilter, EmbedLinksWhereInput> | null
+    favorite?: XOR<FavoriteRelationFilter, FavoriteWhereInput>
     gallery?: XOR<GalleryRelationFilter, GalleryWhereInput>
     album?: XOR<AlbumPictureNullableRelationFilter, AlbumPictureWhereInput> | null
   }, "id">
@@ -9015,8 +11338,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    is_favorited?: SortOrder
+    filename?: SortOrder
+    extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrderInput | SortOrder
+    favorite_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PictureCountOrderByAggregateInput
@@ -9034,8 +11361,12 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Picture"> | string
     description?: StringWithAggregatesFilter<"Picture"> | string
     url?: StringWithAggregatesFilter<"Picture"> | string
+    is_favorited?: BoolWithAggregatesFilter<"Picture"> | boolean
+    filename?: StringWithAggregatesFilter<"Picture"> | string
+    extension?: StringWithAggregatesFilter<"Picture"> | string
     gallery_id?: IntWithAggregatesFilter<"Picture"> | number
     album_picture_id?: IntNullableWithAggregatesFilter<"Picture"> | number | null
+    favorite_id?: IntWithAggregatesFilter<"Picture"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Picture"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Picture"> | Date | string
   }
@@ -9155,6 +11486,63 @@ export namespace Prisma {
     end_date?: DateTimeNullableWithAggregatesFilter<"Subcription"> | Date | string | null
     status?: EnumstatusWithAggregatesFilter<"Subcription"> | $Enums.status
     plan?: EnumplanWithAggregatesFilter<"Subcription"> | $Enums.plan
+  }
+
+  export type EmbedLinksWhereInput = {
+    AND?: EmbedLinksWhereInput | EmbedLinksWhereInput[]
+    OR?: EmbedLinksWhereInput[]
+    NOT?: EmbedLinksWhereInput | EmbedLinksWhereInput[]
+    id?: IntFilter<"EmbedLinks"> | number
+    html_link?: JsonFilter<"EmbedLinks">
+    direct_link?: JsonFilter<"EmbedLinks">
+    markdown_link?: JsonFilter<"EmbedLinks">
+    picture_id?: IntFilter<"EmbedLinks"> | number
+    picture?: XOR<PictureRelationFilter, PictureWhereInput>
+  }
+
+  export type EmbedLinksOrderByWithRelationInput = {
+    id?: SortOrder
+    html_link?: SortOrder
+    direct_link?: SortOrder
+    markdown_link?: SortOrder
+    picture_id?: SortOrder
+    picture?: PictureOrderByWithRelationInput
+  }
+
+  export type EmbedLinksWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    picture_id?: number
+    AND?: EmbedLinksWhereInput | EmbedLinksWhereInput[]
+    OR?: EmbedLinksWhereInput[]
+    NOT?: EmbedLinksWhereInput | EmbedLinksWhereInput[]
+    html_link?: JsonFilter<"EmbedLinks">
+    direct_link?: JsonFilter<"EmbedLinks">
+    markdown_link?: JsonFilter<"EmbedLinks">
+    picture?: XOR<PictureRelationFilter, PictureWhereInput>
+  }, "id" | "picture_id">
+
+  export type EmbedLinksOrderByWithAggregationInput = {
+    id?: SortOrder
+    html_link?: SortOrder
+    direct_link?: SortOrder
+    markdown_link?: SortOrder
+    picture_id?: SortOrder
+    _count?: EmbedLinksCountOrderByAggregateInput
+    _avg?: EmbedLinksAvgOrderByAggregateInput
+    _max?: EmbedLinksMaxOrderByAggregateInput
+    _min?: EmbedLinksMinOrderByAggregateInput
+    _sum?: EmbedLinksSumOrderByAggregateInput
+  }
+
+  export type EmbedLinksScalarWhereWithAggregatesInput = {
+    AND?: EmbedLinksScalarWhereWithAggregatesInput | EmbedLinksScalarWhereWithAggregatesInput[]
+    OR?: EmbedLinksScalarWhereWithAggregatesInput[]
+    NOT?: EmbedLinksScalarWhereWithAggregatesInput | EmbedLinksScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"EmbedLinks"> | number
+    html_link?: JsonWithAggregatesFilter<"EmbedLinks">
+    direct_link?: JsonWithAggregatesFilter<"EmbedLinks">
+    markdown_link?: JsonWithAggregatesFilter<"EmbedLinks">
+    picture_id?: IntWithAggregatesFilter<"EmbedLinks"> | number
   }
 
   export type UserCreateInput = {
@@ -9425,12 +11813,74 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FavoriteCreateInput = {
+    user_id: number
+    favorited_pictures: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    pictures?: PictureCreateNestedManyWithoutFavoriteInput
+  }
+
+  export type FavoriteUncheckedCreateInput = {
+    id?: number
+    user_id: number
+    favorited_pictures: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    pictures?: PictureUncheckedCreateNestedManyWithoutFavoriteInput
+  }
+
+  export type FavoriteUpdateInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    favorited_pictures?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pictures?: PictureUpdateManyWithoutFavoriteNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    favorited_pictures?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pictures?: PictureUncheckedUpdateManyWithoutFavoriteNestedInput
+  }
+
+  export type FavoriteCreateManyInput = {
+    id?: number
+    user_id: number
+    favorited_pictures: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavoriteUpdateManyMutationInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    favorited_pictures?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    favorited_pictures?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PictureCreateInput = {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
+    favorite: FavoriteCreateNestedOneWithoutPicturesInput
     gallery: GalleryCreateNestedOneWithoutPicturesInput
     album?: AlbumPictureCreateNestedOneWithoutPicturesInput
   }
@@ -9440,18 +11890,28 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     gallery_id: number
     album_picture_id?: number | null
+    favorite_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
   }
 
   export type PictureUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
+    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
     gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
     album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
   }
@@ -9461,10 +11921,15 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
+    favorite_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
   }
 
   export type PictureCreateManyInput = {
@@ -9472,8 +11937,12 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     gallery_id: number
     album_picture_id?: number | null
+    favorite_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9482,6 +11951,9 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9491,8 +11963,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
+    favorite_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9603,6 +12079,58 @@ export namespace Prisma {
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
+  }
+
+  export type EmbedLinksCreateInput = {
+    html_link: JsonNullValueInput | InputJsonValue
+    direct_link: JsonNullValueInput | InputJsonValue
+    markdown_link: JsonNullValueInput | InputJsonValue
+    picture: PictureCreateNestedOneWithoutEmbed_linkInput
+  }
+
+  export type EmbedLinksUncheckedCreateInput = {
+    id?: number
+    html_link: JsonNullValueInput | InputJsonValue
+    direct_link: JsonNullValueInput | InputJsonValue
+    markdown_link: JsonNullValueInput | InputJsonValue
+    picture_id: number
+  }
+
+  export type EmbedLinksUpdateInput = {
+    html_link?: JsonNullValueInput | InputJsonValue
+    direct_link?: JsonNullValueInput | InputJsonValue
+    markdown_link?: JsonNullValueInput | InputJsonValue
+    picture?: PictureUpdateOneRequiredWithoutEmbed_linkNestedInput
+  }
+
+  export type EmbedLinksUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    html_link?: JsonNullValueInput | InputJsonValue
+    direct_link?: JsonNullValueInput | InputJsonValue
+    markdown_link?: JsonNullValueInput | InputJsonValue
+    picture_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EmbedLinksCreateManyInput = {
+    id?: number
+    html_link: JsonNullValueInput | InputJsonValue
+    direct_link: JsonNullValueInput | InputJsonValue
+    markdown_link: JsonNullValueInput | InputJsonValue
+    picture_id: number
+  }
+
+  export type EmbedLinksUpdateManyMutationInput = {
+    html_link?: JsonNullValueInput | InputJsonValue
+    direct_link?: JsonNullValueInput | InputJsonValue
+    markdown_link?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type EmbedLinksUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    html_link?: JsonNullValueInput | InputJsonValue
+    direct_link?: JsonNullValueInput | InputJsonValue
+    markdown_link?: JsonNullValueInput | InputJsonValue
+    picture_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -9954,6 +12482,42 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
+  export type FavoriteCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FavoriteAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+  }
+
+  export type FavoriteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FavoriteMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FavoriteSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    favorited_pictures?: SortOrder
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -9963,6 +12527,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type EmbedLinksNullableRelationFilter = {
+    is?: EmbedLinksWhereInput | null
+    isNot?: EmbedLinksWhereInput | null
+  }
+
+  export type FavoriteRelationFilter = {
+    is?: FavoriteWhereInput
+    isNot?: FavoriteWhereInput
   }
 
   export type GalleryRelationFilter = {
@@ -9975,8 +12549,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    is_favorited?: SortOrder
+    filename?: SortOrder
+    extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
+    favorite_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9985,6 +12563,7 @@ export namespace Prisma {
     id?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
+    favorite_id?: SortOrder
   }
 
   export type PictureMaxOrderByAggregateInput = {
@@ -9992,8 +12571,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    is_favorited?: SortOrder
+    filename?: SortOrder
+    extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
+    favorite_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10003,8 +12586,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    is_favorited?: SortOrder
+    filename?: SortOrder
+    extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
+    favorite_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10013,6 +12600,7 @@ export namespace Prisma {
     id?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
+    favorite_id?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -10161,6 +12749,86 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumplanFilter<$PrismaModel>
     _max?: NestedEnumplanFilter<$PrismaModel>
+  }
+  export type JsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type PictureRelationFilter = {
+    is?: PictureWhereInput
+    isNot?: PictureWhereInput
+  }
+
+  export type EmbedLinksCountOrderByAggregateInput = {
+    id?: SortOrder
+    html_link?: SortOrder
+    direct_link?: SortOrder
+    markdown_link?: SortOrder
+    picture_id?: SortOrder
+  }
+
+  export type EmbedLinksAvgOrderByAggregateInput = {
+    id?: SortOrder
+    picture_id?: SortOrder
+  }
+
+  export type EmbedLinksMaxOrderByAggregateInput = {
+    id?: SortOrder
+    picture_id?: SortOrder
+  }
+
+  export type EmbedLinksMinOrderByAggregateInput = {
+    id?: SortOrder
+    picture_id?: SortOrder
+  }
+
+  export type EmbedLinksSumOrderByAggregateInput = {
+    id?: SortOrder
+    picture_id?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type ClientKeyCreateNestedOneWithoutUserInput = {
@@ -10445,6 +13113,60 @@ export namespace Prisma {
     update?: XOR<XOR<AlbumPictureUpdateToOneWithWhereWithoutAlbumInput, AlbumPictureUpdateWithoutAlbumInput>, AlbumPictureUncheckedUpdateWithoutAlbumInput>
   }
 
+  export type PictureCreateNestedManyWithoutFavoriteInput = {
+    create?: XOR<PictureCreateWithoutFavoriteInput, PictureUncheckedCreateWithoutFavoriteInput> | PictureCreateWithoutFavoriteInput[] | PictureUncheckedCreateWithoutFavoriteInput[]
+    connectOrCreate?: PictureCreateOrConnectWithoutFavoriteInput | PictureCreateOrConnectWithoutFavoriteInput[]
+    createMany?: PictureCreateManyFavoriteInputEnvelope
+    connect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+  }
+
+  export type PictureUncheckedCreateNestedManyWithoutFavoriteInput = {
+    create?: XOR<PictureCreateWithoutFavoriteInput, PictureUncheckedCreateWithoutFavoriteInput> | PictureCreateWithoutFavoriteInput[] | PictureUncheckedCreateWithoutFavoriteInput[]
+    connectOrCreate?: PictureCreateOrConnectWithoutFavoriteInput | PictureCreateOrConnectWithoutFavoriteInput[]
+    createMany?: PictureCreateManyFavoriteInputEnvelope
+    connect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+  }
+
+  export type PictureUpdateManyWithoutFavoriteNestedInput = {
+    create?: XOR<PictureCreateWithoutFavoriteInput, PictureUncheckedCreateWithoutFavoriteInput> | PictureCreateWithoutFavoriteInput[] | PictureUncheckedCreateWithoutFavoriteInput[]
+    connectOrCreate?: PictureCreateOrConnectWithoutFavoriteInput | PictureCreateOrConnectWithoutFavoriteInput[]
+    upsert?: PictureUpsertWithWhereUniqueWithoutFavoriteInput | PictureUpsertWithWhereUniqueWithoutFavoriteInput[]
+    createMany?: PictureCreateManyFavoriteInputEnvelope
+    set?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    disconnect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    delete?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    connect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    update?: PictureUpdateWithWhereUniqueWithoutFavoriteInput | PictureUpdateWithWhereUniqueWithoutFavoriteInput[]
+    updateMany?: PictureUpdateManyWithWhereWithoutFavoriteInput | PictureUpdateManyWithWhereWithoutFavoriteInput[]
+    deleteMany?: PictureScalarWhereInput | PictureScalarWhereInput[]
+  }
+
+  export type PictureUncheckedUpdateManyWithoutFavoriteNestedInput = {
+    create?: XOR<PictureCreateWithoutFavoriteInput, PictureUncheckedCreateWithoutFavoriteInput> | PictureCreateWithoutFavoriteInput[] | PictureUncheckedCreateWithoutFavoriteInput[]
+    connectOrCreate?: PictureCreateOrConnectWithoutFavoriteInput | PictureCreateOrConnectWithoutFavoriteInput[]
+    upsert?: PictureUpsertWithWhereUniqueWithoutFavoriteInput | PictureUpsertWithWhereUniqueWithoutFavoriteInput[]
+    createMany?: PictureCreateManyFavoriteInputEnvelope
+    set?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    disconnect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    delete?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    connect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
+    update?: PictureUpdateWithWhereUniqueWithoutFavoriteInput | PictureUpdateWithWhereUniqueWithoutFavoriteInput[]
+    updateMany?: PictureUpdateManyWithWhereWithoutFavoriteInput | PictureUpdateManyWithWhereWithoutFavoriteInput[]
+    deleteMany?: PictureScalarWhereInput | PictureScalarWhereInput[]
+  }
+
+  export type EmbedLinksCreateNestedOneWithoutPictureInput = {
+    create?: XOR<EmbedLinksCreateWithoutPictureInput, EmbedLinksUncheckedCreateWithoutPictureInput>
+    connectOrCreate?: EmbedLinksCreateOrConnectWithoutPictureInput
+    connect?: EmbedLinksWhereUniqueInput
+  }
+
+  export type FavoriteCreateNestedOneWithoutPicturesInput = {
+    create?: XOR<FavoriteCreateWithoutPicturesInput, FavoriteUncheckedCreateWithoutPicturesInput>
+    connectOrCreate?: FavoriteCreateOrConnectWithoutPicturesInput
+    connect?: FavoriteWhereUniqueInput
+  }
+
   export type GalleryCreateNestedOneWithoutPicturesInput = {
     create?: XOR<GalleryCreateWithoutPicturesInput, GalleryUncheckedCreateWithoutPicturesInput>
     connectOrCreate?: GalleryCreateOrConnectWithoutPicturesInput
@@ -10455,6 +13177,30 @@ export namespace Prisma {
     create?: XOR<AlbumPictureCreateWithoutPicturesInput, AlbumPictureUncheckedCreateWithoutPicturesInput>
     connectOrCreate?: AlbumPictureCreateOrConnectWithoutPicturesInput
     connect?: AlbumPictureWhereUniqueInput
+  }
+
+  export type EmbedLinksUncheckedCreateNestedOneWithoutPictureInput = {
+    create?: XOR<EmbedLinksCreateWithoutPictureInput, EmbedLinksUncheckedCreateWithoutPictureInput>
+    connectOrCreate?: EmbedLinksCreateOrConnectWithoutPictureInput
+    connect?: EmbedLinksWhereUniqueInput
+  }
+
+  export type EmbedLinksUpdateOneWithoutPictureNestedInput = {
+    create?: XOR<EmbedLinksCreateWithoutPictureInput, EmbedLinksUncheckedCreateWithoutPictureInput>
+    connectOrCreate?: EmbedLinksCreateOrConnectWithoutPictureInput
+    upsert?: EmbedLinksUpsertWithoutPictureInput
+    disconnect?: EmbedLinksWhereInput | boolean
+    delete?: EmbedLinksWhereInput | boolean
+    connect?: EmbedLinksWhereUniqueInput
+    update?: XOR<XOR<EmbedLinksUpdateToOneWithWhereWithoutPictureInput, EmbedLinksUpdateWithoutPictureInput>, EmbedLinksUncheckedUpdateWithoutPictureInput>
+  }
+
+  export type FavoriteUpdateOneRequiredWithoutPicturesNestedInput = {
+    create?: XOR<FavoriteCreateWithoutPicturesInput, FavoriteUncheckedCreateWithoutPicturesInput>
+    connectOrCreate?: FavoriteCreateOrConnectWithoutPicturesInput
+    upsert?: FavoriteUpsertWithoutPicturesInput
+    connect?: FavoriteWhereUniqueInput
+    update?: XOR<XOR<FavoriteUpdateToOneWithWhereWithoutPicturesInput, FavoriteUpdateWithoutPicturesInput>, FavoriteUncheckedUpdateWithoutPicturesInput>
   }
 
   export type GalleryUpdateOneRequiredWithoutPicturesNestedInput = {
@@ -10481,6 +13227,16 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput = {
+    create?: XOR<EmbedLinksCreateWithoutPictureInput, EmbedLinksUncheckedCreateWithoutPictureInput>
+    connectOrCreate?: EmbedLinksCreateOrConnectWithoutPictureInput
+    upsert?: EmbedLinksUpsertWithoutPictureInput
+    disconnect?: EmbedLinksWhereInput | boolean
+    delete?: EmbedLinksWhereInput | boolean
+    connect?: EmbedLinksWhereUniqueInput
+    update?: XOR<XOR<EmbedLinksUpdateToOneWithWhereWithoutPictureInput, EmbedLinksUpdateWithoutPictureInput>, EmbedLinksUncheckedUpdateWithoutPictureInput>
   }
 
   export type PictureCreateNestedManyWithoutAlbumInput = {
@@ -10563,6 +13319,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSubcriptionInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubcriptionInput, UserUpdateWithoutSubcriptionInput>, UserUncheckedUpdateWithoutSubcriptionInput>
+  }
+
+  export type PictureCreateNestedOneWithoutEmbed_linkInput = {
+    create?: XOR<PictureCreateWithoutEmbed_linkInput, PictureUncheckedCreateWithoutEmbed_linkInput>
+    connectOrCreate?: PictureCreateOrConnectWithoutEmbed_linkInput
+    connect?: PictureWhereUniqueInput
+  }
+
+  export type PictureUpdateOneRequiredWithoutEmbed_linkNestedInput = {
+    create?: XOR<PictureCreateWithoutEmbed_linkInput, PictureUncheckedCreateWithoutEmbed_linkInput>
+    connectOrCreate?: PictureCreateOrConnectWithoutEmbed_linkInput
+    upsert?: PictureUpsertWithoutEmbed_linkInput
+    connect?: PictureWhereUniqueInput
+    update?: XOR<XOR<PictureUpdateToOneWithWhereWithoutEmbed_linkInput, PictureUpdateWithoutEmbed_linkInput>, PictureUncheckedUpdateWithoutEmbed_linkInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -10815,6 +13585,28 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumplanFilter<$PrismaModel>
     _max?: NestedEnumplanFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type ClientKeyCreateWithoutUserInput = {
@@ -11084,8 +13876,13 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
+    favorite: FavoriteCreateNestedOneWithoutPicturesInput
     album?: AlbumPictureCreateNestedOneWithoutPicturesInput
   }
 
@@ -11094,9 +13891,14 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     album_picture_id?: number | null
+    favorite_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
   }
 
   export type PictureCreateOrConnectWithoutGalleryInput = {
@@ -11171,8 +13973,12 @@ export namespace Prisma {
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
+    is_favorited?: BoolFilter<"Picture"> | boolean
+    filename?: StringFilter<"Picture"> | string
+    extension?: StringFilter<"Picture"> | string
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
+    favorite_id?: IntFilter<"Picture"> | number
     createdAt?: DateTimeFilter<"Picture"> | Date | string
     updatedAt?: DateTimeFilter<"Picture"> | Date | string
   }
@@ -11345,6 +14151,99 @@ export namespace Prisma {
     subcription?: SubcriptionUncheckedUpdateOneWithoutUserNestedInput
   }
 
+  export type PictureCreateWithoutFavoriteInput = {
+    title: string
+    description: string
+    url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
+    gallery: GalleryCreateNestedOneWithoutPicturesInput
+    album?: AlbumPictureCreateNestedOneWithoutPicturesInput
+  }
+
+  export type PictureUncheckedCreateWithoutFavoriteInput = {
+    id?: number
+    title: string
+    description: string
+    url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
+    gallery_id: number
+    album_picture_id?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
+  }
+
+  export type PictureCreateOrConnectWithoutFavoriteInput = {
+    where: PictureWhereUniqueInput
+    create: XOR<PictureCreateWithoutFavoriteInput, PictureUncheckedCreateWithoutFavoriteInput>
+  }
+
+  export type PictureCreateManyFavoriteInputEnvelope = {
+    data: PictureCreateManyFavoriteInput | PictureCreateManyFavoriteInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PictureUpsertWithWhereUniqueWithoutFavoriteInput = {
+    where: PictureWhereUniqueInput
+    update: XOR<PictureUpdateWithoutFavoriteInput, PictureUncheckedUpdateWithoutFavoriteInput>
+    create: XOR<PictureCreateWithoutFavoriteInput, PictureUncheckedCreateWithoutFavoriteInput>
+  }
+
+  export type PictureUpdateWithWhereUniqueWithoutFavoriteInput = {
+    where: PictureWhereUniqueInput
+    data: XOR<PictureUpdateWithoutFavoriteInput, PictureUncheckedUpdateWithoutFavoriteInput>
+  }
+
+  export type PictureUpdateManyWithWhereWithoutFavoriteInput = {
+    where: PictureScalarWhereInput
+    data: XOR<PictureUpdateManyMutationInput, PictureUncheckedUpdateManyWithoutFavoriteInput>
+  }
+
+  export type EmbedLinksCreateWithoutPictureInput = {
+    html_link: JsonNullValueInput | InputJsonValue
+    direct_link: JsonNullValueInput | InputJsonValue
+    markdown_link: JsonNullValueInput | InputJsonValue
+  }
+
+  export type EmbedLinksUncheckedCreateWithoutPictureInput = {
+    id?: number
+    html_link: JsonNullValueInput | InputJsonValue
+    direct_link: JsonNullValueInput | InputJsonValue
+    markdown_link: JsonNullValueInput | InputJsonValue
+  }
+
+  export type EmbedLinksCreateOrConnectWithoutPictureInput = {
+    where: EmbedLinksWhereUniqueInput
+    create: XOR<EmbedLinksCreateWithoutPictureInput, EmbedLinksUncheckedCreateWithoutPictureInput>
+  }
+
+  export type FavoriteCreateWithoutPicturesInput = {
+    user_id: number
+    favorited_pictures: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavoriteUncheckedCreateWithoutPicturesInput = {
+    id?: number
+    user_id: number
+    favorited_pictures: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavoriteCreateOrConnectWithoutPicturesInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutPicturesInput, FavoriteUncheckedCreateWithoutPicturesInput>
+  }
+
   export type GalleryCreateWithoutPicturesInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11379,6 +14278,56 @@ export namespace Prisma {
   export type AlbumPictureCreateOrConnectWithoutPicturesInput = {
     where: AlbumPictureWhereUniqueInput
     create: XOR<AlbumPictureCreateWithoutPicturesInput, AlbumPictureUncheckedCreateWithoutPicturesInput>
+  }
+
+  export type EmbedLinksUpsertWithoutPictureInput = {
+    update: XOR<EmbedLinksUpdateWithoutPictureInput, EmbedLinksUncheckedUpdateWithoutPictureInput>
+    create: XOR<EmbedLinksCreateWithoutPictureInput, EmbedLinksUncheckedCreateWithoutPictureInput>
+    where?: EmbedLinksWhereInput
+  }
+
+  export type EmbedLinksUpdateToOneWithWhereWithoutPictureInput = {
+    where?: EmbedLinksWhereInput
+    data: XOR<EmbedLinksUpdateWithoutPictureInput, EmbedLinksUncheckedUpdateWithoutPictureInput>
+  }
+
+  export type EmbedLinksUpdateWithoutPictureInput = {
+    html_link?: JsonNullValueInput | InputJsonValue
+    direct_link?: JsonNullValueInput | InputJsonValue
+    markdown_link?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type EmbedLinksUncheckedUpdateWithoutPictureInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    html_link?: JsonNullValueInput | InputJsonValue
+    direct_link?: JsonNullValueInput | InputJsonValue
+    markdown_link?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type FavoriteUpsertWithoutPicturesInput = {
+    update: XOR<FavoriteUpdateWithoutPicturesInput, FavoriteUncheckedUpdateWithoutPicturesInput>
+    create: XOR<FavoriteCreateWithoutPicturesInput, FavoriteUncheckedCreateWithoutPicturesInput>
+    where?: FavoriteWhereInput
+  }
+
+  export type FavoriteUpdateToOneWithWhereWithoutPicturesInput = {
+    where?: FavoriteWhereInput
+    data: XOR<FavoriteUpdateWithoutPicturesInput, FavoriteUncheckedUpdateWithoutPicturesInput>
+  }
+
+  export type FavoriteUpdateWithoutPicturesInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    favorited_pictures?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateWithoutPicturesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    favorited_pictures?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type GalleryUpsertWithoutPicturesInput = {
@@ -11433,8 +14382,13 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
+    favorite: FavoriteCreateNestedOneWithoutPicturesInput
     gallery: GalleryCreateNestedOneWithoutPicturesInput
   }
 
@@ -11443,9 +14397,14 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     gallery_id: number
+    favorite_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
   }
 
   export type PictureCreateOrConnectWithoutAlbumInput = {
@@ -11606,6 +14565,80 @@ export namespace Prisma {
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type PictureCreateWithoutEmbed_linkInput = {
+    title: string
+    description: string
+    url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    favorite: FavoriteCreateNestedOneWithoutPicturesInput
+    gallery: GalleryCreateNestedOneWithoutPicturesInput
+    album?: AlbumPictureCreateNestedOneWithoutPicturesInput
+  }
+
+  export type PictureUncheckedCreateWithoutEmbed_linkInput = {
+    id?: number
+    title: string
+    description: string
+    url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
+    gallery_id: number
+    album_picture_id?: number | null
+    favorite_id: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PictureCreateOrConnectWithoutEmbed_linkInput = {
+    where: PictureWhereUniqueInput
+    create: XOR<PictureCreateWithoutEmbed_linkInput, PictureUncheckedCreateWithoutEmbed_linkInput>
+  }
+
+  export type PictureUpsertWithoutEmbed_linkInput = {
+    update: XOR<PictureUpdateWithoutEmbed_linkInput, PictureUncheckedUpdateWithoutEmbed_linkInput>
+    create: XOR<PictureCreateWithoutEmbed_linkInput, PictureUncheckedCreateWithoutEmbed_linkInput>
+    where?: PictureWhereInput
+  }
+
+  export type PictureUpdateToOneWithWhereWithoutEmbed_linkInput = {
+    where?: PictureWhereInput
+    data: XOR<PictureUpdateWithoutEmbed_linkInput, PictureUncheckedUpdateWithoutEmbed_linkInput>
+  }
+
+  export type PictureUpdateWithoutEmbed_linkInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
+    gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
+    album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
+  }
+
+  export type PictureUncheckedUpdateWithoutEmbed_linkInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
+    gallery_id?: IntFieldUpdateOperationsInput | number
+    album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
+    favorite_id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AlbumCreateManyUserInput = {
     id?: number
     title: string
@@ -11644,7 +14677,11 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     album_picture_id?: number | null
+    favorite_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11653,8 +14690,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
+    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
     album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
   }
 
@@ -11663,9 +14705,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
+    favorite_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
   }
 
   export type PictureUncheckedUpdateManyWithoutGalleryInput = {
@@ -11673,6 +14720,67 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
+    album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
+    favorite_id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PictureCreateManyFavoriteInput = {
+    id?: number
+    title: string
+    description: string
+    url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
+    gallery_id: number
+    album_picture_id?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PictureUpdateWithoutFavoriteInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
+    gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
+    album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
+  }
+
+  export type PictureUncheckedUpdateWithoutFavoriteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
+    gallery_id?: IntFieldUpdateOperationsInput | number
+    album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
+  }
+
+  export type PictureUncheckedUpdateManyWithoutFavoriteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
+    gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11683,7 +14791,11 @@ export namespace Prisma {
     title: string
     description: string
     url: string
+    is_favorited: boolean
+    filename: string
+    extension: string
     gallery_id: number
+    favorite_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11692,8 +14804,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
+    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
     gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
   }
 
@@ -11702,9 +14819,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
   }
 
   export type PictureUncheckedUpdateManyWithoutAlbumInput = {
@@ -11712,7 +14834,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    is_favorited?: BoolFieldUpdateOperationsInput | boolean
+    filename?: StringFieldUpdateOperationsInput | string
+    extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11730,6 +14856,10 @@ export namespace Prisma {
      * @deprecated Use GalleryCountOutputTypeDefaultArgs instead
      */
     export type GalleryCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GalleryCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FavoriteCountOutputTypeDefaultArgs instead
+     */
+    export type FavoriteCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FavoriteCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AlbumPictureCountOutputTypeDefaultArgs instead
      */
@@ -11751,6 +14881,10 @@ export namespace Prisma {
      */
     export type AlbumArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AlbumDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use FavoriteDefaultArgs instead
+     */
+    export type FavoriteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FavoriteDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use PictureDefaultArgs instead
      */
     export type PictureArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PictureDefaultArgs<ExtArgs>
@@ -11762,6 +14896,10 @@ export namespace Prisma {
      * @deprecated Use SubcriptionDefaultArgs instead
      */
     export type SubcriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SubcriptionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use EmbedLinksDefaultArgs instead
+     */
+    export type EmbedLinksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = EmbedLinksDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

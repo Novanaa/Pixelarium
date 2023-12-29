@@ -144,13 +144,25 @@ exports.Prisma.AlbumScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.FavoriteScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  favorited_pictures: 'favorited_pictures',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.PictureScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
   url: 'url',
+  is_favorited: 'is_favorited',
+  filename: 'filename',
+  extension: 'extension',
   gallery_id: 'gallery_id',
   album_picture_id: 'album_picture_id',
+  favorite_id: 'favorite_id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -171,9 +183,21 @@ exports.Prisma.SubcriptionScalarFieldEnum = {
   plan: 'plan'
 };
 
+exports.Prisma.EmbedLinksScalarFieldEnum = {
+  id: 'id',
+  html_link: 'html_link',
+  direct_link: 'direct_link',
+  markdown_link: 'markdown_link',
+  picture_id: 'picture_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -184,6 +208,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.UserType = exports.$Enums.UserType = {
   User: 'User',
@@ -208,9 +238,11 @@ exports.Prisma.ModelName = {
   ClientKey: 'ClientKey',
   Gallery: 'Gallery',
   Album: 'Album',
+  Favorite: 'Favorite',
   Picture: 'Picture',
   AlbumPicture: 'AlbumPicture',
-  Subcription: 'Subcription'
+  Subcription: 'Subcription',
+  EmbedLinks: 'EmbedLinks'
 };
 
 /**
