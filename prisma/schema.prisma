@@ -81,6 +81,7 @@ model Picture {
   is_favorited Boolean
   filename String
   extension String
+  is_private Boolean @default(false)
   gallery_id Int
   album_picture_id Int?
   favorite_id Int? 
