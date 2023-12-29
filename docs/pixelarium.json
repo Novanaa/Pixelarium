@@ -147,9 +147,168 @@
           }
         }
       }
+    },
+    "/v1/users/{name}": {
+      "summary": "Get Single User Data",
+      "get": {
+        "deprecated": false,
+        "tags": ["Users"],
+        "operationId": "singleUser",
+        "description": "Get Single User Data From User Name",
+        "summary": "Get Single User Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Returns a single user data by username.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "user": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{id}": {
+      "delete": {
+        "tags": ["Users"],
+        "deprecated": false,
+        "operationId": "deleteUser",
+        "summary": "Delete Existing User",
+        "description": "Delete Existing User By Id",
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userIdParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "description": "The ID was not valid."
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deletedUser": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "operationId": "updateUser",
+        "deprecated": false,
+        "summary": "Update Existing User",
+        "description": "Update Existing User By Id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userIdParams"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "User Data",
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "John Doe",
+                "bio": "My name is John Doe"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/userIdValidation"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "description": "The image file extension was not supported."
+          },
+          "200": {
+            "description": "Success Updated User Data",
+            "content": {
+              "application/json": {
+                "example": {
+                  "updatedUser": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T05:07:55.886Z",
+                    "updatedAt": "2023-12-29T05:07:55.886Z"
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
+    "securitySchemes": {
+      "JsonWebTokenAuthorization": {
+        "scheme": "bearer",
+        "bearerFormat": "Bearer",
+        "description": "Authentication for User",
+        "type": "http"
+      }
+    },
     "parameters": {
       "sessionTokenCookiesParams": {
         "name": "session",
@@ -162,6 +321,32 @@
         "schema": {
           "deprecated": false,
           "type": "string"
+        }
+      },
+      "usernameParams": {
+        "name": "name",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Name Data",
+        "in": "path",
+        "required": true,
+        "example": "ItsNvaa",
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      },
+      "userIdParams": {
+        "name": "id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Id Data",
+        "in": "path",
+        "required": true,
+        "example": 1,
+        "schema": {
+          "deprecated": false,
+          "type": "number"
         }
       }
     },
@@ -177,6 +362,9 @@
       },
       "unauthorized": {
         "description": "You are not authorized to access this resource. Please provide valid credentials or authentication."
+      },
+      "userIdValidation": {
+        "description": "The ID was not valid."
       }
     }
   }
