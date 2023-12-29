@@ -6718,6 +6718,7 @@ export namespace Prisma {
 
   export type PictureMinAggregateOutputType = {
     id: number | null
+    uniquekey: string | null
     title: string | null
     description: string | null
     url: string | null
@@ -6735,6 +6736,7 @@ export namespace Prisma {
 
   export type PictureMaxAggregateOutputType = {
     id: number | null
+    uniquekey: string | null
     title: string | null
     description: string | null
     url: string | null
@@ -6752,6 +6754,7 @@ export namespace Prisma {
 
   export type PictureCountAggregateOutputType = {
     id: number
+    uniquekey: number
     title: number
     description: number
     url: number
@@ -6787,6 +6790,7 @@ export namespace Prisma {
 
   export type PictureMinAggregateInputType = {
     id?: true
+    uniquekey?: true
     title?: true
     description?: true
     url?: true
@@ -6804,6 +6808,7 @@ export namespace Prisma {
 
   export type PictureMaxAggregateInputType = {
     id?: true
+    uniquekey?: true
     title?: true
     description?: true
     url?: true
@@ -6821,6 +6826,7 @@ export namespace Prisma {
 
   export type PictureCountAggregateInputType = {
     id?: true
+    uniquekey?: true
     title?: true
     description?: true
     url?: true
@@ -6925,6 +6931,7 @@ export namespace Prisma {
 
   export type PictureGroupByOutputType = {
     id: number
+    uniquekey: string
     title: string
     description: string
     url: string
@@ -6961,6 +6968,7 @@ export namespace Prisma {
 
   export type PictureSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    uniquekey?: boolean
     title?: boolean
     description?: boolean
     url?: boolean
@@ -6982,6 +6990,7 @@ export namespace Prisma {
 
   export type PictureSelectScalar = {
     id?: boolean
+    uniquekey?: boolean
     title?: boolean
     description?: boolean
     url?: boolean
@@ -7015,6 +7024,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      uniquekey: string
       title: string
       description: string
       url: string
@@ -7430,6 +7440,7 @@ export namespace Prisma {
    */ 
   interface PictureFieldRefs {
     readonly id: FieldRef<"Picture", 'Int'>
+    readonly uniquekey: FieldRef<"Picture", 'String'>
     readonly title: FieldRef<"Picture", 'String'>
     readonly description: FieldRef<"Picture", 'String'>
     readonly url: FieldRef<"Picture", 'String'>
@@ -10778,6 +10789,7 @@ export namespace Prisma {
 
   export const PictureScalarFieldEnum: {
     id: 'id',
+    uniquekey: 'uniquekey',
     title: 'title',
     description: 'description',
     url: 'url',
@@ -11319,6 +11331,7 @@ export namespace Prisma {
     OR?: PictureWhereInput[]
     NOT?: PictureWhereInput | PictureWhereInput[]
     id?: IntFilter<"Picture"> | number
+    uniquekey?: StringFilter<"Picture"> | string
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
@@ -11340,6 +11353,7 @@ export namespace Prisma {
 
   export type PictureOrderByWithRelationInput = {
     id?: SortOrder
+    uniquekey?: SortOrder
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
@@ -11364,6 +11378,7 @@ export namespace Prisma {
     AND?: PictureWhereInput | PictureWhereInput[]
     OR?: PictureWhereInput[]
     NOT?: PictureWhereInput | PictureWhereInput[]
+    uniquekey?: StringFilter<"Picture"> | string
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
@@ -11385,6 +11400,7 @@ export namespace Prisma {
 
   export type PictureOrderByWithAggregationInput = {
     id?: SortOrder
+    uniquekey?: SortOrder
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
@@ -11410,6 +11426,7 @@ export namespace Prisma {
     OR?: PictureScalarWhereWithAggregatesInput[]
     NOT?: PictureScalarWhereWithAggregatesInput | PictureScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Picture"> | number
+    uniquekey?: StringWithAggregatesFilter<"Picture"> | string
     title?: StringWithAggregatesFilter<"Picture"> | string
     description?: StringWithAggregatesFilter<"Picture"> | string
     url?: StringWithAggregatesFilter<"Picture"> | string
@@ -11925,6 +11942,7 @@ export namespace Prisma {
   }
 
   export type PictureCreateInput = {
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -11943,6 +11961,7 @@ export namespace Prisma {
 
   export type PictureUncheckedCreateInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -11960,6 +11979,7 @@ export namespace Prisma {
   }
 
   export type PictureUpdateInput = {
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -11978,6 +11998,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -11996,6 +12017,7 @@ export namespace Prisma {
 
   export type PictureCreateManyInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -12012,6 +12034,7 @@ export namespace Prisma {
   }
 
   export type PictureUpdateManyMutationInput = {
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -12026,6 +12049,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -12614,6 +12638,7 @@ export namespace Prisma {
 
   export type PictureCountOrderByAggregateInput = {
     id?: SortOrder
+    uniquekey?: SortOrder
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
@@ -12639,6 +12664,7 @@ export namespace Prisma {
 
   export type PictureMaxOrderByAggregateInput = {
     id?: SortOrder
+    uniquekey?: SortOrder
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
@@ -12656,6 +12682,7 @@ export namespace Prisma {
 
   export type PictureMinOrderByAggregateInput = {
     id?: SortOrder
+    uniquekey?: SortOrder
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
@@ -13951,6 +13978,7 @@ export namespace Prisma {
   }
 
   export type PictureCreateWithoutGalleryInput = {
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -13968,6 +13996,7 @@ export namespace Prisma {
 
   export type PictureUncheckedCreateWithoutGalleryInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14052,6 +14081,7 @@ export namespace Prisma {
     OR?: PictureScalarWhereInput[]
     NOT?: PictureScalarWhereInput | PictureScalarWhereInput[]
     id?: IntFilter<"Picture"> | number
+    uniquekey?: StringFilter<"Picture"> | string
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
@@ -14236,6 +14266,7 @@ export namespace Prisma {
   }
 
   export type PictureCreateWithoutFavoriteInput = {
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14253,6 +14284,7 @@ export namespace Prisma {
 
   export type PictureUncheckedCreateWithoutFavoriteInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14467,6 +14499,7 @@ export namespace Prisma {
   }
 
   export type PictureCreateWithoutAlbumInput = {
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14484,6 +14517,7 @@ export namespace Prisma {
 
   export type PictureUncheckedCreateWithoutAlbumInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14658,6 +14692,7 @@ export namespace Prisma {
   }
 
   export type PictureCreateWithoutEmbed_linkInput = {
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14675,6 +14710,7 @@ export namespace Prisma {
 
   export type PictureUncheckedCreateWithoutEmbed_linkInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14707,6 +14743,7 @@ export namespace Prisma {
   }
 
   export type PictureUpdateWithoutEmbed_linkInput = {
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14724,6 +14761,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateWithoutEmbed_linkInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14774,6 +14812,7 @@ export namespace Prisma {
 
   export type PictureCreateManyGalleryInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14789,6 +14828,7 @@ export namespace Prisma {
   }
 
   export type PictureUpdateWithoutGalleryInput = {
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14806,6 +14846,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateWithoutGalleryInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14823,6 +14864,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateManyWithoutGalleryInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14839,6 +14881,7 @@ export namespace Prisma {
 
   export type PictureCreateManyFavoriteInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14854,6 +14897,7 @@ export namespace Prisma {
   }
 
   export type PictureUpdateWithoutFavoriteInput = {
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14871,6 +14915,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateWithoutFavoriteInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14888,6 +14933,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateManyWithoutFavoriteInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14904,6 +14950,7 @@ export namespace Prisma {
 
   export type PictureCreateManyAlbumInput = {
     id?: number
+    uniquekey?: string
     title: string
     description: string
     url: string
@@ -14919,6 +14966,7 @@ export namespace Prisma {
   }
 
   export type PictureUpdateWithoutAlbumInput = {
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14936,6 +14984,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateWithoutAlbumInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
@@ -14953,6 +15002,7 @@ export namespace Prisma {
 
   export type PictureUncheckedUpdateManyWithoutAlbumInput = {
     id?: IntFieldUpdateOperationsInput | number
+    uniquekey?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string

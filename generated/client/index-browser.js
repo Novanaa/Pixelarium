@@ -154,6 +154,7 @@ exports.Prisma.FavoriteScalarFieldEnum = {
 
 exports.Prisma.PictureScalarFieldEnum = {
   id: 'id',
+  uniquekey: 'uniquekey',
   title: 'title',
   description: 'description',
   url: 'url',
