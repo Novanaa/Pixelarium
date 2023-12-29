@@ -67,6 +67,9 @@ export default async function removeClientKey(
       },
     };
 
+    delete responseData.from.email;
+    delete responseData.from.password;
+
     return jsonResult({
       response: res,
       statusCode: http.StatusOk,
