@@ -298,6 +298,160 @@
           }
         }
       }
+    },
+    "/v1/client-keys/generate": {
+      "post": {
+        "tags": ["Client Keys"],
+        "summary": "Generate User Client Keys",
+        "deprecated": false,
+        "operationId": "generateClientKeys",
+        "security": [{ "JsonWebTokenAuthorization": [] }],
+        "description": "Generate User Client Keys Credentials",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "400": {
+            "description": "The request cannot be found"
+          },
+          "201": {
+            "description": "Created a new user client keys credentials",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "This is my bioooo",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T05:07:55.886Z",
+                      "updatedAt": "2023-12-29T05:08:57.153Z"
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/client-keys/{name}": {
+      "get": {
+        "tags": ["Client Keys"],
+        "deprecated": false,
+        "security": [{ "JsonWebTokenAuthorization": [] }],
+        "operationId": "userClientKeys",
+        "summary": "Get User Client Keys",
+        "description": "Get User Client Keys From Username",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "This is my bioooo",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T05:07:55.886Z",
+                      "updatedAt": "2023-12-29T05:08:57.153Z"
+                    },
+                    "client_keys": {
+                      "user_client_id": "pxlmid-03924b8ee55911aa...",
+                      "user_client_secret": "84f7149615a608302bdcb05076eccd7...."
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/client-keys": {
+      "delete": {
+        "tags": ["Client Keys"],
+        "summary": "Delete Existing User Client Keys",
+        "deprecated": false,
+        "security": [{ "JsonWebTokenAuthorization": [] }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "operationId": "deleteUSerClientKeys",
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/unauthorizedUser"
+          },
+          "404": {
+            "description": "Your request doesn't be found"
+          },
+          "422": {
+            "description": "The User Client Secret Ins't Exist."
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "This is my bioooo",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T05:07:55.886Z",
+                      "updatedAt": "2023-12-29T05:08:57.153Z"
+                    },
+                    "deletedClientKeys": {
+                      "user_client_id": "pxlmid-03924b8ee....",
+                      "user_client_secret": "84f7149615a608302bdcb05076eccd..."
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
