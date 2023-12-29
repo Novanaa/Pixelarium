@@ -92,7 +92,7 @@
                   "token": {
                     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ....",
                     "expiresInSecond": 1800,
-                    "expiresDate": "2023-12-29T04:49:02.692Z"
+                    "expiresDate": 1703852872386
                   },
                   "generated": true,
                   "status": "OK"
@@ -150,97 +150,6 @@
     },
     "/v1/users/{name}": {
       "summary": "Get Single User Data",
-      "get": {
-        "deprecated": false,
-        "tags": ["Users"],
-        "operationId": "singleUser",
-        "description": "Get Single User Data From User Name",
-        "summary": "Get Single User Data",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/usernameParams"
-          }
-        ],
-        "responses": {
-          "404": {
-            "$ref": "#/components/responses/notFound"
-          },
-          "400": {
-            "$ref": "#/components/responses/badRequest"
-          },
-          "200": {
-            "description": "Returns a single user data by username.",
-            "content": {
-              "application/json": {
-                "example": {
-                  "user": {
-                    "id": 1,
-                    "provider_id": 130564362,
-                    "name": "ItsNvaa",
-                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
-                    "type": "User",
-                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
-                    "site_admin": false,
-                    "createdAt": "2023-12-29T02:04:38.726Z",
-                    "updatedAt": "2023-12-29T02:04:38.726Z"
-                  },
-                  "isSuccess": true,
-                  "status": "OK"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/users/{id}": {
-      "delete": {
-        "tags": ["Users"],
-        "deprecated": false,
-        "operationId": "deleteUser",
-        "summary": "Delete Existing User",
-        "description": "Delete Existing User By Id",
-        "security": [
-          {
-            "JsonWebTokenAuthorization": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/userIdParams"
-          }
-        ],
-        "responses": {
-          "404": {
-            "$ref": "#/components/responses/notFound"
-          },
-          "400": {
-            "description": "The ID was not valid."
-          },
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "deletedUser": {
-                    "id": 1,
-                    "provider_id": 130564362,
-                    "name": "ItsNvaa",
-                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
-                    "type": "User",
-                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
-                    "site_admin": false,
-                    "createdAt": "2023-12-29T02:04:38.726Z",
-                    "updatedAt": "2023-12-29T02:04:38.726Z"
-                  },
-                  "deleted": true,
-                  "status": "OK"
-                }
-              }
-            }
-          }
-        }
-      },
       "patch": {
         "tags": ["Users"],
         "operationId": "updateUser",
@@ -249,7 +158,7 @@
         "description": "Update Existing User By Id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/userIdParams"
+            "$ref": "#/components/parameters/usernameParams"
           }
         ],
         "requestBody": {
@@ -291,6 +200,95 @@
                     "updatedAt": "2023-12-29T05:07:55.886Z"
                   },
                   "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "deprecated": false,
+        "tags": ["Users"],
+        "operationId": "singleUser",
+        "description": "Get Single User Data From User Name",
+        "summary": "Get Single User Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Returns a single user data by username.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "user": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "deprecated": false,
+        "operationId": "deleteUser",
+        "summary": "Delete Existing User",
+        "description": "Delete Existing User By Id",
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "description": "The ID was not valid."
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deletedUser": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "deleted": true,
                   "status": "OK"
                 }
               }
@@ -452,6 +450,127 @@
           }
         }
       }
+    },
+    "/v1/galleries/{name}": {
+      "get": {
+        "tags": ["Galleries"],
+        "summary": "Get User Galleries",
+        "deprecated": false,
+        "operationId": "gallery",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "gallery": {
+                      "id": 5,
+                      "user_id": 1,
+                      "pictures": [
+                        {
+                          "id": 3,
+                          "title": "example picture",
+                          "description": "this is a description",
+                          "url": "https://example.com/img/galleries/pictures/image.png",
+                          "is_favorited": false,
+                          "filename": "image.png",
+                          "extension": ".png",
+                          "is_private": false,
+                          "gallery_id": 5,
+                          "album_picture_id": null,
+                          "favorite_id": null,
+                          "createdAt": "2023-12-29T06:33:47.737Z",
+                          "updatedAt": "2023-12-29T06:34:51.923Z"
+                        }
+                      ],
+                      "createdAt": "2023-12-24T02:17:41.549Z",
+                      "updatedAt": "2023-12-24T02:17:41.549Z"
+                    },
+                    "total_gallery_pictures": 2
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/galleries/search": {
+      "get": {
+        "tags": ["Galleries"],
+        "summary": "Search for galleries pictures by picture title ",
+        "deprecated": false,
+        "operationId": "searchPicturesGalery",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/searchParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/emptyRequestBodyValidationError"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "A list of found gallery's pictures.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "pictures": [
+                      {
+                        "id": 3,
+                        "title": "example picture",
+                        "description": "this is a description",
+                        "url": "https://example.com/img/galleries/pictures/image.png",
+                        "is_favorited": false,
+                        "filename": "image.png",
+                        "extension": ".png",
+                        "is_private": false,
+                        "gallery_id": 5,
+                        "album_picture_id": null,
+                        "favorite_id": null,
+                        "createdAt": "2023-12-29T06:33:47.737Z",
+                        "updatedAt": "2023-12-29T06:34:51.923Z"
+                      }
+                    ],
+                    "total_found": 1
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -502,6 +621,19 @@
           "deprecated": false,
           "type": "number"
         }
+      },
+      "searchParams": {
+        "name": "q",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Search Query",
+        "in": "query",
+        "required": true,
+        "example": "Pictures title",
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
       }
     },
     "responses": {
@@ -519,6 +651,12 @@
       },
       "userIdValidation": {
         "description": "The ID was not valid."
+      },
+      "emptyRequestBodyValidationError": {
+        "description": "The input fields must be filled."
+      },
+      "validateInvalidRequestBodyObject": {
+        "description": "Validate if the request body object is contains invalid request body field"
       }
     }
   }
