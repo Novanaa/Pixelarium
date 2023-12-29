@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Pixelarium",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Kadek Nova Cahaya Putra",
+      "email": "Kadeknovacahayaputra@gmail.com"
+    },
+    "license": {
+      "name": "MIT license",
+      "url": "https://github.com/ItsNvaa/Pixelarium/blob/main/LICENSE"
+    },
+    "description": "The Infinite Pixels Experience."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Development Environment"
+    },
+    { "url": "http://localhost:8000", "description": "Staging Environment" },
+    { "url": "api.pixelarium.my.id", "description": "Production Environment" }
+  ],
+  "paths": {
+    "/auth/v1/google": {
+      "summary": "Google Authentication",
+      "get": {
+        "deprecated": false,
+        "summary": "Google Authentication",
+        "operationId": "loginWithGoolge",
+        "tags": ["Authentication"],
+        "description": "Sign in with Google Provider",
+        "responses": {
+          "302": {
+            "description": "Redirected to pixelarium dashboard"
+          },
+          "301": {
+            "description": "Redirected to pixelarium login page while the authentication process is failed"
+          },
+          "400": {
+            "description": "The Login Session Was Failed."
+          }
+        }
+      }
+    },
+    "/v1/auth/github": {
+      "summary": "Github Authentication",
+      "get": {
+        "summary": "Github Authentication",
+        "description": "Sign in with Github Provider",
+        "tags": ["Authentication"],
+        "deprecated": false,
+        "operationId": "loginWithGithub",
+        "responses": {
+          "400": {
+            "description": "The Login Session Was Failed."
+          },
+          "302": {
+            "description": "Redirected to pixelarium dashboard"
+          }
+        }
+      }
+    },
+    "/v1/auth/token": {
+      "summary": "Refresh Session Token Rotation",
+      "get": {
+        "description": "Get new access token by using refresh token.",
+        "summary": "Refresh Session Token Rotation",
+        "tags": ["Authentication"],
+        "deprecated": false,
+        "operationId": "token",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/unauthorizedUser"
+          },
+          "422": {
+            "description": "The session token is invalid"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Newly generated JWT token and a cookie for tracking user sessions.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "token": {
+                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ....",
+                    "expiresInSecond": 1800,
+                    "expiresDate": "2023-12-29T04:49:02.692Z"
+                  },
+                  "generated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/logout": {
+      "summary": "Logout User API Endpoint",
+      "post": {
+        "deprecated": false,
+        "summary": "Logout User API Endpoint",
+        "description": "Logout User",
+        "operationId": "logoutUser",
+        "tags": ["Authentication"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "400": {
+            "description": "Cannot find user request!"
+          },
+          "200": {
+            "description": "Success Logouted User",
+            "content": {
+              "application/json": {
+                "example": {
+                  "logutedUser": {
+                    "id": 1,
+                    "provider_id": 623977,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "logouted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "sessionTokenCookiesParams": {
+        "name": "session",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Refresh Session Token",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ....",
+        "in": "cookie",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "notFound": {
+        "description": "Oops! The data you are looking for could not be found."
+      },
+      "badRequest": {
+        "description": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again."
+      },
+      "unauthorizedUser": {
+        "description": "The user must be login first!"
+      },
+      "unauthorized": {
+        "description": "You are not authorized to access this resource. Please provide valid credentials or authentication."
+      }
+    }
+  }
+}
