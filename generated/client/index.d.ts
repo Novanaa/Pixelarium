@@ -6722,6 +6722,7 @@ export namespace Prisma {
     is_favorited: boolean | null
     filename: string | null
     extension: string | null
+    is_private: boolean | null
     gallery_id: number | null
     album_picture_id: number | null
     favorite_id: number | null
@@ -6737,6 +6738,7 @@ export namespace Prisma {
     is_favorited: boolean | null
     filename: string | null
     extension: string | null
+    is_private: boolean | null
     gallery_id: number | null
     album_picture_id: number | null
     favorite_id: number | null
@@ -6752,6 +6754,7 @@ export namespace Prisma {
     is_favorited: number
     filename: number
     extension: number
+    is_private: number
     gallery_id: number
     album_picture_id: number
     favorite_id: number
@@ -6783,6 +6786,7 @@ export namespace Prisma {
     is_favorited?: true
     filename?: true
     extension?: true
+    is_private?: true
     gallery_id?: true
     album_picture_id?: true
     favorite_id?: true
@@ -6798,6 +6802,7 @@ export namespace Prisma {
     is_favorited?: true
     filename?: true
     extension?: true
+    is_private?: true
     gallery_id?: true
     album_picture_id?: true
     favorite_id?: true
@@ -6813,6 +6818,7 @@ export namespace Prisma {
     is_favorited?: true
     filename?: true
     extension?: true
+    is_private?: true
     gallery_id?: true
     album_picture_id?: true
     favorite_id?: true
@@ -6915,6 +6921,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private: boolean
     gallery_id: number
     album_picture_id: number | null
     favorite_id: number | null
@@ -6949,6 +6956,7 @@ export namespace Prisma {
     is_favorited?: boolean
     filename?: boolean
     extension?: boolean
+    is_private?: boolean
     gallery_id?: boolean
     album_picture_id?: boolean
     favorite_id?: boolean
@@ -6968,6 +6976,7 @@ export namespace Prisma {
     is_favorited?: boolean
     filename?: boolean
     extension?: boolean
+    is_private?: boolean
     gallery_id?: boolean
     album_picture_id?: boolean
     favorite_id?: boolean
@@ -6999,6 +7008,7 @@ export namespace Prisma {
       is_favorited: boolean
       filename: string
       extension: string
+      is_private: boolean
       gallery_id: number
       album_picture_id: number | null
       favorite_id: number | null
@@ -7412,6 +7422,7 @@ export namespace Prisma {
     readonly is_favorited: FieldRef<"Picture", 'Boolean'>
     readonly filename: FieldRef<"Picture", 'String'>
     readonly extension: FieldRef<"Picture", 'String'>
+    readonly is_private: FieldRef<"Picture", 'Boolean'>
     readonly gallery_id: FieldRef<"Picture", 'Int'>
     readonly album_picture_id: FieldRef<"Picture", 'Int'>
     readonly favorite_id: FieldRef<"Picture", 'Int'>
@@ -10758,6 +10769,7 @@ export namespace Prisma {
     is_favorited: 'is_favorited',
     filename: 'filename',
     extension: 'extension',
+    is_private: 'is_private',
     gallery_id: 'gallery_id',
     album_picture_id: 'album_picture_id',
     favorite_id: 'favorite_id',
@@ -11297,6 +11309,7 @@ export namespace Prisma {
     is_favorited?: BoolFilter<"Picture"> | boolean
     filename?: StringFilter<"Picture"> | string
     extension?: StringFilter<"Picture"> | string
+    is_private?: BoolFilter<"Picture"> | boolean
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
     favorite_id?: IntNullableFilter<"Picture"> | number | null
@@ -11316,6 +11329,7 @@ export namespace Prisma {
     is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
+    is_private?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrderInput | SortOrder
     favorite_id?: SortOrderInput | SortOrder
@@ -11338,6 +11352,7 @@ export namespace Prisma {
     is_favorited?: BoolFilter<"Picture"> | boolean
     filename?: StringFilter<"Picture"> | string
     extension?: StringFilter<"Picture"> | string
+    is_private?: BoolFilter<"Picture"> | boolean
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
     favorite_id?: IntNullableFilter<"Picture"> | number | null
@@ -11357,6 +11372,7 @@ export namespace Prisma {
     is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
+    is_private?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrderInput | SortOrder
     favorite_id?: SortOrderInput | SortOrder
@@ -11380,6 +11396,7 @@ export namespace Prisma {
     is_favorited?: BoolWithAggregatesFilter<"Picture"> | boolean
     filename?: StringWithAggregatesFilter<"Picture"> | string
     extension?: StringWithAggregatesFilter<"Picture"> | string
+    is_private?: BoolWithAggregatesFilter<"Picture"> | boolean
     gallery_id?: IntWithAggregatesFilter<"Picture"> | number
     album_picture_id?: IntNullableWithAggregatesFilter<"Picture"> | number | null
     favorite_id?: IntNullableWithAggregatesFilter<"Picture"> | number | null
@@ -11893,6 +11910,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
@@ -11909,6 +11927,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     album_picture_id?: number | null
     favorite_id?: number | null
@@ -11924,6 +11943,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
@@ -11940,6 +11960,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11956,6 +11977,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     album_picture_id?: number | null
     favorite_id?: number | null
@@ -11970,6 +11992,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11982,6 +12005,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12568,6 +12592,7 @@ export namespace Prisma {
     is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
+    is_private?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
     favorite_id?: SortOrder
@@ -12590,6 +12615,7 @@ export namespace Prisma {
     is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
+    is_private?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
     favorite_id?: SortOrder
@@ -12605,6 +12631,7 @@ export namespace Prisma {
     is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
+    is_private?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrder
     favorite_id?: SortOrder
@@ -13897,6 +13924,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
@@ -13912,6 +13940,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     album_picture_id?: number | null
     favorite_id?: number | null
     createdAt?: Date | string
@@ -13994,6 +14023,7 @@ export namespace Prisma {
     is_favorited?: BoolFilter<"Picture"> | boolean
     filename?: StringFilter<"Picture"> | string
     extension?: StringFilter<"Picture"> | string
+    is_private?: BoolFilter<"Picture"> | boolean
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
     favorite_id?: IntNullableFilter<"Picture"> | number | null
@@ -14176,6 +14206,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
@@ -14191,6 +14222,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     album_picture_id?: number | null
     createdAt?: Date | string
@@ -14403,6 +14435,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
@@ -14418,6 +14451,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     favorite_id?: number | null
     createdAt?: Date | string
@@ -14590,6 +14624,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     favorite?: FavoriteCreateNestedOneWithoutPicturesInput
@@ -14605,6 +14640,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     album_picture_id?: number | null
     favorite_id?: number | null
@@ -14635,6 +14671,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     favorite?: FavoriteUpdateOneWithoutPicturesNestedInput
@@ -14650,6 +14687,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14698,6 +14736,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     album_picture_id?: number | null
     favorite_id?: number | null
     createdAt?: Date | string
@@ -14711,6 +14750,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
@@ -14726,6 +14766,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14741,6 +14782,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14755,6 +14797,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     album_picture_id?: number | null
     createdAt?: Date | string
@@ -14768,6 +14811,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
@@ -14783,6 +14827,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14798,6 +14843,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14812,6 +14858,7 @@ export namespace Prisma {
     is_favorited: boolean
     filename: string
     extension: string
+    is_private?: boolean
     gallery_id: number
     favorite_id?: number | null
     createdAt?: Date | string
@@ -14825,6 +14872,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
@@ -14840,6 +14888,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14855,6 +14904,7 @@ export namespace Prisma {
     is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     gallery_id?: IntFieldUpdateOperationsInput | number
     favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
