@@ -6917,7 +6917,7 @@ export namespace Prisma {
     extension: string
     gallery_id: number
     album_picture_id: number | null
-    favorite_id: number
+    favorite_id: number | null
     createdAt: Date
     updatedAt: Date
     _count: PictureCountAggregateOutputType | null
@@ -6955,7 +6955,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     embed_link?: boolean | Picture$embed_linkArgs<ExtArgs>
-    favorite?: boolean | FavoriteDefaultArgs<ExtArgs>
+    favorite?: boolean | Picture$favoriteArgs<ExtArgs>
     gallery?: boolean | GalleryDefaultArgs<ExtArgs>
     album?: boolean | Picture$albumArgs<ExtArgs>
   }, ExtArgs["result"]["picture"]>
@@ -6977,7 +6977,7 @@ export namespace Prisma {
 
   export type PictureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     embed_link?: boolean | Picture$embed_linkArgs<ExtArgs>
-    favorite?: boolean | FavoriteDefaultArgs<ExtArgs>
+    favorite?: boolean | Picture$favoriteArgs<ExtArgs>
     gallery?: boolean | GalleryDefaultArgs<ExtArgs>
     album?: boolean | Picture$albumArgs<ExtArgs>
   }
@@ -6987,7 +6987,7 @@ export namespace Prisma {
     name: "Picture"
     objects: {
       embed_link: Prisma.$EmbedLinksPayload<ExtArgs> | null
-      favorite: Prisma.$FavoritePayload<ExtArgs>
+      favorite: Prisma.$FavoritePayload<ExtArgs> | null
       gallery: Prisma.$GalleryPayload<ExtArgs>
       album: Prisma.$AlbumPicturePayload<ExtArgs> | null
     }
@@ -7001,7 +7001,7 @@ export namespace Prisma {
       extension: string
       gallery_id: number
       album_picture_id: number | null
-      favorite_id: number
+      favorite_id: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["picture"]>
@@ -7371,7 +7371,7 @@ export namespace Prisma {
 
     embed_link<T extends Picture$embed_linkArgs<ExtArgs> = {}>(args?: Subset<T, Picture$embed_linkArgs<ExtArgs>>): Prisma__EmbedLinksClient<$Result.GetResult<Prisma.$EmbedLinksPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
-    favorite<T extends FavoriteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FavoriteDefaultArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+    favorite<T extends Picture$favoriteArgs<ExtArgs> = {}>(args?: Subset<T, Picture$favoriteArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     gallery<T extends GalleryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GalleryDefaultArgs<ExtArgs>>): Prisma__GalleryClient<$Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
@@ -7741,6 +7741,22 @@ export namespace Prisma {
      */
     include?: EmbedLinksInclude<ExtArgs> | null
     where?: EmbedLinksWhereInput
+  }
+
+
+  /**
+   * Picture.favorite
+   */
+  export type Picture$favoriteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
   }
 
 
@@ -11283,11 +11299,11 @@ export namespace Prisma {
     extension?: StringFilter<"Picture"> | string
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
-    favorite_id?: IntFilter<"Picture"> | number
+    favorite_id?: IntNullableFilter<"Picture"> | number | null
     createdAt?: DateTimeFilter<"Picture"> | Date | string
     updatedAt?: DateTimeFilter<"Picture"> | Date | string
     embed_link?: XOR<EmbedLinksNullableRelationFilter, EmbedLinksWhereInput> | null
-    favorite?: XOR<FavoriteRelationFilter, FavoriteWhereInput>
+    favorite?: XOR<FavoriteNullableRelationFilter, FavoriteWhereInput> | null
     gallery?: XOR<GalleryRelationFilter, GalleryWhereInput>
     album?: XOR<AlbumPictureNullableRelationFilter, AlbumPictureWhereInput> | null
   }
@@ -11302,7 +11318,7 @@ export namespace Prisma {
     extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrderInput | SortOrder
-    favorite_id?: SortOrder
+    favorite_id?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     embed_link?: EmbedLinksOrderByWithRelationInput
@@ -11324,11 +11340,11 @@ export namespace Prisma {
     extension?: StringFilter<"Picture"> | string
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
-    favorite_id?: IntFilter<"Picture"> | number
+    favorite_id?: IntNullableFilter<"Picture"> | number | null
     createdAt?: DateTimeFilter<"Picture"> | Date | string
     updatedAt?: DateTimeFilter<"Picture"> | Date | string
     embed_link?: XOR<EmbedLinksNullableRelationFilter, EmbedLinksWhereInput> | null
-    favorite?: XOR<FavoriteRelationFilter, FavoriteWhereInput>
+    favorite?: XOR<FavoriteNullableRelationFilter, FavoriteWhereInput> | null
     gallery?: XOR<GalleryRelationFilter, GalleryWhereInput>
     album?: XOR<AlbumPictureNullableRelationFilter, AlbumPictureWhereInput> | null
   }, "id">
@@ -11343,7 +11359,7 @@ export namespace Prisma {
     extension?: SortOrder
     gallery_id?: SortOrder
     album_picture_id?: SortOrderInput | SortOrder
-    favorite_id?: SortOrder
+    favorite_id?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PictureCountOrderByAggregateInput
@@ -11366,7 +11382,7 @@ export namespace Prisma {
     extension?: StringWithAggregatesFilter<"Picture"> | string
     gallery_id?: IntWithAggregatesFilter<"Picture"> | number
     album_picture_id?: IntNullableWithAggregatesFilter<"Picture"> | number | null
-    favorite_id?: IntWithAggregatesFilter<"Picture"> | number
+    favorite_id?: IntNullableWithAggregatesFilter<"Picture"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Picture"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Picture"> | Date | string
   }
@@ -11880,7 +11896,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
-    favorite: FavoriteCreateNestedOneWithoutPicturesInput
+    favorite?: FavoriteCreateNestedOneWithoutPicturesInput
     gallery: GalleryCreateNestedOneWithoutPicturesInput
     album?: AlbumPictureCreateNestedOneWithoutPicturesInput
   }
@@ -11895,7 +11911,7 @@ export namespace Prisma {
     extension: string
     gallery_id: number
     album_picture_id?: number | null
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
@@ -11911,7 +11927,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
-    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
+    favorite?: FavoriteUpdateOneWithoutPicturesNestedInput
     gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
     album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
   }
@@ -11926,7 +11942,7 @@ export namespace Prisma {
     extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
@@ -11942,7 +11958,7 @@ export namespace Prisma {
     extension: string
     gallery_id: number
     album_picture_id?: number | null
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11968,7 +11984,7 @@ export namespace Prisma {
     extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12534,9 +12550,9 @@ export namespace Prisma {
     isNot?: EmbedLinksWhereInput | null
   }
 
-  export type FavoriteRelationFilter = {
-    is?: FavoriteWhereInput
-    isNot?: FavoriteWhereInput
+  export type FavoriteNullableRelationFilter = {
+    is?: FavoriteWhereInput | null
+    isNot?: FavoriteWhereInput | null
   }
 
   export type GalleryRelationFilter = {
@@ -13195,10 +13211,12 @@ export namespace Prisma {
     update?: XOR<XOR<EmbedLinksUpdateToOneWithWhereWithoutPictureInput, EmbedLinksUpdateWithoutPictureInput>, EmbedLinksUncheckedUpdateWithoutPictureInput>
   }
 
-  export type FavoriteUpdateOneRequiredWithoutPicturesNestedInput = {
+  export type FavoriteUpdateOneWithoutPicturesNestedInput = {
     create?: XOR<FavoriteCreateWithoutPicturesInput, FavoriteUncheckedCreateWithoutPicturesInput>
     connectOrCreate?: FavoriteCreateOrConnectWithoutPicturesInput
     upsert?: FavoriteUpsertWithoutPicturesInput
+    disconnect?: FavoriteWhereInput | boolean
+    delete?: FavoriteWhereInput | boolean
     connect?: FavoriteWhereUniqueInput
     update?: XOR<XOR<FavoriteUpdateToOneWithWhereWithoutPicturesInput, FavoriteUpdateWithoutPicturesInput>, FavoriteUncheckedUpdateWithoutPicturesInput>
   }
@@ -13882,7 +13900,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
-    favorite: FavoriteCreateNestedOneWithoutPicturesInput
+    favorite?: FavoriteCreateNestedOneWithoutPicturesInput
     album?: AlbumPictureCreateNestedOneWithoutPicturesInput
   }
 
@@ -13895,7 +13913,7 @@ export namespace Prisma {
     filename: string
     extension: string
     album_picture_id?: number | null
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
@@ -13978,7 +13996,7 @@ export namespace Prisma {
     extension?: StringFilter<"Picture"> | string
     gallery_id?: IntFilter<"Picture"> | number
     album_picture_id?: IntNullableFilter<"Picture"> | number | null
-    favorite_id?: IntFilter<"Picture"> | number
+    favorite_id?: IntNullableFilter<"Picture"> | number | null
     createdAt?: DateTimeFilter<"Picture"> | Date | string
     updatedAt?: DateTimeFilter<"Picture"> | Date | string
   }
@@ -14388,7 +14406,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksCreateNestedOneWithoutPictureInput
-    favorite: FavoriteCreateNestedOneWithoutPicturesInput
+    favorite?: FavoriteCreateNestedOneWithoutPicturesInput
     gallery: GalleryCreateNestedOneWithoutPicturesInput
   }
 
@@ -14401,7 +14419,7 @@ export namespace Prisma {
     filename: string
     extension: string
     gallery_id: number
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     embed_link?: EmbedLinksUncheckedCreateNestedOneWithoutPictureInput
@@ -14574,7 +14592,7 @@ export namespace Prisma {
     extension: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    favorite: FavoriteCreateNestedOneWithoutPicturesInput
+    favorite?: FavoriteCreateNestedOneWithoutPicturesInput
     gallery: GalleryCreateNestedOneWithoutPicturesInput
     album?: AlbumPictureCreateNestedOneWithoutPicturesInput
   }
@@ -14589,7 +14607,7 @@ export namespace Prisma {
     extension: string
     gallery_id: number
     album_picture_id?: number | null
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14619,7 +14637,7 @@ export namespace Prisma {
     extension?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
+    favorite?: FavoriteUpdateOneWithoutPicturesNestedInput
     gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
     album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
   }
@@ -14634,7 +14652,7 @@ export namespace Prisma {
     extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14681,7 +14699,7 @@ export namespace Prisma {
     filename: string
     extension: string
     album_picture_id?: number | null
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14696,7 +14714,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
-    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
+    favorite?: FavoriteUpdateOneWithoutPicturesNestedInput
     album?: AlbumPictureUpdateOneWithoutPicturesNestedInput
   }
 
@@ -14709,7 +14727,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
@@ -14724,7 +14742,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     album_picture_id?: NullableIntFieldUpdateOperationsInput | number | null
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14795,7 +14813,7 @@ export namespace Prisma {
     filename: string
     extension: string
     gallery_id: number
-    favorite_id: number
+    favorite_id?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14810,7 +14828,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUpdateOneWithoutPictureNestedInput
-    favorite?: FavoriteUpdateOneRequiredWithoutPicturesNestedInput
+    favorite?: FavoriteUpdateOneWithoutPicturesNestedInput
     gallery?: GalleryUpdateOneRequiredWithoutPicturesNestedInput
   }
 
@@ -14823,7 +14841,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     embed_link?: EmbedLinksUncheckedUpdateOneWithoutPictureNestedInput
@@ -14838,7 +14856,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     gallery_id?: IntFieldUpdateOperationsInput | number
-    favorite_id?: IntFieldUpdateOperationsInput | number
+    favorite_id?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
