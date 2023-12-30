@@ -20,7 +20,7 @@ app.use(rateLimitter);
 
 // Application Routes
 /* The code block is importing various modules and routes and using them in the Express.js application. */
-import docs from "../docs/openapi.json";
+import docs from "../docs/pixelarium.json";
 import swaggerOptions from "../docs/configs/SwaggerThemes.config";
 import corsOptions from "../configs/cors.config";
 import requestErrorValidation from "./middlewares/requestErrorValidation";
