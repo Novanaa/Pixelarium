@@ -885,6 +885,382 @@
           }
         }
       }
+    },
+    "/v1/albums/{name}": {
+      "get": {
+        "summary": "Get User Albums",
+        "operationId": "userAlbums",
+        "tags": ["Albums"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "user_albums": [
+                      {
+                        "id": 1,
+                        "title": "this is a album",
+                        "description": "heheh",
+                        "user_id": 1,
+                        "pictures": [
+                          {
+                            "id": 1,
+                            "title": "new title",
+                            "description": "new description",
+                            "url": "https://example.com/img/galleries/pictures/image.png",
+                            "is_favorited": true,
+                            "filename": "image.png",
+                            "extension": ".png",
+                            "is_private": false,
+                            "gallery_id": 5,
+                            "album_picture_id": null,
+                            "favorite_id": null,
+                            "createdAt": "2023-12-29T06:33:47.737Z",
+                            "updatedAt": "2023-12-29T06:34:51.923Z"
+                          }
+                        ],
+                        "total_pictures": 1,
+                        "createdAt": "2023-12-29T13:28:23.977Z",
+                        "updatedAt": "2023-12-29T13:27:59.269Z"
+                      },
+                      {
+                        "id": 2,
+                        "title": "this is a album version 2.0",
+                        "description": "heheh",
+                        "pictures": [],
+                        "total_pictures": 0,
+                        "user_id": 1,
+                        "createdAt": "2023-12-29T13:28:23.977Z",
+                        "updatedAt": "2023-12-29T13:27:59.269Z"
+                      }
+                    ],
+                    "total_user_albums": 2
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add User Album Data",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "addAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "description": "Add User Albums Request Body",
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "My album title",
+                "description": "My album description"
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "422": {
+            "description": "The album is already exist"
+          },
+          "201": {
+            "description": "Created user albums data",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "inserted_data": {
+                      "id": 4,
+                      "title": "My album title",
+                      "description": "My album description",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/albums/pictures/{name}/{album_id}": {
+      "post": {
+        "deprecated": false,
+        "operationId": "addAlbumPictures",
+        "tags": ["Albums"],
+        "summary": "Add a picture to an existing album by name and album id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "data": {
+                  "pictures_uniquekey": ["....", "...."]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "inserted_data": {
+                      "pictures": [
+                        {
+                          "id": 1,
+                          "uniquekey": "b466d033-f48f-4e7f-82b3-8f46853d6161",
+                          "title": "This is my image",
+                          "description": "hehehe",
+                          "url": "this is url",
+                          "is_favorited": false,
+                          "filename": "image.png",
+                          "extension": "image/png",
+                          "expires_in": null,
+                          "is_private": false,
+                          "gallery_id": 1,
+                          "album_picture_id": 1,
+                          "favorite_id": null,
+                          "createdAt": "2023-12-30T01:19:45.105Z",
+                          "updatedAt": "2023-12-30T01:32:53.534Z"
+                        },
+                        {
+                          "id": 2,
+                          "uniquekey": "31eeb447-eb75-49c2-8073-715a4560c599",
+                          "title": "This is a title",
+                          "description": "hhehehe",
+                          "url": "url",
+                          "is_favorited": false,
+                          "filename": "field.png",
+                          "extension": "image/png",
+                          "expires_in": null,
+                          "is_private": false,
+                          "gallery_id": 1,
+                          "album_picture_id": 1,
+                          "favorite_id": null,
+                          "createdAt": "2023-12-30T01:34:05.831Z",
+                          "updatedAt": "2023-12-30T01:35:06.988Z"
+                        }
+                      ],
+                      "total_pictures_inserted": 2
+                    }
+                  },
+                  "inserted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/albums/{name}/{album_id}": {
+      "patch": {
+        "summary": "Update Existing User Album",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "updateAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "description": "Album Update Request Body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "new title",
+                "description": "new description"
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success User Album Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "old_data": {
+                      "id": 2,
+                      "title": "this is a album version 2.0",
+                      "description": "heheh",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    },
+                    "updated_data": {
+                      "id": 2,
+                      "title": "new title",
+                      "description": "new description",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Existing User Album",
+        "tags": ["Albums"],
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "deprecated": false,
+        "operationId": "deleteUserAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deleted_data": {
+                      "id": 2,
+                      "title": "new title",
+                      "description": "new description",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -959,6 +1335,18 @@
         "schema": {
           "deprecated": false,
           "type": "string"
+        }
+      },
+      "albumIdParams": {
+        "name": "album_id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Album Id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "number"
         }
       }
     },
