@@ -6,8 +6,7 @@ import { User } from "../../../../../generated/client";
 import checkIfPictureIsInternalPicture from "../../../../utils/checkIfPictureIsInternalPicture";
 import getFilename from "../../../../utils/getFilename";
 import getPictureFilepath from "../../../../utils/getPictureFilepath";
-import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
-import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import {
   httpBadRequestResponse,
   httpNotFoundResponse,
@@ -22,13 +21,11 @@ export default async function deleteUser(
 ): Promise<void | Response> {
   const filesSystem = new FilesSystem();
   try {
-    const { id } = req.params;
+    const { name } = req.params;
 
-    validateRequestIDParams({ id, response: res });
-
-    const user: Awaited<User | null> = await isUserExistByIdOrProviderId({
-      value: id,
-      field: "id",
+    const user: Awaited<User | null> = await isUserExistByNameOrEmail({
+      value: name,
+      field: "name",
     });
 
     if (!user) return httpNotFoundResponse({ response: res });
@@ -54,7 +51,7 @@ export default async function deleteUser(
     delete responseData.password;
 
     await client.user.delete({
-      where: { id: Number(id) },
+      where: { name },
     });
 
     return jsonResult({

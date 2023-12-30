@@ -2,11 +2,10 @@ import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import { Request, Response } from "express";
 import { UploadedFile } from "express-fileupload";
-import validateRequestIDParams from "../../../../utils/validateRequestIDParams";
 import userValidation from "../../../../validations/userValidation";
 import validateRequestBody from "../../../../utils/validateRequestBody";
 import { User } from "../../../../../generated/client";
-import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
+import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import checkIfUsernameHasBeenTaken from "../../../../utils/checkIfUsernameHasBeenTaken";
 import type TUserValidation from "../interfaces/types/UserValidationTypes";
 import updateUserData from "../services/updateUserData";
@@ -35,9 +34,7 @@ export default async function updateUser(
 ): Promise<void | Response> {
   const filesSystem: FilesSystem = new FilesSystem();
   try {
-    const { id } = req.params;
-
-    validateRequestIDParams({ id, response: res });
+    const { name } = req.params;
 
     const { error, value } = userValidation<TUserValidation>({
       payload: req.body,
@@ -52,9 +49,9 @@ export default async function updateUser(
 
     if (validateResult) return;
 
-    const user: Awaited<User | null> = await isUserExistByIdOrProviderId({
-      field: "id",
-      value: id,
+    const user: Awaited<User | null> = await isUserExistByNameOrEmail({
+      field: "name",
+      value: name,
     });
 
     if (!user) return httpNotFoundResponse({ response: res });
@@ -72,7 +69,7 @@ export default async function updateUser(
     }
 
     if (!req.files) {
-      await updateUserData({ id, data: value });
+      await updateUserData({ name, data: value });
     }
 
     if (req.files) {
@@ -112,7 +109,7 @@ export default async function updateUser(
 
       if (isInternalPicture) {
         const latestUserPictureProfile: Awaited<string | null | undefined> =
-          await getLatestUserProfilePicture(id);
+          await getLatestUserProfilePicture(String(user.id));
 
         const latestUserPictureProfileFilename: string | null = getFilename(
           latestUserPictureProfile!
@@ -127,7 +124,7 @@ export default async function updateUser(
           filesSystem.deleteFile(destFileDelete);
       }
 
-      await updateUserData({ id, data: value, picture: urlpath });
+      await updateUserData({ name, data: value, picture: urlpath });
     }
 
     const responseData: UserWithOptionalChaining = { ...user };
