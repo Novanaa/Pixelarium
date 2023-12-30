@@ -183,6 +183,7 @@ exports.Prisma.SubcriptionScalarFieldEnum = {
   start_date: 'start_date',
   end_date: 'end_date',
   next_payments_date: 'next_payments_date',
+  order_id: 'order_id',
   status: 'status',
   plan: 'plan'
 };
