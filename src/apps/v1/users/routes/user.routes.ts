@@ -6,7 +6,7 @@ import singleUser from "../controllers/user.get.controller";
 import jsonWebTokenAuthorization from "../../../../middlewares/jsonWebTokenAuthorization";
 
 router.get("/:name", singleUser);
-router.patch("/:id", updateUser);
-router.delete("/:id", jsonWebTokenAuthorization, deleteUser);
+router.patch("/:name", updateUser);
+router.delete("/:name", jsonWebTokenAuthorization, deleteUser);
 
 export default router;
