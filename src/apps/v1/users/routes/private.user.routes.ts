@@ -5,6 +5,6 @@ import singleUser from "../controllers/user.get.controller";
 import apiGrantAccess from "../../../../middlewares/apiGrantAccess";
 
 router.get("/:name", singleUser);
-router.patch("/:id", apiGrantAccess, updateUser);
+router.patch("/:name", apiGrantAccess, updateUser);
 
 export default router;
