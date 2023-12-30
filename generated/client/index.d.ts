@@ -8856,7 +8856,7 @@ export namespace Prisma {
     start_date: Date | null
     end_date: Date | null
     next_payments_date: Date | null
-    order_id: string | null
+    payment_id: string | null
     status: $Enums.status | null
     plan: $Enums.plan | null
   }
@@ -8867,7 +8867,7 @@ export namespace Prisma {
     start_date: Date | null
     end_date: Date | null
     next_payments_date: Date | null
-    order_id: string | null
+    payment_id: string | null
     status: $Enums.status | null
     plan: $Enums.plan | null
   }
@@ -8878,7 +8878,7 @@ export namespace Prisma {
     start_date: number
     end_date: number
     next_payments_date: number
-    order_id: number
+    payment_id: number
     status: number
     plan: number
     _all: number
@@ -8901,7 +8901,7 @@ export namespace Prisma {
     start_date?: true
     end_date?: true
     next_payments_date?: true
-    order_id?: true
+    payment_id?: true
     status?: true
     plan?: true
   }
@@ -8912,7 +8912,7 @@ export namespace Prisma {
     start_date?: true
     end_date?: true
     next_payments_date?: true
-    order_id?: true
+    payment_id?: true
     status?: true
     plan?: true
   }
@@ -8923,7 +8923,7 @@ export namespace Prisma {
     start_date?: true
     end_date?: true
     next_payments_date?: true
-    order_id?: true
+    payment_id?: true
     status?: true
     plan?: true
     _all?: true
@@ -9021,7 +9021,7 @@ export namespace Prisma {
     start_date: Date | null
     end_date: Date | null
     next_payments_date: Date | null
-    order_id: string | null
+    payment_id: string | null
     status: $Enums.status
     plan: $Enums.plan
     _count: SubcriptionCountAggregateOutputType | null
@@ -9051,7 +9051,7 @@ export namespace Prisma {
     start_date?: boolean
     end_date?: boolean
     next_payments_date?: boolean
-    order_id?: boolean
+    payment_id?: boolean
     status?: boolean
     plan?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -9063,7 +9063,7 @@ export namespace Prisma {
     start_date?: boolean
     end_date?: boolean
     next_payments_date?: boolean
-    order_id?: boolean
+    payment_id?: boolean
     status?: boolean
     plan?: boolean
   }
@@ -9084,7 +9084,7 @@ export namespace Prisma {
       start_date: Date | null
       end_date: Date | null
       next_payments_date: Date | null
-      order_id: string | null
+      payment_id: string | null
       status: $Enums.status
       plan: $Enums.plan
     }, ExtArgs["result"]["subcription"]>
@@ -9487,7 +9487,7 @@ export namespace Prisma {
     readonly start_date: FieldRef<"Subcription", 'DateTime'>
     readonly end_date: FieldRef<"Subcription", 'DateTime'>
     readonly next_payments_date: FieldRef<"Subcription", 'DateTime'>
-    readonly order_id: FieldRef<"Subcription", 'String'>
+    readonly payment_id: FieldRef<"Subcription", 'String'>
     readonly status: FieldRef<"Subcription", 'status'>
     readonly plan: FieldRef<"Subcription", 'plan'>
   }
@@ -10872,7 +10872,7 @@ export namespace Prisma {
     start_date: 'start_date',
     end_date: 'end_date',
     next_payments_date: 'next_payments_date',
-    order_id: 'order_id',
+    payment_id: 'payment_id',
     status: 'status',
     plan: 'plan'
   };
@@ -11562,7 +11562,7 @@ export namespace Prisma {
     start_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
     end_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
     next_payments_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
-    order_id?: StringNullableFilter<"Subcription"> | string | null
+    payment_id?: StringNullableFilter<"Subcription"> | string | null
     status?: EnumstatusFilter<"Subcription"> | $Enums.status
     plan?: EnumplanFilter<"Subcription"> | $Enums.plan
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -11574,7 +11574,7 @@ export namespace Prisma {
     start_date?: SortOrderInput | SortOrder
     end_date?: SortOrderInput | SortOrder
     next_payments_date?: SortOrderInput | SortOrder
-    order_id?: SortOrderInput | SortOrder
+    payment_id?: SortOrderInput | SortOrder
     status?: SortOrder
     plan?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -11589,7 +11589,7 @@ export namespace Prisma {
     start_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
     end_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
     next_payments_date?: DateTimeNullableFilter<"Subcription"> | Date | string | null
-    order_id?: StringNullableFilter<"Subcription"> | string | null
+    payment_id?: StringNullableFilter<"Subcription"> | string | null
     status?: EnumstatusFilter<"Subcription"> | $Enums.status
     plan?: EnumplanFilter<"Subcription"> | $Enums.plan
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -11601,7 +11601,7 @@ export namespace Prisma {
     start_date?: SortOrderInput | SortOrder
     end_date?: SortOrderInput | SortOrder
     next_payments_date?: SortOrderInput | SortOrder
-    order_id?: SortOrderInput | SortOrder
+    payment_id?: SortOrderInput | SortOrder
     status?: SortOrder
     plan?: SortOrder
     _count?: SubcriptionCountOrderByAggregateInput
@@ -11620,7 +11620,7 @@ export namespace Prisma {
     start_date?: DateTimeNullableWithAggregatesFilter<"Subcription"> | Date | string | null
     end_date?: DateTimeNullableWithAggregatesFilter<"Subcription"> | Date | string | null
     next_payments_date?: DateTimeNullableWithAggregatesFilter<"Subcription"> | Date | string | null
-    order_id?: StringNullableWithAggregatesFilter<"Subcription"> | string | null
+    payment_id?: StringNullableWithAggregatesFilter<"Subcription"> | string | null
     status?: EnumstatusWithAggregatesFilter<"Subcription"> | $Enums.status
     plan?: EnumplanWithAggregatesFilter<"Subcription"> | $Enums.plan
   }
@@ -12187,7 +12187,7 @@ export namespace Prisma {
     start_date?: Date | string | null
     end_date?: Date | string | null
     next_payments_date?: Date | string | null
-    order_id?: string | null
+    payment_id?: string | null
     status?: $Enums.status
     plan?: $Enums.plan
     user: UserCreateNestedOneWithoutSubcriptionInput
@@ -12199,7 +12199,7 @@ export namespace Prisma {
     start_date?: Date | string | null
     end_date?: Date | string | null
     next_payments_date?: Date | string | null
-    order_id?: string | null
+    payment_id?: string | null
     status?: $Enums.status
     plan?: $Enums.plan
   }
@@ -12208,7 +12208,7 @@ export namespace Prisma {
     start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     next_payments_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    order_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
     user?: UserUpdateOneRequiredWithoutSubcriptionNestedInput
@@ -12220,7 +12220,7 @@ export namespace Prisma {
     start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     next_payments_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    order_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
@@ -12231,7 +12231,7 @@ export namespace Prisma {
     start_date?: Date | string | null
     end_date?: Date | string | null
     next_payments_date?: Date | string | null
-    order_id?: string | null
+    payment_id?: string | null
     status?: $Enums.status
     plan?: $Enums.plan
   }
@@ -12240,7 +12240,7 @@ export namespace Prisma {
     start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     next_payments_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    order_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
@@ -12251,7 +12251,7 @@ export namespace Prisma {
     start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     next_payments_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    order_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
@@ -12872,7 +12872,7 @@ export namespace Prisma {
     start_date?: SortOrder
     end_date?: SortOrder
     next_payments_date?: SortOrder
-    order_id?: SortOrder
+    payment_id?: SortOrder
     status?: SortOrder
     plan?: SortOrder
   }
@@ -12888,7 +12888,7 @@ export namespace Prisma {
     start_date?: SortOrder
     end_date?: SortOrder
     next_payments_date?: SortOrder
-    order_id?: SortOrder
+    payment_id?: SortOrder
     status?: SortOrder
     plan?: SortOrder
   }
@@ -12899,7 +12899,7 @@ export namespace Prisma {
     start_date?: SortOrder
     end_date?: SortOrder
     next_payments_date?: SortOrder
-    order_id?: SortOrder
+    payment_id?: SortOrder
     status?: SortOrder
     plan?: SortOrder
   }
@@ -13934,7 +13934,7 @@ export namespace Prisma {
     start_date?: Date | string | null
     end_date?: Date | string | null
     next_payments_date?: Date | string | null
-    order_id?: string | null
+    payment_id?: string | null
     status?: $Enums.status
     plan?: $Enums.plan
   }
@@ -13944,7 +13944,7 @@ export namespace Prisma {
     start_date?: Date | string | null
     end_date?: Date | string | null
     next_payments_date?: Date | string | null
-    order_id?: string | null
+    payment_id?: string | null
     status?: $Enums.status
     plan?: $Enums.plan
   }
@@ -14069,7 +14069,7 @@ export namespace Prisma {
     start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     next_payments_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    order_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
@@ -14079,7 +14079,7 @@ export namespace Prisma {
     start_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     next_payments_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    order_id?: NullableStringFieldUpdateOperationsInput | string | null
+    payment_id?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     plan?: EnumplanFieldUpdateOperationsInput | $Enums.plan
   }
