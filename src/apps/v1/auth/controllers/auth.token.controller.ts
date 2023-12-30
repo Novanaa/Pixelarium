@@ -68,7 +68,7 @@ export default async function tokenRotation(req: Request, res: Response) {
         const responseData: TokenRotationResponseData = {
           accessToken,
           expiresInSecond: 1800,
-          expiresDate: accessTokenExpiresDate,
+          expiresDate: accessTokenExpiresDate.getTime(),
         };
 
         return jsonResult({

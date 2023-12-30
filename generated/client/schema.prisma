@@ -26,6 +26,7 @@ model User {
   updatedAt DateTime @updatedAt
   client_keys ClientKey?
   gallery Gallery?
+  favorite_picture Favorite?
   album Album[]
   subcription Subcription?
 }
@@ -69,25 +70,29 @@ model Favorite {
   user_id Int @unique
   pictures Picture[]
   favorited_pictures Int // Total Favorited Pictures
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Picture {
   id Int @id @default(autoincrement())  
+  uniquekey String @default(uuid())
   title   String
   description   String
   url       String
   is_favorited Boolean
   filename String
   extension String
+  expires_in Int? 
+  is_private Boolean @default(false)
   gallery_id Int
   album_picture_id Int?
-  favorite_id Int
+  favorite_id Int? 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   embed_link EmbedLinks?
-  favorite Favorite @relation(fields: [favorite_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  favorite Favorite? @relation(fields: [favorite_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   gallery   Gallery  @relation(fields: [gallery_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   album AlbumPicture? @relation(fields: [album_picture_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
@@ -106,6 +111,10 @@ model Subcription {
   user_id Int @unique
   start_date DateTime? 
   end_date DateTime?
+  next_payments_date DateTime?
+  payment_id String?
+  interval String @default("Monthly")
+  interval_count Int?
   status status @default(deactive)
   plan plan @default(none)
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)

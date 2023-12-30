@@ -1,7 +1,7 @@
 type TokenRotationResponseData = {
   accessToken: string;
   expiresInSecond: number;
-  expiresDate: Date;
+  expiresDate: number;
 };
 
 export default TokenRotationResponseData;

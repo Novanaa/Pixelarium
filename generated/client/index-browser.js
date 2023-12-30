@@ -154,12 +154,15 @@ exports.Prisma.FavoriteScalarFieldEnum = {
 
 exports.Prisma.PictureScalarFieldEnum = {
   id: 'id',
+  uniquekey: 'uniquekey',
   title: 'title',
   description: 'description',
   url: 'url',
   is_favorited: 'is_favorited',
   filename: 'filename',
   extension: 'extension',
+  expires_in: 'expires_in',
+  is_private: 'is_private',
   gallery_id: 'gallery_id',
   album_picture_id: 'album_picture_id',
   favorite_id: 'favorite_id',
@@ -179,6 +182,10 @@ exports.Prisma.SubcriptionScalarFieldEnum = {
   user_id: 'user_id',
   start_date: 'start_date',
   end_date: 'end_date',
+  next_payments_date: 'next_payments_date',
+  payment_id: 'payment_id',
+  interval: 'interval',
+  interval_count: 'interval_count',
   status: 'status',
   plan: 'plan'
 };
