@@ -1261,6 +1261,160 @@
           }
         }
       }
+    },
+    "/v1/embed-links/{name}/{picture_uniquekey}": {
+      "get": {
+        "summary": "Get the embed link for a picture in an album by its unique key.",
+        "deprecated": false,
+        "tags": ["Embed Links"],
+        "operationId": "userPictureEmbedLinks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "picture_data": {
+                      "id": 1,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "embed_pictures_links": {
+                      "id": 1,
+                      "picture_id": 1,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a link to an image in the user's profile picture.",
+        "deprecated": false,
+        "operationId": "addEmbedLinksPicture",
+        "tags": ["Embed Links"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "picture_data": {
+                      "id": 2,
+                      "title": "this is a title",
+                      "description": "my description is here",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "inserted_data": {
+                      "id": 2,
+                      "picture_id": 2,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
