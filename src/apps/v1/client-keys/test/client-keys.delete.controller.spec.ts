@@ -4,11 +4,6 @@ import supertest, { Request } from "supertest";
 import generateMocksJWTToken from "../../../../tests/utils/generateMocksJWTToken";
 import JsonWebToken from "../../../../services/JsonWebToken";
 import TJwtUserPayload from "../../../../interfaces/types/JwtUserPayloadTypes";
-import payload from "../../../../tests/const/payload";
-import { ClientKey, User } from "../../../../../generated/client";
-import client from "../../../../libs/configs/prisma";
-import getTestUser from "../../../../tests/utils/getTestUser";
-import getTestUserClientKeys from "../../../../tests/utils/getTestUserClientKeys";
 
 describe("Unit-Testing Delete/Remove User Client Secret API Endpoint", () => {
   test("should be return 401 status code if the user doesn't have access token session", async () => {
