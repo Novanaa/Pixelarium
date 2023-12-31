@@ -1,7 +1,7 @@
 import logger from "../libs/configs/logger";
 import { Request, Response, NextFunction } from "express";
 import { isUserExistByIdOrProviderId } from "../utils/isUser";
-import { ClientKey, Subcription, User } from "../../generated/client";
+import { ClientKey, Subscription, User } from "../../generated/client";
 import client from "../libs/configs/prisma";
 import userPlans from "../const/readonly/userPlans";
 import {
@@ -45,8 +45,8 @@ export default async function apiGrantAccess(
       });
 
     if (isUser) {
-      const userSubs: Awaited<Subcription | null> =
-        await client.subcription.findUnique({
+      const userSubs: Awaited<Subscription | null> =
+        await client.subscription.findUnique({
           where: { user_id: isUser.id },
         });
 
