@@ -338,4 +338,89 @@ describe("Unit-Testing Search User Gallery Pictures API Endpoint", () => {
     expect(request.status).toBe(404);
     expect(request.body.status).toBe("KO");
   });
+  test("should be return 400 status code if the search query params is not provided", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .get(`/v1/galleries/${user?.name}/search`)
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+});
+
+describe("Verify User Client Keys / API Grant Access - Unit-Testing Search User Gallery Pictures API Endpoint", () => {
+  test("should be return 401 status code if the client credentials doesn't provided", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(401);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the client id is invalid", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=yyrud&client_secret=1526`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 404 status code if the client credentials is invalid", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=pxlmid-1526&client_secret=1526`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(404);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 404 status code if the client credentials is invalid", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=pxlmid-1526&client_secret=1526`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(404);
+    expect(request.body.status).toBe("KO");
+  });
 });
