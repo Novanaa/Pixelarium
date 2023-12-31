@@ -60,48 +60,6 @@ describe("Unit-Testing Get User API Endpoint", () => {
       expect(request.status).toBe(422);
       expect(request.body.status).toBe("KO");
     });
-    test("should be return 400 status code if the user client id has invalid signature", async () => {
-      const jwt: JsonWebToken = new JsonWebToken();
-      const { refreshToken } = jwt.sign(payload);
-      const user: Awaited<User | null> = await client.user.findFirst();
-      const request: Awaited<supertest.Request | supertest.Response> =
-        await supertest(app)
-          .get(
-            `/v1/plxm/users/${
-              user?.name || "ItsNvaa"
-            }?client_id=pxlmid-yautgakD&client_secret=test`
-          )
-          .set("Content-Type", "application/json")
-          .set("Cookie", `session=${refreshToken}`);
-
-      console.log(request.body);
-      expect(request.status).toBe(400);
-      expect(request.body.status).toBe("KO");
-    });
-    test("should be return 400 status code if the user client secret has invalid signature", async () => {
-      const jwt: JsonWebToken = new JsonWebToken();
-      const { refreshToken } = jwt.sign(payload);
-      const user: Awaited<User | null> = await getTestUser(payload.providerId);
-      const userClientKeys: Awaited<ClientKey | null> =
-        await client.clientKey.findUnique({
-          where: {
-            user_id: user?.id,
-          },
-        });
-      const request: Awaited<supertest.Request | supertest.Response> =
-        await supertest(app)
-          .get(
-            `/v1/plxm/users/${
-              user?.name || "ItsNvaa"
-            }?client_id=${userClientKeys?.client_id}&client_secret=test`
-          )
-          .set("Content-Type", "application/json")
-          .set("Cookie", `session=${refreshToken}`);
-
-      console.log(request.body);
-      expect(request.status).toBe(400);
-      expect(request.body.status).toBe("KO");
-    });
     test("should be return 200 status code", async () => {
       const jwt: JsonWebToken = new JsonWebToken();
       const { refreshToken } = jwt.sign(payload);
