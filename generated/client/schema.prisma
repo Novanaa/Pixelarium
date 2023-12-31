@@ -28,7 +28,7 @@ model User {
   gallery Gallery?
   favorite_picture Favorite?
   album Album[]
-  subcription Subcription?
+  subscription Subscription?
 }
 
 enum UserType {
@@ -106,7 +106,7 @@ model AlbumPicture {
   updatedAt DateTime @updatedAt
 }
 
-model Subcription {
+model Subscription {
   id Int @id @default(autoincrement())  
   user_id Int @unique
   start_date DateTime? 

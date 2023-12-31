@@ -177,7 +177,7 @@ exports.Prisma.AlbumPictureScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.SubcriptionScalarFieldEnum = {
+exports.Prisma.SubscriptionScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   start_date: 'start_date',
@@ -248,7 +248,7 @@ exports.Prisma.ModelName = {
   Favorite: 'Favorite',
   Picture: 'Picture',
   AlbumPicture: 'AlbumPicture',
-  Subcription: 'Subcription',
+  Subscription: 'Subscription',
   EmbedLinks: 'EmbedLinks'
 };
 
