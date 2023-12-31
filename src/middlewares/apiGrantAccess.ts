@@ -7,6 +7,7 @@ import userPlans from "../const/readonly/userPlans";
 import {
   httpBadRequestResponse,
   httpNotFoundResponse,
+  httpUnauthorizedResponse,
   httpUnprocessableContentResponse,
 } from "../utils/responses/httpErrorsResponses";
 
@@ -16,13 +17,20 @@ export default async function apiGrantAccess(
   next: NextFunction
 ): Promise<void | Response> {
   try {
-    const { client_id } = req.query;
+    const { client_id, client_secret } = req.query;
 
     const userClientKeys: Awaited<ClientKey | null> =
       await client.clientKey.findUnique({
         where: {
           client_id: client_id as string,
+          client_secret: client_secret as string,
         },
+      });
+
+    if (!userClientKeys)
+      return httpUnauthorizedResponse({
+        response: res,
+        errorMessage: "Invalid Credentials Keys!",
       });
 
     const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
@@ -48,7 +56,7 @@ export default async function apiGrantAccess(
           errorMessage: "The user subscription cannot be found",
         });
 
-      const premiumUserPlans: string | undefined = userPlans.shift() || "none";
+      const premiumUserPlans: string[] = userPlans.filter((p) => p !== "none");
       const includedPremiumUserPlans: boolean = premiumUserPlans.includes(
         userSubs.plan
       );
