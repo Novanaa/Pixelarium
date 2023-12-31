@@ -3,6 +3,7 @@ import { Gallery, Picture } from "../../../../../generated/client";
 
 // Importing the client configuration for accessing the database
 import client from "../../../../libs/configs/prisma";
+import findUserGallery from "../utils/findUserGallery";
 
 export interface UserGallery extends Gallery {
   pictures: Array<Picture>;
@@ -19,9 +20,7 @@ export default async function getUserGallery(
 ): Promise<UserGallery> {
   // Use the client to find the gallery with the specified userId.
   // The await keyword ensures that the function will wait for the query to complete before returning the result.
-  const gallery: Awaited<Gallery | null> = await client.gallery.findUnique({
-    where: { user_id: userId },
-  });
+  const gallery: Awaited<Gallery | null> = await findUserGallery(userId);
 
   const userGalleryPictures: Awaited<Array<Picture>> =
     await client.picture.findMany({
