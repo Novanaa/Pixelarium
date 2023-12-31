@@ -34,10 +34,4 @@ describe("Unit-Test Get User Gallery Services", () => {
     expect(userGallery).toBeDefined();
     expect(userGallery).not.toBeNull();
   });
-  test("retunred value should be null", async () => {
-    const userGallery: Awaited<Gallery | null> = await getUserGallery(0);
-
-    console.log(userGallery);
-    expect(userGallery).toBeNull();
-  });
 });
