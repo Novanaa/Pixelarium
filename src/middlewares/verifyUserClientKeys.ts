@@ -1,10 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import logger from "../libs/configs/logger";
 import client from "../libs/configs/prisma";
-import { jwtDecode } from "jwt-decode";
-import { TDecodedUser } from "../apps/v1/auth/interfaces/types/DecodedUserTypes";
-import { isUserExistByIdOrProviderId } from "../utils/isUser";
-import { ClientKey, User } from "../../generated/client";
+import { ClientKey } from "../../generated/client";
 import {
   httpBadRequestResponse,
   httpNotFoundResponse,
@@ -27,7 +24,6 @@ export default async function verifyUserClientKeys(
   next: NextFunction
 ): Promise<NextFunction | void | Response> {
   try {
-    const { session } = req.cookies;
     const { client_id, client_secret } = req.query;
 
     if (!client_id || !client_secret)
@@ -42,46 +38,15 @@ export default async function verifyUserClientKeys(
         errorMessage: "The Client ID isn't valid!",
       });
 
-    if (!session)
-      return httpUnauthorizedResponse({
-        response: res,
-        errorMessage: "This operation required a session token!",
-      });
-
-    const decoded: TDecodedUser = jwtDecode(session) as TDecodedUser;
-
-    const user: Awaited<User | null> = await isUserExistByIdOrProviderId({
-      field: "provider_id",
-      value: decoded.providerId,
-    });
-
-    if (!user)
-      return httpNotFoundResponse({
-        response: res,
-        errorMessage: "The user request cannot be found!",
-      });
-
     const userClientKeys: Awaited<ClientKey | null> =
       await client.clientKey.findUnique({
-        where: { user_id: user.id },
+        where: { client_id, client_secret: client_secret as string },
       });
 
     if (!userClientKeys)
       return httpNotFoundResponse({
         response: res,
-        errorMessage: "You doesn't have a client keys!",
-      });
-
-    if (client_id !== userClientKeys.client_id)
-      return httpBadRequestResponse({
-        response: res,
-        errorMessage: "Client ID has invalid signature!",
-      });
-
-    if (client_secret !== userClientKeys.client_secret)
-      return httpBadRequestResponse({
-        response: res,
-        errorMessage: "Client Secret has invalid signature!",
+        errorMessage: "Your credentials keys is invalid",
       });
 
     return next();
