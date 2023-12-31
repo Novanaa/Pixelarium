@@ -423,4 +423,110 @@ describe("Verify User Client Keys / API Grant Access - Unit-Testing Search User 
     expect(request.status).toBe(404);
     expect(request.body.status).toBe("KO");
   });
+  test("should be return 200 status code", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(200);
+    expect(request.body.status).toBe("OK");
+  });
+  test("make sure it can accept application/json", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .get(
+          `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(200);
+    expect(request.body.status).toBe("OK");
+  });
+  test("returned response pictures data should be defined", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .get(
+          `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(200);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.pictures).toBeDefined();
+    expect(request.body.data.pictures).not.toBeUndefined();
+    expect(request.body.data.pictures).not.toBeNull();
+  });
+  test("should be return 422 status code if the user subscription is inactive", async () => {
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .get(
+          `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the user subscription plan is none", async () => {
+    const user: Awaited<User | null> = await getTestUser(898);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const gallery: Awaited<Gallery | null> = await findUserGallery(
+      user?.id || 0
+    );
+    const pictures: Awaited<Array<Picture>> = await client.picture.findMany({
+      where: { gallery_id: gallery?.id },
+    });
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .get(
+          `/v1/plxm/galleries/${user?.name}/search?q=${pictures[0].title}&client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
 });
