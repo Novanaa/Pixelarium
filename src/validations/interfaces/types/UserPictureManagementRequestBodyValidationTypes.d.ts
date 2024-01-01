@@ -2,7 +2,7 @@ type UserPictureManagementRequestBodyValidationTypes = {
   expiresInDays: number;
   is_private: boolean;
   use_external_image_url: boolean;
-  pictures: Picture[];
+  picture: Picture;
 };
 
 type Picture = {
