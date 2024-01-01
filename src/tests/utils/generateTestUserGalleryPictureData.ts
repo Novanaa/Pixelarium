@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import getFutureDateTime from "../../utils/getFutureDateTime";
 
 /**
  * Generates test data for a user gallery picture.
@@ -28,9 +27,7 @@ export default function generateTestUserGalleryPictureData(
     const picture = {
       title: faker.lorem.words(),
       description: faker.lorem.sentences(),
-      expires_in: getFutureDateTime({
-        futureDateTimeInSecond: 5000,
-      }).getTime(),
+      expires_in: 30,
       extension: ".png",
       filename: faker.system.fileName() + ".png",
       is_favorited: faker.datatype.boolean(),
