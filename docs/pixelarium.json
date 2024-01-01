@@ -599,11 +599,13 @@
                 "expiresInDays": 27,
                 "is_private": false,
                 "use_external_image_url": true,
-                "picture": {
-                  "title": "example picture",
-                  "description": "this is a description",
-                  "image": "https://example.com/img/galleries/pictures/image.png"
-                }
+                "pictures": [
+                  {
+                    "title": "example picture",
+                    "description": "this is a description",
+                    "image": "https://example.com/img/galleries/pictures/image.png"
+                  }
+                ]
               }
             }
           }
