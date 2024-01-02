@@ -24,7 +24,7 @@ export default async function createUserIfNotExists({
       picture,
       bio,
       // Create a subscription for the user with an initial status of "deactive" and plan of "none"
-      subcription: {
+      subscription: {
         create: {
           status: "deactive",
           plan: "none",
