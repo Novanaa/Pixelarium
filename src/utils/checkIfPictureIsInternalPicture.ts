@@ -19,12 +19,14 @@ import UsageType from "../interfaces/types/UsageTypes";
 export default function checkIfPictureIsInternalPicture({
   picturePath,
   usage,
+  name,
 }: {
   picturePath: string;
   usage: UsageType;
+  name?: string;
 }): boolean | null {
   try {
-    const includedPicturePath: string = getPictureFilepath({ usage });
+    const includedPicturePath: string = getPictureFilepath({ usage, name });
 
     const isInternalPicture: boolean =
       picturePath.includes(includedPicturePath);
