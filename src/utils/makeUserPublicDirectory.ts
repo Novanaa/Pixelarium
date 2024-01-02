@@ -7,6 +7,17 @@ type MakeUserPublicDirectoryParams = {
   name: string;
 };
 
+/**
+ * Creates a directory for a user's pictures in a public directory.
+ *
+ * @param {MakeUserPublicDirectoryParams} params - The parameters for creating the user's public directory.
+ * @param {string} params.name - The name of the user.
+ *
+ * @throws {Error} If the `name` parameter is not provided.
+ *
+ * @example
+ * makeUserPublicDirectory({ name: "John Doe" });
+ */
 export default function makeUserPublicDirectory({
   name,
 }: MakeUserPublicDirectoryParams) {
