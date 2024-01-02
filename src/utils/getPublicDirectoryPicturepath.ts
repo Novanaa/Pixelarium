@@ -16,11 +16,13 @@ import getPictureFilepath from "./getPictureFilepath";
 export default function getPublicDirectoryPicturepath({
   usage,
   filename,
+  name,
 }: {
   usage: UsageType;
   filename: string;
+  name?: string;
 }): string {
-  const pictureFilepath: string = getPictureFilepath({ usage });
+  const pictureFilepath: string = getPictureFilepath({ usage, name });
   const publicDirectoryPicturepath: string = `./public/${pictureFilepath}/${filename}`;
 
   return publicDirectoryPicturepath;
