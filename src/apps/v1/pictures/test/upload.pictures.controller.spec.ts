@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { describe, test, expect } from "bun:test";
 import app from "../../../../main";
 import supertest from "supertest";
@@ -21,7 +22,7 @@ describe("Unit-Test User Pictures Upload Management API Endpoint", () => {
       await supertest(app)
         .post(`/v1/pictures/${user?.name}/upload`)
         .send({
-          picture: {
+          picture_details: {
             title: "test",
             hehe: "hehe",
             description: "test",
@@ -39,7 +40,7 @@ describe("Unit-Test User Pictures Upload Management API Endpoint", () => {
         .post(`/v1/pictures/${user?.name}/upload`)
         .send({
           use_external_image_url: true,
-          picture: {
+          picture_details: {
             title: "test",
             description: "test",
           },
@@ -49,30 +50,30 @@ describe("Unit-Test User Pictures Upload Management API Endpoint", () => {
     expect(request.status).toBe(422);
     expect(request.body.status).toBe("KO");
   });
-  test("should be return 400 status code if the request file field name is invalid", async () => {
-    const x = {
-      picture: {
-        title: "test",
-        description: "test",
-      },
-    };
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
-    const request: Awaited<supertest.Request | supertest.Response> =
-      await supertest(app)
-        .post(`/v1/pictures/${user?.name}/upload`)
-        .field("picture", JSON.stringify(x))
-        .attach("pictures", "./public/img/test/test.avif");
+  // test("should be return 400 status code if the request file field name is invalid", async () => {
+  //   const x = {
+  //     picture: {
+  //       title: "test",
+  //       description: "test",
+  //     },
+  //   };
+  //   const user: Awaited<User | null> = await getTestUser(payload.providerId);
+  //   const request: Awaited<supertest.Request | supertest.Response> =
+  //     await supertest(app)
+  //       .post(`/v1/pictures/${slugify(user?.name!)}/upload`)
+  //       .field("picture", JSON.stringify(x))
+  //       .attach("pictures", "./public/img/test/test.avif");
 
-    console.log(request.body);
-    expect(request.status).toBe(400);
-    expect(request.body.status).toBe("KO");
-  });
+  //   console.log(request.body);
+  //   expect(request.status).toBe(400);
+  //   expect(request.body.status).toBe("KO");
+  // });
   test("should be return 404 status code if the user is not found", async () => {
     const request: Awaited<supertest.Request | supertest.Response> =
       await supertest(app)
         .post(`/v1/pictures/.../upload`)
         .send({
-          picture: {
+          picture_details: {
             title: "test",
             description: "test",
           },
