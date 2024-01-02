@@ -27,6 +27,7 @@ import {
 import { jsonResult } from "../../../../utils/responses/httpApiResponses";
 import http from "../../../../const/readonly/httpStatusCode";
 import type { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
+import requestFileFieldName from "../../../../const/readonly/requestFileFieldName";
 
 export default async function updateUser(
   req: Request,
@@ -78,7 +79,7 @@ export default async function updateUser(
       const validateFieldResult: void | Response = validateRequestFilesField({
         request: req,
         response: res,
-        field: "picture",
+        field: requestFileFieldName,
       });
 
       if (validateFieldResult) return;

@@ -46,6 +46,29 @@ class FilesSystem {
       return null;
     }
   }
+  /**
+   * Creates a new directory at the specified path.
+   *
+   * @param path - The path parameter represents the directory path that you want to create.
+   *
+   * @throws {Error} - If the path parameter is not provided or is not of type string.
+   *
+   * @returns {void | null} - This method does not return any value. If an error occurs during the execution of the function, it logs the error using the logger.error function.
+   */
+  public makeDirectory(path: string): void | null {
+    try {
+      if (!path) throw new Error("Path Params Should be Provided");
+
+      if (typeof path !== "string") throw new Error("Path Should be String");
+
+      fs.mkdirSync(path, {
+        recursive: true,
+      });
+    } catch (err) {
+      logger.error(err);
+      return null;
+    }
+  }
 }
 
 export default FilesSystem;

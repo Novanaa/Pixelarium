@@ -1,6 +1,7 @@
 import client from "../../../../libs/configs/prisma";
 import TCreateUser from "../interfaces/types/CreateUserTypes";
 import generateClientId from "../../../../services/generateClientId";
+import makeUserPublicDirectory from "../../../../utils/makeUserPublicDirectory";
 
 // Function to create a user if it doesn't exist.
 // The function takes an object as an argument, which includes properties like providerId, name, email, etc.
@@ -24,7 +25,7 @@ export default async function createUserIfNotExists({
       picture,
       bio,
       // Create a subscription for the user with an initial status of "deactive" and plan of "none"
-      subcription: {
+      subscription: {
         create: {
           status: "deactive",
           plan: "none",
@@ -43,6 +44,8 @@ export default async function createUserIfNotExists({
       },
     },
   });
+
+  makeUserPublicDirectory({ name });
 }
 
 // Note: This function is called whenever a new user is encountered during authentication.

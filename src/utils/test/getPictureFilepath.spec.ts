@@ -3,7 +3,10 @@ import getPictureFilepath from "../getPictureFilepath";
 
 describe("Unit-Testing getPictureFilepath Utils", () => {
   test("should be return picture filepath", () => {
-    const picturePath: string = getPictureFilepath({ usage: "galleries" });
+    const picturePath: string = getPictureFilepath({
+      usage: "galleries",
+      name: "test",
+    });
 
     expect(picturePath).toBeDefined();
   });

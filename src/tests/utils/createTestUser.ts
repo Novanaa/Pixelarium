@@ -4,6 +4,7 @@ import client from "../../libs/configs/prisma";
 import generateClientId from "../../services/generateClientId";
 import generateTestUserGalleryPictureData from "./generateTestUserGalleryPictureData";
 import logger from "../../libs/configs/logger";
+import makeUserPublicDirectory from "../../utils/makeUserPublicDirectory";
 
 export default async function createTestUser({
   providerId,
@@ -19,11 +20,12 @@ export default async function createTestUser({
     const [pictures] = await Promise.all([
       generateTestUserGalleryPictureData(5),
     ]);
+    const username: string = faker.person.fullName();
 
     await client.user.create({
       data: {
         provider_id: providerId,
-        name: faker.person.fullName(),
+        name: username,
         email: faker.internet.email(),
         password: null,
         picture: faker.internet.url(),
@@ -53,6 +55,8 @@ export default async function createTestUser({
         },
       },
     });
+
+    makeUserPublicDirectory({ name: username });
   } catch (err) {
     logger.error(err);
   } finally {
