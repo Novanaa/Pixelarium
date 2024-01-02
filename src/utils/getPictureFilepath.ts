@@ -8,16 +8,21 @@ import type UsageType from "../interfaces/types/UsageTypes";
  */
 export default function getPictureFilepath({
   usage,
+  name,
 }: {
   usage: UsageType;
+  name?: string;
 }): string {
   const defaultPicturePath: string = "img/users/profiles/pictures";
+
+  if (usage == "galleries" && !name)
+    throw new Error("Name Should be Provided if The Usage is Galleries");
 
   const includedPicturePath: string =
     {
       users: defaultPicturePath,
       albums: "img/albums/pictures",
-      galleries: "img/galleries/pictures",
+      galleries: `img/galleries/${name}/pictures`,
     }[usage] || defaultPicturePath;
 
   return includedPicturePath;
