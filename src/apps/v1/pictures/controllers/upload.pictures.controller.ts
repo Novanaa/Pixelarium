@@ -25,7 +25,6 @@ export default async function addUserGalleryPicture(
   try {
     const { name } = req.params;
     let pictureUrl: string = "";
-    console.log(req.files);
 
     const {
       error,
@@ -57,7 +56,7 @@ export default async function addUserGalleryPicture(
       user.id
     );
 
-    if (value.use_external_image_url && !value.picture.image)
+    if (value.use_external_image_url && !value.picture_details.image)
       return httpUnprocessableContentResponse({
         response: res,
         errorMessage:
@@ -65,7 +64,7 @@ export default async function addUserGalleryPicture(
       });
 
     if (value.use_external_image_url)
-      pictureUrl = value.picture.image as string;
+      pictureUrl = value.picture_details.image as string;
 
     if (req.files) {
       const requestFilesFieldValidation: void | Response =
@@ -82,7 +81,7 @@ export default async function addUserGalleryPicture(
 
     return res.send(userGallery);
   } catch (err) {
-    if (err) throw err;
+    // if (err) throw err;
     logger.error(err);
     return httpBadRequestResponse({ response: res });
   } finally {
