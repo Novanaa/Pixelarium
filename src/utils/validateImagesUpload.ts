@@ -4,6 +4,8 @@ import messege from "../const/readonly/messege";
 import { UploadedFile } from "express-fileupload";
 import { default as allowedImgExt } from "../const/readonly/extentsion";
 import { httpUnprocessableContentResponse } from "./responses/httpErrorsResponses";
+import imageLimitSize from "../const/readonly/imageLimitSize";
+import userPlans from "../const/readonly/userPlans";
 
 /**
  * The function validates the uploaded image file size and extension, returning an error response if
@@ -17,11 +19,14 @@ import { httpUnprocessableContentResponse } from "./responses/httpErrorsResponse
 export default function validateImagesUpload({
   response,
   file,
+  plan = userPlans[0],
 }: {
   response: Response;
   file: UploadedFile;
+  plan?: string;
 }): void | Response {
-  if (file.data.length > 15 * 1024 * 1024)
+  const userPlansMapping = imageLimitSize[plan] || userPlans[0];
+  if (file.data.length > userPlansMapping * 1024 * 1024)
     return httpUnprocessableContentResponse({
       response,
       errorMessage: messege.unsupportedImageFileSize,
