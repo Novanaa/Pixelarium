@@ -18,11 +18,11 @@ import imageLimitSize from "../const/readonly/imageLimitSize";
 export default function validateImagesUpload({
   response,
   file,
-  plan,
+  plan = "none",
 }: {
   response: Response;
   file: UploadedFile;
-  plan: string;
+  plan?: string;
 }): void | Response {
   const userPlansMapping: number = imageLimitSize[plan] || imageLimitSize.none;
   if (file.data.length > userPlansMapping * 1024 * 1024)
