@@ -1,10 +1,6 @@
 import userPlans from "./userPlans";
 
-type ImageLimitSize = {
-  [key: string]: number;
-};
-
-const imageLimitSize: ImageLimitSize = {
+const imageLimitSize = {
   [userPlans[0]]: 15,
   [userPlans[1]]: 40,
   [userPlans[2]]: 80,
