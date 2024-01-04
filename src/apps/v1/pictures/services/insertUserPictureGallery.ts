@@ -1,6 +1,7 @@
 import client from "../../../../libs/configs/prisma";
 import { UserGallery } from "../../galleries/services/getUserGallery";
 import UserPictureManagementRequestBodyValidationTypes from "../../../../validations/interfaces/types/UserPictureManagementRequestBodyValidationTypes";
+import { Picture } from "../../../../../generated/client";
 
 type InsertUserPictureGalleryParams = {
   userGallery: UserGallery;
@@ -12,15 +13,15 @@ type InsertUserPictureGalleryParams = {
 };
 
 /**
- * Inserts a new picture into the user's picture gallery in the database.
+ * Inserts a new picture into a user's gallery.
  *
- * @param userGallery - An object representing the user gallery.
- * @param extension - A string representing the file extension of the picture.
- * @param filename - A string representing the filename of the picture.
- * @param value - An object containing the picture details and privacy settings.
- * @param url - A string representing the URL of the picture.
- * @param expires_in - A number representing the expiration time of the picture in seconds.
- * @returns A Promise that resolves to void.
+ * @param userGallery - The user's gallery object where the picture will be inserted.
+ * @param extension - The file extension of the picture.
+ * @param filename - The name of the picture file.
+ * @param value - An object containing the picture details such as description, title, and privacy settings.
+ * @param url - The URL of the picture.
+ * @param expires_in - The expiration time of the picture in seconds.
+ * @returns The newly inserted picture object in the user's gallery.
  */
 export default async function insertUserPictureGallery({
   userGallery,
@@ -29,8 +30,8 @@ export default async function insertUserPictureGallery({
   value,
   url,
   expires_in,
-}: InsertUserPictureGalleryParams): Promise<void> {
-  await client.picture.create({
+}: InsertUserPictureGalleryParams): Promise<Picture> {
+  const insertedPicture: Awaited<Picture> = await client.picture.create({
     data: {
       gallery_id: userGallery.id,
       extension,
@@ -43,4 +44,6 @@ export default async function insertUserPictureGallery({
       is_private: value.is_private,
     },
   });
+
+  return insertedPicture;
 }
