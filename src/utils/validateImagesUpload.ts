@@ -5,6 +5,7 @@ import { UploadedFile } from "express-fileupload";
 import { default as allowedImgExt } from "../const/readonly/extentsion";
 import { httpUnprocessableContentResponse } from "./responses/httpErrorsResponses";
 import imageLimitSize from "../const/readonly/imageLimitSize";
+import { Subscription } from "../../generated/client";
 
 /**
  * The function validates the uploaded image file size and extension, returning an error response if
@@ -18,13 +19,16 @@ import imageLimitSize from "../const/readonly/imageLimitSize";
 export default function validateImagesUpload({
   response,
   file,
-  plan = "none",
+  userSubs,
 }: {
   response: Response;
   file: UploadedFile;
-  plan?: string;
+  userSubs: Subscription;
 }): void | Response {
-  const userPlansMapping: number = imageLimitSize[plan] || imageLimitSize.none;
+  let userPlansMapping: number =
+    imageLimitSize[userSubs.plan] || imageLimitSize.none;
+
+  if (userSubs.status == "deactive") userPlansMapping = 15;
   if (file.data.length > userPlansMapping * 1024 * 1024)
     return httpUnprocessableContentResponse({
       response,
