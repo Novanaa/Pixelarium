@@ -2,8 +2,9 @@ import { describe, test, expect } from "bun:test";
 import app from "../../../../main";
 import supertest from "supertest";
 import getTestUser from "../../../../tests/utils/getTestUser";
-import { User } from "../../../../../generated/client";
+import { ClientKey, User } from "../../../../../generated/client";
 import payload from "../../../../tests/const/payload";
+import getTestUserClientKeys from "../../../../tests/utils/getTestUserClientKeys";
 
 const dummyExternalPictureUrl: string =
   "https://blog-asset.jakmall.com/blog/content/images/2020/11/20f535c616bbe807a1166e5661b396fd.jpg";
@@ -469,5 +470,276 @@ describe("Unit-Test User Pictures Upload Management API Endpoint", () => {
     expect(request.body.data.inserted).not.toBeNull();
     expect(request.body.data.inserted).toBeBoolean();
     expect(request.body.data.inserted).toBe(true);
+  });
+});
+
+describe("Verify Client Keys - Unit-Test User Pictures Upload Management API Endpoint", () => {
+  test("should be return 401 status code if the client_id and client_secret is no provided", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(`/v1/plxm/pictures/${user?.name}/upload`)
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(401);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the client_id is invalid", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=16272&client_secret=1728`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 404 status code if the client keys is invalid", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=1728`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(404);
+    expect(request.body.status).toBe("KO");
+  });
+});
+
+describe("API Grant Access - Unit-Test User Pictures Upload Management API Endpoint", () => {
+  test("should be return 422 status code if the user plan is none", async () => {
+    const user: Awaited<User | null> = await getTestUser(898);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 422 status code if the user plan is netherite but the status is deactivated", async () => {
+    const user: Awaited<User | null> = await getTestUser(123);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(422);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 201", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        });
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+  });
+  test("make sure it can accept application/json", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+  });
+  test("returned response data must be contains owner data field", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.owner).toBeDefined();
+    expect(request.body.data.owner).not.toBeUndefined();
+    expect(request.body.data.owner).not.toBeNull();
+  });
+  test("returned response data must be contains inserted_data field", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.inserted_data).toBeDefined();
+    expect(request.body.data.inserted_data).not.toBeUndefined();
+    expect(request.body.data.inserted_data).not.toBeNull();
+  });
+  test("returned response data must be contains inserted field", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.inserted).toBeDefined();
+    expect(request.body.data.inserted).not.toBeUndefined();
+    expect(request.body.data.inserted).not.toBeNull();
+    expect(request.body.data.inserted).toBe(true);
+    expect(request.body.data.inserted).toBeBoolean();
+  });
+  test("returned response data inserted_data field must be contains url data", async () => {
+    const user: Awaited<User | null> = await getTestUser(321);
+    const userClientKeys: Awaited<ClientKey | null> =
+      await getTestUserClientKeys(user?.id || 0);
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(
+          `/v1/plxm/pictures/${user?.name}/upload?client_id=${userClientKeys?.client_id}&client_secret=${userClientKeys?.client_secret}`
+        )
+        .send({
+          use_external_image_url: true,
+          picture_details: {
+            title: "test",
+            description: "test",
+            image_url: dummyExternalPictureUrl,
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.inserted_data.url).toBeDefined();
+    expect(request.body.data.inserted_data.url).not.toBeUndefined();
+    expect(request.body.data.inserted_data.url).not.toBeNull();
+    expect(request.body.data.inserted_data.url).toBe(dummyExternalPictureUrl);
+    expect(request.body.data.inserted_data.url).toMatch(
+      dummyExternalPictureUrl
+    );
+    expect(request.body.data.inserted_data.url).toBeString();
   });
 });
