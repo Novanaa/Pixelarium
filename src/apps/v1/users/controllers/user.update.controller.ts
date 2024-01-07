@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { UploadedFile } from "express-fileupload";
 import userValidation from "../../../../validations/userValidation";
 import validateRequestBody from "../../../../utils/validateRequestBody";
-import { User } from "../../../../../generated/client";
+import { Subscription, User } from "../../../../../generated/client";
 import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import checkIfUsernameHasBeenTaken from "../../../../utils/checkIfUsernameHasBeenTaken";
 import type TUserValidation from "../interfaces/types/UserValidationTypes";
@@ -28,6 +28,7 @@ import { jsonResult } from "../../../../utils/responses/httpApiResponses";
 import http from "../../../../const/readonly/httpStatusCode";
 import type { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import requestFileFieldName from "../../../../const/readonly/requestFileFieldName";
+import getUserSubscription from "../../../../utils/getUserSubscription";
 
 export default async function updateUser(
   req: Request,
@@ -43,9 +44,7 @@ export default async function updateUser(
 
     const validateResult: void | Response = validateRequestBody({
       res,
-      value,
       error,
-      usage: "update",
     });
 
     if (validateResult) return;
@@ -74,7 +73,19 @@ export default async function updateUser(
     }
 
     if (req.files) {
-      const picture: UploadedFile = req.files.picture as UploadedFile;
+      const picture: UploadedFile = req.files[
+        requestFileFieldName
+      ] as UploadedFile;
+
+      const userSubs: Awaited<Subscription | null> = await getUserSubscription(
+        user.id
+      );
+
+      if (!userSubs)
+        return httpBadRequestResponse({
+          response: res,
+          errorMessage: "Unexpected Error Ocurred",
+        });
 
       const validateFieldResult: void | Response = validateRequestFilesField({
         request: req,
@@ -87,6 +98,7 @@ export default async function updateUser(
       const validateImagesresult: void | Response = validateImagesUpload({
         file: picture,
         response: res,
+        userSubs,
       });
 
       if (validateImagesresult) return;

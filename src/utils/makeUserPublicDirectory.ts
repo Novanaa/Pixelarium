@@ -24,7 +24,7 @@ export default function makeUserPublicDirectory({
   try {
     if (!name) throw new Error("Username params should be provided");
 
-    name = slugify(name);
+    name = slugify(name, { lower: true });
 
     const basePublicDirPath: string = "./public/img";
     const galleriesPictureDirPath: string = `${basePublicDirPath}/galleries/${name}/pictures`;

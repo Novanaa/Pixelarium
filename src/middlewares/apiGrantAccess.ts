@@ -10,6 +10,7 @@ import {
   httpUnauthorizedResponse,
   httpUnprocessableContentResponse,
 } from "../utils/responses/httpErrorsResponses";
+import getUserSubscription from "../utils/getUserSubscription";
 
 export default async function apiGrantAccess(
   req: Request,
@@ -45,10 +46,9 @@ export default async function apiGrantAccess(
       });
 
     if (isUser) {
-      const userSubs: Awaited<Subscription | null> =
-        await client.subscription.findUnique({
-          where: { user_id: isUser.id },
-        });
+      const userSubs: Awaited<Subscription | null> = await getUserSubscription(
+        isUser.id
+      );
 
       if (!userSubs)
         return httpNotFoundResponse({

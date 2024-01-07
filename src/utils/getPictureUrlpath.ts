@@ -21,12 +21,14 @@ export default function getPictureUrlpath({
   request,
   usage,
   filename,
+  name,
 }: {
   request: Request;
   usage: UsageType;
   filename: string;
+  name?: string;
 }): string {
-  const pictureFilepath: string = getPictureFilepath({ usage: usage });
+  const pictureFilepath: string = getPictureFilepath({ usage, name });
 
   const urlpath: string = `${request.protocol}://${request.get(
     "host"

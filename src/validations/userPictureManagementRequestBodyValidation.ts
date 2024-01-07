@@ -1,6 +1,7 @@
 import { Request } from "express";
 import { default as joi } from "joi";
 import UserPictureManagementRequestBodyValidationTypes from "./interfaces/types/UserPictureManagementRequestBodyValidationTypes";
+import customValidationObject from "./custom";
 
 export default function userPictureManagementRequestBodyValidation(
   req: Request
@@ -9,7 +10,7 @@ export default function userPictureManagementRequestBodyValidation(
     expiresInDays: joi.number().default(30),
     is_private: joi.boolean().default(false),
     use_external_image_url: joi.boolean().default(false),
-    picture_details: joi
+    picture_details: customValidationObject
       .object({
         title: joi.string().required(),
         description: joi.string().required(),

@@ -1,5 +1,9 @@
 import Joi from "joi";
+import slugify from "slugify";
+import validator from "validator";
 import { Request, Response } from "express";
+import saveFile from "../../../../utils/saveFile";
+import { UploadedFile } from "express-fileupload";
 import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import {
@@ -17,6 +21,20 @@ import getUserGallery, {
 } from "../../galleries/services/getUserGallery";
 import validateRequestFilesField from "../../../../utils/validateRequestFilesField";
 import requestFileFieldName from "../../../../const/readonly/requestFileFieldName";
+import validateImagesUpload from "../../../../utils/validateImagesUpload";
+import { Picture, Subscription } from "../../../../../generated/client";
+import getUserSubscription from "../../../../utils/getUserSubscription";
+import createHashedFilename from "../../../../utils/createHashedFilename";
+import getPictureUrlpath from "../../../../utils/getPictureUrlpath";
+import getPictureExtensionName from "../../../../utils/getPictureExtensionName";
+import sendUploadUserGalleryPictureJsonResultHttpResponse from "../services/sendJsonResultHttpResponse";
+import generateUploadPictureResponseData, {
+  AddUserGalleryPictureResponseData,
+} from "../services/generateUploadPictureResponseData";
+import insertUserPictureGallery from "../services/insertUserPictureGallery";
+import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryPicturepath";
+import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody";
+import getFilename from "../../../../utils/getFilename";
 
 export default async function addUserGalleryPicture(
   req: Request,
@@ -24,7 +42,11 @@ export default async function addUserGalleryPicture(
 ): Promise<Response | void> {
   try {
     const { name } = req.params;
-    let pictureUrl: string = "";
+
+    const validateEmptyRequestBodyResult: void | Response =
+      validateEmptyRequestBody({ request: req, response: res });
+
+    if (validateEmptyRequestBodyResult) return;
 
     const {
       error,
@@ -34,10 +56,9 @@ export default async function addUserGalleryPicture(
 
     const validateRequestBodyResult: void | Response = validateRequestBody({
       res,
-      value,
       error,
-      usage: "upload",
     });
+
     if (validateRequestBodyResult) return;
 
     if (!name)
@@ -52,21 +73,44 @@ export default async function addUserGalleryPicture(
 
     if (!user) return httpNotFoundResponse({ response: res });
 
+    const slugifiedUsername: string = slugify(user.name, { lower: true });
+
+    delete user.email;
+    delete user.password;
+
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user.id
     );
 
-    if (value.use_external_image_url && !value.picture_details.image)
-      return httpUnprocessableContentResponse({
-        response: res,
-        errorMessage:
-          "The image field must be filled if the use_external_image_url is setted to true",
-      });
+    const isUserUsedExternalPicture: boolean =
+      value.use_external_image_url as boolean;
 
-    if (value.use_external_image_url)
-      pictureUrl = value.picture_details.image as string;
+    const pictureExpiresIn: number | null = !value.expiresInDays
+      ? null
+      : value.expiresInDays;
 
     if (req.files) {
+      const picture: UploadedFile = req.files[
+        requestFileFieldName
+      ] as UploadedFile;
+
+      const userSubs: Awaited<Subscription | null> = await getUserSubscription(
+        user.id
+      );
+
+      if (!userSubs)
+        return httpBadRequestResponse({
+          response: res,
+          errorMessage: "Unexpected Error Occurred",
+        });
+
+      if (isUserUsedExternalPicture)
+        return httpBadRequestResponse({
+          response: res,
+          errorMessage:
+            "You cannot uploading file if the 'use_external_image_url' field is setted to true",
+        });
+
       const requestFilesFieldValidation: void | Response =
         validateRequestFilesField({
           response: res,
@@ -75,13 +119,93 @@ export default async function addUserGalleryPicture(
         });
 
       if (requestFilesFieldValidation) return;
+
+      const validateImagesUploadResult: void | Response = validateImagesUpload({
+        file: picture,
+        response: res,
+        userSubs,
+      });
+
+      if (validateImagesUploadResult) return;
+
+      const filename: string = createHashedFilename({ file: picture });
+      const pictureExtension: string = getPictureExtensionName(filename);
+      const pictureUrlpath: string = getPictureUrlpath({
+        request: req,
+        filename,
+        usage: "galleries",
+        name: slugifiedUsername,
+      });
+      const pictureDest: string = getPublicDirectoryPicturepath({
+        usage: "galleries",
+        filename,
+        name: slugifiedUsername,
+      });
+
+      const insertedPicture: Awaited<Picture> = await insertUserPictureGallery({
+        userGallery,
+        extension: pictureExtension,
+        filename,
+        value,
+        url: pictureUrlpath,
+        expires_in: pictureExpiresIn,
+      });
+
+      const responseData: AddUserGalleryPictureResponseData =
+        generateUploadPictureResponseData({ insertedPicture, user });
+
+      saveFile({ file: picture, response: res, path: pictureDest });
+
+      return sendUploadUserGalleryPictureJsonResultHttpResponse({
+        response: res,
+        responseData,
+      });
     }
 
-    console.log(pictureUrl);
+    if (!req.files) {
+      const externalPictureUrl: string = value.picture_details
+        .image_url as string;
 
-    return res.send(userGallery);
+      if (isUserUsedExternalPicture && !externalPictureUrl)
+        return httpUnprocessableContentResponse({
+          response: res,
+          errorMessage:
+            "The image field must be filled if the use_external_image_url is setted to true",
+        });
+
+      const isUrl: boolean = validator.isURL(externalPictureUrl);
+
+      if (!isUrl)
+        return httpBadRequestResponse({
+          response: res,
+          errorMessage: "The external image url is not a valid image url",
+        });
+
+      const filename: string = getFilename(externalPictureUrl);
+      const pictureExtension: string = getPictureExtensionName(filename);
+
+      const insertedPicture: Awaited<Picture> = await insertUserPictureGallery({
+        userGallery,
+        extension: pictureExtension,
+        filename: filename.split(".")[0],
+        value,
+        url: externalPictureUrl,
+        expires_in: pictureExpiresIn,
+      });
+
+      const responseData: AddUserGalleryPictureResponseData =
+        generateUploadPictureResponseData({
+          insertedPicture,
+          user,
+        });
+
+      return sendUploadUserGalleryPictureJsonResultHttpResponse({
+        response: res,
+        responseData,
+      });
+    }
   } catch (err) {
-    // if (err) throw err;
+    if (err) throw err;
     logger.error(err);
     return httpBadRequestResponse({ response: res });
   } finally {
