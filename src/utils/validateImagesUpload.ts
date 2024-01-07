@@ -28,7 +28,7 @@ export default function validateImagesUpload({
   if (file.data.length > userPlansMapping * 1024 * 1024)
     return httpUnprocessableContentResponse({
       response,
-      errorMessage: messege.unsupportedImageFileSize,
+      errorMessage: `The image file size must be less than ${userPlansMapping}mb.`,
     });
 
   const ext: string = path.extname(file.name);
