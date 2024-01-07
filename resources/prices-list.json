@@ -73,7 +73,7 @@
       },
       {
         "id": 2,
-        "title": "40MB Limitation File Size",
+        "title": "30MB Limitation File Size",
         "description": "Experience our services with a file size limitation of 40MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
         "isIncluded": true
       },
@@ -131,7 +131,7 @@
       },
       {
         "id": 2,
-        "title": "80MB Limitation File Size",
+        "title": "60MB Limitation File Size",
         "description": "Experience our services with a file size limitation of 80MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
         "isIncluded": true
       },
@@ -189,7 +189,7 @@
       },
       {
         "id": 2,
-        "title": "100MB Limitation File Size",
+        "title": "80MB Limitation File Size",
         "description": "Experience our services with a file size limitation of 100MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
         "isIncluded": true
       },
