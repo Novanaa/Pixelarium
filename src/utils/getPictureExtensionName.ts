@@ -11,7 +11,7 @@ import imgExt from "../const/readonly/extentsion";
 export default function getPictureExtensionName(urlpath: string): string {
   if (!urlpath) throw new Error("Urlpath must be provided!");
 
-  const findExtName: string = path.extname(urlpath);
+  const findExtName: string = path.extname(urlpath).toLowerCase();
 
   if (!imgExt.includes(findExtName)) return "Unknown";
 
