@@ -82,7 +82,7 @@ class FilesSystem {
    */
   public async deleteDirectoryFiles(path: string): Promise<void | null> {
     try {
-      if (this.isExist(path)) throw new Error("The dirpath is not found");
+      if (!this.isExist(path)) throw new Error("The dirpath is not found");
 
       const files: Awaited<Array<string>> = await fsp.readdir(path);
 
