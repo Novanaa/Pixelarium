@@ -10,10 +10,12 @@ export default async function createTestUser({
   providerId,
   plan,
   status,
+  usage,
 }: {
   providerId: number;
   plan: plan;
   status: status;
+  usage?: "removesAllPicturesTest";
 }): Promise<void> {
   try {
     const clientId: string = generateClientId(providerId);
@@ -47,7 +49,7 @@ export default async function createTestUser({
           create: {
             pictures: {
               createMany: {
-                data: pictures,
+                data: usage !== "removesAllPicturesTest" ? pictures : [],
                 skipDuplicates: true,
               },
             },
