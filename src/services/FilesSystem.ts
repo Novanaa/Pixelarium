@@ -1,5 +1,7 @@
 import fs from "fs";
+import { default as fsp } from "fs/promises";
 import logger from "../libs/configs/logger";
+import { default as npath } from "path";
 
 /* The FilesSystem class provides methods to check if a file exists and delete a file. */
 class FilesSystem {
@@ -64,6 +66,31 @@ class FilesSystem {
       fs.mkdirSync(path, {
         recursive: true,
       });
+    } catch (err) {
+      logger.error(err);
+      return null;
+    }
+  }
+  /**
+   * Deletes all files in the specified directory.
+   *
+   * @param {string} path - The path parameter represents the directory path from which you want to delete all files.
+   *
+   * @throws {Error} - If the dirpath is not found.
+   *
+   * @returns {Promise<void | null>} - This method returns a Promise that resolves to void if all files are successfully deleted, or null if there is an error.
+   */
+  public async deleteDirectoryFiles(path: string): Promise<void | null> {
+    try {
+      if (this.isExist(path)) throw new Error("The dirpath is not found");
+
+      const files: Awaited<Array<string>> = await fsp.readdir(path);
+
+      if (files.length) {
+        files.map(async (file) => {
+          await fsp.unlink(npath.join(path, file));
+        });
+      }
     } catch (err) {
       logger.error(err);
       return null;
