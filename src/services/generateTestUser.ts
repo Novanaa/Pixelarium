@@ -48,6 +48,12 @@ export default async function generateTestUser(): Promise<void> {
           plan: "Diamond",
           status: "active",
         }),
+        createTestUser({
+          providerId: 3,
+          plan: "Diamond",
+          status: "active",
+          usage: "removesAllPicturesTest",
+        }),
       ]);
     }
   } catch (err) {
