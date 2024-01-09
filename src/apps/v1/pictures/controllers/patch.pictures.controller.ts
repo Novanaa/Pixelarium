@@ -14,6 +14,10 @@ import validateUpdateUserRequestBody, {
   UpdateUserRequestBodySchemaValidation,
 } from "../../../../validations/validateUpdateUserPictureRequestBody";
 import validateRequestBody from "../../../../utils/validateRequestBody";
+import getUserGallery, {
+  UserGallery,
+} from "../../galleries/services/getUserGallery";
+import { Picture } from "../../../../../generated/client";
 
 export default async function updateUserPicture(
   req: Request,
@@ -47,6 +51,27 @@ export default async function updateUserPicture(
 
     if (!user) return httpNotFoundResponse({ response: res });
 
+    delete user.email;
+    delete user.password;
+
+    const userGallery: Awaited<UserGallery> = await getUserGallery(user.id);
+
+    if (!userGallery.pictures.length)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "Your gallery pictures was empty!",
+      });
+
+    const userGalleryPicture: Picture = userGallery.pictures.filter(
+      (p) => p.uniquekey == uniquekey
+    )[0];
+
+    if (!userGalleryPicture)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The gallery picture doesn't exist",
+      });
+
     const externalPictureUrl: string = value.image_url as string;
 
     if (!req.files) {
@@ -59,7 +84,7 @@ export default async function updateUserPicture(
         });
     }
 
-    res.send(value);
+    res.send(userGalleryPicture);
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
