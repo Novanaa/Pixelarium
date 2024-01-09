@@ -11459,10 +11459,10 @@ export namespace Prisma {
 
   export type PictureWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    uniquekey?: string
     AND?: PictureWhereInput | PictureWhereInput[]
     OR?: PictureWhereInput[]
     NOT?: PictureWhereInput | PictureWhereInput[]
-    uniquekey?: StringFilter<"Picture"> | string
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
@@ -11480,7 +11480,7 @@ export namespace Prisma {
     favorite?: XOR<FavoriteNullableRelationFilter, FavoriteWhereInput> | null
     gallery?: XOR<GalleryRelationFilter, GalleryWhereInput>
     album?: XOR<AlbumPictureNullableRelationFilter, AlbumPictureWhereInput> | null
-  }, "id">
+  }, "id" | "uniquekey">
 
   export type PictureOrderByWithAggregationInput = {
     id?: SortOrder

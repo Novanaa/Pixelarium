@@ -77,7 +77,7 @@ model Favorite {
 
 model Picture {
   id Int @id @default(autoincrement())  
-  uniquekey String @default(uuid())
+  uniquekey String @default(uuid()) @unique
   title   String
   description   String
   url       String
