@@ -9,9 +9,9 @@ import payload from "../../../../tests/const/payload";
 import getUserGallery, {
   UserGallery,
 } from "../../galleries/services/getUserGallery";
+import uniquekey from "../../../../const/readonly/pictureUniquekeyExample";
 
 const jwt: JsonWebToken = new JsonWebToken();
-const uniquekey: string = "550e8400-e29b-41d4-a716-446655440000";
 describe("Unit-Test Delete All User Gallery Pictures", () => {
   test("should be return 404 status code if the user wasn't found", async () => {
     const user: Awaited<User | null> = await getTestUser(3);
