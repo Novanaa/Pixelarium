@@ -43,7 +43,6 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
       await supertest(app)
         .patch(`/v1/pictures/${user?.name}/${uniquekey}`)
         .send({
-          use_external_image_url: true,
           image_url: "hehe",
         });
 
