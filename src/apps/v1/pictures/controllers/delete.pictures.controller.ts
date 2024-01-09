@@ -1,5 +1,4 @@
 import slugify from "slugify";
-import validator from "validator";
 import { Request, Response } from "express";
 import client from "../../../../libs/configs/prisma";
 import logger from "../../../../libs/configs/logger";
@@ -21,6 +20,7 @@ import { GetBatchResult } from "@prisma/client/runtime/library";
 import { Picture } from "../../../../../generated/client";
 import checkIfPictureIsInternalPicture from "../../../../utils/checkIfPictureIsInternalPicture";
 import removeSingleGalleryPicture from "../services/removeSingleGalleryPicture";
+import validatePictureUniquekey from "../../../../utils/validatePictureUniquekey";
 
 type DeleteAllUserPicturesResponseData = {
   from: UserWithOptionalChaining;
@@ -101,11 +101,12 @@ export async function deleteSingleExistingUserPicture(
   try {
     const { name, uniquekey } = req.params;
 
-    if (!validator.isUUID(uniquekey))
-      return httpBadRequestResponse({
-        response: res,
-        errorMessage: "The picture uniquekey must be a valid uniquekey",
-      });
+    const validateUniquekey: void | Response = validatePictureUniquekey({
+      uniquekey,
+      response: res,
+    });
+
+    if (validateUniquekey) return;
 
     const user: Awaited<UserWithOptionalChaining | null> =
       await isUserExistByNameOrEmail({ field: "name", value: name });
