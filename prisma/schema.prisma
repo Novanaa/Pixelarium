@@ -85,6 +85,7 @@ model Picture {
   filename String
   extension String
   expires_in Int? 
+  is_external_picture Boolean
   is_private Boolean @default(false)
   gallery_id Int
   album_picture_id Int?
