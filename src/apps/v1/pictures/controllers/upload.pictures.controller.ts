@@ -149,6 +149,7 @@ export default async function addUserGalleryPicture(
         value,
         url: pictureUrlpath,
         expires_in: pictureExpiresIn,
+        isExternalPicture: true,
       });
 
       const responseData: AddUserGalleryPictureResponseData =
@@ -191,6 +192,7 @@ export default async function addUserGalleryPicture(
         value,
         url: externalPictureUrl,
         expires_in: pictureExpiresIn,
+        isExternalPicture: false,
       });
 
       const responseData: AddUserGalleryPictureResponseData =
