@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
 
+export type GenerateTestUserGalleryPictureDataOptions = {
+  is_external_picture: boolean;
+};
+
 /**
  * Generates test data for a user gallery picture.
  * @returns An object representing a user gallery picture.
@@ -19,7 +23,8 @@ import { faker } from "@faker-js/faker";
  *  }
  */
 export default function generateTestUserGalleryPictureData(
-  numberOfData: number
+  numberOfData: number,
+  { is_external_picture }: GenerateTestUserGalleryPictureDataOptions
 ) {
   const pictures = [];
 
@@ -33,7 +38,7 @@ export default function generateTestUserGalleryPictureData(
       is_favorited: faker.datatype.boolean(),
       url: faker.internet.url(),
       is_private: faker.datatype.boolean(),
-      is_external_picture: false,
+      is_external_picture,
     };
 
     pictures.push(picture);
