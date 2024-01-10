@@ -28,7 +28,8 @@ import createHashedFilename from "../../../../utils/createHashedFilename";
 import getPictureUrlpath from "../../../../utils/getPictureUrlpath";
 import getPictureExtensionName from "../../../../utils/getPictureExtensionName";
 import SendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
-import generateUploadPictureResponseData, {
+import {
+  generateUploadPictureResponseData,
   AddUserGalleryPictureResponseData,
 } from "../services/generateHttpResponseData";
 import insertUserPictureGallery from "../services/insertUserPictureGallery";

@@ -20,7 +20,7 @@ type GenerateUploadPictureResponseDataParams = {
  * @param {UserWithOptionalChaining} params.user - The user with optional chaining.
  * @returns {AddUserGalleryPictureResponseData} The generated response data.
  */
-export default function generateUploadPictureResponseData({
+export function generateUploadPictureResponseData({
   insertedPicture,
   user,
 }: GenerateUploadPictureResponseDataParams) {
