@@ -5,9 +5,8 @@ import getTestUser from "../../../../tests/utils/getTestUser";
 import { ClientKey, User } from "../../../../../generated/client";
 import payload from "../../../../tests/const/payload";
 import getTestUserClientKeys from "../../../../tests/utils/getTestUserClientKeys";
+import dummyExternalPictureUrl from "../../../../const/readonly/dummyExternalPictureUrl";
 
-const dummyExternalPictureUrl: string =
-  "https://blog-asset.jakmall.com/blog/content/images/2020/11/20f535c616bbe807a1166e5661b396fd.jpg";
 describe("Unit-Test User Pictures Upload Management API Endpoint", () => {
   test("should be return 422 status code if the request body payload is invalid", async () => {
     const user: Awaited<User | null> = await getTestUser(payload.providerId);
