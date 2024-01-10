@@ -27,32 +27,64 @@ export default async function generateTestUser(): Promise<void> {
           providerId: 321,
           plan: "Netherite",
           status: "active",
+          options: {
+            emptyPicture: false,
+            is_external_picture: false,
+          },
         }),
         createTestUser({
           providerId: 123,
           plan: "Netherite",
           status: "deactive",
+          options: {
+            emptyPicture: false,
+            is_external_picture: false,
+          },
         }),
         createTestUser({
           providerId: 898,
           plan: "none",
           status: "deactive",
+          options: {
+            emptyPicture: false,
+            is_external_picture: false,
+          },
         }),
         createTestUser({
           providerId: 1,
           plan: "Gold",
           status: "active",
+          options: {
+            emptyPicture: false,
+            is_external_picture: false,
+          },
         }),
         createTestUser({
           providerId: 2,
           plan: "Diamond",
           status: "active",
+          options: {
+            is_external_picture: false,
+            emptyPicture: false,
+          },
         }),
         createTestUser({
           providerId: 3,
           plan: "Diamond",
           status: "active",
-          usage: "removesAllPicturesTest",
+          options: {
+            emptyPicture: true,
+            is_external_picture: false,
+          },
+        }),
+        createTestUser({
+          providerId: 4,
+          plan: "Diamond",
+          status: "active",
+          options: {
+            emptyPicture: false,
+            is_external_picture: true,
+          },
         }),
       ]);
     }
