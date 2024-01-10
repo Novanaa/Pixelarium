@@ -30,7 +30,7 @@ import getPictureExtensionName from "../../../../utils/getPictureExtensionName";
 import SendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
 import generateUploadPictureResponseData, {
   AddUserGalleryPictureResponseData,
-} from "../services/generateUploadPictureResponseData";
+} from "../services/generateHttpResponseData";
 import insertUserPictureGallery from "../services/insertUserPictureGallery";
 import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryPicturepath";
 import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody";
