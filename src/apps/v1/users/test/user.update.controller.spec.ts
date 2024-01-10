@@ -74,7 +74,7 @@ describe("Unit-Testing User Update API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 status code if the request files image size is more than 20mb", async () => {
-    const user: Awaited<User | null> = await client.user.findFirst();
+    const user: Awaited<User | null> = await getTestUser(898);
     const request = await supertest(app)
       .patch(`/v1/users/${user?.name}`)
       .field({

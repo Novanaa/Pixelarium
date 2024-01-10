@@ -33,6 +33,7 @@ export default function generateTestUserGalleryPictureData(
       is_favorited: faker.datatype.boolean(),
       url: faker.internet.url(),
       is_private: faker.datatype.boolean(),
+      is_external_picture: false,
     };
 
     pictures.push(picture);

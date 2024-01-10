@@ -10,6 +10,7 @@ type InsertUserPictureGalleryParams = {
   value: UserPictureManagementRequestBodyValidationTypes;
   url: string;
   expires_in: number | null;
+  isExternalPicture: boolean;
 };
 
 /**
@@ -21,6 +22,7 @@ type InsertUserPictureGalleryParams = {
  * @param value - An object containing the picture details such as description, title, and privacy settings.
  * @param url - The URL of the picture.
  * @param expires_in - The expiration time of the picture in seconds.
+ * @param isExternalPicture
  * @returns The newly inserted picture object in the user's gallery.
  */
 export default async function insertUserPictureGallery({
@@ -30,6 +32,7 @@ export default async function insertUserPictureGallery({
   value,
   url,
   expires_in,
+  isExternalPicture,
 }: InsertUserPictureGalleryParams): Promise<Picture> {
   const insertedPicture: Awaited<Picture> = await client.picture.create({
     data: {
@@ -42,6 +45,7 @@ export default async function insertUserPictureGallery({
       expires_in,
       is_favorited: false,
       is_private: value.is_private,
+      is_external_picture: isExternalPicture,
     },
   });
 
