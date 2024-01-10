@@ -1,11 +1,10 @@
 import { Response } from "express";
-import { AddUserGalleryPictureResponseData } from "./generateUploadPictureResponseData";
 import { jsonResult } from "../../../../utils/responses/httpApiResponses";
 import http from "../../../../const/readonly/httpStatusCode";
 
 type SendUploadUserGalleryPictureJsonResultHttpResponseParams = {
   response: Response;
-  responseData: AddUserGalleryPictureResponseData;
+  responseData: unknown;
 };
 
 /**
@@ -16,11 +15,11 @@ type SendUploadUserGalleryPictureJsonResultHttpResponseParams = {
  * @param {AddUserGalleryPictureResponseData} params.responseData - The response data to be sent.
  * @returns {void}
  */
-export default function sendUploadUserGalleryPictureJsonResultHttpResponse({
+export default function sendUploadUserGalleryPictureJsonResultHttpResponse<T>({
   response,
   responseData,
 }: SendUploadUserGalleryPictureJsonResultHttpResponseParams): void {
-  jsonResult<AddUserGalleryPictureResponseData>({
+  jsonResult<T>({
     response,
     statusCode: http.StatusCreated,
     resultKey: "created",
