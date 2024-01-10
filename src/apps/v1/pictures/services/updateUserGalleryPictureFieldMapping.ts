@@ -20,7 +20,8 @@ export default function updateUserGalleryPictureFieldMapping({
   pictureInfo,
 }: UpdateUserGalleryPictureFieldMappingParams): TUpdateUserGalleryPictureField {
   const fieldMapping: TUpdateUserGalleryPictureField = {
-    ...value,
+    title: value.title,
+    description: value.description,
     url: value.image_url,
     expires_in: value.expiresInDays || null,
     is_favorited: value.isFavorited,
