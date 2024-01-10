@@ -27,7 +27,7 @@ import getUserSubscription from "../../../../utils/getUserSubscription";
 import createHashedFilename from "../../../../utils/createHashedFilename";
 import getPictureUrlpath from "../../../../utils/getPictureUrlpath";
 import getPictureExtensionName from "../../../../utils/getPictureExtensionName";
-import sendUploadUserGalleryPictureJsonResultHttpResponse from "../services/sendJsonResultHttpResponse";
+import SendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
 import generateUploadPictureResponseData, {
   AddUserGalleryPictureResponseData,
 } from "../services/generateUploadPictureResponseData";
@@ -157,7 +157,7 @@ export default async function addUserGalleryPicture(
 
       saveFile({ file: picture, response: res, path: pictureDest });
 
-      return sendUploadUserGalleryPictureJsonResultHttpResponse({
+      return SendJsonResultHttpResponse<AddUserGalleryPictureResponseData>({
         response: res,
         responseData,
       });
@@ -201,7 +201,7 @@ export default async function addUserGalleryPicture(
           user,
         });
 
-      return sendUploadUserGalleryPictureJsonResultHttpResponse({
+      return SendJsonResultHttpResponse<AddUserGalleryPictureResponseData>({
         response: res,
         responseData,
       });
