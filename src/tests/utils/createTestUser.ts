@@ -2,25 +2,45 @@ import { plan, status } from "../../../generated/client";
 import { faker } from "@faker-js/faker";
 import client from "../../libs/configs/prisma";
 import generateClientId from "../../services/generateClientId";
-import generateTestUserGalleryPictureData from "./generateTestUserGalleryPictureData";
+import generateTestUserGalleryPictureData, {
+  GenerateTestUserGalleryPictureDataOptions,
+} from "./generateTestUserGalleryPictureData";
 import logger from "../../libs/configs/logger";
 import makeUserPublicDirectory from "../../utils/makeUserPublicDirectory";
 
+interface CreateTestUserOptions
+  extends GenerateTestUserGalleryPictureDataOptions {
+  emptyPicture: boolean;
+}
+
+/**
+ * Creates a test user with the given parameters.
+ *
+ * @param {Object} options - The options for creating the test user.
+ * @param {number} options.providerId - The provider ID of the test user.
+ * @param {plan} options.plan - The plan of the test user.
+ * @param {status} options.status - The status of the test user.
+ * @param {CreateTestUserOptions} options.options - Additional options for creating the test user.
+ * @returns {Promise<void>} - A promise that resolves when the test user is created.
+ * @throws {Error} - If an error occurs during the creation of the test user.
+ */
 export default async function createTestUser({
   providerId,
   plan,
   status,
-  usage,
+  options,
 }: {
   providerId: number;
   plan: plan;
   status: status;
-  usage?: "removesAllPicturesTest";
+  options: CreateTestUserOptions;
 }): Promise<void> {
   try {
     const clientId: string = generateClientId(providerId);
     const [pictures] = await Promise.all([
-      generateTestUserGalleryPictureData(5),
+      generateTestUserGalleryPictureData(5, {
+        is_external_picture: options.is_external_picture,
+      }),
     ]);
     const username: string = faker.person.fullName();
 
@@ -49,7 +69,7 @@ export default async function createTestUser({
           create: {
             pictures: {
               createMany: {
-                data: usage !== "removesAllPicturesTest" ? pictures : [],
+                data: !options.emptyPicture ? pictures : [],
                 skipDuplicates: true,
               },
             },
