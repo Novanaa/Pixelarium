@@ -5,23 +5,26 @@ import http from "../const/readonly/httpStatusCode";
 type SendJsonResultHttpResponseParams = {
   response: Response;
   responseData: unknown;
+  usage?: string;
 };
 
 /**
- * Sends an HTTP response for the upload user gallery picture operation.
+ * Sends a JSON result HTTP response.
  *
- * @param {SendJsonResultHttpResponseParams} params - The parameters for sending the HTTP response.
- * @param {Response} params.response - The Express response object.
- * @param {AddUserGalleryPictureResponseData} params.responseData - The response data to be sent.
+ * @param {Object} options - The options for the HTTP response.
+ * @param {Response} options.response - The Express response object.
+ * @param {unknown} options.responseData - The data to be included in the response.
+ * @param {string} [options.usage="create"] - The usage of the response (default: "create").
  * @returns {void}
  */
 export default function sendJsonResultHttpResponse<T>({
   response,
   responseData,
+  usage = "create",
 }: SendJsonResultHttpResponseParams): void {
   jsonResult<T>({
     response,
-    statusCode: http.StatusCreated,
+    statusCode: usage == "create" ? http.StatusCreated : http.StatusOk,
     resultKey: "created",
     dataKey: "data",
     data: responseData,
