@@ -36,6 +36,7 @@ import insertUserPictureGallery from "../services/insertUserPictureGallery";
 import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryPicturepath";
 import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody";
 import getFilename from "../../../../utils/getFilename";
+import http from "../../../../const/readonly/httpStatusCode";
 
 export default async function addUserGalleryPicture(
   req: Request,
@@ -161,6 +162,7 @@ export default async function addUserGalleryPicture(
       return SendJsonResultHttpResponse<AddUserGalleryPictureResponseData>({
         response: res,
         responseData,
+        options: { statusCode: http.StatusCreated, resultKey: "created" },
       });
     }
 
@@ -205,6 +207,7 @@ export default async function addUserGalleryPicture(
       return SendJsonResultHttpResponse<AddUserGalleryPictureResponseData>({
         response: res,
         responseData,
+        options: { statusCode: http.StatusCreated, resultKey: "created" },
       });
     }
   } catch (err) {

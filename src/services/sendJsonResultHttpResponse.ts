@@ -5,7 +5,12 @@ import http from "../const/readonly/httpStatusCode";
 type SendJsonResultHttpResponseParams = {
   response: Response;
   responseData: unknown;
-  usage?: string;
+  options?: SendJsonResultHttpResponseOptions;
+};
+
+type SendJsonResultHttpResponseOptions = {
+  statusCode?: number;
+  resultKey?: string;
 };
 
 /**
@@ -20,12 +25,12 @@ type SendJsonResultHttpResponseParams = {
 export default function sendJsonResultHttpResponse<T>({
   response,
   responseData,
-  usage = "create",
+  options,
 }: SendJsonResultHttpResponseParams): void {
   jsonResult<T>({
     response,
-    statusCode: usage == "create" ? http.StatusCreated : http.StatusOk,
-    resultKey: "created",
+    statusCode: options?.statusCode || http.StatusOk,
+    resultKey: options?.resultKey || "isSuccess",
     dataKey: "data",
     data: responseData,
   });
