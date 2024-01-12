@@ -7,6 +7,7 @@ import {
 import jsonWebTokenAuthorization from "../../../../middlewares/jsonWebTokenAuthorization";
 import verifySessionToken from "../../../../middlewares/verifySessionToken";
 import updateUserPicture from "../controllers/patch.pictures.controller";
+import singleUserPicture from "../controllers/pictures.get.controller";
 const router = express.Router();
 
 router.post("/:name/upload", addUserGalleryPicture);
@@ -21,5 +22,6 @@ router.delete(
   deleteSingleExistingUserPicture
 );
 router.patch("/:name/:uniquekey", updateUserPicture);
+router.get("/:uniquekey", singleUserPicture);
 
 export default router;
