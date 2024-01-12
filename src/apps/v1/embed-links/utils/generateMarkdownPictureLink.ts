@@ -17,7 +17,7 @@ export default function generateMarkdownPictureLink({
   title,
   url,
 }: GenerateMarkdownPictureLinkParams): MarkdownLink {
-  const tooltip: string = `![${{ title }}](${url})`;
+  const tooltip: string = `![${title}](${url})`;
 
   const markdownLink: MarkdownLink = {
     tooltip_link: tooltip,
