@@ -670,6 +670,70 @@
         }
       }
     },
+    "/v1/pictures/{picture_uniquekey}": {
+      "get": {
+        "tags": ["Pictures"],
+        "deprecated": false,
+        "operationId": "singleUserPicture",
+        "summary": "Get Single User Existing Picture",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "picture": {
+                      "id": 1,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "embed_pictures_links": {
+                      "id": 1,
+                      "picture_id": 1,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
+                    }
+                  },
+                  "isSucces": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/emptyRequestBodyValidationError"
+          }
+        }
+      }
+    },
     "/v1/pictures/{name}/{picture_uniquekey}": {
       "delete": {
         "security": [
