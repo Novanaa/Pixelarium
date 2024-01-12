@@ -688,17 +688,6 @@
               "application/json": {
                 "example": {
                   "data": {
-                    "owner": {
-                      "id": 1,
-                      "provider_id": 130564362,
-                      "name": "ItsNvaa",
-                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
-                      "type": "User",
-                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
-                      "site_admin": false,
-                      "createdAt": "2023-12-29T02:04:38.726Z",
-                      "updatedAt": "2023-12-29T02:04:38.726Z"
-                    },
                     "picture": {
                       "id": 1,
                       "title": "new title",
@@ -713,6 +702,21 @@
                       "favorite_id": null,
                       "createdAt": "2023-12-29T06:33:47.737Z",
                       "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "embed_pictures_links": {
+                      "id": 1,
+                      "picture_id": 1,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
                     }
                   },
                   "isSucces": true,
