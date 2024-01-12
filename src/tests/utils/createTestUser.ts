@@ -7,6 +7,8 @@ import generateTestUserGalleryPictureData, {
 } from "./generateTestUserGalleryPictureData";
 import logger from "../../libs/configs/logger";
 import makeUserPublicDirectory from "../../utils/makeUserPublicDirectory";
+import PictureEmbedLinks from "../../apps/v1/embed-links/interfaces/PictureEmbedLinks";
+import generatePictureEmbedLinks from "../../apps/v1/embed-links/services/generatePictureEmbedLinks";
 
 interface CreateTestUserOptions
   extends GenerateTestUserGalleryPictureDataOptions {
@@ -37,46 +39,92 @@ export default async function createTestUser({
 }): Promise<void> {
   try {
     const clientId: string = generateClientId(providerId);
-    const [pictures] = await Promise.all([
-      generateTestUserGalleryPictureData(5, {
+    const [picture] = await Promise.all([
+      generateTestUserGalleryPictureData(1, {
         is_external_picture: options.is_external_picture,
-      }),
+      })[0],
     ]);
     const username: string = faker.person.fullName();
+    const pictureEmbedLinks: PictureEmbedLinks = generatePictureEmbedLinks({
+      url: faker.internet.url(),
+      title: faker.lorem.words(),
+      directViewLink: faker.internet.url(),
+      options: {
+        imageHeight: 1000,
+        imageWidth: 1000,
+      },
+    });
+    const client_secret: string =
+      "a93efc24cf7b6783b87a7487afe2de9035125f66257da682f8b10dc6544a63c2";
 
-    await client.user.create({
-      data: {
-        provider_id: providerId,
-        name: username,
-        email: faker.internet.email(),
-        password: null,
-        picture: faker.internet.url(),
-        bio: faker.lorem.sentence(),
-        client_keys: {
-          create: {
-            client_id: clientId,
-            client_secret:
-              "a93efc24cf7b6783b87a7487afe2de9035125f66257da682f8b10dc6544a63c2",
+    if (options.emptyPicture) {
+      await client.user.create({
+        data: {
+          provider_id: providerId,
+          name: username,
+          email: faker.internet.email(),
+          password: null,
+          picture: faker.internet.url(),
+          bio: faker.lorem.sentence(),
+          client_keys: {
+            create: {
+              client_id: clientId,
+              client_secret,
+            },
+          },
+          subscription: {
+            create: {
+              plan,
+              status,
+            },
+          },
+          gallery: {
+            create: {
+              pictures: {},
+            },
           },
         },
-        subscription: {
-          create: {
-            plan,
-            status,
+      });
+    }
+
+    if (!options.emptyPicture) {
+      await client.user.create({
+        data: {
+          provider_id: providerId,
+          name: username,
+          email: faker.internet.email(),
+          password: null,
+          picture: faker.internet.url(),
+          bio: faker.lorem.sentence(),
+          client_keys: {
+            create: {
+              client_id: clientId,
+              client_secret,
+            },
           },
-        },
-        gallery: {
-          create: {
-            pictures: {
-              createMany: {
-                data: !options.emptyPicture ? pictures : [],
-                skipDuplicates: true,
+          subscription: {
+            create: {
+              plan,
+              status,
+            },
+          },
+          gallery: {
+            create: {
+              pictures: {
+                create: {
+                  ...picture,
+                  embed_link: {
+                    create: {
+                      ...pictureEmbedLinks,
+                    },
+                  },
+                },
               },
             },
           },
         },
-      },
-    });
+      });
+    }
 
     makeUserPublicDirectory({ name: username });
   } catch (err) {
