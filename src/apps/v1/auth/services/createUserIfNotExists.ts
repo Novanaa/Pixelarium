@@ -42,6 +42,12 @@ export default async function createUserIfNotExists({
           pictures: {},
         },
       },
+      favorite_picture: {
+        create: {
+          pictures: {},
+          favorited_pictures: 0,
+        },
+      },
     },
   });
 

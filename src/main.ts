@@ -32,6 +32,7 @@ import clientKeysRoutes from "./apps/v1/client-keys/routes/clientKeys.routes";
 import galleriesRoutes from "./apps/v1/galleries/routes/galleries.routes";
 import userPicturesRoutes from "./apps/v1/pictures/routes/pictures.routes";
 import pictureEmbedLinks from "./apps/v1/embed-links/routes/embed-links.routes";
+import userFavoritesPictureRoutes from "./apps/v1/favorites-picture/routes/favorites.routes";
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(docs, swaggerOptions));
 app.use("/v1/auth", authRoutes);
@@ -40,12 +41,14 @@ app.use("/v1/client-keys", clientKeysRoutes);
 app.use("/v1/galleries", galleriesRoutes);
 app.use("/v1/pictures", userPicturesRoutes);
 app.use("/v1/embed-links", pictureEmbedLinks);
+app.use("/v1/favorites", userFavoritesPictureRoutes);
 
 // Private Access API Endpoint
 import privateUserRoutes from "./apps/v1/users/routes/private.user.routes";
 import privateGalleriesRoutes from "./apps/v1/galleries/routes/private.galleriesroutes";
 import privateUserPicturesRoutes from "./apps/v1/pictures/routes/private.pictures.routes";
 import privatePictureEmbedLinksRoutes from "./apps/v1/embed-links/routes/private.embed-links.routes";
+import privateUserFavoritesPictureRoutes from "./apps/v1/favorites-picture/routes/private.favorites.routes";
 
 app.use("/v1/plxm/users", [cors(), verifyUserClientKeys], privateUserRoutes);
 app.use(
@@ -62,6 +65,11 @@ app.use(
   "/v1/plxm/embed-links",
   [cors(), verifyUserClientKeys],
   privatePictureEmbedLinksRoutes
+);
+app.use(
+  "/v1/plxm/favorites",
+  [cors(), verifyUserClientKeys],
+  privateUserFavoritesPictureRoutes
 );
 
 export default app;
