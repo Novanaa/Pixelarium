@@ -1586,38 +1586,21 @@
                       "createdAt": "2023-12-29T02:04:38.726Z",
                       "updatedAt": "2023-12-29T02:04:38.726Z"
                     },
-                    "inserted_favorites_data_pictures": [
-                      {
-                        "id": 1,
-                        "title": "new title",
-                        "description": "new description",
-                        "url": "https://example.com/img/galleries/pictures/image.png",
-                        "is_favorited": true,
-                        "filename": "boo.png",
-                        "extension": "image/png",
-                        "is_private": false,
-                        "gallery_id": 5,
-                        "album_picture_id": null,
-                        "favorite_id": null,
-                        "createdAt": "2023-12-29T06:33:47.737Z",
-                        "updatedAt": "2023-12-29T06:34:51.923Z"
-                      },
-                      {
-                        "id": 2,
-                        "title": "my image title",
-                        "description": "new asf description",
-                        "url": "https://example.com/img/galleries/pictures/image.png",
-                        "is_favorited": true,
-                        "filename": "boo.png",
-                        "extension": "image/png",
-                        "is_private": false,
-                        "gallery_id": 5,
-                        "album_picture_id": null,
-                        "favorite_id": null,
-                        "createdAt": "2023-12-29T06:33:47.737Z",
-                        "updatedAt": "2023-12-29T06:34:51.923Z"
-                      }
-                    ],
+                    "inserted_favorites_data_picture": {
+                      "id": 1,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "boo.png",
+                      "extension": "image/png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
                     "total_inserted_pictures": 2
                   },
                   "created": true,
