@@ -72,6 +72,12 @@ export default async function createTestUser({
               client_secret,
             },
           },
+          favorite_picture: {
+            create: {
+              pictures: {},
+              favorited_pictures: 0,
+            },
+          },
           subscription: {
             create: {
               plan,
@@ -106,6 +112,12 @@ export default async function createTestUser({
             create: {
               plan,
               status,
+            },
+          },
+          favorite_picture: {
+            create: {
+              pictures: {},
+              favorited_pictures: 0,
             },
           },
           gallery: {
