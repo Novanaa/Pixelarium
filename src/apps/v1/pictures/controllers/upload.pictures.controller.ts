@@ -37,6 +37,8 @@ import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryP
 import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody";
 import getFilename from "../../../../utils/getFilename";
 import http from "../../../../const/readonly/httpStatusCode";
+import useFetch from "../../../../utils/useFetch";
+import { CLIENT_URL } from "../../../../const/env";
 
 export default async function addUserGalleryPicture(
   req: Request,
@@ -197,6 +199,11 @@ export default async function addUserGalleryPicture(
         expires_in: pictureExpiresIn,
         isExternalPicture: false,
       });
+
+      await useFetch(
+        `${CLIENT_URL}/v1/embed-links/${user.name}/${insertedPicture.uniquekey}`,
+        "POST"
+      );
 
       const responseData: AddUserGalleryPictureResponseData =
         generateUploadPictureResponseData({
