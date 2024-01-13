@@ -1546,7 +1546,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/v1/favorites/{name}/{picture_uniquekey}": {
       "post": {
         "tags": ["User Favorires Pictures"],
         "summary": "Add a favorite picture to the user profile by name",
@@ -1555,11 +1557,11 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
           }
         ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/pictureUniquekeyPayload"
-        },
         "responses": {
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -1625,9 +1627,7 @@
             }
           }
         }
-      }
-    },
-    "/v1/favorites/{name}/{picture_uniquekey}": {
+      },
       "delete": {
         "operationId": "deleteFavoritePicture",
         "deprecated": false,
