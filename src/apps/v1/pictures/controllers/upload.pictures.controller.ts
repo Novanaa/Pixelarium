@@ -200,7 +200,7 @@ export default async function addUserGalleryPicture(
         isExternalPicture: false,
       });
 
-      useFetch({
+      await useFetch({
         method: "POST",
         url: `${CLIENT_URL}/v1/embed-links/${user.name}/${insertedPicture.uniquekey}`,
       });
