@@ -4,6 +4,6 @@ import addFavoritePictureByName from "../controllers/favorites.post.controller";
 const router: express.Router = express.Router();
 
 router.get("/:name", userFavoritePictures);
-router.post("/:name", addFavoritePictureByName);
+router.post("/:name/:uniquekey", addFavoritePictureByName);
 
 export default router;
