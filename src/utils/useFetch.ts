@@ -1,32 +1,45 @@
 import logger from "../libs/configs/logger";
 
+type UseFetchParams = {
+  url: string;
+  method: "GET" | "POST" | "PATCH" | "DELETE" | "PUT";
+  body?: unknown;
+  headers?: Headers | HeadersInit;
+  options?: UseFetchOptions;
+};
+
+type UseFetchOptions = {
+  credentials?: RequestCredentials;
+  cache: RequestCache;
+};
+
 /**
- * The function `useFetch` is an asynchronous function that makes a request to a specified URL using
- * the specified HTTP method and authorization header, and returns the response as a JSON object of
- * type T, or null if there is an error.
- * @param {string} url - The `url` parameter is a string that represents the URL of the API endpoint
- * you want to fetch data from.
- * @param {string} [method=GET] - The method parameter is used to specify the HTTP method to be used in
- * the request. It is optional and defaults to "GET" if not provided.
- * @param {string} [auth] - The `auth` parameter is used to specify the authorization token that should
- * be included in the request headers. It is an optional parameter and its default value is an empty
- * string. If you want to include an authorization token in the request, you can pass it as a string to
- * the `auth` parameter
- * @returns a Promise that resolves to a value of type T or null.
+ * Performs a fetch request to the specified URL using the provided method, body, headers, and options.
+ *
+ * @param method - The HTTP method to use for the request (GET, POST, PATCH, DELETE, PUT).
+ * @param url - The URL to send the request to.
+ * @param body - The request body data (optional).
+ * @param headers - The request headers (optional).
+ * @param options - Additional options for the fetch request (optional).
+ * @returns An object containing the fetched data
  */
-export default async function useFetch<T>(
-  url: string,
-  method: string = "GET",
-  auth: string = ""
-): Promise<T | null> {
+export default async function useFetch<T>({
+  method = "GET",
+  url,
+  body = {},
+  headers,
+  options,
+}: UseFetchParams): Promise<T | null> {
   try {
-    const response = await fetch(url, {
+    const response: Awaited<Response> = await fetch(url, {
       method,
-      headers: { Accept: "application/json", Authorization: auth },
+      body: method == "GET" ? null : JSON.stringify(body),
+      headers: { Accept: "application/json", ...headers },
+      credentials: options?.credentials || "same-origin",
+      cache: options?.cache,
     });
     const result: Awaited<T> = await response.json();
-
-    return result;
+    return result as T;
   } catch (err) {
     logger.error(err);
     return null;
