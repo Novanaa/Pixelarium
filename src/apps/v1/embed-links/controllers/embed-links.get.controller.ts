@@ -7,7 +7,7 @@ import {
 } from "../../../../utils/responses/httpErrorsResponses";
 import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
-import getUserPicturesByUniquekey from "../services/getUserPicturesByUniquekey";
+import getUserPictureByUniquekey from "../../pictures/services/getUserPictureByUniquekey";
 import { EmbedLinks, Picture } from "../../../../../generated/client";
 import validatePictureUniquekey from "../../../../utils/validatePictureUniquekey";
 import getPictureEmbedLinks from "../services/getPictureEmbedLinks";
@@ -41,7 +41,7 @@ export default async function userPictureEmbedLinks(
     if (pictureUniquekeyValidation) return;
 
     const picture: Awaited<Picture | null> =
-      await getUserPicturesByUniquekey(uniquekey);
+      await getUserPictureByUniquekey(uniquekey);
 
     if (!picture)
       return httpNotFoundResponse({
