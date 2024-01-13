@@ -13,11 +13,6 @@ type UseFetchOptions = {
   cache: RequestCache;
 };
 
-type UseFetchReturnType = {
-  datas: unknown;
-  errors: Error | undefined;
-};
-
 /**
  * Performs a fetch request to the specified URL using the provided method, body, headers, and options.
  *
@@ -26,35 +21,27 @@ type UseFetchReturnType = {
  * @param body - The request body data (optional).
  * @param headers - The request headers (optional).
  * @param options - Additional options for the fetch request (optional).
- * @returns An object containing the fetched data and any errors encountered.
+ * @returns An object containing the fetched data
  */
-export default function useFetch<T>({
-  method,
+export default async function useFetch<T>({
+  method = "GET",
   url,
   body = {},
   headers,
   options,
-}: UseFetchParams): UseFetchReturnType {
-  let datas, errors;
-
-  const retriveData = async () => {
-    try {
-      const response: Awaited<Response> = await fetch(url, {
-        method,
-        body: JSON.stringify(body),
-        headers,
-        credentials: options?.credentials || "same-origin",
-        cache: options?.cache,
-      });
-      const result: Awaited<T> = await response.json();
-      datas = result;
-    } catch (err) {
-      logger.error(err);
-      errors = err;
-    }
-  };
-
-  retriveData();
-
-  return { datas, errors };
+}: UseFetchParams): Promise<T | null> {
+  try {
+    const response: Awaited<Response> = await fetch(url, {
+      method,
+      body: method == "GET" ? null : JSON.stringify(body),
+      headers: { Accept: "application/json", ...headers },
+      credentials: options?.credentials || "same-origin",
+      cache: options?.cache,
+    });
+    const result: Awaited<T> = await response.json();
+    return result as T;
+  } catch (err) {
+    logger.error(err);
+    return null;
+  }
 }
