@@ -36,21 +36,21 @@ export async function loginWithGithub(
   try {
     const { code } = req.query;
 
-    const githubAccessToken: Awaited<TGithubAccessToken> | null =
-      await useFetch<TGithubAccessToken>(
-        `${OAuthGithubAccessTokenUrl}&code=${code}`,
-        "POST"
-      );
+    const githubAccessToken: Awaited<TGithubAccessToken | null> =
+      await useFetch<TGithubAccessToken>({
+        method: "POST",
+        url: `${OAuthGithubAccessTokenUrl}&code=${code}`,
+      });
 
     const { access_token, token_type } =
       githubAccessToken as TGithubAccessToken;
 
     const auth: string = `${token_type} ${access_token}`;
-    const user: Awaited<TGithubUser> | null = await useFetch<TGithubUser>(
-      "https://api.github.com/user",
-      "GET",
-      auth
-    );
+    const user: Awaited<TGithubUser | null> = await useFetch<TGithubUser>({
+      url: "https://api.github.com/user",
+      method: "GET",
+      headers: { Accept: "application/json", Authorization: auth },
+    });
 
     if (!user)
       return httpBadRequestResponse({
@@ -87,6 +87,7 @@ export async function loginWithGithub(
       `${CLIENT_FRONTEND_URL}/auth/login/callback?session=${accessToken}&type=success`
     );
   } catch (err) {
+    if (err) throw err;
     logger.error(err);
     return httpBadRequestResponse({ response: res });
   } finally {
