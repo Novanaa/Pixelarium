@@ -7,7 +7,7 @@ import {
 import client from "../../../../libs/configs/prisma";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
-import { Favorite, Picture } from "../../../../../generated/client";
+import { Picture } from "../../../../../generated/client";
 import getUserPictureByUniquekey from "../../pictures/services/getUserPictureByUniquekey";
 import validatePictureUniquekey from "../../../../utils/validatePictureUniquekey";
 import UserFavoritePictures from "../interfaces/UserFavoritesPictures";
@@ -15,6 +15,7 @@ import getUserFavoritesPictures from "../services/getUserFavoritesPictures";
 import insertFavoritesPicture from "../services/insertFavoritesPicture";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
 import http from "../../../../const/readonly/httpStatusCode";
+import updateTotalFavoritedPictures from "../services/updateTotalFavoritedPictures";
 
 type AddFavoritePictureByNameResponseData = {
   owner: UserWithOptionalChaining;
@@ -63,17 +64,30 @@ export default async function addFavoritePictureByName(
     const totalFavoritedPictures: number = userFavoritePicture.pictures
       .length as number;
 
-    const insertedFavoritesPicture: Awaited<Favorite> =
-      await insertFavoritesPicture({
+    const isPictureIsAlreadyInserted: Picture =
+      userFavoritePicture.pictures.filter(
+        (p) => p.uniquekey == userPicture.uniquekey
+      )[0];
+
+    const validatedTotalFavoritedPictures: number = !isPictureIsAlreadyInserted
+      ? totalFavoritedPictures + 1
+      : totalFavoritedPictures;
+
+    Promise.all([
+      insertFavoritesPicture({
         userId: user.id,
         userPictureId: userPicture.id,
-        totalFavorited: totalFavoritedPictures,
-      });
+      }),
+      updateTotalFavoritedPictures({
+        userId: user.id,
+        totalFavoritedPictures: validatedTotalFavoritedPictures,
+      }),
+    ]);
 
     const responseData: AddFavoritePictureByNameResponseData = {
       owner: user,
       inserted_favorites_data_picture: userPicture,
-      total_inserted_pictures: insertedFavoritesPicture.favorited_pictures,
+      total_inserted_pictures: validatedTotalFavoritedPictures,
     };
 
     return sendJsonResultHttpResponse({
