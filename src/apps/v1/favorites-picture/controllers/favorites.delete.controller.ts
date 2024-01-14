@@ -5,25 +5,23 @@ import {
   httpNotFoundResponse,
 } from "../../../../utils/responses/httpErrorsResponses";
 import client from "../../../../libs/configs/prisma";
+import validatePictureUniquekey from "../../../../utils/validatePictureUniquekey";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import { Picture } from "../../../../../generated/client";
 import getUserPictureByUniquekey from "../../pictures/services/getUserPictureByUniquekey";
-import validatePictureUniquekey from "../../../../utils/validatePictureUniquekey";
 import UserFavoritePictures from "../interfaces/UserFavoritesPictures";
 import getUserFavoritesPictures from "../services/getUserFavoritesPictures";
-import insertFavoritesPicture from "../services/insertFavoritesPicture";
+import deleteUserFavoritesPicture from "../services/deletUserFavoritesPicture";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
-import http from "../../../../const/readonly/httpStatusCode";
 import updateTotalFavoritedPictures from "../services/updateTotalFavoritedPictures";
 
-type AddFavoritePictureByNameResponseData = {
+type DeleteFavoritePictureResponseData = {
   owner: UserWithOptionalChaining;
-  inserted_favorites_data_picture: Picture;
-  total_inserted_pictures: number;
+  deleted_favorite_picture: Picture;
 };
 
-export default async function addFavoritePictureByName(
+export default async function deleteFavoritePicture(
   req: Request,
   res: Response
 ): Promise<Response | void> {
@@ -52,50 +50,49 @@ export default async function addFavoritePictureByName(
         errorMessage: "The picture doesn't exist",
       });
 
-    const userFavoritePicture: Awaited<UserFavoritePictures | null> =
+    const userFavoritePictures: Awaited<UserFavoritePictures | null> =
       await getUserFavoritesPictures(user.id);
 
-    if (!userFavoritePicture)
+    if (!userFavoritePictures)
       return httpNotFoundResponse({
         response: res,
         errorMessage: "Unexpected Errors Occurred",
       });
 
-    const totalFavoritedPictures: number = userFavoritePicture.pictures
+    const favoritedPicture: Picture = userFavoritePictures.pictures.filter(
+      (p) => p.uniquekey == uniquekey
+    )[0];
+
+    if (!favoritedPicture)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The picture doesn't exist",
+      });
+
+    const totalFavoritedPictures: number = userFavoritePictures.pictures
       .length as number;
 
-    const isPictureIsAlreadyInserted: Picture =
-      userFavoritePicture.pictures.filter(
-        (p) => p.uniquekey == userPicture.uniquekey
-      )[0];
-
-    const validatedTotalFavoritedPictures: number = !isPictureIsAlreadyInserted
-      ? totalFavoritedPictures + 1
-      : totalFavoritedPictures;
-
     Promise.all([
-      insertFavoritesPicture({
+      deleteUserFavoritesPicture({
+        uniquekey: favoritedPicture.uniquekey,
         userId: user.id,
-        userPictureId: userPicture.id,
       }),
       updateTotalFavoritedPictures({
         userId: user.id,
-        totalFavoritedPictures: validatedTotalFavoritedPictures,
+        totalFavoritedPictures: totalFavoritedPictures - 1,
       }),
     ]);
 
-    const responseData: AddFavoritePictureByNameResponseData = {
+    const responseData: DeleteFavoritePictureResponseData = {
       owner: user,
-      inserted_favorites_data_picture: userPicture,
-      total_inserted_pictures: validatedTotalFavoritedPictures,
+      deleted_favorite_picture: favoritedPicture,
     };
 
     return sendJsonResultHttpResponse({
       response: res,
       responseData,
       options: {
-        statusCode: http.StatusCreated,
-        resultKey: "created",
+        resultKey: "deleted",
       },
     });
   } catch (err) {

@@ -4,7 +4,6 @@ import client from "../../../../libs/configs/prisma";
 type InsertFavoritesPictureParams = {
   userId: number;
   userPictureId: number;
-  totalFavorited: number;
 };
 
 /**
@@ -17,7 +16,6 @@ type InsertFavoritesPictureParams = {
  * @returns {Promise<Favorite>} - A promise that resolves to the updated favorite object.
  */
 export default async function insertFavoritesPicture({
-  totalFavorited,
   userId,
   userPictureId,
 }: InsertFavoritesPictureParams): Promise<Favorite> {
@@ -29,7 +27,6 @@ export default async function insertFavoritesPicture({
           id: userPictureId,
         },
       },
-      favorited_pictures: totalFavorited,
     },
   });
 
