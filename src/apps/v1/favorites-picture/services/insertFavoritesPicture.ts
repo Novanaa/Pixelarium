@@ -29,7 +29,7 @@ export default async function insertFavoritesPicture({
           id: userPictureId,
         },
       },
-      favorited_pictures: totalFavorited + 1,
+      favorited_pictures: totalFavorited,
     },
   });
 
