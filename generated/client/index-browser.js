@@ -165,15 +165,8 @@ exports.Prisma.PictureScalarFieldEnum = {
   is_external_picture: 'is_external_picture',
   is_private: 'is_private',
   gallery_id: 'gallery_id',
-  album_picture_id: 'album_picture_id',
-  favorite_id: 'favorite_id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.AlbumPictureScalarFieldEnum = {
-  id: 'id',
   album_id: 'album_id',
+  favorite_id: 'favorite_id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -248,7 +241,6 @@ exports.Prisma.ModelName = {
   Album: 'Album',
   Favorite: 'Favorite',
   Picture: 'Picture',
-  AlbumPicture: 'AlbumPicture',
   Subscription: 'Subscription',
   EmbedLinks: 'EmbedLinks'
 };
