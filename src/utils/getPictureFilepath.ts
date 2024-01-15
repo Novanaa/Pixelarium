@@ -27,7 +27,10 @@ export default function getPictureFilepath({
   if (usage == "galleries" && !name)
     throw new Error("Name Should be Provided if The Usage is Galleries");
 
-  if ((usage == "albums" && !name) || !albumName)
+  if (
+    (usage == "albums" && !name) ||
+    (usage == "albums" && !name && !albumName)
+  )
     throw new Error(
       "Name and Album Name Should be Provided if The Usage is Albums"
     );
