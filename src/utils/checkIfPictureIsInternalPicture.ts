@@ -2,6 +2,13 @@ import logger from "../libs/configs/logger";
 import getPictureFilepath from "./getPictureFilepath";
 import UsageType from "../interfaces/types/UsageTypes";
 
+type CheckIfPictureIsInternalPictureParams = {
+  picturePath: string;
+  usage: UsageType;
+  name?: string;
+  albumName?: string;
+};
+
 /**
  * The function `checkIfPictureIsInternalPicture` checks if a given picture path is an internal picture
  * based on the usage type.
@@ -20,13 +27,14 @@ export default function checkIfPictureIsInternalPicture({
   picturePath,
   usage,
   name,
-}: {
-  picturePath: string;
-  usage: UsageType;
-  name?: string;
-}): boolean | null {
+  albumName,
+}: CheckIfPictureIsInternalPictureParams): boolean | null {
   try {
-    const includedPicturePath: string = getPictureFilepath({ usage, name });
+    const includedPicturePath: string = getPictureFilepath({
+      usage,
+      name,
+      albumName,
+    });
 
     const isInternalPicture: boolean =
       picturePath.includes(includedPicturePath);
