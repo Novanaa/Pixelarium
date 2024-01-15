@@ -59,6 +59,7 @@ model Album {
   title   String
   description   String
   is_private Boolean @default(false)
+  thumbnail String?
   pictures Picture[]
   user_id Int
   createdAt DateTime @default(now())

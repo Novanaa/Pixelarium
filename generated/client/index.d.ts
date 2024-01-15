@@ -4683,6 +4683,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     is_private: boolean | null
+    thumbnail: string | null
     user_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4693,6 +4694,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     is_private: boolean | null
+    thumbnail: string | null
     user_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4703,6 +4705,7 @@ export namespace Prisma {
     title: number
     description: number
     is_private: number
+    thumbnail: number
     user_id: number
     createdAt: number
     updatedAt: number
@@ -4725,6 +4728,7 @@ export namespace Prisma {
     title?: true
     description?: true
     is_private?: true
+    thumbnail?: true
     user_id?: true
     createdAt?: true
     updatedAt?: true
@@ -4735,6 +4739,7 @@ export namespace Prisma {
     title?: true
     description?: true
     is_private?: true
+    thumbnail?: true
     user_id?: true
     createdAt?: true
     updatedAt?: true
@@ -4745,6 +4750,7 @@ export namespace Prisma {
     title?: true
     description?: true
     is_private?: true
+    thumbnail?: true
     user_id?: true
     createdAt?: true
     updatedAt?: true
@@ -4842,6 +4848,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private: boolean
+    thumbnail: string | null
     user_id: number
     createdAt: Date
     updatedAt: Date
@@ -4871,6 +4878,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     is_private?: boolean
+    thumbnail?: boolean
     user_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4884,6 +4892,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     is_private?: boolean
+    thumbnail?: boolean
     user_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4907,6 +4916,7 @@ export namespace Prisma {
       title: string
       description: string
       is_private: boolean
+      thumbnail: string | null
       user_id: number
       createdAt: Date
       updatedAt: Date
@@ -5311,6 +5321,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Album", 'String'>
     readonly description: FieldRef<"Album", 'String'>
     readonly is_private: FieldRef<"Album", 'Boolean'>
+    readonly thumbnail: FieldRef<"Album", 'String'>
     readonly user_id: FieldRef<"Album", 'Int'>
     readonly createdAt: FieldRef<"Album", 'DateTime'>
     readonly updatedAt: FieldRef<"Album", 'DateTime'>
@@ -9817,6 +9828,7 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     is_private: 'is_private',
+    thumbnail: 'thumbnail',
     user_id: 'user_id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -10259,6 +10271,7 @@ export namespace Prisma {
     title?: StringFilter<"Album"> | string
     description?: StringFilter<"Album"> | string
     is_private?: BoolFilter<"Album"> | boolean
+    thumbnail?: StringNullableFilter<"Album"> | string | null
     user_id?: IntFilter<"Album"> | number
     createdAt?: DateTimeFilter<"Album"> | Date | string
     updatedAt?: DateTimeFilter<"Album"> | Date | string
@@ -10271,6 +10284,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     is_private?: SortOrder
+    thumbnail?: SortOrderInput | SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10286,6 +10300,7 @@ export namespace Prisma {
     title?: StringFilter<"Album"> | string
     description?: StringFilter<"Album"> | string
     is_private?: BoolFilter<"Album"> | boolean
+    thumbnail?: StringNullableFilter<"Album"> | string | null
     user_id?: IntFilter<"Album"> | number
     createdAt?: DateTimeFilter<"Album"> | Date | string
     updatedAt?: DateTimeFilter<"Album"> | Date | string
@@ -10298,6 +10313,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     is_private?: SortOrder
+    thumbnail?: SortOrderInput | SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10316,6 +10332,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Album"> | string
     description?: StringWithAggregatesFilter<"Album"> | string
     is_private?: BoolWithAggregatesFilter<"Album"> | boolean
+    thumbnail?: StringNullableWithAggregatesFilter<"Album"> | string | null
     user_id?: IntWithAggregatesFilter<"Album"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Album"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Album"> | Date | string
@@ -10854,6 +10871,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     pictures?: PictureCreateNestedManyWithoutAlbumInput
@@ -10865,6 +10883,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     user_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10875,6 +10894,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pictures?: PictureUpdateManyWithoutAlbumNestedInput
@@ -10886,6 +10906,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10897,6 +10918,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     user_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10906,6 +10928,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10915,6 +10938,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11563,6 +11587,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     is_private?: SortOrder
+    thumbnail?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11578,6 +11603,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     is_private?: SortOrder
+    thumbnail?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11588,6 +11614,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     is_private?: SortOrder
+    thumbnail?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12777,6 +12804,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     pictures?: PictureCreateNestedManyWithoutAlbumInput
@@ -12787,6 +12815,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     pictures?: PictureUncheckedCreateNestedManyWithoutAlbumInput
@@ -12926,6 +12955,7 @@ export namespace Prisma {
     title?: StringFilter<"Album"> | string
     description?: StringFilter<"Album"> | string
     is_private?: BoolFilter<"Album"> | boolean
+    thumbnail?: StringNullableFilter<"Album"> | string | null
     user_id?: IntFilter<"Album"> | number
     createdAt?: DateTimeFilter<"Album"> | Date | string
     updatedAt?: DateTimeFilter<"Album"> | Date | string
@@ -13580,6 +13610,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAlbumInput
@@ -13590,6 +13621,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     user_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13689,6 +13721,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAlbumNestedInput
@@ -13699,6 +13732,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     user_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13885,6 +13919,7 @@ export namespace Prisma {
     title: string
     description: string
     is_private?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13893,6 +13928,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pictures?: PictureUpdateManyWithoutAlbumNestedInput
@@ -13903,6 +13939,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pictures?: PictureUncheckedUpdateManyWithoutAlbumNestedInput
@@ -13913,6 +13950,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     is_private?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
