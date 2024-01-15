@@ -17,7 +17,7 @@ type UserAlbumsResponseData = {
   total_user_albums: number;
 };
 
-export default async function userAlbums(
+export async function userAlbums(
   req: Request,
   res: Response
 ): Promise<void | Response> {
@@ -41,6 +41,20 @@ export default async function userAlbums(
     };
 
     return sendJsonResultHttpResponse({ response: res, responseData });
+  } catch (err) {
+    logger.error(err);
+    return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
+  }
+}
+
+export async function singleUserAlbum(
+  req: Request,
+  res: Response
+): Promise<void | Response> {
+  try {
+    res.send("testttttttt");
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
