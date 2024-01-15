@@ -19,13 +19,15 @@ import { httpBadRequestResponse } from "./responses/httpErrorsResponses";
 export default function validateRequestIDParams({
   id,
   response,
+  errorMessege,
 }: {
   id: string;
   response: Response;
+  errorMessege?: string;
 }): void | Response {
   if (!/^\d+$/.test(id))
     return httpBadRequestResponse({
       response,
-      errorMessage: messege.wrongRequestID,
+      errorMessage: errorMessege || messege.wrongRequestID,
     });
 }
