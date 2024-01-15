@@ -1109,6 +1109,18 @@
             "$ref": "#/components/parameters/pictureUniquekey"
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "This is your title album",
+                "description": "This is your description album",
+                "is_private": false
+              }
+            }
+          }
+        },
         "responses": {
           "404": {
             "$ref": "#/components/responses/notFound"
