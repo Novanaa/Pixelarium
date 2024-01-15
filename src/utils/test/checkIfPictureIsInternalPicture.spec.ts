@@ -13,10 +13,13 @@ describe("Unit-Testing checkIfPictureIsInternalPicture Utils", () => {
     expect(isInternalPicture).toBeTrue();
   });
   test("should be return true", () => {
-    const path: string = "http://127.0.0.1:54657/img/albums/pictures/test.png";
+    const path: string =
+      "http://127.0.0.1:54657/img/albums/ItsNvaa/hehe/pictures/test.png";
     const isInternalPicture: boolean | null = checkIfPictureIsInternalPicture({
       picturePath: path,
       usage: "albums",
+      name: "ItsNvaa",
+      albumName: "hehe",
     });
 
     expect(isInternalPicture).toBeTrue();

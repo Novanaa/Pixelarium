@@ -11,7 +11,11 @@ describe("Unit-Testing getPictureFilepath Utils", () => {
     expect(picturePath).toBeDefined();
   });
   test("filepath data type should be string", () => {
-    const picturePath: string = getPictureFilepath({ usage: "albums" });
+    const picturePath: string = getPictureFilepath({
+      usage: "albums",
+      albumName: "testtt",
+      name: "test",
+    });
 
     expect(picturePath).toBeString();
   });

@@ -1035,12 +1035,13 @@
           }
         ],
         "requestBody": {
-          "description": "Add User Albums Request Body",
+          "required": true,
           "content": {
             "application/json": {
               "example": {
-                "title": "My album title",
-                "description": "My album description"
+                "title": "This is your title album",
+                "description": "This is your description album",
+                "is_private": false
               }
             }
           }
@@ -1092,7 +1093,7 @@
         }
       }
     },
-    "/v1/albums/pictures/{name}/{album_id}": {
+    "/v1/albums/pictures/{name}/{album_id}/{picture_uniquekey}": {
       "post": {
         "deprecated": false,
         "operationId": "addAlbumPictures",
@@ -1104,11 +1105,11 @@
           },
           {
             "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
           }
         ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/pictureUniquekeyPayload"
-        },
         "responses": {
           "404": {
             "$ref": "#/components/responses/notFound"
@@ -1122,44 +1123,44 @@
               "application/json": {
                 "example": {
                   "data": {
-                    "inserted_data": {
-                      "pictures": [
-                        {
-                          "id": 1,
-                          "uniquekey": "b466d033-f48f-4e7f-82b3-8f46853d6161",
-                          "title": "This is my image",
-                          "description": "hehehe",
-                          "url": "this is url",
-                          "is_favorited": false,
-                          "filename": "image.png",
-                          "extension": "image/png",
-                          "expires_in": null,
-                          "is_private": false,
-                          "gallery_id": 1,
-                          "album_picture_id": 1,
-                          "favorite_id": null,
-                          "createdAt": "2023-12-30T01:19:45.105Z",
-                          "updatedAt": "2023-12-30T01:32:53.534Z"
-                        },
-                        {
-                          "id": 2,
-                          "uniquekey": "31eeb447-eb75-49c2-8073-715a4560c599",
-                          "title": "This is a title",
-                          "description": "hhehehe",
-                          "url": "url",
-                          "is_favorited": false,
-                          "filename": "field.png",
-                          "extension": "image/png",
-                          "expires_in": null,
-                          "is_private": false,
-                          "gallery_id": 1,
-                          "album_picture_id": 1,
-                          "favorite_id": null,
-                          "createdAt": "2023-12-30T01:34:05.831Z",
-                          "updatedAt": "2023-12-30T01:35:06.988Z"
-                        }
-                      ],
-                      "total_pictures_inserted": 2
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "album_data": {
+                      "id": 3,
+                      "title": "cupressus fugiat thesis",
+                      "description": "Tantillus barba bibo tonsor paulatim soleo triumphus angustus delibero. Trucido strenuus timidus totam via casus virgo. Quo debilito tristis spargo una culpo necessitatibus speculum. Auctus depulso cauda depromo.",
+                      "is_private": false,
+                      "thumbnail": "https://striking-porter.name",
+                      "user_id": 168,
+                      "createdAt": "2024-01-15T08:54:50.090Z",
+                      "updatedAt": "2024-01-15T08:54:50.090Z",
+                      "pictures": []
+                    },
+                    "inserted_picture": {
+                      "id": 1,
+                      "uniquekey": "31eeb447-eb75-49c2-8073-715a4560c599",
+                      "title": "This is a title",
+                      "description": "hhehehe",
+                      "url": "url",
+                      "is_favorited": false,
+                      "filename": "field.png",
+                      "extension": "image/png",
+                      "expires_in": null,
+                      "is_private": false,
+                      "gallery_id": 1,
+                      "album_picture_id": 1,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-30T01:34:05.831Z",
+                      "updatedAt": "2023-12-30T01:35:06.988Z"
                     }
                   },
                   "inserted": true,
