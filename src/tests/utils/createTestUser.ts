@@ -57,6 +57,29 @@ export default async function createTestUser({
     const client_secret: string =
       "a93efc24cf7b6783b87a7487afe2de9035125f66257da682f8b10dc6544a63c2";
 
+    const createUserClientKeysData = {
+      create: {
+        client_id: clientId,
+        client_secret,
+      },
+    };
+
+    const createUserSubsData = {
+      create: {
+        plan,
+        status,
+      },
+    };
+
+    const createUserAlbum = {
+      create: {
+        title: faker.lorem.words(),
+        description: faker.lorem.sentences(),
+        is_private: faker.datatype.boolean(),
+        thumbnail: faker.internet.url(),
+      },
+    };
+
     if (options.emptyPicture) {
       await client.user.create({
         data: {
@@ -66,29 +89,20 @@ export default async function createTestUser({
           password: null,
           picture: faker.internet.url(),
           bio: faker.lorem.sentence(),
-          client_keys: {
-            create: {
-              client_id: clientId,
-              client_secret,
-            },
-          },
+          client_keys: createUserClientKeysData,
           favorite_picture: {
             create: {
               pictures: {},
               favorited_pictures: 0,
             },
           },
-          subscription: {
-            create: {
-              plan,
-              status,
-            },
-          },
+          subscription: createUserSubsData,
           gallery: {
             create: {
               pictures: {},
             },
           },
+          album: createUserAlbum,
         },
       });
     }
@@ -102,18 +116,8 @@ export default async function createTestUser({
           password: null,
           picture: faker.internet.url(),
           bio: faker.lorem.sentence(),
-          client_keys: {
-            create: {
-              client_id: clientId,
-              client_secret,
-            },
-          },
-          subscription: {
-            create: {
-              plan,
-              status,
-            },
-          },
+          client_keys: createUserClientKeysData,
+          subscription: createUserSubsData,
           favorite_picture: {
             create: {
               pictures: {},
@@ -134,6 +138,7 @@ export default async function createTestUser({
               },
             },
           },
+          album: createUserAlbum,
         },
       });
     }
