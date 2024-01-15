@@ -4682,6 +4682,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    is_private: boolean | null
     user_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4691,6 +4692,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    is_private: boolean | null
     user_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4700,6 +4702,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
+    is_private: number
     user_id: number
     createdAt: number
     updatedAt: number
@@ -4721,6 +4724,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    is_private?: true
     user_id?: true
     createdAt?: true
     updatedAt?: true
@@ -4730,6 +4734,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    is_private?: true
     user_id?: true
     createdAt?: true
     updatedAt?: true
@@ -4739,6 +4744,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    is_private?: true
     user_id?: true
     createdAt?: true
     updatedAt?: true
@@ -4835,6 +4841,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string
+    is_private: boolean
     user_id: number
     createdAt: Date
     updatedAt: Date
@@ -4863,6 +4870,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    is_private?: boolean
     user_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4875,6 +4883,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    is_private?: boolean
     user_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4897,6 +4906,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string
+      is_private: boolean
       user_id: number
       createdAt: Date
       updatedAt: Date
@@ -5300,6 +5310,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Album", 'Int'>
     readonly title: FieldRef<"Album", 'String'>
     readonly description: FieldRef<"Album", 'String'>
+    readonly is_private: FieldRef<"Album", 'Boolean'>
     readonly user_id: FieldRef<"Album", 'Int'>
     readonly createdAt: FieldRef<"Album", 'DateTime'>
     readonly updatedAt: FieldRef<"Album", 'DateTime'>
@@ -9805,6 +9816,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
+    is_private: 'is_private',
     user_id: 'user_id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -10246,6 +10258,7 @@ export namespace Prisma {
     id?: IntFilter<"Album"> | number
     title?: StringFilter<"Album"> | string
     description?: StringFilter<"Album"> | string
+    is_private?: BoolFilter<"Album"> | boolean
     user_id?: IntFilter<"Album"> | number
     createdAt?: DateTimeFilter<"Album"> | Date | string
     updatedAt?: DateTimeFilter<"Album"> | Date | string
@@ -10257,6 +10270,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    is_private?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10271,6 +10285,7 @@ export namespace Prisma {
     NOT?: AlbumWhereInput | AlbumWhereInput[]
     title?: StringFilter<"Album"> | string
     description?: StringFilter<"Album"> | string
+    is_private?: BoolFilter<"Album"> | boolean
     user_id?: IntFilter<"Album"> | number
     createdAt?: DateTimeFilter<"Album"> | Date | string
     updatedAt?: DateTimeFilter<"Album"> | Date | string
@@ -10282,6 +10297,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    is_private?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10299,6 +10315,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Album"> | number
     title?: StringWithAggregatesFilter<"Album"> | string
     description?: StringWithAggregatesFilter<"Album"> | string
+    is_private?: BoolWithAggregatesFilter<"Album"> | boolean
     user_id?: IntWithAggregatesFilter<"Album"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Album"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Album"> | Date | string
@@ -10836,6 +10853,7 @@ export namespace Prisma {
   export type AlbumCreateInput = {
     title: string
     description: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     pictures?: PictureCreateNestedManyWithoutAlbumInput
@@ -10846,6 +10864,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    is_private?: boolean
     user_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10855,6 +10874,7 @@ export namespace Prisma {
   export type AlbumUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pictures?: PictureUpdateManyWithoutAlbumNestedInput
@@ -10865,6 +10885,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10875,6 +10896,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    is_private?: boolean
     user_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10883,6 +10905,7 @@ export namespace Prisma {
   export type AlbumUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10891,6 +10914,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11538,6 +11562,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    is_private?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11552,6 +11577,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    is_private?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11561,6 +11587,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    is_private?: SortOrder
     user_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12749,6 +12776,7 @@ export namespace Prisma {
   export type AlbumCreateWithoutUserInput = {
     title: string
     description: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     pictures?: PictureCreateNestedManyWithoutAlbumInput
@@ -12758,6 +12786,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     pictures?: PictureUncheckedCreateNestedManyWithoutAlbumInput
@@ -12896,6 +12925,7 @@ export namespace Prisma {
     id?: IntFilter<"Album"> | number
     title?: StringFilter<"Album"> | string
     description?: StringFilter<"Album"> | string
+    is_private?: BoolFilter<"Album"> | boolean
     user_id?: IntFilter<"Album"> | number
     createdAt?: DateTimeFilter<"Album"> | Date | string
     updatedAt?: DateTimeFilter<"Album"> | Date | string
@@ -13549,6 +13579,7 @@ export namespace Prisma {
   export type AlbumCreateWithoutPicturesInput = {
     title: string
     description: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAlbumInput
@@ -13558,6 +13589,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    is_private?: boolean
     user_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13656,6 +13688,7 @@ export namespace Prisma {
   export type AlbumUpdateWithoutPicturesInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAlbumNestedInput
@@ -13665,6 +13698,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13850,6 +13884,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    is_private?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13857,6 +13892,7 @@ export namespace Prisma {
   export type AlbumUpdateWithoutUserInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pictures?: PictureUpdateManyWithoutAlbumNestedInput
@@ -13866,6 +13902,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pictures?: PictureUncheckedUpdateManyWithoutAlbumNestedInput
@@ -13875,6 +13912,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    is_private?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

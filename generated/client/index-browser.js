@@ -139,6 +139,7 @@ exports.Prisma.AlbumScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  is_private: 'is_private',
   user_id: 'user_id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
