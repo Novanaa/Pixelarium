@@ -1092,7 +1092,7 @@
         }
       }
     },
-    "/v1/albums/pictures/{name}/{album_id}": {
+    "/v1/albums/pictures/{name}/{album_id}/{picture_uniquekey}": {
       "post": {
         "deprecated": false,
         "operationId": "addAlbumPictures",
@@ -1104,11 +1104,11 @@
           },
           {
             "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
           }
         ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/pictureUniquekeyPayload"
-        },
         "responses": {
           "404": {
             "$ref": "#/components/responses/notFound"
