@@ -997,25 +997,9 @@
                         "id": 1,
                         "title": "this is a album",
                         "description": "heheh",
+                        "is_private": false,
+                        "thumbnail": "...",
                         "user_id": 1,
-                        "pictures": [
-                          {
-                            "id": 1,
-                            "title": "new title",
-                            "description": "new description",
-                            "url": "https://example.com/img/galleries/pictures/image.png",
-                            "is_favorited": true,
-                            "filename": "image.png",
-                            "extension": ".png",
-                            "is_private": false,
-                            "gallery_id": 5,
-                            "album_picture_id": null,
-                            "favorite_id": null,
-                            "createdAt": "2023-12-29T06:33:47.737Z",
-                            "updatedAt": "2023-12-29T06:34:51.923Z"
-                          }
-                        ],
-                        "total_pictures": 1,
                         "createdAt": "2023-12-29T13:28:23.977Z",
                         "updatedAt": "2023-12-29T13:27:59.269Z"
                       },
@@ -1023,8 +1007,8 @@
                         "id": 2,
                         "title": "this is a album version 2.0",
                         "description": "heheh",
-                        "pictures": [],
-                        "total_pictures": 0,
+                        "is_private": false,
+                        "thumbnail": "...",
                         "user_id": 1,
                         "createdAt": "2023-12-29T13:28:23.977Z",
                         "updatedAt": "2023-12-29T13:27:59.269Z"
