@@ -1172,6 +1172,63 @@
       }
     },
     "/v1/albums/{name}/{album_id}": {
+      "get": {
+        "tags": ["Albums"],
+        "summary": "Get Single User Album",
+        "deprecated": false,
+        "operationId": "singleUserAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "user_albums": {
+                      "id": 1,
+                      "title": "this is a album",
+                      "description": "heheh",
+                      "is_private": false,
+                      "thumbnail": "...",
+                      "pictures": [],
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
       "patch": {
         "summary": "Update Existing User Album",
         "deprecated": false,
@@ -1180,6 +1237,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/albumIdParams"
           }
         ],
         "requestBody": {
