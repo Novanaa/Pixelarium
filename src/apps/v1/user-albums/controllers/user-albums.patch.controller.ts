@@ -72,7 +72,11 @@ export default async function updateUserAlbum(
       Number(albumId)
     );
 
-    if (!userAlbum) return httpNotFoundResponse({ response: res });
+    if (!userAlbum)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The album doesn't exist",
+      });
 
     const updatedUserAlbum: Awaited<UserAlbums | null> =
       await updateUserAlbumData({ albumId: userAlbum.id, value });
