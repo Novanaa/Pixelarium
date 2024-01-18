@@ -1,7 +1,7 @@
 import { Album } from "../../../../../generated/client";
-import defaultUserAlbumThumbnail from "../../../../const/readonly/defaultUserAlbumThumbnail";
 import client from "../../../../libs/configs/prisma";
 import AddAlbumDataRequestBody from "../../../../validations/interfaces/types/AddAlbumDataRequestBody";
+import getDefaultUserAlbumThumbnail from "./getDefaultUserAlbumThumbnail";
 
 type CreateNewUserAlbumParams = {
   value: AddAlbumDataRequestBody;
@@ -23,7 +23,7 @@ export default async function createNewUserAlbum({
   const queryResult: Awaited<Album> = await client.album.create({
     data: {
       ...value,
-      thumbnail: defaultUserAlbumThumbnail,
+      thumbnail: getDefaultUserAlbumThumbnail(),
       user_id: userId,
     },
   });
