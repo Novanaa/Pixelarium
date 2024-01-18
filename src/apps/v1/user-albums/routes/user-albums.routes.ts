@@ -8,7 +8,7 @@ import {
   addUserAlbum,
 } from "../controllers/user-albums.post.controller";
 import updateUserAlbum from "../controllers/user-albums.patch.controller";
-import deleteUserAlbum from "../controllers/user-albums.delete.controller";
+import { deleteUserAlbum } from "../controllers/user-albums.delete.controller";
 import jsonWebTokenAuthorization from "../../../../middlewares/jsonWebTokenAuthorization";
 import verifySessionToken from "../../../../middlewares/verifySessionToken";
 const router: express.Router = express.Router();
