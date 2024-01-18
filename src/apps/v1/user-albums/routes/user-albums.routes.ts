@@ -8,7 +8,10 @@ import {
   addUserAlbum,
 } from "../controllers/user-albums.post.controller";
 import updateUserAlbum from "../controllers/user-albums.patch.controller";
-import { deleteUserAlbum } from "../controllers/user-albums.delete.controller";
+import {
+  deleteUserAlbum,
+  deleteUserAlbumPicture,
+} from "../controllers/user-albums.delete.controller";
 import jsonWebTokenAuthorization from "../../../../middlewares/jsonWebTokenAuthorization";
 import verifySessionToken from "../../../../middlewares/verifySessionToken";
 const router: express.Router = express.Router();
@@ -22,7 +25,11 @@ router.delete(
   [jsonWebTokenAuthorization, verifySessionToken],
   deleteUserAlbum
 );
-router.post("/:name/:albumId/:uniquekey", addAlbumPicture);
+router.delete(
+  "/:name/:albumId/:uniquekey",
+  [jsonWebTokenAuthorization, verifySessionToken],
+  deleteUserAlbumPicture
+);
 router.post("/:name/:albumId/:uniquekey", addAlbumPicture);
 
 export default router;
