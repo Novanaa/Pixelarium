@@ -14,6 +14,9 @@ import deleteUserAlbumData from "../services/deleteUserAlbumData";
 import FilesSystem from "../../../../services/FilesSystem";
 import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryPicturepath";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
+import validatePictureUniquekey from "../../../../utils/validatePictureUniquekey";
+import { Picture } from "../../../../../generated/client";
+import deleteUserAlbumPictureData from "../services/deleteUserAlbumPictureData";
 
 type DeleteUserAlbumResponseData = {
   owner: UserWithOptionalChaining;
@@ -70,7 +73,7 @@ export async function deleteUserAlbum(
       deleted_data: userAlbum,
     };
 
-    return sendJsonResultHttpResponse({
+    return sendJsonResultHttpResponse<DeleteUserAlbumResponseData>({
       response: res,
       responseData,
       options: { resultKey: "deleted" },
@@ -83,12 +86,76 @@ export async function deleteUserAlbum(
   }
 }
 
+type DeleteUserAlbumPictureResponseData = {
+  owner: UserWithOptionalChaining;
+  deleted_picture: Picture;
+};
+
 export async function deleteUserAlbumPicture(
   req: Request,
   res: Response
 ): Promise<void | Response> {
   try {
-    res.send("testtt");
+    const { name, albumId, uniquekey } = req.params;
+
+    const uniquekeyValidation: void | Response = validatePictureUniquekey({
+      uniquekey,
+      response: res,
+    });
+
+    if (uniquekeyValidation) return;
+
+    const albumIdValidation: void | Response = validateRequestIDParams({
+      id: albumId,
+      response: res,
+      errorMessege: "The album ID must be valid!",
+    });
+
+    if (albumIdValidation) return;
+
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await isUserExistByNameOrEmail({ field: "name", value: name });
+
+    if (!user) return httpNotFoundResponse({ response: res });
+
+    delete user.email;
+    delete user.password;
+
+    const userAlbum: Awaited<UserAlbums | null> = await getUserAlbum(
+      Number(albumId)
+    );
+
+    if (!userAlbum)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The album doesn't exist",
+      });
+
+    const userPicture: Picture = userAlbum.pictures.filter(
+      (p) => p.uniquekey == uniquekey
+    )[0];
+
+    if (!userPicture)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The picture doesn't exist",
+      });
+
+    await deleteUserAlbumPictureData({
+      albumId: userAlbum.id,
+      uniquekey: userPicture.uniquekey,
+    });
+
+    const responseData: DeleteUserAlbumPictureResponseData = {
+      owner: user,
+      deleted_picture: userPicture,
+    };
+
+    return sendJsonResultHttpResponse<DeleteUserAlbumPictureResponseData>({
+      response: res,
+      responseData,
+      options: { resultKey: "deleted" },
+    });
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
