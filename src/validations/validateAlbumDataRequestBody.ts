@@ -2,6 +2,10 @@ import { default as joi } from "joi";
 import { Request } from "express";
 import AddAlbumDataRequestBody from "./interfaces/types/AddAlbumDataRequestBody";
 
+type ValidateCreateNewAlbumDataRequestBodyOptions = {
+  required?: boolean;
+};
+
 /**
  * Validates the request body for adding an existing picture album.
  *
@@ -9,11 +13,12 @@ import AddAlbumDataRequestBody from "./interfaces/types/AddAlbumDataRequestBody"
  * @returns A Joi validation result for the request body.
  */
 export default function validateCreateNewAlbumDataRequestBody(
-  request: Request
+  request: Request,
+  options?: ValidateCreateNewAlbumDataRequestBodyOptions
 ): joi.ValidationResult<AddAlbumDataRequestBody> {
   const schema: joi.ObjectSchema<AddAlbumDataRequestBody> = joi.object({
-    title: joi.string().required(),
-    description: joi.string().required(),
+    title: options?.required ? joi.string() : joi.string().required(),
+    description: options?.required ? joi.string() : joi.string().required(),
     is_private: joi.boolean().default(false),
   });
 
