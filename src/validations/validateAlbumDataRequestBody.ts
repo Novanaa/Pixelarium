@@ -19,7 +19,9 @@ export default function validateCreateNewAlbumDataRequestBody(
   const schema: joi.ObjectSchema<AddAlbumDataRequestBody> = joi.object({
     title: options?.required ? joi.string() : joi.string().required(),
     description: options?.required ? joi.string() : joi.string().required(),
-    is_private: joi.boolean().default(false),
+    is_private: options?.required
+      ? joi.boolean()
+      : joi.boolean().default(false),
   });
 
   return schema.validate(request.body);
