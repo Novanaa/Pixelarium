@@ -7,11 +7,13 @@ import {
   addAlbumPicture,
   addUserAlbum,
 } from "../controllers/user-albums.post.controller";
+import updateUserAlbum from "../controllers/user-albums.patch.controller";
 const router: express.Router = express.Router();
 
 router.get("/:name", userAlbums);
 router.post("/:name", addUserAlbum);
 router.get("/:name/:albumId", singleUserAlbum);
+router.patch("/:name/:albumId", updateUserAlbum);
 router.post("/:name/:albumId/:uniquekey", addAlbumPicture);
 
 export default router;
