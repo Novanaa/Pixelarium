@@ -1170,6 +1170,78 @@
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Delete User Album Picture",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "deleteUserAlbumPicture",
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deleted_picture": {
+                      "id": 3,
+                      "title": "example picture",
+                      "description": "this is a description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": false,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v1/albums/{name}/{album_id}": {
