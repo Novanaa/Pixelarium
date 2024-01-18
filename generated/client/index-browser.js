@@ -213,6 +213,39 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  picture: 'picture',
+  bio: 'bio'
+};
+
+exports.Prisma.ClientKeyOrderByRelevanceFieldEnum = {
+  client_id: 'client_id',
+  client_secret: 'client_secret'
+};
+
+exports.Prisma.AlbumOrderByRelevanceFieldEnum = {
+  title: 'title',
+  description: 'description',
+  thumbnail: 'thumbnail'
+};
+
+exports.Prisma.PictureOrderByRelevanceFieldEnum = {
+  uniquekey: 'uniquekey',
+  title: 'title',
+  description: 'description',
+  url: 'url',
+  filename: 'filename',
+  extension: 'extension'
+};
+
+exports.Prisma.SubscriptionOrderByRelevanceFieldEnum = {
+  payment_id: 'payment_id',
+  interval: 'interval'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
