@@ -22,7 +22,7 @@ type AddAlbumPictureResponseData = {
   inserted_picture: Picture;
 };
 
-export default async function addAlbumPicture(
+export async function addAlbumPicture(
   req: Request,
   res: Response
 ): Promise<void | Response> {
@@ -92,6 +92,20 @@ export default async function addAlbumPicture(
         resultKey: "inserted",
       },
     });
+  } catch (err) {
+    logger.error(err);
+    return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
+  }
+}
+
+export async function addUserAlbum(
+  req: Request,
+  res: Response
+): Promise<void | Response> {
+  try {
+    res.send("testtt");
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
