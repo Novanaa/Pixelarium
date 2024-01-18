@@ -8,7 +8,7 @@ import AddAlbumDataRequestBody from "./interfaces/types/AddAlbumDataRequestBody"
  * @param request - The Express request object.
  * @returns A Joi validation result for the request body.
  */
-export default function validateAddExistingPictureAlbumRequestBody(
+export default function validateCreateNewAlbumDataRequestBody(
   request: Request
 ): joi.ValidationResult<AddAlbumDataRequestBody> {
   const schema: joi.ObjectSchema<AddAlbumDataRequestBody> = joi.object({
