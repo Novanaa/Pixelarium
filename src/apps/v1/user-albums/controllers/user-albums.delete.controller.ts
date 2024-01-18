@@ -20,7 +20,7 @@ type DeleteUserAlbumResponseData = {
   deleted_data: UserAlbums;
 };
 
-export default async function deleteUserAlbum(
+export async function deleteUserAlbum(
   req: Request,
   res: Response
 ): Promise<void | Response> {
@@ -75,6 +75,20 @@ export default async function deleteUserAlbum(
       responseData,
       options: { resultKey: "deleted" },
     });
+  } catch (err) {
+    logger.error(err);
+    return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
+  }
+}
+
+export async function deleteUserAlbumPicture(
+  req: Request,
+  res: Response
+): Promise<void | Response> {
+  try {
+    res.send("testtt");
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
