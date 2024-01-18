@@ -2,6 +2,7 @@ import fs from "fs";
 import { default as fsp } from "fs/promises";
 import logger from "../libs/configs/logger";
 import { default as npath } from "path";
+import { rimrafSync } from "rimraf";
 
 /* The FilesSystem class provides methods to check if a file exists and delete a file. */
 class FilesSystem {
@@ -91,6 +92,27 @@ class FilesSystem {
           await fsp.unlink(npath.join(path, file));
         });
       }
+    } catch (err) {
+      logger.error(err);
+      return null;
+    }
+  }
+  /**
+   * Deletes a directory at the specified path.
+   *
+   * @param {string} path - The path parameter represents the directory path that you want to delete.
+   *
+   * @returns {boolean | null} - Returns a boolean value indicating whether the directory is successfully deleted. If the directory exists and is successfully deleted, it returns true. If the directory does not exist, it returns false. If an error occurs during the execution of the function, it returns null.
+   */
+  public deleteDirectory(path: string): boolean | null {
+    try {
+      if (this.isExist(path)) {
+        rimrafSync(path);
+
+        return true;
+      }
+
+      return false;
     } catch (err) {
       logger.error(err);
       return null;
