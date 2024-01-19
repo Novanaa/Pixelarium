@@ -29,10 +29,10 @@ export default async function searchQueryGalleryPictures({
         gallery_id: gallery?.id || 0,
         OR: [
           {
-            title: { search: query },
+            title: { contains: query },
           },
           {
-            description: { search: query },
+            description: { contains: query },
           },
         ],
       },
