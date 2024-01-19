@@ -356,7 +356,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.6.0
+   * Prisma Client JS version: 5.8.1
    * Query Engine version: e95e739751f42d8ca026f6b910f5a2dc5adeaeee
    */
   export type PrismaVersion = {
@@ -1920,7 +1920,7 @@ export namespace Prisma {
   type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
   type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: UserCountAggregateInputType | true
     }
 
@@ -2965,7 +2965,7 @@ export namespace Prisma {
   type ClientKeyGetPayload<S extends boolean | null | undefined | ClientKeyDefaultArgs> = $Result.GetResult<Prisma.$ClientKeyPayload, S>
 
   type ClientKeyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ClientKeyFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ClientKeyFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: ClientKeyCountAggregateInputType | true
     }
 
@@ -3915,7 +3915,7 @@ export namespace Prisma {
   type GalleryGetPayload<S extends boolean | null | undefined | GalleryDefaultArgs> = $Result.GetResult<Prisma.$GalleryPayload, S>
 
   type GalleryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<GalleryFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<GalleryFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: GalleryCountAggregateInputType | true
     }
 
@@ -4928,7 +4928,7 @@ export namespace Prisma {
   type AlbumGetPayload<S extends boolean | null | undefined | AlbumDefaultArgs> = $Result.GetResult<Prisma.$AlbumPayload, S>
 
   type AlbumCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<AlbumFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<AlbumFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: AlbumCountAggregateInputType | true
     }
 
@@ -5919,7 +5919,7 @@ export namespace Prisma {
   type FavoriteGetPayload<S extends boolean | null | undefined | FavoriteDefaultArgs> = $Result.GetResult<Prisma.$FavoritePayload, S>
 
   type FavoriteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<FavoriteFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<FavoriteFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: FavoriteCountAggregateInputType | true
     }
 
@@ -7029,7 +7029,7 @@ export namespace Prisma {
   type PictureGetPayload<S extends boolean | null | undefined | PictureDefaultArgs> = $Result.GetResult<Prisma.$PicturePayload, S>
 
   type PictureCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PictureFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PictureFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: PictureCountAggregateInputType | true
     }
 
@@ -8104,7 +8104,7 @@ export namespace Prisma {
   type SubscriptionGetPayload<S extends boolean | null | undefined | SubscriptionDefaultArgs> = $Result.GetResult<Prisma.$SubscriptionPayload, S>
 
   type SubscriptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<SubscriptionFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<SubscriptionFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: SubscriptionCountAggregateInputType | true
     }
 
@@ -9053,7 +9053,7 @@ export namespace Prisma {
   type EmbedLinksGetPayload<S extends boolean | null | undefined | EmbedLinksDefaultArgs> = $Result.GetResult<Prisma.$EmbedLinksPayload, S>
 
   type EmbedLinksCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<EmbedLinksFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<EmbedLinksFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: EmbedLinksCountAggregateInputType | true
     }
 
