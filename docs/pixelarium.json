@@ -2224,9 +2224,9 @@
             "JsonWebTokenAuthorization": []
           }
         ],
-        "summary": "Activate a User Subscription",
+        "summary": "Deactivate User Subscription",
         "deprecated": false,
-        "operationId": "activateUserSubscription",
+        "operationId": "deactivateUserSubscription",
         "parameters": [
           {
             "$ref": "#/components/parameters/subscriptionPaymentsId"
@@ -2249,7 +2249,7 @@
             "$ref": "#/components/responses/unauthorizedUser"
           },
           "200": {
-            "description": "The subscription has been activated.",
+            "description": "The subscription has been deactivated.",
             "content": {
               "application/json": {
                 "example": {
