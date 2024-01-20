@@ -84,7 +84,6 @@ model Picture {
   title   String
   description   String
   url       String
-  is_favorited Boolean
   filename String
   extension String
   expires_in Int? 

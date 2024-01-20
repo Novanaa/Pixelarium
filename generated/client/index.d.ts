@@ -6695,7 +6695,6 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
-    is_favorited: boolean | null
     filename: string | null
     extension: string | null
     expires_in: number | null
@@ -6714,7 +6713,6 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
-    is_favorited: boolean | null
     filename: string | null
     extension: string | null
     expires_in: number | null
@@ -6733,7 +6731,6 @@ export namespace Prisma {
     title: number
     description: number
     url: number
-    is_favorited: number
     filename: number
     extension: number
     expires_in: number
@@ -6770,7 +6767,6 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
-    is_favorited?: true
     filename?: true
     extension?: true
     expires_in?: true
@@ -6789,7 +6785,6 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
-    is_favorited?: true
     filename?: true
     extension?: true
     expires_in?: true
@@ -6808,7 +6803,6 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
-    is_favorited?: true
     filename?: true
     extension?: true
     expires_in?: true
@@ -6914,7 +6908,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in: number | null
@@ -6952,7 +6945,6 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
-    is_favorited?: boolean
     filename?: boolean
     extension?: boolean
     expires_in?: boolean
@@ -6975,7 +6967,6 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
-    is_favorited?: boolean
     filename?: boolean
     extension?: boolean
     expires_in?: boolean
@@ -7010,7 +7001,6 @@ export namespace Prisma {
       title: string
       description: string
       url: string
-      is_favorited: boolean
       filename: string
       extension: string
       expires_in: number | null
@@ -7427,7 +7417,6 @@ export namespace Prisma {
     readonly title: FieldRef<"Picture", 'String'>
     readonly description: FieldRef<"Picture", 'String'>
     readonly url: FieldRef<"Picture", 'String'>
-    readonly is_favorited: FieldRef<"Picture", 'Boolean'>
     readonly filename: FieldRef<"Picture", 'String'>
     readonly extension: FieldRef<"Picture", 'String'>
     readonly expires_in: FieldRef<"Picture", 'Int'>
@@ -9854,7 +9843,6 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     url: 'url',
-    is_favorited: 'is_favorited',
     filename: 'filename',
     extension: 'extension',
     expires_in: 'expires_in',
@@ -10458,7 +10446,6 @@ export namespace Prisma {
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
-    is_favorited?: BoolFilter<"Picture"> | boolean
     filename?: StringFilter<"Picture"> | string
     extension?: StringFilter<"Picture"> | string
     expires_in?: IntNullableFilter<"Picture"> | number | null
@@ -10481,7 +10468,6 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
-    is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
     expires_in?: SortOrderInput | SortOrder
@@ -10508,7 +10494,6 @@ export namespace Prisma {
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
-    is_favorited?: BoolFilter<"Picture"> | boolean
     filename?: StringFilter<"Picture"> | string
     extension?: StringFilter<"Picture"> | string
     expires_in?: IntNullableFilter<"Picture"> | number | null
@@ -10531,7 +10516,6 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
-    is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
     expires_in?: SortOrderInput | SortOrder
@@ -10558,7 +10542,6 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Picture"> | string
     description?: StringWithAggregatesFilter<"Picture"> | string
     url?: StringWithAggregatesFilter<"Picture"> | string
-    is_favorited?: BoolWithAggregatesFilter<"Picture"> | boolean
     filename?: StringWithAggregatesFilter<"Picture"> | string
     extension?: StringWithAggregatesFilter<"Picture"> | string
     expires_in?: IntNullableWithAggregatesFilter<"Picture"> | number | null
@@ -11058,7 +11041,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -11078,7 +11060,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -11097,7 +11078,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11117,7 +11097,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11137,7 +11116,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -11155,7 +11133,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11171,7 +11148,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11774,7 +11750,6 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
-    is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
     expires_in?: SortOrder
@@ -11801,7 +11776,6 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
-    is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
     expires_in?: SortOrder
@@ -11820,7 +11794,6 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
-    is_favorited?: SortOrder
     filename?: SortOrder
     extension?: SortOrder
     expires_in?: SortOrder
@@ -13177,7 +13150,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13196,7 +13168,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13284,7 +13255,6 @@ export namespace Prisma {
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
     url?: StringFilter<"Picture"> | string
-    is_favorited?: BoolFilter<"Picture"> | boolean
     filename?: StringFilter<"Picture"> | string
     extension?: StringFilter<"Picture"> | string
     expires_in?: IntNullableFilter<"Picture"> | number | null
@@ -13348,7 +13318,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13367,7 +13336,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13497,7 +13465,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13516,7 +13483,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13920,7 +13886,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13939,7 +13904,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -13973,7 +13937,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -13992,7 +13955,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14052,7 +14014,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -14069,7 +14030,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14088,7 +14048,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14107,7 +14066,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14125,7 +14083,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -14142,7 +14099,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14161,7 +14117,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14180,7 +14135,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14198,7 +14152,6 @@ export namespace Prisma {
     title: string
     description: string
     url: string
-    is_favorited: boolean
     filename: string
     extension: string
     expires_in?: number | null
@@ -14215,7 +14168,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14234,7 +14186,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14253,7 +14204,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
-    is_favorited?: BoolFieldUpdateOperationsInput | boolean
     filename?: StringFieldUpdateOperationsInput | string
     extension?: StringFieldUpdateOperationsInput | string
     expires_in?: NullableIntFieldUpdateOperationsInput | number | null

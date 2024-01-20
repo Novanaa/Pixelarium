@@ -160,7 +160,6 @@ exports.Prisma.PictureScalarFieldEnum = {
   title: 'title',
   description: 'description',
   url: 'url',
-  is_favorited: 'is_favorited',
   filename: 'filename',
   extension: 'extension',
   expires_in: 'expires_in',
