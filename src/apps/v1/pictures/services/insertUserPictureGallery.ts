@@ -43,7 +43,6 @@ export default async function insertUserPictureGallery({
       title: value.picture_details.title,
       url,
       expires_in,
-      is_favorited: false,
       is_private: value.is_private,
       is_external_picture: isExternalPicture,
     },
