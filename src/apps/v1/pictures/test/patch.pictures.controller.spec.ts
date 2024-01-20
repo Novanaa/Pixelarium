@@ -105,7 +105,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 status code if the user gallery picture is external picture but user want to change it to uploaded picture", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -121,7 +121,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 200 status code", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -140,7 +140,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("OK");
   });
   test("make sure it can accept application/json", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -160,7 +160,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("OK");
   });
   test("returned response data should be contains owner data", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -183,7 +183,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.owner).not.toBeNull();
   });
   test("returned response data should be contains old picture data field", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -206,7 +206,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.old_data).not.toBeNull();
   });
   test("returned response data should be contains updated picture data field", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -229,7 +229,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.updated_data).not.toBeNull();
   });
   test("returned response data updated picture data field must be contains updated image url", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -254,7 +254,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.updated_data.url).toMatch(dummyExternalPictureUrl);
   });
   test("returned response data old picture data field must be contains old image url", async () => {
-    const user: Awaited<User | null> = await getTestUser(payload.providerId);
+    const user: Awaited<User | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -279,9 +279,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.old_data.url).toMatch(userGallery.pictures[0].url);
   });
   test("returned response data should be contains owner data and match user data", async () => {
-    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
-      payload.providerId
-    );
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(4);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -307,7 +305,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.owner).toMatchObject(userObj);
   });
   test("should be return 400 status code if the picture is internal picture but user want to switch it to external picture", async () => {
-    const user: Awaited<User | null> = await getTestUser(4);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -454,7 +452,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.owner).toMatchObject(userObj);
   });
   test("should be return 400 if user trying to update internal picture data with uploaded file but the request files field name is invalid", async () => {
-    const user: Awaited<User | null> = await getTestUser(4);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -474,7 +472,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 if the picture extension is not supported", async () => {
-    const user: Awaited<User | null> = await getTestUser(4);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -534,7 +532,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 if the picture file size is more than 60mb when the user plan is Diamond", async () => {
-    const user: Awaited<User | null> = await getTestUser(4);
+    const user: Awaited<User | null> = await getTestUser(2);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -574,7 +572,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 if the picture file size is more than 15mb when the user plan is Netherite but inactive", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -594,7 +592,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 200 if the user want to update picture data with uploaded picture", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -613,7 +611,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.status).toBe("OK");
   });
   test("returned response data must be included owner data", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -636,7 +634,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.owner).not.toBeNull();
   });
   test("returned response data owner field must be match user object data", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -662,7 +660,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.owner).toMatchObject(userObj);
   });
   test("returned response data must be included old_data field", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -685,7 +683,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.body.data.old_data).not.toBeNull();
   });
   test("returned response data must be included updated_data field", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -711,7 +709,7 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
 
 describe("Verify User Client Keys - Unit-test Update User Gallery Picture API Endpoint", () => {
   test("should be return 401 status code if the client id and client secret is not provided", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -731,14 +729,14 @@ describe("Verify User Client Keys - Unit-test Update User Gallery Picture API En
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 status code if the client id is invalid", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
     const request: Awaited<supertest.Response | supertest.Request> =
       await supertest(app)
         .patch(
-          `/v1/plxm/pictures/${user?.name}/${userGallery.pictures[0].uniquekey}?client_id=1728&client_secret=182`
+          `/v1/plxm/pictures/${user?.name}/${userGallery.pictures[0].uniquekey}?client_id=1payload.providerId28&client_secret=182`
         )
         .field({
           title: "tesssettt",
@@ -751,7 +749,7 @@ describe("Verify User Client Keys - Unit-test Update User Gallery Picture API En
     expect(request.body.status).toBe("KO");
   });
   test("should be return 404 status code if the client keys is invalid", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -796,7 +794,7 @@ describe("API Grant Access - Unit-test Update User Gallery Picture API Endpoint"
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 status code if user plan is deactive", async () => {
-    const user: Awaited<User | null> = await getTestUser(7);
+    const user: Awaited<User | null> = await getTestUser(payload.providerId);
     const userClientKeys: Awaited<ClientKey | null> =
       await getTestUserClientKeys(user?.id || 0);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(

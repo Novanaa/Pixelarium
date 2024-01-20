@@ -100,7 +100,7 @@ export default async function updateUserPicture(
 
     const externalPictureUrl: string = value.image_url as string;
 
-    if (!userGalleryPicture.is_external_picture) {
+    if (userGalleryPicture.is_external_picture) {
       if (req.files)
         return httpUnprocessableContentResponse({
           response: res,
@@ -146,7 +146,7 @@ export default async function updateUserPicture(
       if (httpSuccessResponse) return;
     }
 
-    if (userGalleryPicture.is_external_picture) {
+    if (!userGalleryPicture.is_external_picture) {
       if (externalPictureUrl)
         return httpBadRequestResponse({
           response: res,
