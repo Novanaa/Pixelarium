@@ -3,11 +3,11 @@ import {
   prices,
   userSubscriptionStatus,
 } from "../controllers/subscription.get.controller";
-import deacitivateUserSubscription from "../controllers/subscription.delete.controller";
+import deactivateUserSubscription from "../controllers/subscription.delete.controller";
 const router: express.Router = express.Router();
 
 router.get("/prices", prices);
 router.get("/status/:name", userSubscriptionStatus);
-router.delete("/deactivate/:name", deacitivateUserSubscription);
+router.delete("/deactivate/:name", deactivateUserSubscription);
 
 export default router;
