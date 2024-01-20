@@ -30,6 +30,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: true,
           },
         }),
         createTestUser({
@@ -39,6 +40,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: false,
           },
         }),
         createTestUser({
@@ -48,6 +50,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: false,
           },
         }),
         createTestUser({
@@ -57,6 +60,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: true,
           },
         }),
         createTestUser({
@@ -66,6 +70,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             is_external_picture: false,
             emptyPicture: false,
+            isMember: true,
           },
         }),
         createTestUser({
@@ -75,6 +80,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: true,
             is_external_picture: false,
+            isMember: true,
           },
         }),
         createTestUser({
@@ -84,6 +90,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: true,
+            isMember: true,
           },
         }),
         createTestUser({
@@ -93,6 +100,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: true,
           },
         }),
         createTestUser({
@@ -102,6 +110,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: false,
           },
         }),
         createTestUser({
@@ -111,6 +120,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: false,
           },
         }),
         createTestUser({
@@ -120,6 +130,7 @@ export default async function generateTestUser(): Promise<void> {
           options: {
             emptyPicture: false,
             is_external_picture: false,
+            isMember: true,
           },
         }),
       ]);
