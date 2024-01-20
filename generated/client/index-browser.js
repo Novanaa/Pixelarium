@@ -117,6 +117,7 @@ exports.Prisma.UserScalarFieldEnum = {
   type: 'type',
   bio: 'bio',
   site_admin: 'site_admin',
+  is_member: 'is_member',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
