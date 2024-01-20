@@ -92,7 +92,7 @@ export default async function generateTestUser(): Promise<void> {
           status: "active",
           options: {
             emptyPicture: false,
-            is_external_picture: true,
+            is_external_picture: false,
           },
         }),
         createTestUser({
@@ -101,7 +101,7 @@ export default async function generateTestUser(): Promise<void> {
           status: "deactive",
           options: {
             emptyPicture: false,
-            is_external_picture: true,
+            is_external_picture: false,
           },
         }),
         createTestUser({
@@ -110,7 +110,7 @@ export default async function generateTestUser(): Promise<void> {
           status: "deactive",
           options: {
             emptyPicture: false,
-            is_external_picture: true,
+            is_external_picture: false,
           },
         }),
         createTestUser({
@@ -119,7 +119,7 @@ export default async function generateTestUser(): Promise<void> {
           status: "active",
           options: {
             emptyPicture: false,
-            is_external_picture: true,
+            is_external_picture: false,
           },
         }),
       ]);
