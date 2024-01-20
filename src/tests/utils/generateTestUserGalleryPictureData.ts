@@ -35,7 +35,6 @@ export default function generateTestUserGalleryPictureData(
       expires_in: 30,
       extension: ".png",
       filename: faker.system.fileName() + ".png",
-      is_favorited: faker.datatype.boolean(),
       url: faker.internet.url(),
       is_private: faker.datatype.boolean(),
       is_external_picture,
