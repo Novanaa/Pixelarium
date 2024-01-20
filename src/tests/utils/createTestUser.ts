@@ -12,6 +12,7 @@ import generatePictureEmbedLinks from "../../apps/v1/embed-links/services/genera
 
 interface CreateTestUserOptions
   extends GenerateTestUserGalleryPictureDataOptions {
+  isMember?: boolean;
   emptyPicture: boolean;
 }
 
@@ -90,6 +91,7 @@ export default async function createTestUser({
           picture: faker.internet.url(),
           bio: faker.lorem.sentence(),
           client_keys: createUserClientKeysData,
+          is_member: options?.isMember || false,
           favorite_picture: {
             create: {
               pictures: {},
@@ -118,6 +120,7 @@ export default async function createTestUser({
           bio: faker.lorem.sentence(),
           client_keys: createUserClientKeysData,
           subscription: createUserSubsData,
+          is_member: options?.isMember || false,
           favorite_picture: {
             create: {
               pictures: {},
