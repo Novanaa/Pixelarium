@@ -4,8 +4,7 @@ import { default as joi } from "joi";
 export type UpdateUserRequestBodySchemaValidation = {
   title: string;
   description: string;
-  isFavorited: boolean;
-  isPrivate: boolean;
+  is_private: boolean;
   use_external_image_url: boolean;
   image_url: string;
   expiresInDays: number;
@@ -26,8 +25,7 @@ export default function validateUpdateUserRequestBody(
       description: joi.string(),
       expiresInDays: joi.number(),
       image_url: joi.string(),
-      isFavorited: joi.boolean(),
-      isPrivate: joi.boolean(),
+      is_private: joi.boolean(),
     });
 
   return updateUserRequestBodySchema.validate(request.body);
