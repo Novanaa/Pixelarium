@@ -1641,6 +1641,7 @@ export namespace Prisma {
     type: $Enums.UserType | null
     bio: string | null
     site_admin: boolean | null
+    is_member: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1655,6 +1656,7 @@ export namespace Prisma {
     type: $Enums.UserType | null
     bio: string | null
     site_admin: boolean | null
+    is_member: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1669,6 +1671,7 @@ export namespace Prisma {
     type: number
     bio: number
     site_admin: number
+    is_member: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1695,6 +1698,7 @@ export namespace Prisma {
     type?: true
     bio?: true
     site_admin?: true
+    is_member?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1709,6 +1713,7 @@ export namespace Prisma {
     type?: true
     bio?: true
     site_admin?: true
+    is_member?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1723,6 +1728,7 @@ export namespace Prisma {
     type?: true
     bio?: true
     site_admin?: true
+    is_member?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1824,6 +1830,7 @@ export namespace Prisma {
     type: $Enums.UserType
     bio: string
     site_admin: boolean
+    is_member: boolean
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1857,6 +1864,7 @@ export namespace Prisma {
     type?: boolean
     bio?: boolean
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     client_keys?: boolean | User$client_keysArgs<ExtArgs>
@@ -1877,6 +1885,7 @@ export namespace Prisma {
     type?: boolean
     bio?: boolean
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -1910,6 +1919,7 @@ export namespace Prisma {
       type: $Enums.UserType
       bio: string
       site_admin: boolean
+      is_member: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2324,6 +2334,7 @@ export namespace Prisma {
     readonly type: FieldRef<"User", 'UserType'>
     readonly bio: FieldRef<"User", 'String'>
     readonly site_admin: FieldRef<"User", 'Boolean'>
+    readonly is_member: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -9785,6 +9796,7 @@ export namespace Prisma {
     type: 'type',
     bio: 'bio',
     site_admin: 'site_admin',
+    is_member: 'is_member',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -10106,6 +10118,7 @@ export namespace Prisma {
     type?: EnumUserTypeFilter<"User"> | $Enums.UserType
     bio?: StringFilter<"User"> | string
     site_admin?: BoolFilter<"User"> | boolean
+    is_member?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     client_keys?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
@@ -10125,6 +10138,7 @@ export namespace Prisma {
     type?: SortOrder
     bio?: SortOrder
     site_admin?: SortOrder
+    is_member?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     client_keys?: ClientKeyOrderByWithRelationAndSearchRelevanceInput
@@ -10148,6 +10162,7 @@ export namespace Prisma {
     type?: EnumUserTypeFilter<"User"> | $Enums.UserType
     bio?: StringFilter<"User"> | string
     site_admin?: BoolFilter<"User"> | boolean
+    is_member?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     client_keys?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
@@ -10167,6 +10182,7 @@ export namespace Prisma {
     type?: SortOrder
     bio?: SortOrder
     site_admin?: SortOrder
+    is_member?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -10189,6 +10205,7 @@ export namespace Prisma {
     type?: EnumUserTypeWithAggregatesFilter<"User"> | $Enums.UserType
     bio?: StringWithAggregatesFilter<"User"> | string
     site_admin?: BoolWithAggregatesFilter<"User"> | boolean
+    is_member?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -10703,6 +10720,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -10722,6 +10740,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -10740,6 +10759,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
@@ -10759,6 +10779,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
@@ -10778,6 +10799,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10791,6 +10813,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10805,6 +10828,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11416,6 +11440,7 @@ export namespace Prisma {
     type?: SortOrder
     bio?: SortOrder
     site_admin?: SortOrder
+    is_member?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11435,6 +11460,7 @@ export namespace Prisma {
     type?: SortOrder
     bio?: SortOrder
     site_admin?: SortOrder
+    is_member?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11449,6 +11475,7 @@ export namespace Prisma {
     type?: SortOrder
     bio?: SortOrder
     site_admin?: SortOrder
+    is_member?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13068,6 +13095,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     gallery?: GalleryCreateNestedOneWithoutUserInput
@@ -13086,6 +13114,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
@@ -13119,6 +13148,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     gallery?: GalleryUpdateOneWithoutUserNestedInput
@@ -13137,6 +13167,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
@@ -13199,6 +13230,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -13217,6 +13249,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -13287,6 +13320,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
@@ -13305,6 +13339,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
@@ -13367,6 +13402,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -13385,6 +13421,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -13434,6 +13471,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
@@ -13452,6 +13490,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
@@ -13514,6 +13553,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -13532,6 +13572,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -13581,6 +13622,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
@@ -13599,6 +13641,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
@@ -13804,6 +13847,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyCreateNestedOneWithoutUserInput
@@ -13822,6 +13866,7 @@ export namespace Prisma {
     type?: $Enums.UserType
     bio: string
     site_admin?: boolean
+    is_member?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     client_keys?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
@@ -13855,6 +13900,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUpdateOneWithoutUserNestedInput
@@ -13873,6 +13919,7 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     bio?: StringFieldUpdateOperationsInput | string
     site_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_member?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client_keys?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
