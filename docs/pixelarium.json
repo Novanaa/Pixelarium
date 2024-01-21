@@ -2059,25 +2059,26 @@
         }
       }
     },
-    "/v1/subscription/payments/tokenizer": {
+    "/v1/subscription/payments/tokenizer/{name}": {
       "post": {
         "deprecated": false,
         "operationId": "tokenizer",
         "summary": "Payments Tokenizer",
         "tags": ["Subscriptions"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "example": {
                 "data": {
                   "item_details": {
-                    "id": "8768f1f8-d1f0-4275-aa0f-8872fba72d27",
                     "price": 2.99,
                     "plan": "Gold",
                     "currency": "USD"
-                  },
-                  "user_details": {
-                    "name": "ItsNvaa"
                   },
                   "interval_count_in_month": 2
                 }
