@@ -16,7 +16,7 @@ import jwt, { VerifyErrors } from "jsonwebtoken";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { jsonResult } from "../../../../utils/responses/httpApiResponses";
 import http from "../../../../const/readonly/httpStatusCode";
-import getFutureDateTime from "../../../../utils/getFutureDateTime";
+import { getFutureDateTimeInSeconds } from "../../../../utils/getFutureDateTime";
 import type TokenRotationResponseData from "../interfaces/types/TokenRotationResponseDataTypes";
 
 export default async function tokenRotation(req: Request, res: Response) {
@@ -62,7 +62,7 @@ export default async function tokenRotation(req: Request, res: Response) {
           }
         );
 
-        const accessTokenExpiresDate: Date = getFutureDateTime({
+        const accessTokenExpiresDate: Date = getFutureDateTimeInSeconds({
           futureDateTimeInSecond: 1800,
         });
         const responseData: TokenRotationResponseData = {
