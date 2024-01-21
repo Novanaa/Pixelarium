@@ -15,7 +15,7 @@ type GetFutureDateTimeType = {
  * @param getFutureDateTimeType - The input object, of type GetFutureDateTimeType, containing the number of seconds into the future that the returned Date object should represent.
  * @returns The Date object representing the date and time in the future that corresponds to the specified number of seconds.
  */
-export default function getFutureDateTime({
+export function getFutureDateTimeInSeconds({
   futureDateTimeInSecond,
 }: GetFutureDateTimeType): Date {
   const now: Date = new Date();
