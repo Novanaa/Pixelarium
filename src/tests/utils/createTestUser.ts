@@ -10,6 +10,7 @@ import makeUserPublicDirectory from "../../utils/makeUserPublicDirectory";
 import PictureEmbedLinks from "../../apps/v1/embed-links/interfaces/PictureEmbedLinks";
 import generatePictureEmbedLinks from "../../apps/v1/embed-links/services/generatePictureEmbedLinks";
 import generateUserSubscriptionPaymentID from "../../utils/generateUserSubscriptionPaymentID";
+import { getFutureDateTimeInDays } from "../../utils/getFutureDateTime";
 
 interface CreateTestUserOptions
   extends GenerateTestUserGalleryPictureDataOptions {
@@ -70,11 +71,23 @@ export default async function createTestUser({
       ? generateUserSubscriptionPaymentID({ name: username, plan })
       : null;
 
+    const intervalCount: number = 30;
+    const startDate: Date = new Date();
+    const endDate: Date = getFutureDateTimeInDays({
+      futureDateTimeInDays: intervalCount,
+    });
+    const nextPaymentDate: Date = getFutureDateTimeInDays({
+      futureDateTimeInDays: intervalCount + 1,
+    });
+
     const createUserSubsData = {
       create: {
         plan,
         status,
         payment_id: createUserSubscriptionPaymentId,
+        start_date: options.isMember ? startDate : null,
+        end_date: options.isMember ? endDate : null,
+        next_payments_date: options.isMember ? nextPaymentDate : null,
       },
     };
 
