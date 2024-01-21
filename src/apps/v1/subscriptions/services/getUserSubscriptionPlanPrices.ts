@@ -1,6 +1,6 @@
 import pricesList from "../../../../../resources/prices-list.json";
 
-type Plan = "Gold" | "Diamond" | "Netherite";
+export type Plan = "Gold" | "Diamond" | "Netherite";
 
 export type GetUserSubscriptionPlanPricesParams = {
   quantity: number;
