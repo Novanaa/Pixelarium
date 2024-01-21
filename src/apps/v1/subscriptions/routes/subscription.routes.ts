@@ -10,7 +10,7 @@ import tokenizer from "../controllers/subscription.post.controller";
 const router: express.Router = express.Router();
 
 router.get("/prices", prices);
-router.post("/payments/tokenizer", tokenizer);
+router.post("/payments/tokenizer/:name", tokenizer);
 router.get("/status/:name", userSubscriptionStatus);
 router.delete(
   "/deactivate/:name",
