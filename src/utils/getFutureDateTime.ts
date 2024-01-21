@@ -25,3 +25,24 @@ export function getFutureDateTimeInSeconds({
 
   return futureDateTime;
 }
+
+type GetFutureDateTimeInDays = {
+  futureDateTimeInDays: number;
+};
+
+/**
+ * Calculates the future date and time based on the given number of days.
+ *
+ * @param {GetFutureDateTimeInDays} options - The options object.
+ * @param {number} options.futureDateTimeInDays - The number of days to add to the current date.
+ * @returns {Date} The future date and time.
+ */
+export function getFutureDateTimeInDays({
+  futureDateTimeInDays,
+}: GetFutureDateTimeInDays): Date {
+  const now: Date = new Date();
+  const futureDateTime: Date = new Date();
+  futureDateTime.setDate(now.getDate() + futureDateTimeInDays);
+
+  return new Date(futureDateTime);
+}
