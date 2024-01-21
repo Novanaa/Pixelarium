@@ -9,6 +9,7 @@ import logger from "../../libs/configs/logger";
 import makeUserPublicDirectory from "../../utils/makeUserPublicDirectory";
 import PictureEmbedLinks from "../../apps/v1/embed-links/interfaces/PictureEmbedLinks";
 import generatePictureEmbedLinks from "../../apps/v1/embed-links/services/generatePictureEmbedLinks";
+import generateUserSubscriptionPaymentID from "../../utils/generateUserSubscriptionPaymentID";
 
 interface CreateTestUserOptions
   extends GenerateTestUserGalleryPictureDataOptions {
@@ -65,10 +66,15 @@ export default async function createTestUser({
       },
     };
 
+    const createUserSubscriptionPaymentId: string | null = options?.isMember
+      ? generateUserSubscriptionPaymentID({ name: username, plan })
+      : null;
+
     const createUserSubsData = {
       create: {
         plan,
         status,
+        payment_id: createUserSubscriptionPaymentId,
       },
     };
 
