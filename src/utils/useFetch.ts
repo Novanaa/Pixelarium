@@ -1,6 +1,6 @@
 import logger from "../libs/configs/logger";
 
-type UseFetchParams = {
+export type UseFetchParams = {
   url: string;
   method: "GET" | "POST" | "PATCH" | "DELETE" | "PUT";
   body?: unknown;
@@ -38,6 +38,8 @@ export default async function useFetch<T>({
       credentials: options?.credentials || "same-origin",
       cache: options?.cache,
     });
+
+    // @ts-expect-error error
     const result: Awaited<T> = await response.json();
     return result as T;
   } catch (err) {
