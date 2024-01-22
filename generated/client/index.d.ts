@@ -11754,16 +11754,16 @@ export namespace Prisma {
   export type PaymentsHistoryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     user_id?: number
+    order_id?: string
     AND?: PaymentsHistoryWhereInput | PaymentsHistoryWhereInput[]
     OR?: PaymentsHistoryWhereInput[]
     NOT?: PaymentsHistoryWhereInput | PaymentsHistoryWhereInput[]
-    order_id?: StringFilter<"PaymentsHistory"> | string
     plan?: EnumplanFilter<"PaymentsHistory"> | $Enums.plan
     interval_count?: IntFilter<"PaymentsHistory"> | number
     amount?: JsonFilter<"PaymentsHistory">
     status?: EnumsubscriptionStatusFilter<"PaymentsHistory"> | $Enums.subscriptionStatus
     order_date?: DateTimeFilter<"PaymentsHistory"> | Date | string
-  }, "id" | "user_id">
+  }, "id" | "user_id" | "order_id">
 
   export type PaymentsHistoryOrderByWithAggregationInput = {
     id?: SortOrder
