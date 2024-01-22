@@ -119,7 +119,7 @@ export async function subscriptionPaymentsCallback(
     if (!paymentHistory)
       return httpBadRequestResponse({
         response: res,
-        errorMessage: "Unexpected Errors Occurred",
+        errorMessage: "You doesn't have any payment request!",
       });
 
     if (type == "failed") {
