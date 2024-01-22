@@ -1,6 +1,7 @@
 import express from "express";
 import {
   prices,
+  subscriptionPaymentsCallback,
   userSubscriptionStatus,
 } from "../controllers/subscription.get.controller";
 import deactivateUserSubscription from "../controllers/subscription.delete.controller";
@@ -11,6 +12,7 @@ const router: express.Router = express.Router();
 
 router.get("/prices", prices);
 router.post("/payments/tokenizer/:name", tokenizer);
+router.get("/payments/callback", subscriptionPaymentsCallback);
 router.get("/status/:name", userSubscriptionStatus);
 router.delete(
   "/deactivate/:name",
