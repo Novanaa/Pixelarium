@@ -2116,7 +2116,7 @@
                     "transaction_secret": {
                       "transaction_token": ".....",
                       "redirect_url": ".....",
-                      "generated_payment_id": "...."
+                      "order_id": "...."
                     },
                     "ordered_plan": {
                       "name": "Gold",
@@ -2147,7 +2147,7 @@
             "$ref": "#/components/parameters/subscriptionTypeParams"
           },
           {
-            "$ref": "#/components/parameters/subscriptionPaymentsId"
+            "$ref": "#/components/parameters/orderIdSubscriptionParams"
           }
         ],
         "responses": {
