@@ -27,6 +27,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   client_keys ClientKey?
+  paymentHistory PaymentsHistory[]
   gallery Gallery?
   favorite_picture Favorite?
   album Album[]
@@ -118,12 +119,13 @@ model Subscription {
 model PaymentsHistory {
   id Int @id @default(autoincrement())  
   user_id Int @unique
-  order_id String
+  order_id String @unique
   plan plan
   interval_count Int
   amount Json
   status subscriptionStatus
   order_date DateTime
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum plan {

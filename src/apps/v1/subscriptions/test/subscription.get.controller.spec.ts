@@ -5,6 +5,7 @@ import getTestUser from "../../../../tests/utils/getTestUser";
 import payload from "../../../../tests/const/payload";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import jsonifyUserObject from "../../../../tests/utils/jsonifyUserObject";
+import generatePaymentOrderId from "../services/generatePaymentOrderId";
 
 describe("Unit-test Get User Subscription Status API Core Logic", () => {
   test("should be return 404 status code if the user doesn't exist", async () => {
@@ -151,5 +152,68 @@ describe("Unit-test Get User Subscription Status API Core Logic", () => {
     expect(request.status).toBe(200);
     expect(request.body.status).toBe("OK");
     expect(request.body.isSuccess).toBeTrue();
+  });
+});
+
+describe("Unit-test User Subscription Payment Callback", () => {
+  test("should be return 404 status code if the user doesn't exist", async () => {
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(`/v1/subscription/payments/callback/0`);
+
+    console.log(request.body);
+    expect(request.status).toBe(404);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the type or order_id query params doesn't provided", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/subscription/payments/callback/${user?.name}`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the order_id query params is invalid", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/subscription/payments/callback/${user?.name}?order_id=123&type=172`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the type query params is invalid", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/subscription/payments/callback/${user?.name}?order_id=${generatePaymentOrderId()}&type=172`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the user doesn't have a payment request", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/subscription/payments/callback/${user?.name}?order_id=${generatePaymentOrderId()}&type=success`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
   });
 });

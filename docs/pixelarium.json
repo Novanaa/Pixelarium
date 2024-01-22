@@ -2354,7 +2354,7 @@
         }
       }
     },
-    "/v1/subscription/payments/callback": {
+    "/v1/subscription/payments/callback/{name}": {
       "get": {
         "summary": "Callback for subscription payment",
         "deprecated": false,
