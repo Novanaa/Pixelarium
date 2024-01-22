@@ -283,6 +283,55 @@ describe("Unit-test Generate Subscription Transaction Token API Core Logic", () 
     ).not.toBeNull();
     expect(request.body.data.transaction_secret.transaction_token).toBeString();
   });
+  test("returned response data transaction_secret field must be included order_id field data", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(`/v1/subscription/payments/tokenizer/${user?.name}`)
+        .send({
+          data: {
+            interval_count_in_month: 1,
+            items_details: {
+              plan: "Gold",
+            },
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.transaction_secret.order_id).toBeDefined();
+    expect(request.body.data.transaction_secret.order_id).not.toBeUndefined();
+    expect(request.body.data.transaction_secret.order_id).not.toBeNull();
+  });
+  test("returned response data transaction_secret order_id field data must be type of string", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app)
+        .post(`/v1/subscription/payments/tokenizer/${user?.name}`)
+        .send({
+          data: {
+            interval_count_in_month: 1,
+            items_details: {
+              plan: "Gold",
+            },
+          },
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(201);
+    expect(request.body.status).toBe("OK");
+    expect(request.body.data.transaction_secret.order_id).toBeDefined();
+    expect(request.body.data.transaction_secret.order_id).not.toBeUndefined();
+    expect(request.body.data.transaction_secret.order_id).not.toBeNull();
+    expect(request.body.data.transaction_secret.order_id).toBeString();
+  });
   test("returned response data transaction_secret field must be included redirect_url field data", async () => {
     const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
       payload.providerId
