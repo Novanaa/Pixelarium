@@ -118,7 +118,7 @@ model Subscription {
 model PaymentsHistory {
   id Int @id @default(autoincrement())  
   user_id Int @unique
-  order_id String
+  order_id String @unique
   plan plan
   interval_count Int
   amount Json
