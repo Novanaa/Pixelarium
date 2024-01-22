@@ -62,3 +62,17 @@ export async function userSubscriptionStatus(
     await client.$disconnect();
   }
 }
+
+export async function subscriptionPaymentsCallback(
+  req: Request,
+  res: Response
+): Promise<void | Response> {
+  try {
+    return res.send("testtt");
+  } catch (err) {
+    logger.error(err);
+    return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
+  }
+}
