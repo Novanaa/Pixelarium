@@ -9,11 +9,16 @@ import {
 import client from "../../../../libs/configs/prisma";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
-import { Subscription } from "../../../../../generated/client";
+import { PaymentsHistory, Subscription } from "../../../../../generated/client";
 import getUserSubscription from "../../../../utils/getUserSubscription";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
 import subscriptionTypeParams from "../const/readonly/subscriptionTypeParams";
 import validateSubscriptionPaymentOrderId from "../services/validateSubscriptionPaymentOrderId";
+import getUserPaymentHistoryByOrderId from "../services/getUserPaymentHistoryByOrderId";
+import updateUserPaymentHistoryStatus from "../services/updateUserPaymentHistoryStatus";
+import upgradeUserSubscriptionPlan from "../services/upgradeUserSubscriptionPlan";
+import generateUserSubscriptionPaymentID from "../../../../utils/generateUserSubscriptionPaymentID";
+import { getFutureDateTimeInDays } from "../../../../utils/getFutureDateTime";
 
 export function prices(_: Request, res: Response): Response {
   return res.status(200).json(pricesList);
@@ -72,6 +77,18 @@ export async function subscriptionPaymentsCallback(
 ): Promise<void | Response> {
   try {
     const { order_id, type } = req.query;
+    const { name } = req.params;
+
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await isUserExistByNameOrEmail({
+        field: "name",
+        value: name,
+      });
+
+    if (!user) return httpNotFoundResponse({ response: res });
+
+    delete user.password;
+    delete user.email;
 
     if (!order_id || !type)
       return httpBadRequestResponse({
@@ -96,17 +113,62 @@ export async function subscriptionPaymentsCallback(
     const failedPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/failed?order_id=${order_id}`;
     const pendingPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/pending?order_id=${order_id}`;
 
-    if (type == "failed") res.redirect(failedPageUrl);
+    const paymentHistory: Awaited<PaymentsHistory | null> =
+      await getUserPaymentHistoryByOrderId({
+        orderId: String(order_id),
+        userId: user.id,
+      });
+
+    if (!paymentHistory)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Unexpected Errors Occurred",
+      });
+
+    if (type == "failed") {
+      await updateUserPaymentHistoryStatus({
+        orderId: String(order_id),
+        status: "failed",
+      });
+
+      res.redirect(failedPageUrl);
+    }
 
     if (type == "pending") res.redirect(pendingPageUrl);
 
     if (type == "success") {
       const successPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/success?order_id=${order_id}`;
+      const userPaymenrId: string = generateUserSubscriptionPaymentID({
+        name: user.name,
+        plan: paymentHistory.plan,
+      });
+
+      await updateUserPaymentHistoryStatus({
+        orderId: String(order_id),
+        status: "success",
+      });
+
+      const endDateCalculation: number = 30 * paymentHistory.interval_count;
+      const startDate: Date = new Date();
+      const endDate: Date = getFutureDateTimeInDays({
+        futureDateTimeInDays: endDateCalculation,
+      });
+      const nextPaymentDate: Date = getFutureDateTimeInDays({
+        futureDateTimeInDays: endDateCalculation + 3,
+      });
+
+      await upgradeUserSubscriptionPlan({
+        plan: paymentHistory.plan,
+        intervalCount: paymentHistory.interval_count,
+        paymentId: userPaymenrId,
+        startDate,
+        userId: user.id,
+        endDate,
+        nextPaymentDate,
+      });
 
       res.redirect(successPageUrl);
     }
-
-    return res.send("testtt");
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
