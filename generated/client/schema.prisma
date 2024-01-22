@@ -115,11 +115,28 @@ model Subscription {
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
+model PaymentsHistory {
+  id Int @id @default(autoincrement())  
+  user_id Int @unique
+  order_id String
+  plan plan
+  interval_count Int
+  amount Json
+  status subscriptionStatus
+  order_date DateTime
+}
+
 enum plan {
   none
   Gold
   Diamond
   Netherite
+}
+
+enum subscriptionStatus {
+  failed
+  success
+  pending
 }
 
 enum status {

@@ -186,6 +186,17 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   plan: 'plan'
 };
 
+exports.Prisma.PaymentsHistoryScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  order_id: 'order_id',
+  plan: 'plan',
+  interval_count: 'interval_count',
+  amount: 'amount',
+  status: 'status',
+  order_date: 'order_date'
+};
+
 exports.Prisma.EmbedLinksScalarFieldEnum = {
   id: 'id',
   html_link: 'html_link',
@@ -251,6 +262,10 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+
+exports.Prisma.PaymentsHistoryOrderByRelevanceFieldEnum = {
+  order_id: 'order_id'
+};
 exports.UserType = exports.$Enums.UserType = {
   User: 'User',
   Admin: 'Admin',
@@ -269,6 +284,12 @@ exports.plan = exports.$Enums.plan = {
   Netherite: 'Netherite'
 };
 
+exports.subscriptionStatus = exports.$Enums.subscriptionStatus = {
+  failed: 'failed',
+  success: 'success',
+  pending: 'pending'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ClientKey: 'ClientKey',
@@ -277,6 +298,7 @@ exports.Prisma.ModelName = {
   Favorite: 'Favorite',
   Picture: 'Picture',
   Subscription: 'Subscription',
+  PaymentsHistory: 'PaymentsHistory',
   EmbedLinks: 'EmbedLinks'
 };
 
