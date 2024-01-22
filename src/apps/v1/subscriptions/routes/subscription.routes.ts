@@ -12,7 +12,7 @@ const router: express.Router = express.Router();
 
 router.get("/prices", prices);
 router.post("/payments/tokenizer/:name", tokenizer);
-router.get("/payments/callback", subscriptionPaymentsCallback);
+router.get("/payments/callback/:name", subscriptionPaymentsCallback);
 router.get("/status/:name", userSubscriptionStatus);
 router.delete(
   "/deactivate/:name",
