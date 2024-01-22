@@ -1801,6 +1801,224 @@
         }
       }
     },
+    "/v1/payment-history/{name}": {
+      "get": {
+        "summary": "Get All User Payments history",
+        "deprecated": false,
+        "operationId": "userPaymentsHistories",
+        "tags": ["Payments History"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "histories": [
+                      {
+                        "id": 1,
+                        "user_id": 1,
+                        "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                        "plan": "Gold",
+                        "interval_count": 1,
+                        "amount": {
+                          "USD": 2.99,
+                          "IDR": 47000
+                        },
+                        "status": "success",
+                        "order_date": "2024-01-21T03:20:29.503Z"
+                      }
+                    ]
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add User Payments History",
+        "operationId": "addPaymentHistory",
+        "tags": ["Payments History"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                "plan": "Gold",
+                "interval_count": 1,
+                "amount": {
+                  "USD": 2.99,
+                  "IDR": 47000
+                },
+                "status": "success",
+                "order_date": "2024-01-21T03:20:29.503Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "inserted_data": {
+                      "id": 1,
+                      "user_id": 1,
+                      "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                      "plan": "Gold",
+                      "interval_count": 1,
+                      "amount": {
+                        "USD": 2.99,
+                        "IDR": 47000
+                      },
+                      "status": "success",
+                      "order_date": "2024-01-21T03:20:29.503Z"
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/payment-history/{name}/{payment_history_id}": {
+      "patch": {
+        "summary": "Update Existing User Payment History",
+        "tags": ["Payments History"],
+        "operationId": "updateUserPaymentHistory",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/paymentHistoryId"
+          }
+        ],
+        "deprecated": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "status": "failed"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "old_data": {
+                      "id": 1,
+                      "user_id": 1,
+                      "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                      "plan": "Gold",
+                      "interval_count": 1,
+                      "amount": {
+                        "USD": 2.99,
+                        "IDR": 47000
+                      },
+                      "status": "success",
+                      "order_date": "2024-01-21T03:20:29.503Z"
+                    },
+                    "updated_data": {
+                      "id": 1,
+                      "user_id": 1,
+                      "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                      "plan": "Gold",
+                      "interval_count": 1,
+                      "amount": {
+                        "USD": 2.99,
+                        "IDR": 47000
+                      },
+                      "status": "failed",
+                      "order_date": "2024-01-21T03:20:29.503Z"
+                    }
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/subscription/prices": {
       "get": {
         "tags": ["Subscriptions"],
@@ -2330,6 +2548,19 @@
         "schema": {
           "deprecated": false,
           "type": "string"
+        }
+      },
+      "paymentHistoryId": {
+        "name": "payment_history_id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Existing Payment History ID",
+        "in": "path",
+        "required": true,
+        "example": 1,
+        "schema": {
+          "deprecated": false,
+          "type": "number"
         }
       },
       "userIdParams": {
