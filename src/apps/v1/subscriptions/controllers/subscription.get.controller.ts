@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import pricesList from "../../../../../resources/prices-list.json";
 import logger from "../../../../libs/configs/logger";
+import { CLIENT_FRONTEND_URL } from "../../../../const/env";
 import {
   httpBadRequestResponse,
   httpNotFoundResponse,
@@ -11,6 +12,8 @@ import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import { Subscription } from "../../../../../generated/client";
 import getUserSubscription from "../../../../utils/getUserSubscription";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
+import subscriptionTypeParams from "../const/readonly/subscriptionTypeParams";
+import validateSubscriptionPaymentOrderId from "../services/validateSubscriptionPaymentOrderId";
 
 export function prices(_: Request, res: Response): Response {
   return res.status(200).json(pricesList);
@@ -68,6 +71,41 @@ export async function subscriptionPaymentsCallback(
   res: Response
 ): Promise<void | Response> {
   try {
+    const { order_id, type } = req.query;
+
+    if (!order_id || !type)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "The order_id params and type must be included",
+      });
+
+    const orderIdValidation: void | Response =
+      validateSubscriptionPaymentOrderId({
+        orderId: String(order_id),
+        response: res,
+      });
+
+    if (orderIdValidation) return;
+
+    if (!subscriptionTypeParams.includes(String(type)))
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: `Invalid query params 'type', must be one of => ${subscriptionTypeParams}`,
+      });
+
+    const failedPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/failed?order_id=${order_id}`;
+    const pendingPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/pending?order_id=${order_id}`;
+
+    if (type == "failed") res.redirect(failedPageUrl);
+
+    if (type == "pending") res.redirect(pendingPageUrl);
+
+    if (type == "success") {
+      const successPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/success?order_id=${order_id}`;
+
+      res.redirect(successPageUrl);
+    }
+
     return res.send("testtt");
   } catch (err) {
     logger.error(err);
