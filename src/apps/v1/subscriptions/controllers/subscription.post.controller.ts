@@ -116,6 +116,7 @@ export default async function tokenizer(
     const transactionSecret: TransactionSecretData = {
       transaction_token: subscriptionPaymentTokenData.token,
       redirect_url: subscriptionPaymentTokenData.redirect_url,
+      order_id: orderId,
     };
 
     const responseData: TokenizerResponseData = {
