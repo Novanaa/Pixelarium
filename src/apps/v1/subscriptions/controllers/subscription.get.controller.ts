@@ -87,9 +87,6 @@ export async function subscriptionPaymentsCallback(
 
     if (!user) return httpNotFoundResponse({ response: res });
 
-    delete user.password;
-    delete user.email;
-
     if (!order_id || !type)
       return httpBadRequestResponse({
         response: res,
