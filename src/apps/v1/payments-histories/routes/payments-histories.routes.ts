@@ -4,6 +4,6 @@ import updateUserPaymentHistory from "../controllers/payments-histories.patch.co
 const router: express.Router = express.Router();
 
 router.get("/:name", userPaymentsHistories);
-router.patch("/:name/:paymentId", updateUserPaymentHistory);
+router.patch("/:name/:orderId", updateUserPaymentHistory);
 
 export default router;
