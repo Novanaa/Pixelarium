@@ -66,7 +66,11 @@ export default async function updateUserPaymentHistory(
     const status: subscriptionStatus = value.status as subscriptionStatus;
 
     const updatedPaymentHistoryData: Awaited<PaymentsHistory> =
-      await updateUserPaymentHistoryStatus({ status, orderId });
+      await updateUserPaymentHistoryStatus({
+        status,
+        orderId,
+        userId: user.id,
+      });
 
     const responseData: UpdateUserPaymentHistoryResponseData = {
       owner: user,
