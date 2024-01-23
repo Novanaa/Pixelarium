@@ -19,6 +19,7 @@ import {
   subscriptionStatus,
 } from "../../../../../generated/client";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
+import getUserPaymentHistoryByOrderId from "../../subscriptions/services/getUserPaymentHistoryByOrderId";
 
 type UpdateUserPaymentHistoryResponseData = {
   owner: UserWithOptionalChaining;
@@ -65,10 +66,19 @@ export default async function updateUserPaymentHistory(
 
     const status: subscriptionStatus = value.status as subscriptionStatus;
 
+    const userPaymentHistory: Awaited<PaymentsHistory | null> =
+      await getUserPaymentHistoryByOrderId({ orderId, userId: user.id });
+
+    if (!userPaymentHistory)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "You doesn't have any payment request",
+      });
+
     const updatedPaymentHistoryData: Awaited<PaymentsHistory> =
       await updateUserPaymentHistoryStatus({
         status,
-        orderId,
+        orderId: userPaymentHistory.order_id,
         userId: user.id,
       });
 
