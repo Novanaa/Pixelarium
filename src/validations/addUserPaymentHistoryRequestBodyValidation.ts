@@ -11,14 +11,11 @@ export default function addUserPaymentHistoryRequestBodyValidation(
       order_id: joi.string().required().regex(orderIdPattern),
       interval_count: joi.number().required(),
       plan: joi.string().valid("Gold", "Diamond", "Netherite").required(),
-      status: joi.string().valid("failed", "success", "pending").required(),
+      status: joi
+        .string()
+        .valid("failed", "success", "pending")
+        .default("pending"),
       order_date: joi.date().required(),
-      amount: joi
-        .object({
-          USD: joi.number().required(),
-          IDR: joi.number(),
-        })
-        .required(),
     });
 
   return schemaValidation.validate(request.body);
