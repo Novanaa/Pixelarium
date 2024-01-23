@@ -93,22 +93,12 @@ export default async function createTestUser({
       },
     };
 
-    const intervalCountPaymentHistory: number = Math.floor(Math.random() * 3);
+    const intervalCountPaymentHistory: number = faker.number.int({
+      min: 1,
+      max: 3,
+    });
     const amountInUSD: number = 2.99 * intervalCountPaymentHistory;
     const amountInIDR: number = await convertUSDToIDR(amountInUSD);
-    const createUserPaymentHistoryData = {
-      create: {
-        interval_count: intervalCountPaymentHistory,
-        amount: {
-          USD: amountInUSD,
-          IDR: amountInIDR,
-        },
-        order_date: new Date(),
-        plan: "Gold",
-        order_id: generatePaymentOrderId(),
-        status: "pending",
-      },
-    };
 
     const createUserAlbum = {
       create: {
@@ -143,8 +133,19 @@ export default async function createTestUser({
             },
           },
           album: createUserAlbum,
-          // @ts-expect-error just an error
-          paymentHistory: createUserPaymentHistoryData,
+          paymentHistory: {
+            create: {
+              interval_count: intervalCountPaymentHistory,
+              amount: {
+                USD: amountInUSD,
+                IDR: amountInIDR,
+              },
+              order_date: new Date(),
+              plan: "Gold",
+              order_id: generatePaymentOrderId(),
+              status: "pending",
+            },
+          },
         },
       });
     }
@@ -182,14 +183,26 @@ export default async function createTestUser({
             },
           },
           album: createUserAlbum,
-          // @ts-expect-error just an error
-          paymentHistory: createUserPaymentHistoryData,
+          paymentHistory: {
+            create: {
+              interval_count: intervalCountPaymentHistory,
+              amount: {
+                USD: amountInUSD,
+                IDR: amountInIDR,
+              },
+              order_date: new Date(),
+              plan: "Gold",
+              order_id: generatePaymentOrderId(),
+              status: "pending",
+            },
+          },
         },
       });
     }
 
     makeUserPublicDirectory({ name: username });
   } catch (err) {
+    if (err) throw err;
     logger.error(err);
   } finally {
     await client.$disconnect();
