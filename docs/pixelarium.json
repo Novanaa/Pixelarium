@@ -1935,7 +1935,7 @@
         }
       }
     },
-    "/v1/payment-history/{name}/{payment_history_id}": {
+    "/v1/payment-history/{name}/{orderId}": {
       "patch": {
         "summary": "Update Existing User Payment History",
         "tags": ["Payments History"],
@@ -1945,7 +1945,7 @@
             "$ref": "#/components/parameters/usernameParams"
           },
           {
-            "$ref": "#/components/parameters/paymentHistoryId"
+            "$ref": "#/components/parameters/orderIdSubscriptionParams"
           }
         ],
         "deprecated": false,
