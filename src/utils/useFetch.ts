@@ -39,10 +39,13 @@ export default async function useFetch<T>({
       cache: options?.cache,
     });
 
+    if (!response.ok) throw new Error("Unexpected Errors Occurred");
+
     // @ts-expect-error error
     const result: Awaited<T> = await response.json();
     return result as T;
   } catch (err) {
+    if (err) throw err;
     logger.error(err);
     return null;
   }
