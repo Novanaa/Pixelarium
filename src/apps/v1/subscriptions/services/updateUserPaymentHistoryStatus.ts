@@ -6,6 +6,7 @@ import client from "../../../../libs/configs/prisma";
 
 type UpdateUserPaymentHistoryStatusParams = {
   orderId: string;
+  userId: number;
   status: subscriptionStatus;
 };
 
@@ -20,10 +21,11 @@ type UpdateUserPaymentHistoryStatusParams = {
 export default async function updateUserPaymentHistoryStatus({
   orderId,
   status,
+  userId,
 }: UpdateUserPaymentHistoryStatusParams): Promise<PaymentsHistory> {
   const updatedData: Awaited<PaymentsHistory> =
     await client.paymentsHistory.update({
-      where: { order_id: orderId },
+      where: { order_id: orderId, user_id: userId },
       data: { status },
     });
 

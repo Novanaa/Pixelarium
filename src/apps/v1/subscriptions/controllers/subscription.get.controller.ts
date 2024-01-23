@@ -126,12 +126,20 @@ export async function subscriptionPaymentsCallback(
       await updateUserPaymentHistoryStatus({
         orderId: String(order_id),
         status: "failed",
+        userId: user.id,
       });
 
       res.redirect(failedPageUrl);
     }
 
-    if (type == "pending") res.redirect(pendingPageUrl);
+    if (type == "pending") {
+      await updateUserPaymentHistoryStatus({
+        orderId: String(order_id),
+        status: "pending",
+        userId: user.id,
+      });
+      res.redirect(pendingPageUrl);
+    }
 
     if (type == "success") {
       const successPageUrl: string = `${CLIENT_FRONTEND_URL}/payments/status/success?order_id=${order_id}`;
@@ -143,6 +151,7 @@ export async function subscriptionPaymentsCallback(
       await updateUserPaymentHistoryStatus({
         orderId: String(order_id),
         status: "success",
+        userId: user.id,
       });
 
       const endDateCalculation: number = 30 * paymentHistory.interval_count;

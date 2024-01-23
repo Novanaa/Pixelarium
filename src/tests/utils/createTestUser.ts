@@ -11,6 +11,8 @@ import PictureEmbedLinks from "../../apps/v1/embed-links/interfaces/PictureEmbed
 import generatePictureEmbedLinks from "../../apps/v1/embed-links/services/generatePictureEmbedLinks";
 import generateUserSubscriptionPaymentID from "../../utils/generateUserSubscriptionPaymentID";
 import { getFutureDateTimeInDays } from "../../utils/getFutureDateTime";
+import generatePaymentOrderId from "../../apps/v1/subscriptions/services/generatePaymentOrderId";
+import convertUSDToIDR from "../../apps/v1/subscriptions/services/convertUSDToIDR";
 
 interface CreateTestUserOptions
   extends GenerateTestUserGalleryPictureDataOptions {
@@ -91,6 +93,23 @@ export default async function createTestUser({
       },
     };
 
+    const intervalCountPaymentHistory: number = Math.floor(Math.random() * 3);
+    const amountInUSD: number = 2.99 * intervalCountPaymentHistory;
+    const amountInIDR: number = await convertUSDToIDR(amountInUSD);
+    const createUserPaymentHistoryData = {
+      create: {
+        interval_count: intervalCountPaymentHistory,
+        amount: {
+          USD: amountInUSD,
+          IDR: amountInIDR,
+        },
+        order_date: new Date(),
+        plan: "Gold",
+        order_id: generatePaymentOrderId(),
+        status: "pending",
+      },
+    };
+
     const createUserAlbum = {
       create: {
         title: faker.lorem.words(),
@@ -124,6 +143,8 @@ export default async function createTestUser({
             },
           },
           album: createUserAlbum,
+          // @ts-expect-error just an error
+          paymentHistory: createUserPaymentHistoryData,
         },
       });
     }
@@ -161,6 +182,8 @@ export default async function createTestUser({
             },
           },
           album: createUserAlbum,
+          // @ts-expect-error just an error
+          paymentHistory: createUserPaymentHistoryData,
         },
       });
     }
