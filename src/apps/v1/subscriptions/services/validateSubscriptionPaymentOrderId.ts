@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { httpBadRequestResponse } from "../../../../utils/responses/httpErrorsResponses";
+import orderIdPattern from "../../../../const/readonly/orderIdPattern";
 
 type ValidateSubscriptionPaymentOrderIdParams = {
   orderId: string;
@@ -18,10 +19,7 @@ export default function validateSubscriptionPaymentOrderId({
   orderId,
   response,
 }: ValidateSubscriptionPaymentOrderIdParams): void | Response {
-  const regexPattern: RegExp =
-    /plxmoid-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/;
-
-  if (!regexPattern.test(orderId))
+  if (!orderIdPattern.test(orderId))
     return httpBadRequestResponse({
       response,
       errorMessage: "Invalid order_id request!",
