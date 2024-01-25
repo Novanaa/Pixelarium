@@ -13,6 +13,7 @@ import generateUserSubscriptionPaymentID from "../../utils/generateUserSubscript
 import { getFutureDateTimeInDays } from "../../utils/getFutureDateTime";
 import generatePaymentOrderId from "../../apps/v1/subscriptions/services/generatePaymentOrderId";
 import convertUSDToIDR from "../../apps/v1/subscriptions/services/convertUSDToIDR";
+import dummyPaymentOrderId from "../../const/readonly/dummyPaymentOrderId";
 
 interface CreateTestUserOptions
   extends GenerateTestUserGalleryPictureDataOptions {
@@ -142,7 +143,7 @@ export default async function createTestUser({
               },
               order_date: new Date(),
               plan: "Gold",
-              order_id: generatePaymentOrderId(),
+              order_id: dummyPaymentOrderId,
               status: "pending",
             },
           },
