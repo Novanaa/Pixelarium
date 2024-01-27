@@ -28,7 +28,7 @@ type GeneratePictureEmbedLinksParams = {
  * @param {GeneratePictureEmbedLinksOptions} params.options - The options for generating the picture embed links.
  * @returns {PictureEmbedLinks} - The generated picture embed links.
  */
-export default function generatePictureEmbedLinks({
+export default function generatePictureEmbedLinksData({
   directViewLink,
   title,
   url,
