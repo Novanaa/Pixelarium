@@ -37,8 +37,7 @@ import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryP
 import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody";
 import getFilename from "../../../../utils/getFilename";
 import http from "../../../../const/readonly/httpStatusCode";
-import useFetch from "../../../../utils/useFetch";
-import { CLIENT_URL } from "../../../../const/env";
+import generatePictureEmbedLinks from "../../../../services/generatePictureEmbedLinks";
 
 export default async function addUserGalleryPicture(
   req: Request,
@@ -156,6 +155,14 @@ export default async function addUserGalleryPicture(
         isExternalPicture: true,
       });
 
+      if (!insertedPicture.is_private) {
+
+        await generatePictureEmbedLinks({
+          name: user.name,
+          uniquekey: insertedPicture.uniquekey,
+        });
+      }
+
       const responseData: AddUserGalleryPictureResponseData =
         generateUploadPictureResponseData({ insertedPicture, user });
 
@@ -200,10 +207,12 @@ export default async function addUserGalleryPicture(
         isExternalPicture: false,
       });
 
-      await useFetch({
-        method: "POST",
-        url: `${CLIENT_URL}/v1/embed-links/${user.name}/${insertedPicture.uniquekey}`,
-      });
+      if (!insertedPicture.is_private) {
+        await generatePictureEmbedLinks({
+          name: user.name,
+          uniquekey: insertedPicture.uniquekey,
+        });
+      }
 
       const responseData: AddUserGalleryPictureResponseData =
         generateUploadPictureResponseData({
