@@ -10,7 +10,7 @@ import client from "../../libs/configs/prisma";
 export default async function getTestUserPaymentHistory(
   userId: number
 ): Promise<PaymentsHistory | null> {
-  return client.paymentsHistory.findUnique({
+  return client.paymentsHistory.findFirst({
     where: { user_id: userId },
   }) as Promise<PaymentsHistory | null>;
 }
