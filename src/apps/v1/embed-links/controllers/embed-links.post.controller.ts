@@ -11,7 +11,7 @@ import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import { EmbedLinks, Picture } from "../../../../../generated/client";
 import getUserPictureByUniquekey from "../../pictures/services/getUserPictureByUniquekey";
 import PictureEmbedLinks from "../interfaces/PictureEmbedLinks";
-import generatePictureEmbedLinks from "../services/generatePictureEmbedLinks";
+import generatePictureEmbedLinksData from "../services/generatePictureEmbedLinksData";
 import generateDirectViewLinkPicture from "../services/generateDirectViewLinkPicture";
 import addPictureEmbedLinks from "../services/addPictureEmbedLinks";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
@@ -58,7 +58,7 @@ export default async function addEmbedLinksPicture(
 
     const directViewLink: string = generateDirectViewLinkPicture(uniquekey);
 
-    const pictureEmbedLinks: PictureEmbedLinks = generatePictureEmbedLinks({
+    const pictureEmbedLinks: PictureEmbedLinks = generatePictureEmbedLinksData({
       title: userPicture.title,
       url: userPicture.url,
       directViewLink,

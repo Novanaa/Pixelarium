@@ -8,7 +8,7 @@ import generateTestUserGalleryPictureData, {
 import logger from "../../libs/configs/logger";
 import makeUserPublicDirectory from "../../utils/makeUserPublicDirectory";
 import PictureEmbedLinks from "../../apps/v1/embed-links/interfaces/PictureEmbedLinks";
-import generatePictureEmbedLinks from "../../apps/v1/embed-links/services/generatePictureEmbedLinks";
+import generatePictureEmbedLinksData from "../../apps/v1/embed-links/services/generatePictureEmbedLinksData";
 import generateUserSubscriptionPaymentID from "../../utils/generateUserSubscriptionPaymentID";
 import { getFutureDateTimeInDays } from "../../utils/getFutureDateTime";
 import generatePaymentOrderId from "../../apps/v1/subscriptions/services/generatePaymentOrderId";
@@ -51,7 +51,7 @@ export default async function createTestUser({
       })[0],
     ]);
     const username: string = faker.person.fullName();
-    const pictureEmbedLinks: PictureEmbedLinks = generatePictureEmbedLinks({
+    const pictureEmbedLinks: PictureEmbedLinks = generatePictureEmbedLinksData({
       url: faker.internet.url(),
       title: faker.lorem.words(),
       directViewLink: faker.internet.url(),
