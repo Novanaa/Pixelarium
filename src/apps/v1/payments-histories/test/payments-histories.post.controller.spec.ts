@@ -114,9 +114,7 @@ describe("Unit-test Add new User Payment History API Core Logic", () => {
     expect(request.body.status).toBe("KO");
   });
   test("should be return 400 status code if the payment history data with the same order_id was already created", async () => {
-    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
-      payload.providerId
-    );
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(3);
     const request: Awaited<supertest.Request | supertest.Response> =
       await supertest(app)
         .post(`/v1/payment-history/${user?.name}`)
