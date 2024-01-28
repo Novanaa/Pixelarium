@@ -38,6 +38,7 @@ import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody
 import getFilename from "../../../../utils/getFilename";
 import http from "../../../../const/readonly/httpStatusCode";
 import generatePictureEmbedLinks from "../../../../services/generatePictureEmbedLinks";
+// import compressUserPicture from "../../../../services/compressUserPicture";
 
 export default async function addUserGalleryPicture(
   req: Request,
@@ -156,7 +157,6 @@ export default async function addUserGalleryPicture(
       });
 
       if (!insertedPicture.is_private) {
-
         await generatePictureEmbedLinks({
           name: user.name,
           uniquekey: insertedPicture.uniquekey,
@@ -165,6 +165,14 @@ export default async function addUserGalleryPicture(
 
       const responseData: AddUserGalleryPictureResponseData =
         generateUploadPictureResponseData({ insertedPicture, user });
+
+      // const pictureFilesize: number = picture.data.length;
+      // const minimumPictureFilesizeToCompress: number = 15 * 1024 * 1024;
+      // if (pictureFilesize < minimumPictureFilesizeToCompress) {
+      //   saveFile({ file: picture, response: res, path: pictureDest });
+      // }
+
+      // await compressUserPicture({ data: picture.data, path: pictureDest });
 
       saveFile({ file: picture, response: res, path: pictureDest });
 
