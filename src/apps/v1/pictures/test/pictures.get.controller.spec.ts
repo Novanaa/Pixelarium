@@ -160,3 +160,38 @@ describe("Unit-test Get Single User Picture API Endpoint", () => {
     expect(request.body.data.embed_pictures_links.markdown_link).not.toBeNull();
   });
 });
+
+describe("Unit-test Download User Picture API Core Logic", () => {
+  test("should be return 404 status code if the user doesn't exist", async () => {
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(`/v1/pictures/download/0/100`);
+
+    console.log(request.body);
+    expect(request.status).toBe(404);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 status code if the user picture uniquekey is invalid", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(`/v1/pictures/download/${user?.name}/100`);
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 404 status code if the user picture doesn't exist", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> = await getTestUser(
+      payload.providerId
+    );
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app).get(
+        `/v1/pictures/download/${user?.name}/${uniquekey}`
+      );
+
+    console.log(request.body);
+    expect(request.status).toBe(404);
+    expect(request.body.status).toBe("KO");
+  });
+});
