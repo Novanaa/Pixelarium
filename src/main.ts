@@ -3,9 +3,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import swaggerUi from "swagger-ui-express";
+import compression from "compression";
 /* `const app = express();` is creating an instance of the Express.js application. This instance will
 be used to configure and run the server. */
-const app = express();
+const app: express.Application = express();
 
 // Middlewares
 /* The code block is setting up and using various middleware functions in an Express.js application. */
@@ -17,12 +18,14 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 app.use(requestErrorValidation);
 app.use(rateLimitter);
+app.use(compression(compressionConfigs));
 
 // Application Routes
 /* The code block is importing various modules and routes and using them in the Express.js application. */
 import docs from "../docs/pixelarium.json";
 import swaggerOptions from "../docs/configs/SwaggerThemes.config";
 import corsOptions from "../configs/cors.config";
+import compressionConfigs from "../configs/compression.config";
 import requestErrorValidation from "./middlewares/requestErrorValidation";
 import verifyUserClientKeys from "./middlewares/verifyUserClientKeys";
 import rateLimitter from "./middlewares/rateLimitter";
