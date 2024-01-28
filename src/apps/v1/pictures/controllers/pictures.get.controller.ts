@@ -10,6 +10,15 @@ import { EmbedLinks, Picture } from "../../../../../generated/client";
 import getUserPictureByUniquekey from "../services/getUserPictureByUniquekey";
 import getPictureEmbedLinks from "../../embed-links/services/getPictureEmbedLinks";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
+import FilesSystem from "../../../../services/FilesSystem";
+import getPublicDirectoryPicturepath from "../../../../utils/getPublicDirectoryPicturepath";
+import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
+import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
+import slugify from "slugify";
+import getUserGallery, {
+  UserGallery,
+} from "../../galleries/services/getUserGallery";
+import http from "../../../../const/readonly/httpStatusCode";
 
 type SingleUserPictureResponseData = {
   picture: Picture;
@@ -66,8 +75,64 @@ export async function downloadUserPicture(
   req: Request,
   res: Response
 ): Promise<Response | void> {
+  const fs: FilesSystem = new FilesSystem();
   try {
-    res.send("testtttt");
+    const { name, uniquekey } = req.params;
+
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await isUserExistByNameOrEmail({ field: "name", value: name });
+
+    if (!user) return httpNotFoundResponse({ response: res });
+
+    const slugifiedUsername: string = slugify(user.name, {
+      lower: true,
+    });
+
+    const pictureUniquekeyValidation: void | Response =
+      validatePictureUniquekey({
+        uniquekey,
+        response: res,
+      });
+
+    if (pictureUniquekeyValidation) return;
+
+    const userGallery: Awaited<UserGallery | null> = await getUserGallery(
+      user.id
+    );
+
+    if (!userGallery)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Unexpected Errors Occurred",
+      });
+
+    const userPicture: Picture = userGallery.pictures.filter(
+      (p) => p.uniquekey == uniquekey
+    )[0];
+
+    if (!userPicture)
+      return httpNotFoundResponse({
+        response: res,
+        errorMessage: "The picture doesn't exist",
+      });
+
+    const filename: string = userPicture.filename;
+
+    const userPicturePath: string = getPublicDirectoryPicturepath({
+      usage: "galleries",
+      filename,
+      name: slugifiedUsername,
+    });
+
+    const isFileExist: boolean | null = fs.isExist(userPicturePath);
+
+    if (!isFileExist)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Unexpected Errors Occurred",
+      });
+
+    res.status(http.StatusOk).download(userPicturePath);
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
