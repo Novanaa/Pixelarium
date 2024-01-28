@@ -26,6 +26,6 @@ router.delete(
 );
 router.patch("/:name/:uniquekey", updateUserPicture);
 router.get("/:uniquekey", singleUserPicture);
-router.get("/:uniquekey", downloadUserPicture);
+router.get("/download/:uniquekey", downloadUserPicture);
 
 export default router;
