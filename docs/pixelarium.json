@@ -957,6 +957,33 @@
         }
       }
     },
+    "/v1/pictures/download/{name}/{picture_uniquekey}": {
+      "get": {
+        "summary": "Download user picture",
+        "deprecated": false,
+        "operationId": "downloadUserPicture",
+        "tags": ["Pictures"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Successfully download user picture!"
+          }
+        }
+      }
+    },
     "/v1/albums/{name}": {
       "get": {
         "summary": "Get User Albums",
