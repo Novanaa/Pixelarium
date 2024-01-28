@@ -61,3 +61,17 @@ export async function singleUserPicture(
     await client.$disconnect();
   }
 }
+
+export async function downloadUserPicture(
+  req: Request,
+  res: Response
+): Promise<Response | void> {
+  try {
+    res.send("testtttt");
+  } catch (err) {
+    logger.error(err);
+    return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
+  }
+}
