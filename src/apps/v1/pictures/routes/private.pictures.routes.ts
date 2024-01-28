@@ -11,6 +11,6 @@ const router = express.Router();
 router.post("/:name/upload", apiGrantAccess, addUserGalleryPicture);
 router.patch("/:name/:uniquekey", apiGrantAccess, updateUserPicture);
 router.get("/:uniquekey", singleUserPicture);
-router.get("/download/:uniquekey", downloadUserPicture);
+router.get("/download/:name/:uniquekey", downloadUserPicture);
 
 export default router;
