@@ -957,7 +957,7 @@
         }
       }
     },
-    "/v1/pictures/download/{picture_uniquekey}": {
+    "/v1/pictures/download/{name}/{picture_uniquekey}": {
       "get": {
         "summary": "Download user picture",
         "deprecated": false,
@@ -966,6 +966,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
           }
         ],
         "responses": {
