@@ -16,7 +16,7 @@ type SingleUserPictureResponseData = {
   embed_pictures_links: EmbedLinks;
 };
 
-export default async function singleUserPicture(
+export async function singleUserPicture(
   req: Request,
   res: Response
 ): Promise<Response | void> {
