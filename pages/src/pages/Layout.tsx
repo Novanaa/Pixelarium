@@ -11,9 +11,9 @@ function Layout({ children, className }: LayoutParams) {
   console.log(className);
   return (
     <>
-      <main className={cn(`container`, className)}>
+      <main>
         <Navbar />
-        <section>{children}</section>
+        <section className={cn(`container`, className)}>{children}</section>
       </main>
     </>
   );
