@@ -8,7 +8,6 @@ interface LayoutParams extends ReactNodeChild {
 }
 
 function Layout({ children, className }: LayoutParams) {
-  console.log(className);
   return (
     <>
       <main>
