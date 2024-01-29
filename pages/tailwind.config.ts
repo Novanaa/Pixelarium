@@ -76,7 +76,6 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    require("prettier-plugin-tailwindcss"),
   ],
 } satisfies Config;
 
