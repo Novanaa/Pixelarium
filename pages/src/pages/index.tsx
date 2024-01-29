@@ -1,5 +1,6 @@
+import { HeadingTwo } from "@/components/ui/Typographies/Heading";
 import React from "react";
 
 export default function Home() {
-  return <div>Hello, World!</div>;
+  return <HeadingTwo>Hello, World!</HeadingTwo>;
 }
