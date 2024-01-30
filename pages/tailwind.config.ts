@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -12,9 +12,13 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "6rem",
-      screens: {
-        "2xl": "1400px",
+      padding: {
+        DEFAULT: "2rem",
+        xl: "6rem",
+        lg: "3rem",
+        md: "1.5rem",
+        sm: "0.5rem",
+        "2xl": "11rem",
       },
     },
     extend: {
