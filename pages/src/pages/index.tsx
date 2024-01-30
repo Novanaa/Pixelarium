@@ -1,6 +1,11 @@
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
+// import { HeadingTwo } from "@/components/ui/Typographies/Heading";
 import React from "react";
+import Layout from "./Layout";
 
 export default function Home() {
-  return <HeadingTwo>Hello, World!</HeadingTwo>;
+  return (
+    <Layout>
+      <div className="pt-[80rem]">Hello, World!</div>
+    </Layout>
+  );
 }
