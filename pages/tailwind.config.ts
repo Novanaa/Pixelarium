@@ -12,7 +12,7 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "4rem",
+      padding: "6rem",
       screens: {
         "2xl": "1400px",
       },
@@ -76,6 +76,7 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
+    require("@tailwindcss/container-queries"),
   ],
 } satisfies Config;
 
