@@ -37,7 +37,7 @@ function NavbarMobile({
 
   return (
     <section
-      className={`${isNavbarOpenValidation} fixed z-10 flex h-screen w-full justify-center bg-secondary/60`}
+      className={`${isNavbarOpenValidation} fixed z-10 flex h-screen w-full justify-center bg-secondary/90`}
     >
       <Container className="relative top-20 w-full">
         <NavigationMenu className="flex flex-col gap-5">
