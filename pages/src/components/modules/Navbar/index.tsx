@@ -38,14 +38,14 @@ function Navbar() {
   const userSession: boolean = true;
 
   const bluryBackground: string =
-    "bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
+    "bg-secondary rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
 
   return (
     <>
       <section
         className={cn(
           bluryBackground,
-          `@container fixed z-20 w-full border-b bg-[var(--border)] py-[0.65rem] pb-[0.65rem]`,
+          `fixed z-20 w-full border-b bg-[var(--border)] py-[0.65rem] pb-[0.65rem] @container`,
         )}
       >
         <Container className="flex w-full justify-between">
@@ -56,14 +56,14 @@ function Navbar() {
             {/* Navigation Menu */}
             <NavbarMenuLinks />
           </NavigationMenu>
-          <NavigationMenu className="@5xl:block hidden">
+          <NavigationMenu className="hidden @5xl:block">
             <NavbarFooter
               theme={theme}
               setTheme={setTheme}
               userSession={userSession}
             />
           </NavigationMenu>
-          <NavigationMenu className="@5xl:hidden block">
+          <NavigationMenu className="block @5xl:hidden">
             <NavbarMobileMenu
               isNavbarOpen={isNavbarOpen}
               setIsNavbarOpen={setIsNavbarOpen}
@@ -103,7 +103,7 @@ function NavbarHeaders({ theme }: NavbarHeadersParams): React.ReactElement {
 
 function NavbarMenuLinks(): React.ReactElement {
   return (
-    <NavigationMenuList className="@5xl:block hidden">
+    <NavigationMenuList className="hidden @5xl:block">
       <NavigationMenuItem
         className={cn(
           jakartaSans.variable,
