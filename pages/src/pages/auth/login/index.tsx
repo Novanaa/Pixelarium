@@ -31,7 +31,7 @@ function Login() {
           description: messege,
         });
     }
-  }, [messege, type]);
+  }, [messege, type, nextRouter.isReady, toast, nextRouter.query]);
 
   return (
     <Layout>

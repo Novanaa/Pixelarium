@@ -33,11 +33,11 @@ function LoginCallback() {
     }
 
     return () => setDecodedUser(null);
-  }, [sessionToken, loginType]);
+  }, [sessionToken, loginType, router.isReady]);
 
   useEffect(() => {
-    setUserLogin({ name: decodedUser?.name!, router: routerNav });
-  }, [decodedUser]);
+    setUserLogin({ name: decodedUser?.name || null, router: routerNav });
+  }, [decodedUser, router.isReady, routerNav]);
 
   return (
     <Container className="flex h-screen w-full flex-col items-center justify-center gap-3 text-center">
