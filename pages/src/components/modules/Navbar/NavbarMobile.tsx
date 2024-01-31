@@ -5,7 +5,6 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import React from "react";
 import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
