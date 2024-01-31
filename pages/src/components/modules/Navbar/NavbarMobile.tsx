@@ -5,7 +5,6 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import React from "react";
 import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
@@ -37,7 +36,7 @@ function NavbarMobile({
 
   return (
     <section
-      className={`${isNavbarOpenValidation} fixed z-10 flex h-screen w-full justify-center bg-secondary/60`}
+      className={`${isNavbarOpenValidation} fixed z-10 flex h-screen w-full justify-center bg-secondary/90`}
     >
       <Container className="relative top-20 w-full">
         <NavigationMenu className="flex flex-col gap-5">
@@ -47,7 +46,7 @@ function NavbarMobile({
           {!userSession ? (
             <Link
               className={`${jakartaSans.variable} flex w-full font-sans font-semibold`}
-              href="/login"
+              href="/auth/login"
             >
               <Button variant="default" size="lg" className="flex w-full">
                 <AvatarIcon className="mr-2 h-4 w-4" />
