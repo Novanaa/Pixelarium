@@ -47,7 +47,7 @@ function NavbarMobile({
           {!userSession ? (
             <Link
               className={`${jakartaSans.variable} flex w-full font-sans font-semibold`}
-              href="/login"
+              href="/auth/login"
             >
               <Button variant="default" size="lg" className="flex w-full">
                 <AvatarIcon className="mr-2 h-4 w-4" />

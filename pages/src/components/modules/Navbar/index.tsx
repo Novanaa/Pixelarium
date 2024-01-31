@@ -35,7 +35,7 @@ import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
 function Navbar() {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
   const { theme, setTheme }: UseThemeProps = useTheme();
-  const userSession: boolean = true;
+  const userSession: boolean = false;
 
   const bluryBackground: string =
     "bg-secondary rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
@@ -159,7 +159,7 @@ function NavbarFooter({
         {!userSession ? (
           <NavigationMenuLink
             className={`${jakartaSans.variable} font-sans font-semibold`}
-            href="/login"
+            href="/auth/login"
           >
             <Button variant="default">
               <AvatarIcon className="mr-2 h-4 w-4" />
