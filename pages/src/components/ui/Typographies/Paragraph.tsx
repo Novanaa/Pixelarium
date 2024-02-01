@@ -9,7 +9,7 @@ import type ReactNodeChild from "@/components/interfaces/types/ReactNodeChild";
  * @returns {React.ReactNode} The rendered paragraph element.
  */
 function Paragraph({ children }: ReactNodeChild): React.ReactNode {
-  return <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>;
+  return <p className="leading-7">{children}</p>;
 }
 
 export default Paragraph;

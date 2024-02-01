@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useEffect } from "react";
-import Layout from "../../Layout";
 import { Card } from "@/components/ui/card";
 import { HeadingTwo } from "@/components/ui/Typographies/Heading";
 import { jakartaSans } from "@/configs/fonts";
@@ -34,7 +35,7 @@ function Login() {
   }, [messege, type, nextRouter.isReady, toast, nextRouter.query]);
 
   return (
-    <Layout>
+    <>
       <section className="flex h-screen w-full flex-col items-center justify-center gap-2">
         <Card className="flex flex-col items-center justify-center gap-3 px-[1.4rem] py-6 sm:px-10">
           <div>
@@ -81,7 +82,7 @@ function Login() {
         </MutedText>
       </section>
       <Toaster />
-    </Layout>
+    </>
   );
 }
 
