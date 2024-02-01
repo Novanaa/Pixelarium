@@ -1,10 +1,15 @@
-import { NextRouter, useRouter } from "next/router";
+"use client";
+
 import errorException from "@/exceptions/errorException";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import type DecodedUser from "@/interfaces/types/DecodedUser";
 import React from "react";
-import { useRouter as useRouterNav } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  useRouter as useRouterNav,
+  useSearchParams,
+} from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Container from "@/components/ui/Container";
 import setUserLogin from "@/services/setUserLogin";
@@ -16,28 +21,26 @@ function LoginCallback() {
   const [decodedUser, setDecodedUser] = useState<DecodedUser | null>(null);
 
   const routerNav: AppRouterInstance = useRouterNav();
-  const router: NextRouter = useRouter();
-  const sessionToken: string = String(router.query.session);
-  const loginType: string = String(router.query.type);
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  const sessionToken: string = String(searchParams.get("session"));
+  const loginType: string = String(searchParams.get("type"));
 
   useEffect(() => {
-    if (router.isReady) {
-      if (!sessionToken) errorException("Something wrong happend!");
+    if (!sessionToken) errorException("Something wrong happend!");
 
-      if (loginType !== "success")
-        errorException("The authentication proccess was failed");
+    if (loginType !== "success")
+      errorException("The authentication proccess was failed");
 
-      const decodedUser: DecodedUser = jwtDecode(sessionToken);
+    const decodedUser: DecodedUser = jwtDecode(sessionToken);
 
-      setDecodedUser(decodedUser);
-    }
+    setDecodedUser(decodedUser);
 
     return () => setDecodedUser(null);
-  }, [sessionToken, loginType, router.isReady]);
+  }, [sessionToken, loginType]);
 
   useEffect(() => {
     setUserLogin({ name: decodedUser?.name || null, router: routerNav });
-  }, [decodedUser, router.isReady, routerNav]);
+  }, [decodedUser, routerNav]);
 
   return (
     <Container className="flex h-screen w-full flex-col items-center justify-center gap-3 text-center">

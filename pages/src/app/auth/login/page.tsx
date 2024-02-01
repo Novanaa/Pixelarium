@@ -10,29 +10,29 @@ import MutedText from "@/components/ui/Typographies/MutedText";
 import Link from "next/link";
 import { SiGoogle, SiBitbucket } from "react-icons/si";
 import apiUrlEndpoint from "@/constant/readonly/apiUrlEndpoint";
-import { useRouter } from "next/navigation";
+import { ReadonlyURLSearchParams, useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
-import { NextRouter, useRouter as useNextRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 function Login() {
   const router: AppRouterInstance = useRouter();
-  const nextRouter: NextRouter = useNextRouter();
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const { toast } = useToast();
 
-  const type: string = String(nextRouter.query.type);
-  const messege: string = String(nextRouter.query.messege);
+  const type: string = String(searchParams.get("type"));
+  const messege: string = String(searchParams.get("messege"));
 
   useEffect(() => {
-    if (nextRouter.query && nextRouter.isReady) {
+    if (messege) {
       if (type == "failed")
         toast({
           title: "Unexpected Error",
           description: messege,
         });
     }
-  }, [messege, type, nextRouter.isReady, toast, nextRouter.query]);
+  }, [messege, type, toast]);
 
   return (
     <>
