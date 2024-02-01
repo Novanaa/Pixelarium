@@ -1,15 +1,16 @@
 import { Response } from "express";
-import { NODE_ENV } from "../../../../const/env";
+import cookiesOptions from "../const/readonly/cookiesOptions";
 
 export default function generateTokenResponseCookie(
   res: Response,
   refreshToken: string
 ) {
-  const isSecured = NODE_ENV == "production" ? true : false;
+  const sessionTokenCookiesMaxAge: number = 24 * 60 * 60 * 1000;
+
   res.cookie("session", refreshToken, {
-    maxAge: 24 * 60 * 60 * 1000,
-    secure: isSecured,
-    httpOnly: true,
-    sameSite: "strict",
+    ...cookiesOptions,
+    maxAge: sessionTokenCookiesMaxAge,
   });
+
+  res.cookie("logged_in", true, cookiesOptions);
 }

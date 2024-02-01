@@ -10,17 +10,17 @@ import { TDecodedUser } from "../interfaces/types/DecodedUserTypes";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import http from "../../../../const/readonly/httpStatusCode";
+import cookiesOptions from "../const/readonly/cookiesOptions";
+import client from "../../../../libs/configs/prisma";
 
 export default async function logout(
   req: Request,
   res: Response
 ): Promise<void | Response> {
   try {
-    const { session } = req.cookies;
+    const { session, logged_in } = req.cookies;
 
     if (!session) return httpUnauthorizedResponse({ response: res });
-
-    if (session) res.clearCookie("session");
 
     const decoded: TDecodedUser = jwtDecode(session);
 
@@ -39,6 +39,10 @@ export default async function logout(
     delete user.password;
     delete user.email;
 
+    if (session) res.clearCookie("session");
+
+    if (logged_in) res.cookie("logged_in", false, cookiesOptions);
+
     return jsonResult<UserWithOptionalChaining>({
       response: res,
       statusCode: http.StatusOk,
@@ -49,5 +53,7 @@ export default async function logout(
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
   }
 }
