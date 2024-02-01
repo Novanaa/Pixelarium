@@ -11,6 +11,7 @@ import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import http from "../../../../const/readonly/httpStatusCode";
 import cookiesOptions from "../const/readonly/cookiesOptions";
+import client from "../../../../libs/configs/prisma";
 
 export default async function logout(
   req: Request,
@@ -52,5 +53,7 @@ export default async function logout(
   } catch (err) {
     logger.error(err);
     return httpBadRequestResponse({ response: res });
+  } finally {
+    await client.$disconnect();
   }
 }
