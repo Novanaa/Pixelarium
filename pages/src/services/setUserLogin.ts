@@ -23,9 +23,7 @@ export default async function setUserLogin({
     const error = err as AxiosError<ErrorResponse>;
 
     if (error.response?.data) {
-      const errorMessege: string =
-        (error.response?.data.messege as string) ||
-        "Unexpected Errors Occurred";
+      const errorMessege: string = error.response?.data.messege as string;
 
       router.push(`/auth/login?messege=${errorMessege}&type=failed`);
     }
