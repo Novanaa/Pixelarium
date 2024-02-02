@@ -12,5 +12,5 @@ export default function generateTokenResponseCookie(
     maxAge: sessionTokenCookiesMaxAge,
   });
 
-  res.cookie("logged_in", true, cookiesOptions);
+  res.cookie("logged_in", "yes", cookiesOptions);
 }
