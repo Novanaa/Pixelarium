@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
@@ -33,11 +33,17 @@ import type { default as NavbarFooterParams } from "@/components/interfaces/type
 import type { default as NavbarMobileMenuParams } from "@/components/interfaces/types/NavbarMobileMenu";
 import NavbarMobile from "./NavbarMobile";
 import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
+import isLoggedIn from "@/services/isLoggedIn";
 
 function Navbar() {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
+  const [userSession, setUserSession] = useState<boolean>(false);
+
   const { theme, setTheme }: UseThemeProps = useTheme();
-  const userSession: boolean = false;
+
+  useEffect(() => {
+    isLoggedIn().then((data) => setUserSession(data));
+  }, []);
 
   const bluryBackground: string =
     "bg-secondary rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
