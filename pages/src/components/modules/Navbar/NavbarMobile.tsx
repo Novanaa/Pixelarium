@@ -15,6 +15,7 @@ import {
   GitHubLogoIcon,
   HomeIcon,
   MoonIcon,
+  ReloadIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
 import Link from "next/link";
@@ -23,12 +24,14 @@ import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 
 interface NavbarMobileParams extends NavbarMobileMenuParams {
-  userSession: boolean;
+  userSession: boolean | null;
+  throttleUser: boolean;
 }
 
 function NavbarMobile({
   isNavbarOpen,
   userSession,
+  throttleUser,
 }: NavbarMobileParams): React.ReactElement {
   const { theme, setTheme }: UseThemeProps = useTheme();
 
@@ -48,9 +51,23 @@ function NavbarMobile({
               className={`${jakartaSans.variable} flex w-full font-sans font-semibold`}
               href="/auth/login"
             >
-              <Button variant="default" size="lg" className="flex w-full">
-                <AvatarIcon className="mr-2 h-4 w-4" />
-                Login / Sign In
+              <Button
+                variant="default"
+                size="lg"
+                className="flex w-full"
+                disabled={throttleUser}
+              >
+                {throttleUser ? (
+                  <>
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  <>
+                    <AvatarIcon className="mr-2 h-4 w-4" />
+                    Login / Sign In
+                  </>
+                )}
               </Button>
             </Link>
           ) : (
@@ -58,8 +75,22 @@ function NavbarMobile({
               className={`${jakartaSans.variable} flex w-full font-sans font-semibold`}
               href="/dashboard"
             >
-              <Button variant="outline" size="default" className="flex w-full">
-                <HomeIcon className="mr-2 h-4 w-4" /> Dashboard
+              <Button
+                variant="outline"
+                size="default"
+                className="flex w-full"
+                disabled={throttleUser}
+              >
+                {throttleUser ? (
+                  <>
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  <>
+                    <HomeIcon className="mr-2 h-4 w-4" /> Dashboard
+                  </>
+                )}
               </Button>
             </Link>
           )}

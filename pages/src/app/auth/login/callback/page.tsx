@@ -1,9 +1,7 @@
 "use client";
 
 import errorException from "@/exceptions/errorException";
-import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
-import type DecodedUser from "@/interfaces/types/DecodedUser";
+import { useEffect } from "react";
 import React from "react";
 import {
   ReadonlyURLSearchParams,
@@ -18,8 +16,6 @@ import { LineWave } from "react-loader-spinner";
 import MutedText from "@/components/ui/Typographies/MutedText";
 
 function LoginCallback() {
-  const [decodedUser, setDecodedUser] = useState<DecodedUser | null>(null);
-
   const routerNav: AppRouterInstance = useRouterNav();
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const sessionToken: string = String(searchParams.get("session"));
@@ -30,17 +26,13 @@ function LoginCallback() {
 
     if (loginType !== "success")
       errorException("The authentication proccess was failed");
-
-    const decodedUser: DecodedUser = jwtDecode(sessionToken);
-
-    setDecodedUser(decodedUser);
-
-    return () => setDecodedUser(null);
   }, [sessionToken, loginType]);
 
   useEffect(() => {
-    setUserLogin({ name: decodedUser?.name || null, router: routerNav });
-  }, [decodedUser, routerNav]);
+    setUserLogin({
+      router: routerNav,
+    });
+  }, [routerNav]);
 
   return (
     <Container className="flex h-screen w-full flex-col items-center justify-center gap-3 text-center">
