@@ -6,7 +6,7 @@ const isSecured = NODE_ENV == "production" ? true : false;
 const cookiesOptions: CookieOptions = {
   secure: isSecured,
   httpOnly: true,
-  sameSite: "strict",
+  sameSite: "none",
 };
 
 export default cookiesOptions;
