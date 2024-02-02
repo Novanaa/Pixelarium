@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface UserInitialState {
   isLogin: boolean;
@@ -15,15 +15,9 @@ const user = createSlice({
     getUserLoginStatus(state: UserInitialState): UserInitialState {
       return state;
     },
-    updateUserLoginStatus(
-      state: UserInitialState,
-      action: PayloadAction<UserInitialState, string>,
-    ): UserInitialState {
-      return { ...state, isLogin: action.payload.isLogin };
-    },
   },
 });
 
-export const { getUserLoginStatus, updateUserLoginStatus } = user.actions;
+export const { getUserLoginStatus } = user.actions;
 
 export default user.reducer;
