@@ -24,6 +24,7 @@ import {
   HamburgerMenuIcon,
   HomeIcon,
   MoonIcon,
+  ReloadIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
 import githubRepositoryLink from "@/constant/readonly/githubRepositoryLink";
@@ -37,7 +38,9 @@ import isLoggedIn from "@/services/isLoggedIn";
 
 function Navbar() {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
-  const [userSession, setUserSession] = useState<boolean>(false);
+  const [userSession, setUserSession] = useState<boolean | null>(null);
+
+  const throttleUserSession: boolean = userSession == null ? true : false;
 
   const { theme, setTheme }: UseThemeProps = useTheme();
 
@@ -69,6 +72,7 @@ function Navbar() {
               theme={theme}
               setTheme={setTheme}
               userSession={userSession}
+              throttleUser={throttleUserSession}
             />
           </NavigationMenu>
           <NavigationMenu className="block @5xl:hidden">
@@ -83,6 +87,7 @@ function Navbar() {
         isNavbarOpen={isNavbarOpen}
         userSession={userSession}
         setIsNavbarOpen={setIsNavbarOpen}
+        throttleUser={throttleUserSession}
       />
     </>
   );
@@ -145,6 +150,7 @@ function NavbarFooter({
   setTheme,
   theme,
   userSession,
+  throttleUser,
 }: NavbarFooterParams): React.ReactElement {
   return (
     <NavigationMenuList>
@@ -169,9 +175,18 @@ function NavbarFooter({
             className={`${jakartaSans.variable} font-sans font-semibold`}
             href="/auth/login"
           >
-            <Button variant="default">
-              <AvatarIcon className="mr-2 h-4 w-4" />
-              Login / Sign In
+            <Button variant="default" disabled={throttleUser}>
+              {throttleUser ? (
+                <>
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                <>
+                  <AvatarIcon className="mr-2 h-4 w-4" />
+                  Login / Sign In
+                </>
+              )}
             </Button>
           </NavigationMenuLink>
         ) : (
@@ -179,8 +194,17 @@ function NavbarFooter({
             className={`${jakartaSans.variable} font-sans font-semibold`}
             href="/dashboard"
           >
-            <Button variant="outline">
-              <HomeIcon className="mr-2 h-4 w-4" /> Dashboard
+            <Button variant="outline" disabled={throttleUser}>
+              {throttleUser ? (
+                <>
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                <>
+                  <HomeIcon className="mr-2 h-4 w-4" /> Dashboard
+                </>
+              )}
             </Button>
           </NavigationMenuLink>
         )}
