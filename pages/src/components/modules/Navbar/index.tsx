@@ -95,7 +95,7 @@ function Navbar() {
 }
 
 function NavbarHeaders({ theme }: NavbarHeadersParams): React.ReactElement {
-  const iconsImageSrc: string = getLogoSource(theme || "dark");
+  const iconsImageSrc: string = getLogoSource(theme!);
 
   return (
     <Link
