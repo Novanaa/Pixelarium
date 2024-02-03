@@ -84,7 +84,7 @@ function Hero(): React.ReactElement {
               effect="blur"
               alt="test"
               src={dummyImageSrc}
-              className="relative top-2 rounded-lg border object-fill @lg:scale-[0.9] sm:top-0"
+              className="relative top-2 rounded-lg border object-fill shadow-lg shadow-primary/15 @lg:scale-[0.9] sm:top-0"
             />
           </div>
         </main>
