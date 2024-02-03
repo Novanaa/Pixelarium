@@ -1,3 +1,4 @@
+import CookiesData from "@/interfaces/types/Cookies";
 import getServerSideCookiesData from "@/utils/getServerSideCookiesData";
 
 /**
