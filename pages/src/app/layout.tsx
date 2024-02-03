@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="selection:bg-primary selection:text-secondary">
       <body className={jakartaSans.variable}>
         <ReduxProvider>
           <ThemeProvider
@@ -26,7 +26,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navbar />
-            <main className="container">{children}</main>
+            <main>{children}</main>
           </ThemeProvider>
         </ReduxProvider>
       </body>
