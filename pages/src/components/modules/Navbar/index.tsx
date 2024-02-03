@@ -35,6 +35,7 @@ import type { default as NavbarMobileMenuParams } from "@/components/interfaces/
 import NavbarMobile from "./NavbarMobile";
 import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
 import isLoggedIn from "@/services/isLoggedIn";
+import getLogoSource from "@/utils/getLogoSource";
 
 function Navbar() {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
@@ -94,10 +95,7 @@ function Navbar() {
 }
 
 function NavbarHeaders({ theme }: NavbarHeadersParams): React.ReactElement {
-  const iconsImageSrc: string =
-    theme == "light"
-      ? "/img/icons/pixelarium-light.png"
-      : "/img/icons/pixelarium-dark.png";
+  const iconsImageSrc: string = getLogoSource(theme || "dark");
 
   return (
     <Link
