@@ -1,7 +1,12 @@
 import React from "react";
+import Hero from "@/components/modules/Hero";
 
 function Home() {
-  return <div className="pt-[80rem]">Hello, World!</div>;
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
 }
 
 export default Home;
