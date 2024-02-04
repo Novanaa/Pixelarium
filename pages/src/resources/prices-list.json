@@ -4,6 +4,7 @@
     "title": "None",
     "description": "A default starter pricing plans",
     "price": 0,
+    "priceInIDR": 0,
     "currency": "USD",
     "interval": "Forever",
     "benefits": [
@@ -60,8 +61,9 @@
   {
     "id": "638d42c1-37fd-42d7-80eb-987963b38191",
     "title": "Gold",
-    "description": "The 'Gold' pricing plan offers a comprehensive set of features for a monthly subscription fee of $2 USD. This plan provides users with a premium experience, ensuring access to an array of advanced functionalities.",
+    "description": "This plan provides users with a premium experience, ensuring access to an array of advanced functionalities.",
     "price": 2.99,
+    "priceInIDR": 47000,
     "currency": "USD",
     "isPrimary": false,
     "interval": "Month",
@@ -119,8 +121,9 @@
   {
     "id": "a780721e-67cc-4a4b-be47-64182957a372",
     "title": "Diamond",
-    "description": "Elevate your experience with the Diamond subscription, a premium offering tailored to enhance your access and privileges on our platform. Unlock exclusive content, advanced features, and a heightened level of service, ensuring a seamless and enriched user experience.",
+    "description": "Unlock exclusive content, advanced features, and a heightened level of service.",
     "price": 6.99,
+    "priceInIDR": 110000,
     "currency": "USD",
     "isPrimary": true,
     "interval": "Month",
@@ -178,8 +181,9 @@
   {
     "id": "0ecff444-8c11-4bbe-8342-9b08f9c3df4c",
     "title": "Netherite",
-    "description": "The Netherite subscription offers a comprehensive package, ensuring a heightened and enriched user experience. Subscribe today to enjoy a seamless journey through our platform",
+    "description": "Offers a heightened and enriched user experience.",
     "price": 9.99,
+    "priceInIDR": 157000,
     "currency": "USD",
     "isPrimary": false,
     "interval": "Month",

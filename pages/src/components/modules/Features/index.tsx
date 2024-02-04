@@ -14,7 +14,7 @@ import {
 
 function Features(): React.ReactElement {
   return (
-    <section className="light:bg-primary-foreground/100 relative my-[6.2rem] h-full w-full border-b border-t pb-10 @container @3xl:top-[4.5rem] dark:bg-primary-foreground/20">
+    <section className="light:bg-primary-foreground/100 relative my-[6.2rem] h-full w-full border-b border-t pb-14 @container @3xl:top-[4.5rem] dark:bg-primary-foreground/20">
       <main className="flex flex-col items-center justify-center gap-[0.2rem] pt-[4rem]">
         <FeaturesHeader />
         <FeaturesCard />
