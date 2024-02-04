@@ -4,6 +4,7 @@ import Navbar from "@/components/modules/Navbar";
 import { jakartaSans } from "@/configs/fonts";
 import { ThemeProvider } from "@/lib/ThemesProvider";
 import ReduxProvider from "@/stores/Provider";
+import Footer from "@/components/modules/Footer";
 
 export const metadata: Metadata = {
   title: "Pixelarium",
@@ -27,6 +28,7 @@ export default function RootLayout({
           >
             <Navbar />
             <main>{children}</main>
+            <Footer />
           </ThemeProvider>
         </ReduxProvider>
       </body>
