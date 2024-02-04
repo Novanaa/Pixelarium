@@ -63,6 +63,7 @@
     "description": "The 'Gold' pricing plan offers a comprehensive set of features for a monthly subscription fee of $2 USD. This plan provides users with a premium experience, ensuring access to an array of advanced functionalities.",
     "price": 2.99,
     "currency": "USD",
+    "isPrimary": false,
     "interval": "Month",
     "benefits": [
       {
@@ -121,6 +122,7 @@
     "description": "Elevate your experience with the Diamond subscription, a premium offering tailored to enhance your access and privileges on our platform. Unlock exclusive content, advanced features, and a heightened level of service, ensuring a seamless and enriched user experience.",
     "price": 6.99,
     "currency": "USD",
+    "isPrimary": true,
     "interval": "Month",
     "benefits": [
       {
@@ -179,6 +181,7 @@
     "description": "The Netherite subscription offers a comprehensive package, ensuring a heightened and enriched user experience. Subscribe today to enjoy a seamless journey through our platform",
     "price": 9.99,
     "currency": "USD",
+    "isPrimary": false,
     "interval": "Month",
     "benefits": [
       {
