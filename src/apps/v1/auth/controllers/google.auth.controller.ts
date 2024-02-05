@@ -65,12 +65,12 @@ export async function loginWithGoogle(
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
       providerId: Number(isUser?.provider_id) || Number(userId),
-      name: isUser?.name || data.name!,
-      email: isUser?.email || data.email!,
+      name: data.name!,
+      email: data.email!,
       picture: isUser?.picture || data.picture!,
     });
 
-    generateTokenResponseCookie(res, refreshToken);
+    generateTokenResponseCookie(res, refreshToken, data.name!);
 
     return res.redirect(
       `${CLIENT_FRONTEND_URL}/auth/login/callback?session=${accessToken}&type=success`
