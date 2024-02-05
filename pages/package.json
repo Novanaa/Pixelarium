@@ -16,6 +16,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@reduxjs/toolkit": "^2.1.0",
     "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.10",
     "@types/jwt-decode": "^3.1.0",
     "@types/prettier": "^3.0.0",
     "@types/react-lazy-load-image-component": "^1.6.3",
