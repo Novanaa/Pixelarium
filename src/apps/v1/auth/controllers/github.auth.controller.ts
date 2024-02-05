@@ -67,7 +67,7 @@ export async function loginWithGithub(
     if (!isUser) {
       await createUserIfNotExists({
         providerId: userId,
-        name: user.login! || user.name!,
+        name: user.login!,
         email: user.email || null,
         picture: user.avatar_url || defaultUserImage,
         bio: user.bio,
@@ -76,12 +76,12 @@ export async function loginWithGithub(
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
       providerId: Number(isUser?.provider_id) || Number(userId),
-      name: isUser?.name || user.login,
-      email: isUser?.email || user.email!,
+      name: user.login,
+      email: user.email!,
       picture: isUser?.picture || user.avatar_url,
     });
 
-    generateTokenResponseCookie(res, refreshToken);
+    generateTokenResponseCookie(res, refreshToken, user.login);
 
     return res.redirect(
       `${CLIENT_FRONTEND_URL}/auth/login/callback?session=${accessToken}&type=success`
