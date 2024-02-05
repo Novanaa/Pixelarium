@@ -22,9 +22,7 @@ import {
   Cross1Icon,
   GitHubLogoIcon,
   HamburgerMenuIcon,
-  HomeIcon,
   MoonIcon,
-  ReloadIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
 import githubRepositoryLink from "@/constant/readonly/githubRepositoryLink";
@@ -36,6 +34,8 @@ import NavbarMobile from "./NavbarMobile";
 import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
 import isLoggedIn from "@/services/isLoggedIn";
 import getLogoSource from "@/utils/getLogoSource";
+import { Skeleton } from "@/components/ui/skeleton";
+import UserProfilePicture from "./UserProfilePicture";
 
 function Navbar() {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
@@ -168,42 +168,21 @@ function NavbarFooter({
             <SunIcon onClick={() => setTheme("light")} />
           </NavigationMenuLink>
         )}
-        {!userSession ? (
+        {userSession ? (
+          <UserProfilePicture isLoading={throttleUser} />
+        ) : (
           <NavigationMenuLink
             className={`${jakartaSans.variable} font-sans font-semibold`}
             href="/auth/login"
           >
-            <Button variant="default" disabled={throttleUser}>
-              {throttleUser ? (
-                <>
-                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait
-                </>
-              ) : (
-                <>
-                  <AvatarIcon className="mr-2 h-4 w-4" />
-                  Login / Sign In
-                </>
-              )}
-            </Button>
-          </NavigationMenuLink>
-        ) : (
-          <NavigationMenuLink
-            className={`${jakartaSans.variable} font-sans font-semibold`}
-            href="/dashboard"
-          >
-            <Button variant="outline" disabled={throttleUser}>
-              {throttleUser ? (
-                <>
-                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait
-                </>
-              ) : (
-                <>
-                  <HomeIcon className="mr-2 h-4 w-4" /> Dashboard
-                </>
-              )}
-            </Button>
+            {throttleUser ? (
+              <Skeleton className="h-8 w-8 rounded-full" />
+            ) : (
+              <Button variant="default" disabled={throttleUser}>
+                <AvatarIcon className="mr-2 h-4 w-4" />
+                Login / Sign In
+              </Button>
+            )}
           </NavigationMenuLink>
         )}
       </NavigationMenuItem>
