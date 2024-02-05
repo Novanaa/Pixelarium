@@ -7,11 +7,13 @@ export async function GET() {
 
   const sessionToken: string | undefined = nextCookies.get("session")?.value;
   const loggedIn: string | undefined = nextCookies.get("logged_in")?.value;
+  const loggedAs: string | undefined = nextCookies.get("logged_as")?.value;
 
   return NextResponse.json({
     cookies: {
       session: sessionToken || null,
       isLoggedIn: loggedIn || null,
+      loggedAs: loggedAs || null,
     },
   });
 }
