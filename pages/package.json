@@ -44,6 +44,7 @@
     "simple-icons": "^11.3.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "unified": "^11.0.4",
     "unsupported": "^1.1.0"
   },
   "devDependencies": {
