@@ -26,6 +26,7 @@
     "clsx": "^2.1.0",
     "cookies-next": "^4.1.1",
     "embla-carousel-react": "^8.0.0-rc22",
+    "gray-matter": "^4.0.3",
     "jwt-decode": "^4.0.0",
     "next": "latest",
     "next-themes": "^0.2.1",
