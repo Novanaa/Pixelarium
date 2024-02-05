@@ -79,7 +79,9 @@ function Navbar() {
           <NavigationMenu className="block @5xl:hidden">
             <NavbarMobileMenu
               isNavbarOpen={isNavbarOpen}
+              isLoading={throttleUserSession}
               setIsNavbarOpen={setIsNavbarOpen}
+              isLogin={userSession!}
             />
           </NavigationMenu>
         </Container>
@@ -193,6 +195,8 @@ function NavbarFooter({
 function NavbarMobileMenu({
   isNavbarOpen,
   setIsNavbarOpen,
+  isLoading,
+  isLogin,
 }: NavbarMobileMenuParams): React.ReactElement {
   return (
     <NavigationMenuList>
@@ -203,9 +207,12 @@ function NavbarMobileMenu({
         {isNavbarOpen ? (
           <Cross1Icon width={19} height={19} />
         ) : (
-          <HamburgerMenuIcon width={19} height={19} />
+          <>
+            <HamburgerMenuIcon width={19} height={19} />
+          </>
         )}
       </NavigationMenuItem>
+      {isLogin ? <UserProfilePicture isLoading={isLoading!} /> : null}
     </NavigationMenuList>
   );
 }
