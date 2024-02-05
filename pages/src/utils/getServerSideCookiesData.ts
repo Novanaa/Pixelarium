@@ -7,11 +7,13 @@ export default function getServerSideCookiesData(): CookiesData {
 
   const sessionToken: string | undefined = nextCookies.get("session")?.value;
   const loggedIn: string | undefined = nextCookies.get("logged_in")?.value;
+  const loggedAs: string | undefined = nextCookies.get("logged_as")?.value;
 
   const cookiesData: CookiesData = {
     cookies: {
       session: sessionToken || null,
       isLoggedIn: (loggedIn as "yes") || null,
+      loggedAs: loggedAs || null,
     },
   };
 

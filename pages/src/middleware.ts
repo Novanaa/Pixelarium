@@ -6,10 +6,10 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const isLogin = getServerSideUserLoginStatus();
 
   if (req.nextUrl.pathname.startsWith("/auth/login")) {
-    if (isLogin) return NextResponse.redirect(new URL("/dashboard", req.url));
+    if (isLogin) return NextResponse.redirect(new URL("/profile", req.url));
   }
 
-  if (req.nextUrl.pathname.startsWith("/dashboard")) {
+  if (req.nextUrl.pathname.startsWith("/profile")) {
     if (!isLogin) return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
@@ -17,5 +17,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/auth/login"],
+  matcher: ["/profile/:name*", "/auth/login"],
 };

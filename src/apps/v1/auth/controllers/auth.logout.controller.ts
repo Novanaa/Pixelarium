@@ -18,7 +18,7 @@ export default async function logout(
   res: Response
 ): Promise<void | Response> {
   try {
-    const { session, logged_in } = req.cookies;
+    const { session, logged_in, logged_as } = req.cookies;
 
     if (!session) return httpUnauthorizedResponse({ response: res });
 
@@ -40,6 +40,7 @@ export default async function logout(
     delete user.email;
 
     if (session) res.clearCookie("session");
+    if (logged_as) res.clearCookie("logged_in");
 
     if (logged_in) res.cookie("logged_in", false, cookiesOptions);
 

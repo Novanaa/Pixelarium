@@ -3,7 +3,8 @@ import cookiesOptions from "../const/readonly/cookiesOptions";
 
 export default function generateTokenResponseCookie(
   res: Response,
-  refreshToken: string
+  refreshToken: string,
+  name: string
 ) {
   const sessionTokenCookiesMaxAge: number = 24 * 60 * 60 * 1000;
 
@@ -13,4 +14,5 @@ export default function generateTokenResponseCookie(
   });
 
   res.cookie("logged_in", "yes", cookiesOptions);
+  res.cookie("logged_as", name, cookiesOptions);
 }

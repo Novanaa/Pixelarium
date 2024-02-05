@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { HeadingOne } from "@/components/ui/Typographies/Heading";
 import Paragraph from "@/components/ui/Typographies/Paragraph";
@@ -16,25 +16,16 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import isLoggedIn from "@/services/isLoggedIn";
 import Container from "@/components/ui/Container";
 
 function Hero(): React.ReactElement {
-  const [isLogin, setIsLogin] = useState<boolean>();
   const router: AppRouterInstance = useRouter();
   const { theme }: UseThemeProps = useTheme();
 
   const pixelariumLogoSrc: string = getLogoSource(theme!);
-  const startUploadPushEndpoint: string = isLogin
-    ? "/dashboard"
-    : "/auth/login";
 
   const dummyImageSrc: string =
     "https://fastly.picsum.photos/id/551/1150/550.jpg?hmac=TZ-b_30y68kxg-3nHZgKeCvZckpTYvFSDMk8qQBPPZ4";
-
-  useEffect(() => {
-    isLoggedIn().then((state) => setIsLogin(state));
-  });
 
   return (
     <Container>
@@ -64,7 +55,7 @@ function Hero(): React.ReactElement {
           <div className="flex gap-3">
             <Button
               className="font-semibold"
-              onClick={() => router.push(startUploadPushEndpoint)}
+              onClick={() => router.push("/auth/login")}
             >
               <RocketIcon className="mr-2 h-4 w-4" />
               Start Upload
