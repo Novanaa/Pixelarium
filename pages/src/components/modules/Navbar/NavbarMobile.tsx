@@ -13,7 +13,6 @@ import { jakartaSans } from "@/configs/fonts";
 import {
   AvatarIcon,
   GitHubLogoIcon,
-  HomeIcon,
   MoonIcon,
   ReloadIcon,
   SunIcon,
@@ -88,7 +87,7 @@ function NavbarMobile({
                   </>
                 ) : (
                   <>
-                    <HomeIcon className="mr-2 h-4 w-4" /> Dashboard
+                    <AvatarIcon className="mr-2 h-4 w-4" /> Profile
                   </>
                 )}
               </Button>
