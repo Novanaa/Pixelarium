@@ -1,21 +1,22 @@
-import axios, { AxiosResponse } from "axios";
-import apiUrlEndpoint from "@/constant/readonly/apiUrlEndpoint";
-import User from "@/interfaces/types/User";
-import getUsername from "@/utils/getUsername";
+import getCookiesData from "@/utils/getCookiesData";
+import CookiesData from "@/interfaces/types/Cookies";
+import { jwtDecode } from "jwt-decode";
+import DecodedUser from "@/interfaces/types/DecodedUser";
 
 /**
  * Retrieves user data from the API based on the provided name.
  *
  * @returns A Promise that resolves to the user data if successful, or null if an error occurs.
  */
-export default async function getUserData(): Promise<User | null> {
+export default async function getUserData(): Promise<DecodedUser | null> {
   try {
-    const name: Awaited<string> = await getUsername();
-    const user: Awaited<AxiosResponse> = await axios.get(
-      `${apiUrlEndpoint}/v1/users/${name}`,
-    );
+    const cookiesData: Awaited<CookiesData> = await getCookiesData();
 
-    return user.data.user as User;
+    const decodedUser: DecodedUser = jwtDecode(cookiesData.cookies.session!, {
+      header: false,
+    });
+
+    return decodedUser;
   } catch (err) {
     return null;
   }
