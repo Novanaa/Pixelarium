@@ -23,10 +23,10 @@ function Error({ error, reset }: ErrorProps) {
       : "/img/icons/pixelarium-dark.png";
 
   return (
-    <section className="flex h-screen w-full flex-col items-center justify-center gap-5 text-center">
+    <section className="flex h-screen w-full flex-col items-center justify-center gap-5 text-center @container">
       <Image width={70} height={70} alt="Pixelarium" src={iconsImageSrc} />
       <HeadingOne>Unexpected Errors Occurred!</HeadingOne>
-      <Paragraph className="w-[80%]">
+      <Paragraph className="w-[90%] @5xl:w-[60%]">
         {!error.message
           ? "An unexpected error has occurred, preventing the successful execution of the requested operation. Please try again later or contact our support team for further assistance."
           : error.message}
