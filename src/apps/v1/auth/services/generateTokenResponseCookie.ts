@@ -6,13 +6,19 @@ export default function generateTokenResponseCookie(
   refreshToken: string,
   name: string
 ) {
-  const sessionTokenCookiesMaxAge: number = 24 * 60 * 60 * 1000;
+  const sessionTokenCookiesMaxAge: number = 15 * 24 * 60 * 60 * 1000;
 
   res.cookie("session", refreshToken, {
     ...cookiesOptions,
     maxAge: sessionTokenCookiesMaxAge,
   });
 
-  res.cookie("logged_in", "yes", cookiesOptions);
-  res.cookie("logged_as", name, cookiesOptions);
+  res.cookie("logged_in", "yes", {
+    ...cookiesOptions,
+    maxAge: sessionTokenCookiesMaxAge,
+  });
+  res.cookie("logged_as", name, {
+    ...cookiesOptions,
+    maxAge: sessionTokenCookiesMaxAge,
+  });
 }
