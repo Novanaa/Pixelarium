@@ -5,6 +5,7 @@ import { jakartaSans } from "@/configs/fonts";
 import { ThemeProvider } from "@/lib/ThemesProvider";
 import ReduxProvider from "@/stores/Provider";
 import Footer from "@/components/modules/Footer";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Pixelarium",
@@ -16,6 +17,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname: string | null = headers().get("x-pathname");
+
   return (
     <html lang="en" className="selection:bg-primary selection:text-secondary">
       <body className={jakartaSans.variable}>
@@ -28,7 +31,7 @@ export default function RootLayout({
           >
             <Navbar />
             <main>{children}</main>
-            <Footer />
+            {pathname?.startsWith("/developers") ? null : <Footer />}
           </ThemeProvider>
         </ReduxProvider>
       </body>
