@@ -24,6 +24,7 @@ import type PictureProfileSidebarProps from "@/components/interfaces/types/Pictu
 import getUserSubscriptionStatus, {
   GetUserSubscriptionStatusReturnType,
 } from "@/services/getUserSubscriptionStatus";
+import PictureProfileSidebarMenuLinksProps from "@/components/interfaces/types/PictureProfileSidebarMenuLinksProps";
 
 export default function PictureProfileSidebar({
   isOpen,
@@ -74,7 +75,7 @@ export default function PictureProfileSidebar({
           </SheetHeader>
           <PictureProfileSidebarSubscriptionStatus />
           <div className="mt-1 h-1 w-full border-b"></div>
-          <PictureProfileSidebarMenuLinks />
+          <PictureProfileSidebarMenuLinks setIsOpen={setIsOpen} />
         </SheetContent>
       </Sheet>
     </main>
@@ -105,7 +106,9 @@ function PictureProfileSidebarSubscriptionStatus(): React.ReactElement {
   );
 }
 
-function PictureProfileSidebarMenuLinks(): React.ReactElement {
+function PictureProfileSidebarMenuLinks({
+  setIsOpen,
+}: PictureProfileSidebarMenuLinksProps): React.ReactElement {
   return (
     <div
       className={cn(
@@ -114,7 +117,8 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
       )}
     >
       <Link
-        href="/"
+        href="/profile"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "h-8 w-full justify-start text-center font-semibold",
@@ -125,6 +129,7 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
       </Link>
       <Link
         href="/"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "h-8 w-full justify-start text-center font-semibold",
@@ -136,6 +141,7 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
       <div className="h-1 w-full border-b py-[0.15rem]"></div>
       <Link
         href="/"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "relative mt-[0.2rem] h-8 w-full justify-start text-center font-semibold",
@@ -146,6 +152,7 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
       </Link>
       <Link
         href="/"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "h-8 w-full justify-start text-center font-semibold",
@@ -156,6 +163,7 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
       </Link>
       <Link
         href="/"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "h-8 w-full justify-start text-center font-semibold",
@@ -165,7 +173,8 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
         Upload
       </Link>
       <Link
-        href="/"
+        href="/pricing"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "h-8 w-full justify-start text-center font-semibold",
@@ -176,7 +185,8 @@ function PictureProfileSidebarMenuLinks(): React.ReactElement {
       </Link>
       <div className="h-1 w-full border-b py-[0.15rem]"></div>
       <Link
-        href="/"
+        href="/auth/logout"
+        onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
           "mt-[0.2rem] h-8 w-full justify-start text-center font-semibold",

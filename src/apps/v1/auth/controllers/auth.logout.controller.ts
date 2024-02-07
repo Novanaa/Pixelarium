@@ -10,7 +10,6 @@ import { TDecodedUser } from "../interfaces/types/DecodedUserTypes";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import http from "../../../../const/readonly/httpStatusCode";
-import cookiesOptions from "../const/readonly/cookiesOptions";
 import client from "../../../../libs/configs/prisma";
 
 export default async function logout(
@@ -40,9 +39,8 @@ export default async function logout(
     delete user.email;
 
     if (session) res.clearCookie("session");
-    if (logged_as) res.clearCookie("logged_in");
-
-    if (logged_in) res.cookie("logged_in", false, cookiesOptions);
+    if (logged_as) res.clearCookie("logged_as");
+    if (logged_in) res.clearCookie("logged_in");
 
     return jsonResult<UserWithOptionalChaining>({
       response: res,
