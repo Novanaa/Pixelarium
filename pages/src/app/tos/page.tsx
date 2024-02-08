@@ -14,7 +14,7 @@ async function TermOfServices() {
     "./src/app/tos/index.mdx",
   );
 
-  return <MDX mdxContent={loadMDXContent} />;
+  return <MDX mdxContent={loadMDXContent} className="prose-h1:text-center" />;
 }
 
 export default TermOfServices;

@@ -10,10 +10,11 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import { VFile } from "vfile";
+import type FrontMatter from "@/interfaces/types/FrontMatter";
 
 export interface RenderMDXReturnType {
   loadMDXContent: string;
-  frontMatter: unknown;
+  frontMatter: FrontMatter;
 }
 
 export default async function renderMDX(
@@ -40,5 +41,8 @@ export default async function renderMDX(
     .use(rehypeAutolinkHeadings)
     .process(content);
 
-  return { frontMatter, loadMDXContent: String(loadMdxContent.value) };
+  return {
+    frontMatter: frontMatter as FrontMatter,
+    loadMDXContent: String(loadMdxContent.value),
+  };
 }

@@ -12,8 +12,8 @@ import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
 export default function DevelopersDocsSidebar(): React.ReactElement {
   return (
     <>
-      <section className="@container">
-        <div className="invisible fixed flex h-[90vh] flex-col gap-6 overflow-y-scroll py-[2rem] pr-7 opacity-90 md:visible">
+      <section className="invisible fixed z-30 h-[90vh] overflow-y-scroll py-[2rem] pr-7 opacity-90 lg:visible">
+        <div className="flex flex-col gap-6">
           <DevelopersDocsSidebarSearchInput />
           <div className="mt-0 h-1 w-full border-b"></div>
           <DevelopersDocsSidebarContent />
