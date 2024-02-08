@@ -31,24 +31,31 @@ export default function DevelopersDocsSidebarMobile(): React.ReactElement {
 
 function DevelopersDocsSidebarMobileNavigationMenu() {
   const dispatch: AppDispatch = useDispatch();
+
+  const bluryBackground: string =
+    "bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
+
   return (
-    <Container
+    <main
       className={cn(
-        "relative top-[3.5rem] flex w-full items-center justify-between border-b py-1 md:hidden",
+        "fixed top-[3.5rem] z-20 mx-auto w-full border-b bg-[var(--border)] py-1 lg:hidden",
+        bluryBackground,
       )}
     >
-      <div
-        onClick={() => dispatch(setSidebarIsOpenState(true))}
-        className={cn("flex h-0 items-center", navigationMenuTriggerStyle())}
-      >
-        <DoubleArrowRightIcon className="mr-2 h-4 w-4" />
-        <span className="font-medium">Menu</span>
-      </div>
-      <MagnifyingGlassIcon
-        onClick={() => dispatch(setSidebarSearchIsOpenState(true))}
-        className={cn("h-4 w-4", navigationMenuTriggerStyle())}
-      />
-    </Container>
+      <Container className="flex items-center justify-between">
+        <div
+          onClick={() => dispatch(setSidebarIsOpenState(true))}
+          className={cn("flex h-0 items-center", navigationMenuTriggerStyle())}
+        >
+          <DoubleArrowRightIcon className="mr-2 h-4 w-4" />
+          <span className="font-medium">Menu</span>
+        </div>
+        <MagnifyingGlassIcon
+          onClick={() => dispatch(setSidebarSearchIsOpenState(true))}
+          className={cn("h-4 w-4", navigationMenuTriggerStyle())}
+        />
+      </Container>
+    </main>
   );
 }
 
