@@ -2,10 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface SidebarState {
   isSidebarOpen: boolean;
+  isSidebarSearchOpen: boolean;
 }
 
 const sidebarInitialState: SidebarState = {
   isSidebarOpen: false,
+  isSidebarSearchOpen: false,
 };
 
 const sidebarSlice = createSlice({
@@ -18,10 +20,20 @@ const sidebarSlice = createSlice({
     setSidebarIsOpenState: (state, action: PayloadAction<boolean>) => {
       state.isSidebarOpen = action.payload;
     },
+    getSidebarSearchIsOpenState: (state) => {
+      return state;
+    },
+    setSidebarSearchIsOpenState: (state, action: PayloadAction<boolean>) => {
+      state.isSidebarSearchOpen = action.payload;
+    },
   },
 });
 
-export const { getSidebarIsOpenState, setSidebarIsOpenState } =
-  sidebarSlice.actions;
+export const {
+  getSidebarIsOpenState,
+  setSidebarIsOpenState,
+  getSidebarSearchIsOpenState,
+  setSidebarSearchIsOpenState,
+} = sidebarSlice.actions;
 
 export default sidebarSlice.reducer;
