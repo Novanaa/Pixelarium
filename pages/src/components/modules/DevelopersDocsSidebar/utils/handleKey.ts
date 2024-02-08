@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/stores";
-import { setSidebarIsOpenState } from "@/stores/reducers/docsSidebar";
+import {  setSidebarSearchIsOpenState } from "@/stores/reducers/docsSidebar";
 
 interface HandleKeyProps {
   ev: KeyboardEvent;
@@ -17,10 +17,10 @@ interface HandleKeyProps {
 export default function handleKey({ dispatch, ev }: HandleKeyProps): void {
   if (ev.key == "/") {
     ev.preventDefault();
-    dispatch(setSidebarIsOpenState(true));
+    dispatch(setSidebarSearchIsOpenState(true));
   }
   if (ev.key == "Escape") {
     ev.preventDefault();
-    dispatch(setSidebarIsOpenState(false));
+    dispatch(setSidebarSearchIsOpenState(false));
   }
 }
