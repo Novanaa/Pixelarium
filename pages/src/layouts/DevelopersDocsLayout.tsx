@@ -1,7 +1,7 @@
 import ReactNodeChild from "@/components/interfaces/types/ReactNodeChild";
 import DevelopersDocsSidebar from "@/components/modules/DevelopersDocsSidebar";
 import DevelopersDocsSidebarMobile from "@/components/modules/DevelopersDocsSidebar/DevelopersDocsSidebarMobile";
-import Next from "@/components/modules/DevelopersDocsSidebar/Next";
+import Next from "@/components/modules/DevelopersDocsContents/Next";
 import Search from "@/components/modules/DevelopersDocsSidebar/Search";
 import React from "react";
 
