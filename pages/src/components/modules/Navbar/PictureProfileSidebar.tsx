@@ -43,12 +43,7 @@ export default function PictureProfileSidebar({
 
   return (
     <main className="absolute @container">
-      <Sheet
-        onOpenChange={() => setIsOpen(false)}
-        open={isOpen}
-        defaultOpen={false}
-        modal={false}
-      >
+      <Sheet onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)} open={isOpen}>
         <SheetContent className="rounded-md border lg:w-[20.5rem]">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">

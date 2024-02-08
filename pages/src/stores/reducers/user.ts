@@ -1,23 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface UserInitialState {
-  isLogin: boolean;
+interface UserState {
+  isProfileSidebarOpen: boolean;
 }
 
-const userInitialState: UserInitialState = {
-  isLogin: false,
+const userInitialState: UserState = {
+  isProfileSidebarOpen: false,
 };
 
 const user = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    getUserLoginStatus(state: UserInitialState): UserInitialState {
+    getIsProfileSidebarOpenState: (state) => {
       return state;
+    },
+    setIsProfileSidebarOpenState: (state, action: PayloadAction<boolean>) => {
+      state.isProfileSidebarOpen = action.payload;
     },
   },
 });
 
-export const { getUserLoginStatus } = user.actions;
+export const { getIsProfileSidebarOpenState, setIsProfileSidebarOpenState } =
+  user.actions;
 
 export default user.reducer;
