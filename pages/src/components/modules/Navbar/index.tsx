@@ -50,7 +50,7 @@ function Navbar() {
   }, []);
 
   const bluryBackground: string =
-    "bg-secondary rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
+    "bg-secondary bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
 
   return (
     <>
