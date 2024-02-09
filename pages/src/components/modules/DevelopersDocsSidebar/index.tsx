@@ -2,12 +2,13 @@
 
 import { HeadingFour } from "@/components/ui/Typographies/Heading";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/stores";
 import { setSidebarSearchIsOpenState } from "@/stores/reducers/docsSidebar";
 import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
+import { cn } from "@/lib/utils";
 
 export default function DevelopersDocsSidebar(): React.ReactElement {
   return (
@@ -44,17 +45,33 @@ function DevelopersDocsSidebarSearchInput(): React.ReactElement {
 }
 
 function DevelopersDocsSidebarContent(): Array<React.ReactElement> {
+  const [pathname, setPathname] = useState<string>("");
+
+  useEffect(() => {
+    const locationPathname: string = window.location.pathname;
+    setPathname(locationPathname);
+
+    return () => setPathname("");
+  }, []);
+
   return dummyData.map((d, i) => {
     return (
       <div className="flex flex-col gap-3" key={i}>
         <HeadingFour className="font-semibold">{d.title}</HeadingFour>
         <div className="flex flex-col items-start justify-start gap-3 font-medium">
           {d.items.map((i, ind) => {
+            const hrefLink: string = i.url;
+            const activeLink: string =
+              hrefLink == pathname ? "text-primary/95 underline" : "";
+
             return (
               <Link
-                href={i.url}
+                href={hrefLink}
                 key={ind}
-                className="text-primary/70 underline-offset-4 hover:text-primary/95 hover:underline"
+                className={cn(
+                  "text-primary/70 underline-offset-4 hover:text-primary/95 hover:underline",
+                  activeLink,
+                )}
               >
                 {i.title}
               </Link>
