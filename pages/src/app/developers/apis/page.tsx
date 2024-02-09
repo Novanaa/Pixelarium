@@ -4,7 +4,7 @@ import DevelopersDocsLayout from "@/layouts/DevelopersDocsLayout";
 import React from "react";
 import { Metadata } from "next";
 
-const { loadMDXContent, frontMatter }: Awaited<RenderMDXReturnType> =
+const { loadMDXContent, frontMatter, toc }: Awaited<RenderMDXReturnType> =
   await renderMDX("./src/app/developers/apis/index.mdx");
 
 export const metadata: Metadata = {
@@ -15,10 +15,7 @@ export const metadata: Metadata = {
 export default async function DevelopersAPISDocs(): Promise<React.ReactElement> {
   return (
     <>
-      <DevelopersDocsLayout
-        nextTitle={frontMatter.next.title}
-        nextLink={frontMatter.next.link}
-      >
+      <DevelopersDocsLayout frontMatter={frontMatter} toc={toc}>
         <MDX mdxContent={loadMDXContent} />
       </DevelopersDocsLayout>
     </>

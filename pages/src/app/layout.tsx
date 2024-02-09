@@ -20,7 +20,10 @@ export default function RootLayout({
   const pathname: string | null = headers().get("x-pathname");
 
   return (
-    <html lang="en" className="selection:bg-primary selection:text-secondary">
+    <html
+      lang="en"
+      className="scroll-pt-20 scroll-smooth selection:bg-primary selection:text-secondary"
+    >
       <body className={jakartaSans.variable}>
         <ReduxProvider>
           <ThemeProvider

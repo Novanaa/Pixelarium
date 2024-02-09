@@ -3,17 +3,20 @@ import DevelopersDocsSidebar from "@/components/modules/DevelopersDocsSidebar";
 import DevelopersDocsSidebarMobile from "@/components/modules/DevelopersDocsSidebar/DevelopersDocsSidebarMobile";
 import Next from "@/components/modules/DevelopersDocsContents/Next";
 import Search from "@/components/modules/DevelopersDocsSidebar/Search";
+import TableOfContents from "@/components/modules/toc";
 import React from "react";
+import FrontMatter from "@/interfaces/types/FrontMatter";
+import type TocElementData from "@/interfaces/types/Toc";
 
 interface DevelopersDocsLayoutProps extends ReactNodeChild {
-  nextTitle: string;
-  nextLink: string;
+  frontMatter: FrontMatter;
+  toc: Array<TocElementData>;
 }
 
 export default function DevelopersDocsLayout({
   children,
-  nextLink,
-  nextTitle,
+  frontMatter,
+  toc,
 }: DevelopersDocsLayoutProps): React.ReactElement {
   return (
     <>
@@ -23,9 +26,10 @@ export default function DevelopersDocsLayout({
         <div className="relative">
           <DevelopersDocsSidebar />
         </div>
-        <section className="relative -mt-[2rem] w-full md:-mt-[3rem] lg:left-[16rem] lg:-mt-[5rem] lg:w-[65%] xl:left-[14.5rem] 2xl:left-[12rem]">
+        <section className="relative -mt-[2rem] w-full md:-mt-[3rem] lg:left-[16rem] lg:-mt-[5rem] lg:w-[60%] xl:left-[14.5rem] xl:w-[65%] 2xl:left-[12rem] 2xl:w-[80%]">
           {children}
-          <Next title={nextTitle} link={nextLink} />
+          <Next title={frontMatter.next.title} link={frontMatter.next.link} />
+          <TableOfContents toc={toc} />
         </section>
       </main>
     </>

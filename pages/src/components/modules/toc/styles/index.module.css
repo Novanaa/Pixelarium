@@ -1,0 +1,17 @@
+@media screen and (min-width: 1120px) {
+  .container {
+    right: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .container {
+    right: 4rem;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  .container {
+    right: 7rem;
+  }
+}
