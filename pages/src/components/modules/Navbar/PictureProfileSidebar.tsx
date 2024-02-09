@@ -19,7 +19,7 @@ import {
   RocketIcon,
 } from "@radix-ui/react-icons";
 import { jakartaSans } from "@/configs/fonts";
-import { HiFire, HiHeart, HiSparkles } from "react-icons/hi";
+import { HiCash, HiFire, HiHeart, HiSparkles } from "react-icons/hi";
 import type PictureProfileSidebarProps from "@/components/interfaces/types/PictureProfileSidebarProps";
 import getUserSubscriptionStatus, {
   GetUserSubscriptionStatusReturnType,
@@ -43,7 +43,10 @@ export default function PictureProfileSidebar({
 
   return (
     <main className="absolute @container">
-      <Sheet onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)} open={isOpen}>
+      <Sheet
+        onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)}
+        open={isOpen}
+      >
         <SheetContent className="rounded-md border lg:w-[20.5rem]">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
@@ -132,6 +135,17 @@ function PictureProfileSidebarMenuLinks({
       >
         <GearIcon className="mr-2 h-5 w-5" />
         Settings
+      </Link>
+      <Link
+        href="/payments/history"
+        onClick={() => setIsOpen(false)}
+        className={cn(
+          navigationMenuTriggerStyle(),
+          "h-8 w-full justify-start text-center font-semibold",
+        )}
+      >
+        <HiCash className="mr-2 h-5 w-5" />
+        Payment History
       </Link>
       <div className="h-1 w-full border-b py-[0.15rem]"></div>
       <Link
