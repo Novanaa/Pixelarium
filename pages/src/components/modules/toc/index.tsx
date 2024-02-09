@@ -9,12 +9,10 @@ import { titleCase } from "title-case";
 import Link from "next/link";
 
 interface TableOfContentsProps extends React.ComponentProps<"div"> {
-  contents: Array<string>;
   toc: Array<TocElementData>;
 }
 
 export default function TableOfContents({
-  contents,
   toc,
 }: TableOfContentsProps): React.ReactElement {
   return (
@@ -25,7 +23,7 @@ export default function TableOfContents({
       )}
     >
       <TableOfContentsHeader />
-      <TableOfContentsMenuLinks contents={contents} toc={toc} />
+      <TableOfContentsMenuLinks toc={toc} />
     </section>
   );
 }
