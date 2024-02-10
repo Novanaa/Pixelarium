@@ -14,6 +14,7 @@ import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import cn from "@/utils/cn";
 import {
   AvatarIcon,
+  BookmarkFilledIcon,
   CameraIcon,
   GearIcon,
   RocketIcon,
@@ -126,7 +127,7 @@ function PictureProfileSidebarMenuLinks({
         Your Profile
       </Link>
       <Link
-        href="/"
+        href="/accounts/settings"
         onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
@@ -137,7 +138,7 @@ function PictureProfileSidebarMenuLinks({
         Settings
       </Link>
       <Link
-        href="/payments/history"
+        href="/accounts/payment/history"
         onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
@@ -149,7 +150,7 @@ function PictureProfileSidebarMenuLinks({
       </Link>
       <div className="h-1 w-full border-b py-[0.15rem]"></div>
       <Link
-        href="/"
+        href="/profile/user?tabActive=gallery"
         onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
@@ -160,7 +161,7 @@ function PictureProfileSidebarMenuLinks({
         Gallery
       </Link>
       <Link
-        href="/"
+        href="/profile/user?tabActive=albums"
         onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
@@ -171,7 +172,7 @@ function PictureProfileSidebarMenuLinks({
         Albums
       </Link>
       <Link
-        href="/"
+        href="/profile/user?active=upload"
         onClick={() => setIsOpen(false)}
         className={cn(
           navigationMenuTriggerStyle(),
@@ -180,6 +181,17 @@ function PictureProfileSidebarMenuLinks({
       >
         <RocketIcon className="mr-2 h-5 w-5" />
         Upload
+      </Link>
+      <Link
+        href="/profile/user?tabActive=favorites"
+        onClick={() => setIsOpen(false)}
+        className={cn(
+          navigationMenuTriggerStyle(),
+          "h-8 w-full justify-start text-center font-semibold",
+        )}
+      >
+        <BookmarkFilledIcon className="mr-2 h-5 w-5" />
+        Favorites
       </Link>
       <Link
         href="/pricing"
