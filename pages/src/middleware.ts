@@ -15,8 +15,6 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const queryParams: string = req.nextUrl.search;
   const parsedQuery: ParsedQuery<string> = queryString.parse(queryParams);
   const tabActive: string = String(parsedQuery.tabActive);
-  const requestHeaders = new Headers(req.headers);
-  requestHeaders.set("x-pathname", nextUrlPathname);
 
   if (nextUrlPathname.startsWith("/auth")) {
     if (nextUrlPathname.startsWith("/auth/login")) {
@@ -67,11 +65,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
+  return NextResponse.next();
 }
 
 export const config = {
