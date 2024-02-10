@@ -3,9 +3,15 @@
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import cn from "@/utils/cn";
 import React from "react";
+import { Skeleton } from "./skeleton";
 
 interface UserAvatarProps extends React.ComponentProps<"img"> {
   user: DecodedUser | null;
+  options?: Partial<UserAvatarPropsOptions>;
+}
+
+interface UserAvatarPropsOptions {
+  lazyLoading: boolean;
 }
 
 /**
@@ -19,16 +25,28 @@ interface UserAvatarProps extends React.ComponentProps<"img"> {
 export default function UserAvatar({
   user,
   className,
+  options,
 }: UserAvatarProps): React.ReactElement {
   return (
-    <picture>
-      <img
-        width={15}
-        height={15}
-        alt={`@${user?.name}`}
-        src={user?.picture}
-        className={cn("h-10 w-10 rounded-full border", className)}
-      />
-    </picture>
+    <>
+      {options?.lazyLoading && !user ? (
+        <Skeleton
+          className={cn(
+            "h-[1.85rem] w-[1.85rem] rounded-full border",
+            className,
+          )}
+        />
+      ) : (
+        <picture>
+          <img
+            width={15}
+            height={15}
+            alt={`@${user?.name}`}
+            src={user?.picture}
+            className={cn("h-10 w-10 rounded-full border", className)}
+          />
+        </picture>
+      )}
+    </>
   );
 }
