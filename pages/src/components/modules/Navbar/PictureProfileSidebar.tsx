@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import Paragraph from "@/components/ui/Typographies/Paragraph";
-import Link from "next/link";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import cn from "@/utils/cn";
 import {
@@ -115,7 +114,7 @@ function PictureProfileSidebarMenuLinks({
         jakartaSans.className,
       )}
     >
-      <Link
+      <a
         href="/profile"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -125,8 +124,8 @@ function PictureProfileSidebarMenuLinks({
       >
         <AvatarIcon className="mr-2 h-5 w-5" />
         Your Profile
-      </Link>
-      <Link
+      </a>
+      <a
         href="/accounts/settings"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -136,8 +135,8 @@ function PictureProfileSidebarMenuLinks({
       >
         <GearIcon className="mr-2 h-5 w-5" />
         Settings
-      </Link>
-      <Link
+      </a>
+      <a
         href="/accounts/payment/history"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -147,9 +146,9 @@ function PictureProfileSidebarMenuLinks({
       >
         <HiCash className="mr-2 h-5 w-5" />
         Payment History
-      </Link>
+      </a>
       <div className="h-1 w-full border-b py-[0.15rem]"></div>
-      <Link
+      <a
         href="/profile/user?tabActive=gallery"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -159,8 +158,8 @@ function PictureProfileSidebarMenuLinks({
       >
         <HiSparkles className="mr-2 h-5 w-5" />
         Gallery
-      </Link>
-      <Link
+      </a>
+      <a
         href="/profile/user?tabActive=albums"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -170,8 +169,8 @@ function PictureProfileSidebarMenuLinks({
       >
         <CameraIcon className="mr-2 h-5 w-5" />
         Albums
-      </Link>
-      <Link
+      </a>
+      <a
         href="/profile/user?active=upload"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -181,8 +180,8 @@ function PictureProfileSidebarMenuLinks({
       >
         <RocketIcon className="mr-2 h-5 w-5" />
         Upload
-      </Link>
-      <Link
+      </a>
+      <a
         href="/profile/user?tabActive=favorites"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -192,8 +191,8 @@ function PictureProfileSidebarMenuLinks({
       >
         <BookmarkFilledIcon className="mr-2 h-5 w-5" />
         Favorites
-      </Link>
-      <Link
+      </a>
+      <a
         href="/pricing"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -203,9 +202,9 @@ function PictureProfileSidebarMenuLinks({
       >
         <HiHeart className="mr-2 h-5 w-5" />
         Upgrade
-      </Link>
+      </a>
       <div className="h-1 w-full border-b py-[0.15rem]"></div>
-      <Link
+      <a
         href="/auth/logout"
         onClick={() => setIsOpen(false)}
         className={cn(
@@ -215,7 +214,7 @@ function PictureProfileSidebarMenuLinks({
       >
         <AvatarIcon className="mr-2 h-5 w-5" />
         Logout
-      </Link>
+      </a>
     </div>
   );
 }
