@@ -38,9 +38,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {navbarComponentValidation ? null : <Navbar />}
+            {!navbarComponentValidation ? <Navbar /> : null}
             <main>{children}</main>
-            {footerComponentValidation ? null : <Footer />}
+            {!footerComponentValidation ? <Footer /> : null}
           </ThemeProvider>
         </ReduxProvider>
       </body>
