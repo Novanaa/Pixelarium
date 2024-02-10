@@ -18,6 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname: string | null = headers().get("x-pathname");
+  const footerComponentValidation: boolean | undefined =
+    pathname?.startsWith("/developers");
+  console.log(pathname);
+  const navbarComponentValidation: boolean | undefined =
+    pathname?.startsWith("/profile") ||
+    pathname?.startsWith("/accounts/settings") ||
+    pathname?.startsWith("/accounts/payment/history");
 
   return (
     <html
@@ -32,9 +39,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
+            {navbarComponentValidation ? null : <Navbar />}
             <main>{children}</main>
-            {pathname?.startsWith("/developers") ? null : <Footer />}
+            {footerComponentValidation ? null : <Footer />}
           </ThemeProvider>
         </ReduxProvider>
       </body>
