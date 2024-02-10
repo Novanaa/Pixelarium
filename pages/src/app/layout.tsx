@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import Navbar from "@/components/modules/Navbar";
 import { jakartaSans } from "@/configs/fonts";
 import { ThemeProvider } from "@/lib/ThemesProvider";
 import ReduxProvider from "@/stores/Provider";
-import Footer from "@/components/modules/Footer";
-import { headers } from "next/headers";
+import RootLayoutChild from "@/layouts/RootLayoutChild";
 
 export const metadata: Metadata = {
   title: "Pixelarium",
@@ -17,8 +15,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname: string | null = headers().get("x-pathname");
-
   return (
     <html
       lang="en"
@@ -32,9 +28,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <main>{children}</main>
-            {pathname?.startsWith("/developers") ? null : <Footer />}
+            <RootLayoutChild>{children}</RootLayoutChild>
           </ThemeProvider>
         </ReduxProvider>
       </body>
