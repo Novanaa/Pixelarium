@@ -20,7 +20,6 @@ export default function RootLayout({
   const pathname: string | null = headers().get("x-pathname");
   const footerComponentValidation: boolean | undefined =
     pathname?.startsWith("/developers");
-  console.log(pathname);
   const navbarComponentValidation: boolean | undefined =
     pathname?.startsWith("/profile") ||
     pathname?.startsWith("/accounts/settings") ||
