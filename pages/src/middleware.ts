@@ -80,6 +80,7 @@ export const config = {
     "/auth/(.*)",
     "/developers/(.*)",
     "/accounts/payment/history",
+    "/accounts/settings",
     "/accounts/settings/(.*)",
   ],
 };
