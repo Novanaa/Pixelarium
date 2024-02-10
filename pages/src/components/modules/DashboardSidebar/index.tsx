@@ -29,6 +29,12 @@ import {
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 import DashboardSidebarMenuLinkProps from "@/components/interfaces/types/DashboardSidebarMenuLinkProps";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function DashboardSidebar(): React.ReactElement {
   return (
@@ -177,12 +183,24 @@ function DashboardSidebarMenuLink({
     "group inline-flex h-12 w-fit pl-[0.6rem] lg:pl-[0rem] right-[0.6rem] relative lg:right-[0rem] lg:w-[90%] items-center rounded-md lg:px-[0.6rem] py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50";
 
   return (
-    <Link href={link} className={cn("flex items-center", menuLinksHoverStyle)}>
-      {Icon}
-      <Paragraph className="hidden text-[1.05rem] font-medium lg:block">
-        {title}
-      </Paragraph>
-    </Link>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link
+            href={link}
+            className={cn("flex items-center", menuLinksHoverStyle)}
+          >
+            {Icon}
+            <Paragraph className="hidden text-[1.05rem] font-medium lg:block">
+              {title}
+            </Paragraph>
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{title}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -195,13 +213,22 @@ function DashboardSidebarMoreOptionsLink({
     "group inline-flex h-10 w-[95%] items-center rounded-md px-[0.6rem] py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50";
 
   return (
-    <Link
-      href={link}
-      className={cn("flex items-center", menuLinkListsHoverStyle)}
-    >
-      {Icon}
-      <Paragraph className="text-[1rem] font-medium">{title}</Paragraph>
-    </Link>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link
+            href={link}
+            className={cn("flex items-center", menuLinkListsHoverStyle)}
+          >
+            {Icon}
+            <Paragraph className="text-[1rem] font-medium">{title}</Paragraph>
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{title}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -216,29 +243,49 @@ function DashboardSidebarMenuLinksMoreOptionsThemes(): React.ReactElement {
   return (
     <div className="relative mt-3 flex flex-col justify-center gap-2 pl-[0.6rem]">
       {theme == "light" ? (
-        <div
-          onClick={() => setTheme("dark")}
-          className={cn(
-            "flex cursor-pointer items-center",
-            menuLinkListsHoverStyle,
-          )}
-        >
-          <MoonIcon className={iconStyle} />
-          <Paragraph className="text-[1rem] font-medium">Dark Themes</Paragraph>
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                onClick={() => setTheme("dark")}
+                className={cn(
+                  "flex cursor-pointer items-center",
+                  menuLinkListsHoverStyle,
+                )}
+              >
+                <MoonIcon className={iconStyle} />
+                <Paragraph className="text-[1rem] font-medium">
+                  Dark Themes
+                </Paragraph>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Dark Themes</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       ) : (
-        <div
-          onClick={() => setTheme("light")}
-          className={cn(
-            "flex cursor-pointer items-center",
-            menuLinkListsHoverStyle,
-          )}
-        >
-          <SunIcon className={iconStyle} />
-          <Paragraph className="text-[1rem] font-medium">
-            Light Themes
-          </Paragraph>
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                onClick={() => setTheme("light")}
+                className={cn(
+                  "flex cursor-pointer items-center",
+                  menuLinkListsHoverStyle,
+                )}
+              >
+                <SunIcon className={iconStyle} />
+                <Paragraph className="text-[1rem] font-medium">
+                  Light Themes
+                </Paragraph>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Light Themes</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
       <DashboardSidebarMoreOptionsLink
         title="Logout"
