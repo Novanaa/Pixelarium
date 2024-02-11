@@ -7,6 +7,16 @@ const nextConfig = {
         hostname: "fastly.picsum.photos",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+      },
     ],
   },
   reactStrictMode: true,

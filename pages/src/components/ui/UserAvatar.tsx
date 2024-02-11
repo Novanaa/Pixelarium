@@ -4,6 +4,7 @@ import DecodedUser from "@/interfaces/types/DecodedUser";
 import cn from "@/utils/cn";
 import React from "react";
 import { Skeleton } from "./skeleton";
+import Image from "next/image";
 
 interface UserAvatarProps extends React.ComponentProps<"img"> {
   user: DecodedUser | null;
@@ -27,6 +28,10 @@ export default function UserAvatar({
   className,
   options,
 }: UserAvatarProps): React.ReactElement {
+  const imageAlt: string = "@".concat(user?.name || "John Doe");
+  const defaultUserAvatar: string = "https://i.ibb.co/vC9jN2s/IMG-mths7.jpg";
+  const pictureSrc: string = user?.picture || defaultUserAvatar;
+
   return (
     <>
       {options?.lazyLoading && !user ? (
@@ -37,15 +42,13 @@ export default function UserAvatar({
           )}
         />
       ) : (
-        <picture>
-          <img
-            width={15}
-            height={15}
-            alt={`@${user?.name}`}
-            src={user?.picture}
-            className={cn("h-10 w-10 rounded-full border", className)}
-          />
-        </picture>
+        <Image
+          width={15}
+          height={15}
+          alt={imageAlt}
+          src={pictureSrc}
+          className={cn("h-10 w-10 rounded-full border", className)}
+        />
       )}
     </>
   );
