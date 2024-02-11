@@ -20,10 +20,11 @@ import getUserSubscriptionStatus, {
 import { Skeleton } from "@/components/ui/skeleton";
 import capitalize from "capitalize";
 import moment from "moment";
+import PaymentDate from "@/components/interfaces/types/PaymentDate";
 
 export default function PaymentHistory(): React.ReactElement {
   return (
-    <main className="flex h-full w-[97%] flex-col gap-4 pt-12">
+    <main className="flex h-full w-full flex-col gap-4 pt-[6rem] @container sm:pl-8 sm:pt-12">
       <PaymentHistoryHeader />
       <PaymentHistoryCards />
     </main>
@@ -61,43 +62,75 @@ function PaymentHistoryHeader(): React.ReactElement {
 const subscriptionQuery: Promise<GetUserSubscriptionStatusReturnType | null> =
   getUserSubscriptionStatus();
 function PaymentHistoryCards(): React.ReactElement {
-  const [nextPaymentDate, setNextPaymentDate] = useState<string>("");
+  const [paymentDate, setPaymentDate] = useState<PaymentDate>({
+    endPaymentDate: "-",
+    nextPaymentDate: "-",
+    startPaymentDate: "-",
+  });
 
   const subscription: GetUserSubscriptionStatusReturnType | null =
     use(subscriptionQuery);
+
   const subscriptionNextPaymentDate: Date | undefined =
-    subscription?.status.next_payment_date;
+    subscription?.status.next_payments_date;
+  const subscriptionStartDate: Date | undefined =
+    subscription?.status.start_date;
 
   const isActivated: string =
-    subscription?.status.status == "active" ? "Activ" : "Inactive";
+    subscription?.status.status == "active" ? "Active" : "Inactive";
 
-  const userPlan: string = subscription?.status.plan
+  const userPlan: string = subscription?.status.plan as string;
+
+  const userPlanStatus: string = subscription?.status.plan
     ? capitalize(subscription?.status.plan as string)
     : (subscription?.status.plan as string);
 
   useEffect(() => {
-    if (!subscriptionNextPaymentDate) {
-      setNextPaymentDate("-");
-      return;
+    if (userPlan !== "none") {
+      const unixNextPaymentDate: number = new Date(
+        subscriptionNextPaymentDate!,
+      ).getTime();
+      const unixStartPaymentDate: number = new Date(
+        subscriptionStartDate!,
+      ).getTime();
+
+      const formattedNextPaymentDate: string =
+        moment(unixNextPaymentDate).format("LL");
+      const formattedStartDate: string =
+        moment(unixStartPaymentDate).format("LL");
+
+      setPaymentDate((prev) => ({
+        ...prev,
+        nextPaymentDate: formattedNextPaymentDate,
+        startPaymentDate: formattedStartDate,
+      }));
     }
 
-    const unixNextPaymentDate: number = new Date(
-      subscriptionNextPaymentDate,
-    ).getTime();
-    const formattedDate: string = moment(unixNextPaymentDate).format("LL");
-    console.log(formattedDate);
-  }, [subscriptionNextPaymentDate]);
+    return () =>
+      setPaymentDate({
+        endPaymentDate: "-",
+        nextPaymentDate: "-",
+        startPaymentDate: "-",
+      });
+  }, [subscriptionNextPaymentDate, userPlan, subscriptionStartDate]);
 
-  console.log(nextPaymentDate);
+  const subscriptionStatusDescription: string =
+    userPlan !== "none"
+      ? `You have been subscribed since ${paymentDate.startPaymentDate}`
+      : "You currently doesn't have any active subscriptions associated with your account.";
+  const subscriptionNextPaymentDateDescription: string =
+    userPlan !== "none"
+      ? `Your next payment date is ${paymentDate.nextPaymentDate}`
+      : "Subscribe to Pixelarium and see the new world";
 
   return (
-    <section className="relative mt-3 grid grid-cols-3 place-items-start justify-start">
+    <section className="relative mt-2 flex flex-wrap items-center justify-center gap-4 @xl:items-center @xl:justify-start">
       <PaymentHistoryCard
         subs={subscription?.status}
         Icon={<FiActivity className="h-[1.1rem] w-[1.1rem]" />}
         title="Subscription Status"
         tooltipContent="Your Subscription Status"
-        description="You have been subscribed since July 2022."
+        description={subscriptionStatusDescription}
         content={isActivated}
       />
       <PaymentHistoryCard
@@ -105,16 +138,16 @@ function PaymentHistoryCards(): React.ReactElement {
         Icon={<HiHeart className="h-[1.2rem] w-[1.2rem]" />}
         title="Your Plan"
         tooltipContent="Your Subscription Plan"
-        description="You have been subscribed since July 2022."
-        content={userPlan}
+        description={`Your current subscription plan is ${userPlan}`}
+        content={userPlanStatus}
       />
       <PaymentHistoryCard
         subs={subscription?.status}
         Icon={<HiCalendar className="h-[1.2rem] w-[1.2rem]" />}
         title="Next Payment Date"
         tooltipContent="Your Next Payment Date"
-        description="You have been subscribed since July 2022."
-        content={nextPaymentDate}
+        description={subscriptionNextPaymentDateDescription}
+        content={paymentDate.nextPaymentDate}
       />
     </section>
   );
@@ -131,9 +164,9 @@ function PaymentHistoryCard({
   return (
     <>
       {!subs ? (
-        <Skeleton className="h-[9.5rem] w-[21rem] rounded-lg " />
+        <Skeleton className="h-[10rem] w-[21rem] rounded-lg " />
       ) : (
-        <div className="flex h-[9.5rem] w-[21rem] cursor-pointer flex-col gap-1 rounded-lg border p-5 hover:bg-primary-foreground/50">
+        <div className="flex h-[10rem] w-[21rem] cursor-pointer flex-col gap-1 rounded-lg border p-5 hover:bg-primary-foreground/50">
           <div className="flex items-center justify-between">
             <HeadingFour>{title}</HeadingFour>
             <TooltipProvider>
