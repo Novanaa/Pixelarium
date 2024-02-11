@@ -25,6 +25,10 @@ import TransactionSecretData from "../interfaces/types/TransactionSecretData";
 import OrderedSubscriptionPlan from "../interfaces/types/OrderedSubscriptionPlan";
 import sendJsonResultHttpResponse from "../../../../services/sendJsonResultHttpResponse";
 import http from "../../../../const/readonly/httpStatusCode";
+import insertUserPaymentHistoryData, {
+  PaymentHistoryData,
+} from "../../payments-histories/services/insertUserPaymentHistoryData";
+import moment from "moment";
 
 type TokenizerResponseData = {
   request_from: UserWithOptionalChaining;
@@ -73,6 +77,7 @@ export default async function tokenizer(
     const getSubsPrice: number | null =
       getUserSubscriptionPrice(selectedUserPlan);
     const quantity: number = value.data.interval_count_in_month as number;
+    const totalPriceInUSD: number = getSubsPrice * quantity;
 
     const orderId: string = generatePaymentOrderId();
 
@@ -80,11 +85,12 @@ export default async function tokenizer(
       convertUSDToIDR(getSubsPrice) as Promise<number>,
     ]);
     const roundedItemPrice: number = getRoundedNumber(subsPrice);
+    const totalPriceInIDR: number = roundedItemPrice * quantity;
 
     const subscriptionPaymentTokenPayload: TokenPaymentDataPayload = {
       transaction_details: {
         order_id: orderId,
-        gross_amount: roundedItemPrice * quantity,
+        gross_amount: totalPriceInIDR,
       },
       item_details: {
         id: uuidv4(),
@@ -93,6 +99,15 @@ export default async function tokenizer(
         price: roundedItemPrice,
       },
       credit_card: { secure: true },
+      expiry: {
+        start_time: moment(new Date()).format("YYYY-MM-DD HH:mm:ss Z"),
+        duration: 24,
+        unit: "hours",
+      },
+      page_expiry: {
+        duration: 24,
+        unit: "hours",
+      },
     };
 
     const subscriptionPaymentTokenData: Awaited<TokenPaymentData | null> =
@@ -104,13 +119,28 @@ export default async function tokenizer(
         errorMessage: "Unexpected Errors Occurred",
       });
 
+    const userPaymentHistoryData: PaymentHistoryData = {
+      amount: {
+        USD: totalPriceInUSD,
+        IDR: totalPriceInIDR,
+      },
+      user_id: user.id,
+      interval_count: quantity,
+      order_date: new Date(),
+      order_id: orderId,
+      plan: selectedUserPlan,
+      status: "pending",
+    };
+
+    await insertUserPaymentHistoryData({ data: userPaymentHistoryData });
+
     const orderedSubsPlan: OrderedSubscriptionPlan = {
       currency: "USD",
       interval: "Moth",
       interval_count: quantity,
       name: selectedUserPlan,
       price: getSubsPrice,
-      total_price: getSubsPrice * quantity,
+      total_price: totalPriceInUSD,
     };
 
     const transactionSecret: TransactionSecretData = {
