@@ -8,10 +8,10 @@ export default function DashboardLayout({
   children,
 }: DashboardLayoutProps): React.ReactElement {
   return (
-    <main className="flex items-start flex-col sm:flex-row gap-5">
+    <main className="flex flex-col items-start gap-8 sm:flex-row">
       <DashboardSidebar />
       <DashboardSidebarMobile />
-      <section className="relative h-full w-full border">{children}</section>
+      <section className="relative h-full w-full">{children}</section>
     </main>
   );
 }

@@ -7,7 +7,7 @@ type AddUserPaymentHistorySchemaValidation = {
   interval_count: number;
   amount: AmountPrices;
   status: subscriptionStatus;
-  order_date: string;
+  order_date: string | Date;
 };
 
 export default AddUserPaymentHistorySchemaValidation;
