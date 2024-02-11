@@ -22,6 +22,7 @@
     "@reduxjs/toolkit": "^2.1.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.10",
+    "@tanstack/react-table": "^8.11.8",
     "@types/capitalize": "^2.0.2",
     "@types/jwt-decode": "^3.1.0",
     "@types/moment": "^2.13.0",
