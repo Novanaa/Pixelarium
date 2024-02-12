@@ -9,7 +9,7 @@ type Subscription = {
   user_id: number;
   start_date: Date;
   end_date: Date;
-  next_payment_date: Date;
+  next_payments_date: Date;
   payment_id: string;
   interval: Interval;
   interval_count: number;
