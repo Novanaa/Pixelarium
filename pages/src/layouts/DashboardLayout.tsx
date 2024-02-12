@@ -11,7 +11,7 @@ export default function DashboardLayout({
     <main className="flex flex-col items-start sm:flex-row">
       <DashboardSidebar />
       <DashboardSidebarMobile />
-      <section className="container relative h-full w-full sm:px-0">
+      <section className="container relative h-full sm:px-0">
         {children}
       </section>
     </main>
