@@ -5,6 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -26,10 +27,24 @@ import { HiBookOpen } from "react-icons/hi";
 import { HeadingThree } from "@/components/ui/Typographies/Heading";
 import Paragraph from "@/components/ui/Typographies/Paragraph";
 import { Button } from "@/components/ui/button";
-import { RocketIcon, UploadIcon } from "@radix-ui/react-icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  RocketIcon,
+  UploadIcon,
+} from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Balancer } from "react-wrap-balancer";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 const paymentHistoryQuery: Promise<PaymentHistoryResponseAPI | null> =
   getUserPaymentHistoryData();
@@ -44,6 +59,7 @@ export default function PaymentHistoryDataTable(): React.ReactElement {
     data: userHistoriesLists!,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -52,7 +68,10 @@ export default function PaymentHistoryDataTable(): React.ReactElement {
         !userHistoriesLists?.length ? (
           <EmptyPaymentHistory />
         ) : (
-          <DataTable table={table} />
+          <>
+            <DataTable table={table} />
+            <DataTablePagination table={table} />
+          </>
         )
       ) : (
         <Loading />
@@ -116,11 +135,57 @@ function DataTable({
   );
 }
 
+function DataTablePagination({
+  table,
+}: PaymentHistoryDataTableProps): React.ReactElement {
+  return (
+    <Pagination className="mt-2">
+      <PaginationContent>
+        <PaginationItem>
+          <Button
+            variant="ghost"
+            disabled={!table.getCanPreviousPage()}
+            aria-disabled={!table.getCanPreviousPage()}
+            className="cursor-pointer font-medium"
+            onClick={() => table.previousPage()}
+          >
+            <ChevronLeftIcon className="mr-2 h-4 w-4" />
+            Previous
+          </Button>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink onClick={() => table.setPageIndex(0)}>
+            1
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis
+            className={cn(navigationMenuTriggerStyle(), "cursor-pointer")}
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <Button
+            variant="ghost"
+            disabled={!table.getCanNextPage()}
+            aria-disabled={!table.getCanNextPage()}
+            className="cursor-pointer font-medium"
+            onClick={() => table.nextPage()}
+          >
+            Next
+            <ChevronRightIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+}
+
 function Loading(): React.ReactElement {
   return (
     <div>
       <div className="rounded-md border">
-        <Skeleton className="h-[15rem] w-full" />
+        <Skeleton className="h-[20rem] w-full" />
       </div>
     </div>
   );
