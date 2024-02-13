@@ -3,6 +3,7 @@ import renderMDX from "@/services/renderMDX";
 import type { RenderMDXReturnType } from "@/services/renderMDX";
 import MDX from "@/components/modules/MDX";
 import { Metadata } from "next";
+import RootLayout from "@/layouts/Layout";
 
 export const metadata: Metadata = {
   title: "Pixelarium - Terms of Service",
@@ -14,7 +15,11 @@ async function TermOfServices() {
     "./src/app/tos/index.mdx",
   );
 
-  return <MDX mdxContent={loadMDXContent} className="prose-h1:text-center" />;
+  return (
+    <RootLayout>
+      <MDX mdxContent={loadMDXContent} className="prose-h1:text-center" />
+    </RootLayout>
+  );
 }
 
 export default TermOfServices;

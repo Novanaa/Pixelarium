@@ -21,22 +21,25 @@ import Paragraph from "@/components/ui/Typographies/Paragraph";
 import { HiSparkles, HiFire } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import RootLayout from "@/layouts/Layout";
 
 function Pricing(): React.ReactElement {
   return (
-    <section className="relative h-full w-full pb-36 pt-[8rem] @container">
-      <Container
-        className={cn(
-          "flex flex-col items-center justify-center gap-6 font-sans",
-          jakartaSans.variable,
-        )}
-      >
-        <PricingHeader />
-        <main className="-ml-2 grid grid-cols-1 gap-4 @xs:-ml-0 @2xl:grid-cols-2 @5xl:grid-cols-3 @5xl:gap-10 @7xl:gap-4">
-          <PricingList />
-        </main>
-      </Container>
-    </section>
+    <RootLayout>
+      <section className="relative h-full w-full pb-36 pt-[8rem] @container">
+        <Container
+          className={cn(
+            "flex flex-col items-center justify-center gap-6 font-sans",
+            jakartaSans.variable,
+          )}
+        >
+          <PricingHeader />
+          <main className="-ml-2 grid grid-cols-1 gap-4 @xs:-ml-0 @2xl:grid-cols-2 @5xl:grid-cols-3 @5xl:gap-10 @7xl:gap-4">
+            <PricingList />
+          </main>
+        </Container>
+      </section>
+    </RootLayout>
   );
 }
 

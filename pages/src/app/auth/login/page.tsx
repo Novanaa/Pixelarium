@@ -15,6 +15,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import { useSearchParams } from "next/navigation";
+import RootLayout from "@/layouts/Layout";
 
 function Login() {
   const router: AppRouterInstance = useRouter();
@@ -35,7 +36,7 @@ function Login() {
   }, [messege, type, toast]);
 
   return (
-    <>
+    <RootLayout>
       <section className="flex h-screen w-full flex-col items-center justify-center gap-2">
         <Card className="flex flex-col items-center justify-center gap-3 px-[1.4rem] py-6 sm:px-10">
           <div>
@@ -82,7 +83,7 @@ function Login() {
         </MutedText>
       </section>
       <Toaster />
-    </>
+    </RootLayout>
   );
 }
 
