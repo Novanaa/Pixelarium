@@ -1,25 +1,15 @@
 "use client";
 
-import { HeadingFour, HeadingTwo } from "@/components/ui/Typographies/Heading";
-import MutedText from "@/components/ui/Typographies/MutedText";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import React, { use, useEffect, useState } from "react";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
 import { FiActivity } from "react-icons/fi";
 import { HiCalendar, HiHeart } from "react-icons/hi";
-import PaymentHistoryCardProps from "@/components/interfaces/types/PaymentHistoryCard";
 import getUserSubscriptionStatus, {
   GetUserSubscriptionStatusReturnType,
 } from "@/services/getUserSubscriptionStatus";
-import { Skeleton } from "@/components/ui/skeleton";
 import capitalize from "capitalize";
 import moment from "moment";
 import PaymentDate from "@/components/interfaces/types/PaymentDate";
+import PaymentHistoryCard from "./PaymentHistoryCard";
 
 const subscriptionQuery: Promise<GetUserSubscriptionStatusReturnType | null> =
   getUserSubscriptionStatus();
@@ -86,7 +76,7 @@ export default function PaymentHistoryCards(): React.ReactElement {
       : "Subscribe to Pixelarium and see the new world";
 
   return (
-    <section className="relative mt-2 flex w-full flex-wrap items-center justify-center gap-4 @xl:items-center @xl:justify-start">
+    <section className="relative mt-2 flex w-full flex-wrap items-center justify-center gap-4 sm:items-start sm:justify-start">
       <PaymentHistoryCard
         subs={subscription?.status}
         Icon={<FiActivity className="h-[1.1rem] w-[1.1rem]" />}
@@ -112,40 +102,5 @@ export default function PaymentHistoryCards(): React.ReactElement {
         content={paymentDate.nextPaymentDate}
       />
     </section>
-  );
-}
-
-function PaymentHistoryCard({
-  Icon,
-  content,
-  description,
-  title,
-  tooltipContent,
-  subs,
-}: PaymentHistoryCardProps): React.ReactElement {
-  return (
-    <>
-      {!subs ? (
-        <Skeleton className="h-[10rem] w-[21rem] rounded-lg" />
-      ) : (
-        <div className="flex h-[10rem] w-[21rem] cursor-pointer flex-col gap-1 rounded-lg border p-5 hover:bg-primary-foreground/50">
-          <div className="flex items-center justify-between">
-            <HeadingFour>{title}</HeadingFour>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>{Icon}</TooltipTrigger>
-                <TooltipContent className="relative z-10">
-                  <Paragraph>{tooltipContent}</Paragraph>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="pt-2">
-            <HeadingTwo className="font-extrabold">{content}</HeadingTwo>
-            <MutedText>{description}</MutedText>
-          </div>
-        </div>
-      )}
-    </>
   );
 }

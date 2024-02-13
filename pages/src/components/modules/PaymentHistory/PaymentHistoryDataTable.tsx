@@ -45,10 +45,11 @@ import {
 } from "@/components/ui/pagination";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import dynamic from "next/dynamic";
 
 const paymentHistoryQuery: Promise<PaymentHistoryResponseAPI | null> =
   getUserPaymentHistoryData();
-export default function PaymentHistoryDataTable(): React.ReactElement {
+function PaymentHistoryDataTable(): React.ReactElement {
   const paymentHistory: PaymentHistoryResponseAPI | null =
     use(paymentHistoryQuery);
 
@@ -74,7 +75,7 @@ export default function PaymentHistoryDataTable(): React.ReactElement {
           </>
         )
       ) : (
-        <Loading />
+        <PaymentHistoryDataTableLoading />
       )}
     </section>
   );
@@ -181,12 +182,10 @@ function DataTablePagination({
   );
 }
 
-function Loading(): React.ReactElement {
+export function PaymentHistoryDataTableLoading(): React.ReactElement {
   return (
-    <div>
-      <div className="rounded-md border">
-        <Skeleton className="h-[20rem] w-full" />
-      </div>
+    <div className="w-full rounded-md pb-24 sm:w-[96.5%]">
+      <Skeleton className="h-[20rem] w-full" />
     </div>
   );
 }
@@ -225,3 +224,8 @@ function EmptyPaymentHistory(): React.ReactElement {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(PaymentHistoryDataTable), {
+  ssr: false,
+  loading: () => <PaymentHistoryDataTableLoading />,
+});
