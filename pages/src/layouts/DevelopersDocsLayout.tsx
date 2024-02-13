@@ -7,6 +7,7 @@ import TableOfContents from "@/components/modules/toc";
 import React from "react";
 import FrontMatter from "@/interfaces/types/FrontMatter";
 import type TocElementData from "@/interfaces/types/Toc";
+import Navbar from "@/components/modules/Navbar";
 
 interface DevelopersDocsLayoutProps extends ReactNodeChild {
   frontMatter: FrontMatter;
@@ -20,6 +21,7 @@ export default function DevelopersDocsLayout({
 }: DevelopersDocsLayoutProps): React.ReactElement {
   return (
     <>
+      <Navbar />
       <Search />
       <DevelopersDocsSidebarMobile />
       <main className="relative top-[3.9rem] flex h-full w-full flex-col px-6 2xl:container lg:flex-row lg:px-8 2xl:px-16">

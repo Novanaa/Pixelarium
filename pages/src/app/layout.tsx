@@ -3,7 +3,6 @@ import "../styles/globals.css";
 import { jakartaSans } from "@/configs/fonts";
 import { ThemeProvider } from "@/lib/ThemesProvider";
 import ReduxProvider from "@/stores/Provider";
-import RootLayoutChild from "@/layouts/RootLayoutChild";
 
 export const metadata: Metadata = {
   title: "Pixelarium",
@@ -28,7 +27,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <RootLayoutChild>{children}</RootLayoutChild>
+            {children}
           </ThemeProvider>
         </ReduxProvider>
       </body>
