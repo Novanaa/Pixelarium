@@ -16,6 +16,7 @@ import createUserIfNotExists from "../services/createUserIfNotExists";
 import { User } from "../../../../../generated/client";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { httpBadRequestResponse } from "../../../../utils/responses/httpErrorsResponses";
+import slugifyUsername from "../utils/slugifyUsername";
 
 export async function redirectGithubLogin(
   req: Request,
@@ -59,6 +60,7 @@ export async function loginWithGithub(
       });
 
     const userId: number = Number(user.id);
+    const slugifiedusername: string = slugifyUsername(user.login);
     const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
       value: userId,
       field: "provider_id",
@@ -67,7 +69,7 @@ export async function loginWithGithub(
     if (!isUser) {
       await createUserIfNotExists({
         providerId: userId,
-        name: user.login!,
+        name: slugifiedusername,
         email: user.email || null,
         picture: user.avatar_url || defaultUserImage,
         bio: user.bio,
@@ -76,12 +78,12 @@ export async function loginWithGithub(
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
       providerId: Number(isUser?.provider_id) || Number(userId),
-      name: user.login,
+      name: slugifiedusername,
       email: user.email!,
       picture: isUser?.picture || user.avatar_url,
     });
 
-    generateTokenResponseCookie(res, refreshToken, user.login);
+    generateTokenResponseCookie(res, refreshToken, slugifiedusername);
 
     return res.redirect(
       `${CLIENT_FRONTEND_URL}/auth/login/callback?session=${accessToken}&type=success`

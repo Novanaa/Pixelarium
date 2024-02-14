@@ -11,6 +11,7 @@ import createUserIfNotExists from "../services/createUserIfNotExists";
 import { User } from "../../../../../generated/client";
 import { isUserExistByIdOrProviderId } from "../../../../utils/isUser";
 import { httpBadRequestResponse } from "../../../../utils/responses/httpErrorsResponses";
+import slugifyUsername from "../utils/slugifyUsername";
 
 export async function redirectGoogleLogin(
   req: Request,
@@ -47,6 +48,7 @@ export async function loginWithGoogle(
 
     const bigNumber: number = Number(data.id);
     const userId: number = bigNumber / Number(10n ** 13n);
+    const slugifiedusername: string = slugifyUsername(data.name!);
 
     const isUser: Awaited<User | null> = await isUserExistByIdOrProviderId({
       field: "provider_id",
@@ -56,7 +58,7 @@ export async function loginWithGoogle(
     if (!isUser) {
       await createUserIfNotExists({
         providerId: userId,
-        name: data.name!,
+        name: slugifiedusername,
         email: data.email!,
         picture: data.picture! || defaultUserImage,
         bio: "",
@@ -65,12 +67,12 @@ export async function loginWithGoogle(
 
     const { accessToken, refreshToken } = new JsonWebToken().sign({
       providerId: Number(isUser?.provider_id) || Number(userId),
-      name: data.name!,
+      name: slugifiedusername,
       email: data.email!,
       picture: isUser?.picture || data.picture!,
     });
 
-    generateTokenResponseCookie(res, refreshToken, data.name!);
+    generateTokenResponseCookie(res, refreshToken, slugifiedusername);
 
     return res.redirect(
       `${CLIENT_FRONTEND_URL}/auth/login/callback?session=${accessToken}&type=success`
