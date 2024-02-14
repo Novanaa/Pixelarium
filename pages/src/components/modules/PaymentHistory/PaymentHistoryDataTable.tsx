@@ -194,7 +194,7 @@ function EmptyPaymentHistory(): React.ReactElement {
   const router: AppRouterInstance = useRouter();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1 @container">
+    <div className="mt-4 flex flex-col items-center justify-center gap-1 @container">
       <HiBookOpen className="h-28 w-28" />
       <Balancer>
         <HeadingThree>
