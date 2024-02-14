@@ -20,7 +20,7 @@ export default async function DashboardSidebarMobileMenuLinksList(): Promise<Rea
       />
       <DashboardSidebarMobileMenuLink
         title="Albums"
-        link="/profile/user?tabActive=albums"
+        link="/albums"
         Icon={<CameraIcon className={iconStyle} />}
       />
       <DashboardSidebarMobileMenuLink
@@ -30,7 +30,7 @@ export default async function DashboardSidebarMobileMenuLinksList(): Promise<Rea
       />
       <DashboardSidebarMobileMenuLink
         title="Gallery"
-        link="/profile/user?tabActive=gallery"
+        link="/gallery"
         Icon={<HiSparkles className={iconStyle} />}
       />
       <DashboardSidebarMobileMenuLink
