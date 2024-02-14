@@ -15,6 +15,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const queryParams: string = req.nextUrl.search;
   const parsedQuery: ParsedQuery<string> = queryString.parse(queryParams);
   const tabActive: string = String(parsedQuery.tabActive);
+  const active: string = String(parsedQuery.active);
 
   if (nextUrlPathname.startsWith("/auth")) {
     if (nextUrlPathname.startsWith("/auth/login")) {
@@ -49,7 +50,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   }
 
   if (nextUrlPathname.startsWith("/profile/user")) {
-    if (tabActive) {
+    if (tabActive && nextUrlPathname.startsWith("/profile/user?tabActive")) {
       if (!tabActiveName.includes(tabActive))
         return NextResponse.redirect(
           new URL(`/profile/${user?.name}?tabActive=gallery`, req.url),
@@ -63,6 +64,11 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
           new URL(`/profile/${user?.name}?tabActive=${tabActive}`, req.url),
         );
     }
+
+    if (active && nextUrlPathnameWithSearch.startsWith("/profile/user?active"))
+      return NextResponse.redirect(
+        new URL(`/profile/${user?.name}?active=${active}`, req.url),
+      );
   }
 
   return NextResponse.next();
