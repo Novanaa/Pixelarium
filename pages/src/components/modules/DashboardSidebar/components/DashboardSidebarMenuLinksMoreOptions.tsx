@@ -45,7 +45,7 @@ export default function DashboardSidebarMenuLinksMoreOptions(): React.ReactEleme
           />
           <DashboardSidebarMoreOptionsLink
             title="Favorites"
-            link="/profile/user?tabActive=favorites"
+            link="/favorites"
             Icon={<BookmarkFilledIcon className={iconStyle} />}
           />
         </div>

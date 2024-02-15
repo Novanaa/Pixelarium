@@ -21,12 +21,12 @@ export default async function DashboardSidebarMenuLinksList(): Promise<React.Rea
       />
       <DashboardSidebarMenuLink
         title="Gallery"
-        link="/profile/user?tabActive=gallery"
+        link="/galleries"
         Icon={<HiSparkles className={iconStyle} />}
       />
       <DashboardSidebarMenuLink
         title="Albums"
-        link="/profile/user?tabActive=albums"
+        link="/albums"
         Icon={<CameraIcon className={iconStyle} />}
       />
       <DashboardSidebarMenuLink
