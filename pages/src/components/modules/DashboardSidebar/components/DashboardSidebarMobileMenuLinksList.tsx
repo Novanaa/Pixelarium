@@ -30,7 +30,7 @@ export default async function DashboardSidebarMobileMenuLinksList(): Promise<Rea
       />
       <DashboardSidebarMobileMenuLink
         title="Gallery"
-        link="/gallery"
+        link="/galleries"
         Icon={<HiSparkles className={iconStyle} />}
       />
       <DashboardSidebarMobileMenuLink
