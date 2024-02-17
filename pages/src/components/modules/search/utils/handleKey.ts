@@ -6,7 +6,6 @@ interface HandleKeyProps {
 }
 
 export default function handleKey({ router, ev }: HandleKeyProps): void {
-  console.log(ev);
   if (ev.key == "/") {
     ev.preventDefault();
     router.push("/galleries?active=search");
