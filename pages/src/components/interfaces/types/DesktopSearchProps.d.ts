@@ -1,8 +1,3 @@
-import type SearchDatas from "./SearchDatas";
+import SearchProps from "./SearchProps";
 
-export default interface DesktopSearchProps {
-  datas: Array<SearchDatas>;
-  heading: string;
-  emptyItemsMessege?: string;
-  placeholder?: string
-}
+export default interface DesktopSearchProps extends SearchProps {}
