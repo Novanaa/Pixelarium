@@ -24,7 +24,7 @@ function GalleryHeader(): React.ReactElement {
             </Link>
           </TooltipOnHover>
           <TooltipOnHover title="Search pictures">
-            <Link href="/?active=search">
+            <Link href="/galleries?active=search">
               <Button variant="ghost" size="icon">
                 <MagnifyingGlassIcon className="h-5 w-5" />
               </Button>
