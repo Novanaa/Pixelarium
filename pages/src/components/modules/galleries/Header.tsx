@@ -1,19 +1,36 @@
+"use client";
+
 import TooltipOnHover from "@/components/ui/TooltipOnHover";
 import Paragraph from "@/components/ui/Typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MagnifyingGlassIcon, PlusIcon } from "@radix-ui/react-icons";
+import {
+  InfoCircledIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import React from "react";
 import Link from "next/link";
+import HeaderMoreOptions from "./HeaderMoreOptions";
+import GalleryHeader from "@/components/interfaces/types/GalleryHeader";
 
-function GalleryHeader(): React.ReactElement {
+function GalleryHeader({ pictures }: GalleryHeader): React.ReactElement {
   return (
     <>
       <section className="flex items-center justify-between gap-5">
-        <Paragraph className="text-[0.75rem] font-medium leading-5 text-primary/70 sm:text-sm">
-          Only you can see your private pictures
-        </Paragraph>
+        <div>
+          <Paragraph className="hidden text-[0.75rem] font-medium leading-5 text-primary/70 sm:block sm:text-sm">
+            Only you can see your private pictures
+          </Paragraph>
+          <div className="block sm:hidden">
+            <TooltipOnHover title="Only you can see your private pictures">
+              <Button variant="ghost" size="icon">
+                <InfoCircledIcon className="h-5 w-5" />
+              </Button>
+            </TooltipOnHover>
+          </div>
+        </div>
         <div className="flex gap-2">
           <TooltipOnHover title="Add a new picture">
             <Link href="/?active=upload">
@@ -30,6 +47,7 @@ function GalleryHeader(): React.ReactElement {
               </Button>
             </Link>
           </TooltipOnHover>
+          <HeaderMoreOptions pictures={pictures} />
         </div>
       </section>
     </>
@@ -39,7 +57,7 @@ function GalleryHeader(): React.ReactElement {
 function Loading(): React.ReactElement {
   return (
     <div className="flex items-center justify-between gap-5 @container">
-      <Skeleton className="h-5 w-[11rem] rounded sm:w-[16rem]" />
+      <Skeleton className="h-7 w-7 rounded sm:w-[16rem]" />
       <div className="flex gap-3">
         <Skeleton className="h-7 w-[5rem] rounded @sm:w-[7rem] sm:w-[8rem]" />
         <Skeleton className="h-7 w-7 rounded" />
