@@ -19,7 +19,7 @@ export default async function UserGallery(): Promise<React.ReactElement> {
   return (
     <>
       <main className="flex h-full flex-col gap-4 pb-24 pt-[6rem] @container sm:px-10 sm:pt-12">
-        <GalleryHeader />
+        <GalleryHeader pictures={pictures} />
         <GalleryPictures gallery={gallery} pictures={pictures} />
       </main>
       <Search
