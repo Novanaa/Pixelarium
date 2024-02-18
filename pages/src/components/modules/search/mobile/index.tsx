@@ -65,9 +65,13 @@ export default function MobileSearch({
       >
         <CommandInput placeholder={placeholder} />
         <CommandList>
-          <CommandEmpty>{emptyItemsMessege}</CommandEmpty>
+          <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading={heading}>
-            <MobileSearchGroup datas={datas} />
+            {!datas.length ? (
+             <div className="text-center my-2 opacity-80">{emptyItemsMessege}</div> 
+            ) : (
+              <MobileSearchGroup datas={datas} />
+            )}
           </CommandGroup>
           <CommandSeparator />
           <AccountsSearchGroup />

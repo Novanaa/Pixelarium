@@ -63,9 +63,15 @@ export default function DesktopSearch({
       >
         <CommandInput placeholder={placeholder} />
         <CommandList>
-          <CommandEmpty>{emptyItemsMessege}</CommandEmpty>
+          <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading={heading}>
-            <DesktopSearchGroup datas={datas} />
+            {!datas.length ? (
+              <div className="my-2 text-center opacity-80">
+                {emptyItemsMessege}
+              </div>
+            ) : (
+              <DesktopSearchGroup datas={datas} />
+            )}
           </CommandGroup>
           <CommandSeparator />
           <AccountsSearchGroup />
