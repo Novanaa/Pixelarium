@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import DesktopSearchProps from "@/components/interfaces/types/DesktopSearchProps";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
-import AccountsSearchGroup from "./AccountsSearchGroup";
+import AccountsSearchGroup from "../AccountsSearchGroup";
 import SearchGroup from "./SearchGroup";
 
 export default function DesktopSearch({
