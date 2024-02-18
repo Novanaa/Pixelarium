@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -21,7 +21,6 @@ import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import { cn } from "@/lib/utils";
 import MobileSearchProps from "@/components/interfaces/types/MobileSearchProps";
 import MobileSearchGroup from "./SearchGroup";
-import useToggleOuterPageClick from "@/hooks/useToggleOuterPageClick";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
@@ -36,8 +35,6 @@ export default function MobileSearch({
   const search: ReadonlyURLSearchParams = useSearchParams();
   const router: AppRouterInstance = useRouter();
   const pathname: string = usePathname();
-  // @ts-expect-error error types
-  const searchRef: React.MutableRefObject<HTMLDivElement> = useRef();
   const searchOpenAndCloseAnimation: string = isOpen
     ? "animate-in fade-in-0 zoom-in-95 slide-out-to-left-1/2 slide-out-to-top-[48%]"
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
@@ -46,8 +43,6 @@ export default function MobileSearch({
   useActiveSearchParams({ isOpen, setIsOpen, searchParams: search });
 
   useTogglePageScrollOverflow(isOpen);
-
-  useToggleOuterPageClick({ ref: searchRef, pagePathname: pathname, router });
 
   return (
     <div
@@ -61,14 +56,15 @@ export default function MobileSearch({
           "h-[100dvh] w-[100vw] rounded-lg border shadow-md",
           searchOpenAndCloseAnimation,
         )}
-        ref={searchRef}
       >
         <CommandInput placeholder={placeholder} />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading={heading}>
             {!datas.length ? (
-             <div className="text-center my-2 opacity-80">{emptyItemsMessege}</div> 
+              <div className="mb-4 mt-2 text-center opacity-80">
+                {emptyItemsMessege}
+              </div>
             ) : (
               <MobileSearchGroup datas={datas} />
             )}
