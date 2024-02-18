@@ -23,9 +23,9 @@ export default function useToggleOuterPageClick({
   router,
   pagePathname,
 }: UseToggleOuterPageClickProps): void {
-  const windowWitdh: number = useWindowWidth();
+  const windowWidth: number = useWindowWidth();
   useEffect(() => {
-    if (windowWitdh > 640) {
+    if (windowWidth > 640) {
       const handleClick = (e: MouseEvent) => {
         if (!ref.current.contains(e.target as Node)) {
           router.push(pagePathname);
@@ -35,5 +35,5 @@ export default function useToggleOuterPageClick({
       document.addEventListener("mousedown", handleClick);
       return () => document.removeEventListener("mousedown", handleClick);
     }
-  });
+  }, [windowWidth, pagePathname, ref, router]);
 }
