@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -17,9 +17,10 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import DesktopSearchProps from "@/components/interfaces/types/DesktopSearchProps";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import AccountsSearchGroup from "../AccountsSearchGroup";
-import SearchGroup from "./SearchGroup";
 import useToggleOuterPageClick from "@/hooks/useToggleOuterPageClick";
 import useKeyboardToggle from "@/hooks/useKeyboardToggle";
+import useActiveSearchParams from "../hooks/useActiveSearchParams";
+import DesktopSearchGroup from "./SearchGroup";
 
 export default function DesktopSearch({
   datas,
@@ -38,17 +39,7 @@ export default function DesktopSearch({
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
   const searchStateValidation: string = isOpen ? `` : `hidden`;
 
-  useEffect(() => {
-    const activeSearchParams: string | null = search.get("active");
-    if (!activeSearchParams || activeSearchParams !== "search") {
-      setIsOpen(false);
-      return;
-    }
-
-    setIsOpen(true);
-
-    return () => setIsOpen(isOpen);
-  }, [setIsOpen, search, isOpen]);
+  useActiveSearchParams({ isOpen, setIsOpen, searchParams: search });
 
   useKeyboardToggle({ pagePathname: pathname, router });
 
@@ -74,7 +65,7 @@ export default function DesktopSearch({
         <CommandList>
           <CommandEmpty>{emptyItemsMessege}</CommandEmpty>
           <CommandGroup heading={heading}>
-            <SearchGroup datas={datas} />
+            <DesktopSearchGroup datas={datas} />
           </CommandGroup>
           <CommandSeparator />
           <AccountsSearchGroup />
