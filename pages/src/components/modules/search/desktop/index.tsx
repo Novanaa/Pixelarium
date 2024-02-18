@@ -66,7 +66,7 @@ export default function DesktopSearch({
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading={heading}>
             {!datas.length ? (
-              <div className="my-2 text-center opacity-80">
+              <div className="mb-4 mt-2 text-center opacity-80">
                 {emptyItemsMessege}
               </div>
             ) : (
