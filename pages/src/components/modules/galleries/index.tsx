@@ -2,25 +2,31 @@ import React from "react";
 import GalleryHeader from "./Header";
 import GalleryPictures from "./PictureList";
 import Search from "../search";
+import getGalleryPictures, {
+  GalleryResponseAPI,
+} from "@/services/getGalleryPictures";
+import Picture from "@/components/interfaces/types/Picture";
 import SearchDatas from "@/components/interfaces/types/SearchDatas";
-import { ReloadIcon } from "@radix-ui/react-icons";
 
-export default function UserGallery(): React.ReactElement {
-  const test: Array<SearchDatas> = [
-    {
-      Icon: <ReloadIcon className="mr-2 h-4 w-4" />,
-      link: "/",
-      title: "testtt",
-    },
-  ];
+export default async function UserGallery(): Promise<React.ReactElement> {
+  const gallery: Awaited<GalleryResponseAPI | null> =
+    await getGalleryPictures();
+
+  const pictures: Array<Picture> | undefined = gallery?.data.gallery.pictures;
+
+  const searchDatas: Array<SearchDatas> = [];
 
   return (
     <>
       <main className="flex h-full flex-col gap-4 pb-24 pt-[6rem] @container sm:px-10 sm:pt-12">
         <GalleryHeader />
-        <GalleryPictures />
+        <GalleryPictures gallery={gallery} pictures={pictures} />
       </main>
-      <Search datas={test} heading="testt dulu banh" />
+      <Search
+        datas={searchDatas}
+        heading="Pictures"
+        emptyItemsMessege="You doesn't have any pictures"
+      />
     </>
   );
 }
