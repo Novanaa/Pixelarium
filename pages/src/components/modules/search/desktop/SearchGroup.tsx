@@ -1,14 +1,10 @@
-import SearchDatas from "@/components/interfaces/types/SearchDatas";
+import SearchGroupProps from "@/components/interfaces/types/SearchGroupProps";
 import { CommandItem } from "@/components/ui/command";
 import Link from "next/link";
 
-interface SearchGroup {
-  datas: Array<SearchDatas>;
-}
-
-export default function SearchGroup({
+export default function DesktopSearchGroup({
   datas,
-}: SearchGroup): Array<React.ReactElement> {
+}: SearchGroupProps): Array<React.ReactElement> {
   return datas?.map((d, i) => (
     <Link href={d.link} key={i}>
       <CommandItem>
