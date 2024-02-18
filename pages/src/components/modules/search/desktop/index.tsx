@@ -12,13 +12,14 @@ import {
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
-import handleKey from "../utils/handleKey";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import DesktopSearchProps from "@/components/interfaces/types/DesktopSearchProps";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import AccountsSearchGroup from "../AccountsSearchGroup";
 import SearchGroup from "./SearchGroup";
+import useToggleOuterPageClick from "@/hooks/useToggleOuterPageClick";
+import useKeyboardToggle from "@/hooks/useKeyboardToggle";
 
 export default function DesktopSearch({
   datas,
@@ -29,6 +30,7 @@ export default function DesktopSearch({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const search: ReadonlyURLSearchParams = useSearchParams();
   const router: AppRouterInstance = useRouter();
+  const pathname: string = usePathname();
   // @ts-expect-error error types
   const searchRef: React.MutableRefObject<HTMLDivElement> = useRef();
   const searchOpenAndCloseAnimation: string = isOpen
@@ -48,23 +50,9 @@ export default function DesktopSearch({
     return () => setIsOpen(isOpen);
   }, [setIsOpen, search, isOpen]);
 
-  useEffect(() => {
-    const handler = (ev: KeyboardEvent) => handleKey({ ev, router });
-    document.addEventListener("keydown", handler);
+  useKeyboardToggle({ pagePathname: pathname, router });
 
-    return () => document.removeEventListener("keydown", handler);
-  });
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (!searchRef.current.contains(e.target as Node)) {
-        router.push("/galleries");
-      }
-    };
-
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  });
+  useToggleOuterPageClick({ ref: searchRef, pagePathname: pathname, router });
 
   useTogglePageScrollOverflow(isOpen);
 
