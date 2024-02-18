@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MagnifyingGlassIcon, PlusIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import React from "react";
+import Link from "next/link";
 
 function GalleryHeader(): React.ReactElement {
   return (
@@ -15,15 +16,19 @@ function GalleryHeader(): React.ReactElement {
         </Paragraph>
         <div className="flex gap-2">
           <TooltipOnHover title="Add a new picture">
-            <Button className="font-medium" variant="ghost">
-              <PlusIcon className="mr-1 h-4 w-4" />
-              New Picture
-            </Button>
+            <Link href="/?active=upload">
+              <Button className="font-medium" variant="ghost">
+                <PlusIcon className="mr-1 h-4 w-4" />
+                New Picture
+              </Button>
+            </Link>
           </TooltipOnHover>
           <TooltipOnHover title="Search pictures">
-            <Button variant="ghost" size="icon">
-              <MagnifyingGlassIcon className="h-5 w-5" />
-            </Button>
+            <Link href="/galleries?active=search">
+              <Button variant="ghost" size="icon">
+                <MagnifyingGlassIcon className="h-5 w-5" />
+              </Button>
+            </Link>
           </TooltipOnHover>
         </div>
       </section>

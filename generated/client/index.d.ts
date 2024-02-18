@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library';
+import * as runtime from './runtime/library.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -384,8 +384,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.8.1
-   * Query Engine version: 78caf6feeaed953168c64e15a249c3e9a033ebe2
+   * Prisma Client JS version: 5.9.1
+   * Query Engine version: 23fdc5965b1e05fc54e5f26ed3de66776b93de64
    */
   export type PrismaVersion = {
     client: string

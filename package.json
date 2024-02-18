@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
-    "@prisma/client": "^5.8.1",
+    "@prisma/client": "^5.9.1",
+    "@prisma/engine": "^1.0.18",
     "@types/base-64": "^1.0.2",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.6",
@@ -62,7 +63,7 @@
     "mime": "^4.0.1",
     "moment": "^2.30.1",
     "prettier": "^3.1.1",
-    "prisma": "^5.8.1",
+    "prisma": "^5.9.1",
     "rimraf": "^5.0.5",
     "sharp": "^0.33.2",
     "slugify": "^1.6.6",
