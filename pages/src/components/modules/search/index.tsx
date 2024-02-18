@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
-import DesktopSearch, { DesktopSearchLoading } from "./Desktop";
 import SearchProps from "@/components/interfaces/types/SearchProps";
+import DesktopSearch from "./desktop";
+import DesktopSearchLoading from "./desktop/Loading";
 
 export default function Search({
   datas,
