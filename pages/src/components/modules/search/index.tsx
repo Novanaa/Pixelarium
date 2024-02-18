@@ -11,7 +11,9 @@ export default function Search({
   emptyItemsMessege,
   placeholder,
 }: SearchProps): React.ReactElement {
-  emptyItemsMessege = !datas.length ? emptyItemsMessege : "No results found.";
+  emptyItemsMessege = !datas.length
+    ? emptyItemsMessege
+    : "You doesn't have any data";
   placeholder = placeholder || "Type a command or search...";
   return (
     <main>
