@@ -26,14 +26,14 @@ export default function useActiveSearchParams({
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
 
   useEffect(() => {
+    const hasActiveQueryParams: boolean = searchParams.has("active");
     const activeSearchParams: string | null = searchParams.get("active");
-    if (!activeSearchParams || activeSearchParams !== expectedValue) {
+    if (!hasActiveQueryParams || activeSearchParams !== expectedValue) {
       setIsOpen(false);
       return;
     }
 
     setIsOpen(true);
-
-    return () => setIsOpen(isOpen);
+    return;
   }, [setIsOpen, searchParams, isOpen, expectedValue]);
 }
