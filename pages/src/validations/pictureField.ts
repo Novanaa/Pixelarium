@@ -6,7 +6,7 @@ const PictureFieldFormSchema = z.object({
     required_error: "Please a insert picture title.",
     invalid_type_error: invalidTypeErrorMessege,
   }),
-  desctiption: z.string({
+  description: z.string({
     required_error: "Please a insert picture description.",
     invalid_type_error: invalidTypeErrorMessege,
   }),
