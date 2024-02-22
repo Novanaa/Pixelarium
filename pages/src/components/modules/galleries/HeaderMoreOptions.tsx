@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import TooltipOnHover from "@/components/ui/TooltipOnHover";
+import TooltipOnHover from "@/components/molecules/tooltip-on-hover";
 import { Button } from "@/components/ui/button";
 import {
   DotsVerticalIcon,

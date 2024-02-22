@@ -1,5 +1,5 @@
 import React from "react";
-import RootLayout from "@/layouts/Layout";
+import RootLayout from "@/layouts";
 import PricingLists from "@/components/modules/pricing";
 import { Metadata } from "next";
 

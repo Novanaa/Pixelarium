@@ -1,4 +1,4 @@
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard";
 import { Metadata } from "next";
 import React from "react";
 import getServerSideUserData from "@/services/getServerSideUserData";

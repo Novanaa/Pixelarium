@@ -1,7 +1,7 @@
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard";
 import React from "react";
 import { Metadata } from "next";
-import PaymentHistory from "@/components/modules/PaymentHistory";
+import PaymentHistory from "@/components/modules/payment-history";
 
 export const metadata: Metadata = {
   title: "Payment History",

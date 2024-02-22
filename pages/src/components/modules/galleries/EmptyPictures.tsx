@@ -1,5 +1,5 @@
-import { HeadingThree } from "@/components/ui/Typographies/Heading";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import { HeadingThree } from "@/components/molecules/typographies/Heading";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import {
   CameraIcon,

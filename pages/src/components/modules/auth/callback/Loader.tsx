@@ -1,12 +1,12 @@
 "use client";
 
-import Container from "@/components/ui/Container";
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
-import MutedText from "@/components/ui/Typographies/MutedText";
+import { HeadingTwo } from "@/components/molecules/typographies/Heading";
+import MutedText from "@/components/molecules/typographies/MutedText";
 import React from "react";
 import { LineWave } from "react-loader-spinner";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
+import Container from "@/components/molecules/container";
 
 export default function LoginCallbackLoader(): React.ReactElement {
   const { theme }: UseThemeProps = useTheme();
