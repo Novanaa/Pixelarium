@@ -9,7 +9,6 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
@@ -19,7 +18,7 @@ import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import AccountsSearchGroup from "../AccountsSearchGroup";
 import useToggleOuterPageClick from "@/hooks/useToggleOuterPageClick";
 import useKeyboardToggle from "@/hooks/useKeyboardToggle";
-import useActiveSearchParams from "../hooks/useActiveSearchParams";
+import useActiveSearchParams from "@/hooks/useActiveSearchParams";
 import DesktopSearchGroup from "./SearchGroup";
 
 export default function DesktopSearch({
@@ -29,7 +28,6 @@ export default function DesktopSearch({
   placeholder,
 }: DesktopSearchProps): React.ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const search: ReadonlyURLSearchParams = useSearchParams();
   const router: AppRouterInstance = useRouter();
   const pathname: string = usePathname();
   // @ts-expect-error error types
@@ -39,7 +37,7 @@ export default function DesktopSearch({
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
   const searchStateValidation: string = isOpen ? `` : `hidden`;
 
-  useActiveSearchParams({ isOpen, setIsOpen, searchParams: search });
+  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "search" });
 
   useKeyboardToggle({ pagePathname: pathname, router });
 
