@@ -1,5 +1,5 @@
 import React from "react";
-import type ReactNodeChild from "../interfaces/types/ReactNodeChild";
+import type ReactNodeChild from "@/components/interfaces/types/ReactNodeChild";
 import { cn } from "@/lib/utils";
 
 interface ReactNodeChildWithClassName extends ReactNodeChild {
