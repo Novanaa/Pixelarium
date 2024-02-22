@@ -1,6 +1,6 @@
 "use client";
 
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
