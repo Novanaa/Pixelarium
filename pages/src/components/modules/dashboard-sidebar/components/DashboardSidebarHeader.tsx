@@ -1,4 +1,4 @@
-import LogoIcons from "@/components/molecules/LogoIcons";
+import LogoIcons from "@/components/molecules/pixelarium-logo-icons";
 import { HeadingThree } from "@/components/molecules/typographies/Heading";
 import { jakartaSans } from "@/configs/fonts";
 import { cn } from "@/lib/utils";

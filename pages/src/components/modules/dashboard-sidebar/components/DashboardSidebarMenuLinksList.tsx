@@ -1,4 +1,4 @@
-import UserAvatar from "@/components/molecules/UserAvatar";
+import UserAvatar from "@/components/molecules/user-avatar";
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import getServerSideUserData from "@/services/getServerSideUserData";
 import { CameraIcon, HeartFilledIcon, RocketIcon } from "@radix-ui/react-icons";

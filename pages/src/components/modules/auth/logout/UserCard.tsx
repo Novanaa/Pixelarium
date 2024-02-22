@@ -1,6 +1,6 @@
 "use client";
 
-import UserAvatar from "@/components/molecules/UserAvatar";
+import UserAvatar from "@/components/molecules/user-avatar";
 import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import getUserData from "@/services/getUserData";

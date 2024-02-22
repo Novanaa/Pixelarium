@@ -1,7 +1,7 @@
 import { HiHome, HiPlusCircle, HiSparkles } from "react-icons/hi";
 import DashboardSidebarMobileMenuLink from "./DashboardSidebarMobileMenuLink";
 import { CameraIcon } from "@radix-ui/react-icons";
-import UserAvatar from "@/components/molecules/UserAvatar";
+import UserAvatar from "@/components/molecules/user-avatar";
 import getServerSideUserData from "@/services/getServerSideUserData";
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import React from "react";
