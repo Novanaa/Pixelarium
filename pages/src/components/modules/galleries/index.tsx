@@ -7,6 +7,7 @@ import getGalleryPictures, {
 } from "@/services/getGalleryPictures";
 import Picture from "@/components/interfaces/types/Picture";
 import SearchDatas from "@/components/interfaces/types/SearchDatas";
+import Upload from "../upload";
 
 export default async function UserGallery(): Promise<React.ReactElement> {
   const gallery: Awaited<GalleryResponseAPI | null> =
@@ -27,6 +28,7 @@ export default async function UserGallery(): Promise<React.ReactElement> {
         heading="Pictures"
         emptyItemsMessege="You doesn't have any pictures"
       />
+      <Upload />
     </>
   );
 }
