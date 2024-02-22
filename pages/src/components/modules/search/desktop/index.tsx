@@ -41,7 +41,7 @@ export default function DesktopSearch({
 
   useKeyboardToggle({ pagePathname: pathname, router });
 
-  useToggleOuterPageClick({ ref: searchRef, pagePathname: pathname, router });
+  useToggleOuterPageClick({ ref: searchRef, router });
 
   useTogglePageScrollOverflow(isOpen);
 
