@@ -8,7 +8,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import cn from "@/utils/cn";
 import {

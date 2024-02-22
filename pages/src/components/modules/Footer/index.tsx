@@ -7,7 +7,7 @@ import getLogoSource from "@/utils/getLogoSource";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 import type FooterHeaderProps from "@/components/interfaces/types/FooterHeaderProps";
-import { HeadingFour } from "@/components/molecules/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import { cn } from "@/lib/utils";
 import { jakartaSans } from "@/configs/fonts";
 import Link from "next/link";
@@ -22,7 +22,7 @@ import {
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { SiBuymeacoffee, SiFacebook } from "react-icons/si";
-import MutedText from "@/components/molecules/Typographies/MutedText";
+import MutedText from "@/components/molecules/typographies/MutedText";
 
 function Footer(): React.ReactElement {
   const { theme }: UseThemeProps = useTheme();

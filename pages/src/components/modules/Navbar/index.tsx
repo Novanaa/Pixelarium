@@ -11,7 +11,7 @@ import {
 import cn from "@/utils/cn";
 import { jakartaSans } from "@/configs/fonts";
 import Image from "next/image";
-import { HeadingFour } from "@/components/molecules/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";

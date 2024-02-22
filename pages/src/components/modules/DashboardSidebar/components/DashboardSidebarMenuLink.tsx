@@ -1,7 +1,7 @@
 "use client";
 
 import DashboardSidebarMenuLinkProps from "@/components/interfaces/types/DashboardSidebarMenuLinkProps";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import {
   Tooltip,
   TooltipContent,

@@ -1,6 +1,6 @@
 import React from "react";
-import { HeadingTwo } from "@/components/molecules/Typographies/Heading";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import { HeadingTwo } from "@/components/molecules/typographies/Heading";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import cn from "@/utils/cn";
 import { jakartaSans } from "@/configs/fonts";
 import {

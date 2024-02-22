@@ -1,7 +1,7 @@
 import Container from "@/components/molecules/Container";
 import React from "react";
 import LogoIcons from "@/components/molecules/LogoIcons";
-import { HeadingThree } from "@/components/molecules/Typographies/Heading";
+import { HeadingThree } from "@/components/molecules/typographies/Heading";
 import LogoutUserCard from "@/components/modules/auth/logout/UserCard";
 import RootLayout from "@/layouts/Layout";
 import { Metadata } from "next";

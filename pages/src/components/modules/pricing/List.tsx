@@ -3,8 +3,8 @@
 import {
   HeadingFour,
   HeadingTwo,
-} from "@/components/molecules/Typographies/Heading";
-import MutedText from "@/components/molecules/Typographies/MutedText";
+} from "@/components/molecules/typographies/Heading";
+import MutedText from "@/components/molecules/typographies/MutedText";
 import { Button } from "@/components/ui/button";
 import { CheckIcon, Cross2Icon, RocketIcon } from "@radix-ui/react-icons";
 import getPricesLists from "@/services/getPricesLists";
@@ -16,7 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { HiSparkles, HiFire } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";

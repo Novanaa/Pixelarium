@@ -4,9 +4,9 @@ import PaymentHistoryCardProps from "@/components/interfaces/types/PaymentHistor
 import {
   HeadingFour,
   HeadingTwo,
-} from "@/components/molecules/Typographies/Heading";
-import MutedText from "@/components/molecules/Typographies/MutedText";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+} from "@/components/molecules/typographies/Heading";
+import MutedText from "@/components/molecules/typographies/MutedText";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,

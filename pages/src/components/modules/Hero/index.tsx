@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { HeadingOne } from "@/components/molecules/Typographies/Heading";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import { HeadingOne } from "@/components/molecules/typographies/Heading";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { jakartaSans } from "@/configs/fonts";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";

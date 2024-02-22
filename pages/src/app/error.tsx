@@ -1,7 +1,7 @@
 "use client";
 
-import { HeadingOne } from "@/components/molecules/Typographies/Heading";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import { HeadingOne } from "@/components/molecules/typographies/Heading";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import { HomeIcon, ReloadIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";

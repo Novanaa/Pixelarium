@@ -16,7 +16,7 @@ import {
 } from "@/stores/reducers/docsSidebar";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
-import { HeadingFour } from "@/components/molecules/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
 

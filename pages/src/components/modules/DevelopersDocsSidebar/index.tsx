@@ -1,6 +1,6 @@
 "use client";
 
-import { HeadingFour } from "@/components/molecules/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";

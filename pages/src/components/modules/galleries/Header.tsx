@@ -1,7 +1,7 @@
 "use client";
 
 import TooltipOnHover from "@/components/molecules/TooltipOnHover";
-import Paragraph from "@/components/molecules/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
