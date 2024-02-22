@@ -1,8 +1,8 @@
 import React from "react";
-import Hero from "@/components/modules/Hero";
-import Features from "@/components/modules/Features";
-import GettingStarted from "@/components/modules/GettingStarted";
-import RootLayout from "@/layouts/Layout";
+import Hero from "@/components/modules/hero";
+import Features from "@/components/modules/features";
+import GettingStarted from "@/components/modules/getting-started";
+import RootLayout from "@/layouts";
 
 function Home() {
   return (

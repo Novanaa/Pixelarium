@@ -1,9 +1,9 @@
 import React from "react";
 import renderMDX from "@/services/renderMDX";
 import type { RenderMDXReturnType } from "@/services/renderMDX";
-import MDX from "@/components/modules/MDX";
+import MDX from "@/components/modules/mdx";
 import { Metadata } from "next";
-import RootLayout from "@/layouts/Layout";
+import RootLayout from "@/layouts";
 
 export const metadata: Metadata = {
   title: "Pixelarium - Terms of Service",
