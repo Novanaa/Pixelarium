@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Container from "@/components/molecules/Container";
 import Image from "next/image";
 import getLogoSource from "@/utils/getLogoSource";
 import { useTheme } from "next-themes";
@@ -23,6 +22,7 @@ import {
 } from "@radix-ui/react-icons";
 import { SiBuymeacoffee, SiFacebook } from "react-icons/si";
 import MutedText from "@/components/molecules/typographies/MutedText";
+import Container from "@/components/molecules/container";
 
 function Footer(): React.ReactElement {
   const { theme }: UseThemeProps = useTheme();

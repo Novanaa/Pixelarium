@@ -1,9 +1,9 @@
-import Container from "@/components/molecules/Container";
 import React from "react";
 import PricingHeader from "./Header";
 import PricingList from "./List";
 import { jakartaSans } from "@/configs/fonts";
 import { cn } from "@/lib/utils";
+import Container from "@/components/molecules/container";
 
 export default function PricingLists(): React.ReactElement {
   return (

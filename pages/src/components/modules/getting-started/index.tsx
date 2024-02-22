@@ -1,6 +1,5 @@
 "use client";
 
-import Container from "@/components/molecules/Container";
 import { HeadingTwo } from "@/components/molecules/typographies/Heading";
 import Paragraph from "@/components/molecules/typographies/Paragraph";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +10,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { useRouter } from "next/navigation";
 import React from "react";
 import { RocketIcon, BookmarkIcon } from "@radix-ui/react-icons";
+import Container from "@/components/molecules/container";
 
 function GettingStarted(): React.ReactElement {
   const router: AppRouterInstance = useRouter();

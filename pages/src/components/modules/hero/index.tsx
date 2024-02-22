@@ -16,7 +16,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import Container from "@/components/molecules/Container";
+import Container from "@/components/molecules/container";
 
 function Hero(): React.ReactElement {
   const router: AppRouterInstance = useRouter();

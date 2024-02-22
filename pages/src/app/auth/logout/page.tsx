@@ -1,10 +1,10 @@
-import Container from "@/components/molecules/Container";
 import React from "react";
 import LogoIcons from "@/components/molecules/LogoIcons";
 import { HeadingThree } from "@/components/molecules/typographies/Heading";
 import LogoutUserCard from "@/components/modules/auth/logout/UserCard";
 import RootLayout from "@/layouts";
 import { Metadata } from "next";
+import Container from "@/components/molecules/container";
 
 export const metadata: Metadata = {
   title: "Thank you for your time spent here!",

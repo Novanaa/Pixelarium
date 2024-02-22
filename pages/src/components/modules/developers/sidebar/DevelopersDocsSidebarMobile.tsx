@@ -1,6 +1,5 @@
 "use client";
 
-import Container from "@/components/molecules/Container";
 import React, { useEffect } from "react";
 import {
   DoubleArrowRightIcon,
@@ -19,6 +18,7 @@ import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
+import Container from "@/components/molecules/container";
 
 export default function DevelopersDocsSidebarMobile(): React.ReactElement {
   return (

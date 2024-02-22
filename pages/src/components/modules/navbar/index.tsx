@@ -15,7 +15,6 @@ import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
-import Container from "@/components/molecules/Container";
 import { Button } from "@/components/ui/button";
 import {
   AvatarIcon,
@@ -36,6 +35,7 @@ import isLoggedIn from "@/services/isLoggedIn";
 import getLogoSource from "@/utils/getLogoSource";
 import { Skeleton } from "@/components/ui/skeleton";
 import UserProfilePicture from "./UserProfilePicture";
+import Container from "@/components/molecules/container";
 
 function Navbar() {
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
