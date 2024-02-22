@@ -1,5 +1,5 @@
 import React from "react";
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
+import { HeadingTwo } from "@/components/molecules/typographies/Heading";
 
 export default function PricingHeader(): React.ReactElement {
   return (

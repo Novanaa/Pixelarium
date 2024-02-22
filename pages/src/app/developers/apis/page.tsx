@@ -1,6 +1,6 @@
 import renderMDX, { type RenderMDXReturnType } from "@/services/renderMDX";
-import MDX from "@/components/modules/MDX";
-import DevelopersDocsLayout from "@/layouts/DevelopersDocsLayout";
+import MDX from "@/components/modules/mdx";
+import DevelopersDocsLayout from "@/layouts/developer";
 import React from "react";
 import { Metadata } from "next";
 

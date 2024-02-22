@@ -1,10 +1,10 @@
-import Container from "@/components/ui/Container";
 import React from "react";
-import LogoIcons from "@/components/ui/LogoIcons";
-import { HeadingThree } from "@/components/ui/Typographies/Heading";
+import LogoIcons from "@/components/molecules/pixelarium-logo-icons";
+import { HeadingThree } from "@/components/molecules/typographies/Heading";
 import LogoutUserCard from "@/components/modules/auth/logout/UserCard";
-import RootLayout from "@/layouts/Layout";
+import RootLayout from "@/layouts";
 import { Metadata } from "next";
+import Container from "@/components/molecules/container";
 
 export const metadata: Metadata = {
   title: "Thank you for your time spent here!",

@@ -12,7 +12,7 @@ import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import onErrorHandler from "./utils/onErrorHandler";
 import type { default as IPicture } from "@/components/interfaces/types/Picture";
 import EmptyPictures from "./EmptyPictures";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
 import moment from "moment";
 
 interface PictureProps extends React.ComponentProps<"div"> {
