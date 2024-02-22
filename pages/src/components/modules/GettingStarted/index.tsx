@@ -1,8 +1,8 @@
 "use client";
 
-import Container from "@/components/ui/Container";
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import Container from "@/components/molecules/Container";
+import { HeadingTwo } from "@/components/molecules/Typographies/Heading";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { jakartaSans } from "@/configs/fonts";

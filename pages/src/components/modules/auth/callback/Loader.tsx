@@ -1,8 +1,8 @@
 "use client";
 
-import Container from "@/components/ui/Container";
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
-import MutedText from "@/components/ui/Typographies/MutedText";
+import Container from "@/components/molecules/Container";
+import { HeadingTwo } from "@/components/molecules/Typographies/Heading";
+import MutedText from "@/components/molecules/Typographies/MutedText";
 import React from "react";
 import { LineWave } from "react-loader-spinner";
 import { useTheme } from "next-themes";

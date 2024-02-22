@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import Container from "@/components/ui/Container";
+import Container from "@/components/molecules/Container";
 import Image from "next/image";
 import getLogoSource from "@/utils/getLogoSource";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 import type FooterHeaderProps from "@/components/interfaces/types/FooterHeaderProps";
-import { HeadingFour } from "@/components/ui/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/Typographies/Heading";
 import { cn } from "@/lib/utils";
 import { jakartaSans } from "@/configs/fonts";
 import Link from "next/link";
@@ -22,7 +22,7 @@ import {
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { SiBuymeacoffee, SiFacebook } from "react-icons/si";
-import MutedText from "@/components/ui/Typographies/MutedText";
+import MutedText from "@/components/molecules/Typographies/MutedText";
 
 function Footer(): React.ReactElement {
   const { theme }: UseThemeProps = useTheme();
@@ -43,7 +43,7 @@ function FooterHeader({ theme }: FooterHeaderProps): React.ReactElement {
   return (
     <>
       <Link
-        className="flex items-center gap-1 rounded border px-[3.2rem] py-3 opacity-80 hover:bg-primary-foreground/50 @sm:px-14 @xl:px-5"
+        className="flex items-center gap-1 rounded border px-[3.2rem] py-3 opacity-80 @sm:px-14 @xl:px-5 hover:bg-primary-foreground/50"
         href="/"
       >
         <Image

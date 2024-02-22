@@ -1,5 +1,5 @@
 import { default as NavbarMobileMenuParams } from "@/components/interfaces/types/NavbarMobileMenu";
-import Container from "@/components/ui/Container";
+import Container from "@/components/molecules/Container";
 import {
   NavigationMenu,
   NavigationMenuList,

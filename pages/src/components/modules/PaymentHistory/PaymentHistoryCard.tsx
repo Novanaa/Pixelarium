@@ -1,9 +1,12 @@
 "use client";
 
 import PaymentHistoryCardProps from "@/components/interfaces/types/PaymentHistoryCard";
-import { HeadingFour, HeadingTwo } from "@/components/ui/Typographies/Heading";
-import MutedText from "@/components/ui/Typographies/MutedText";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import {
+  HeadingFour,
+  HeadingTwo,
+} from "@/components/molecules/Typographies/Heading";
+import MutedText from "@/components/molecules/Typographies/MutedText";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,

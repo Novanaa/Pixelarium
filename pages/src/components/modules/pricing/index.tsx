@@ -1,4 +1,4 @@
-import Container from "@/components/ui/Container";
+import Container from "@/components/molecules/Container";
 import React from "react";
 import PricingHeader from "./Header";
 import PricingList from "./List";

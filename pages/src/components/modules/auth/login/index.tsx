@@ -1,7 +1,7 @@
 "use client";
 
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
-import MutedText from "@/components/ui/Typographies/MutedText";
+import { HeadingTwo } from "@/components/molecules/Typographies/Heading";
+import MutedText from "@/components/molecules/Typographies/MutedText";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";

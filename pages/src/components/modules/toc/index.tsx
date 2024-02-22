@@ -1,6 +1,6 @@
 "use client";
 
-import { HeadingFour } from "@/components/ui/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/Typographies/Heading";
 import { cn } from "@/lib/utils";
 import React from "react";
 import styles from "./styles/index.module.css";

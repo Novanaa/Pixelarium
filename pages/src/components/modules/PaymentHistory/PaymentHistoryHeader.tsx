@@ -1,8 +1,8 @@
 "use client";
 
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
-import MutedText from "@/components/ui/Typographies/MutedText";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import { HeadingTwo } from "@/components/molecules/Typographies/Heading";
+import MutedText from "@/components/molecules/Typographies/MutedText";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import {
   Tooltip,
   TooltipContent,

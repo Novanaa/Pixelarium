@@ -1,6 +1,6 @@
 import React from "react";
-import { HeadingTwo } from "@/components/ui/Typographies/Heading";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import { HeadingTwo } from "@/components/molecules/Typographies/Heading";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import cn from "@/utils/cn";
 import { jakartaSans } from "@/configs/fonts";
 import {
@@ -46,7 +46,7 @@ function FeaturesHeader(): React.ReactElement {
 function FeaturesCard(): React.ReactElement {
   return (
     <div className="relative mt-5 grid grid-cols-1 place-items-center gap-5 p-0 @2xl:grid-cols-2 @5xl:grid-cols-3">
-      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 hover:cursor-default hover:bg-primary-foreground/50 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem]">
+      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem] hover:cursor-default hover:bg-primary-foreground/50">
         <LockClosedIcon width={28} height={28} />
         <Paragraph className="text-lg font-medium">
           Secure and Private
@@ -55,7 +55,7 @@ function FeaturesCard(): React.ReactElement {
           Your images are hosted securely with encryption and access controls.
         </Paragraph>
       </div>
-      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-5 hover:cursor-default hover:bg-primary-foreground/50 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem]">
+      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-5 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem] hover:cursor-default hover:bg-primary-foreground/50">
         <MixerVerticalIcon width={28} height={28} />
         <Paragraph className="text-lg font-medium">
           Flexible Sharing Options
@@ -65,7 +65,7 @@ function FeaturesCard(): React.ReactElement {
           websites or share on social media.
         </Paragraph>
       </div>
-      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 hover:cursor-default hover:bg-primary-foreground/50 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem]">
+      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem] hover:cursor-default hover:bg-primary-foreground/50">
         <CameraIcon width={28} height={28} />
         <Paragraph className="text-lg font-medium">Image Management</Paragraph>
         <Paragraph className="text-sm text-primary/70">
@@ -73,7 +73,7 @@ function FeaturesCard(): React.ReactElement {
           tools.
         </Paragraph>
       </div>
-      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 hover:cursor-default hover:bg-primary-foreground/50 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem]">
+      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem] hover:cursor-default hover:bg-primary-foreground/50">
         <UploadIcon width={28} height={28} />
         <Paragraph className="text-lg font-medium">Easy Image Upload</Paragraph>
         <Paragraph className="text-sm text-primary/70">
@@ -81,7 +81,7 @@ function FeaturesCard(): React.ReactElement {
           interface.
         </Paragraph>
       </div>
-      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 hover:cursor-default hover:bg-primary-foreground/50 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem]">
+      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem] hover:cursor-default hover:bg-primary-foreground/50">
         <CommitIcon width={28} height={28} />
         <Paragraph className="text-lg font-medium">Customizable</Paragraph>
         <Paragraph className="text-sm text-primary/70">
@@ -89,7 +89,7 @@ function FeaturesCard(): React.ReactElement {
           metadata.
         </Paragraph>
       </div>
-      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 hover:cursor-default hover:bg-primary-foreground/50 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem]">
+      <div className="flex h-[10.3rem] w-[90%] flex-col justify-start gap-[0.3rem] rounded-md border pl-5 pr-6 pt-6 @xs:w-[85%] @sm:w-[80vw] @2xl:w-[20rem] @5xl:w-[20rem] hover:cursor-default hover:bg-primary-foreground/50">
         <Share1Icon width={28} height={28} />
         <Paragraph className="text-lg font-medium">Easy Sharing</Paragraph>
         <Paragraph className="text-sm text-primary/70">

@@ -1,7 +1,7 @@
 "use client";
 
-import UserAvatar from "@/components/ui/UserAvatar";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import UserAvatar from "@/components/molecules/UserAvatar";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import getUserData from "@/services/getUserData";
 import DecodedUser from "@/interfaces/types/DecodedUser";

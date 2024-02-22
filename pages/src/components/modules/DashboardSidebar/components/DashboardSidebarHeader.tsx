@@ -1,5 +1,5 @@
-import LogoIcons from "@/components/ui/LogoIcons";
-import { HeadingThree } from "@/components/ui/Typographies/Heading";
+import LogoIcons from "@/components/molecules/LogoIcons";
+import { HeadingThree } from "@/components/molecules/Typographies/Heading";
 import { jakartaSans } from "@/configs/fonts";
 import { cn } from "@/lib/utils";
 

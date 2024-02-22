@@ -1,6 +1,6 @@
 "use client";
 
-import Container from "@/components/ui/Container";
+import Container from "@/components/molecules/Container";
 import React, { useEffect } from "react";
 import {
   DoubleArrowRightIcon,
@@ -16,7 +16,7 @@ import {
 } from "@/stores/reducers/docsSidebar";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
-import { HeadingFour } from "@/components/ui/Typographies/Heading";
+import { HeadingFour } from "@/components/molecules/Typographies/Heading";
 import Link from "next/link";
 import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
 

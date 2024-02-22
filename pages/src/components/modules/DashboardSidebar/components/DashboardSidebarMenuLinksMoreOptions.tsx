@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { HiCash, HiMenuAlt1 } from "react-icons/hi";
 import { cn } from "@/lib/utils";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import {
   Tooltip,
   TooltipContent,

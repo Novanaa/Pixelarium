@@ -24,8 +24,8 @@ import { columns } from "./columnsDefinition";
 import PaymentHistoryDataTableProps from "@/components/interfaces/types/PaymentHistoryDataTableProps";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HiBookOpen } from "react-icons/hi";
-import { HeadingThree } from "@/components/ui/Typographies/Heading";
-import Paragraph from "@/components/ui/Typographies/Paragraph";
+import { HeadingThree } from "@/components/molecules/Typographies/Heading";
+import Paragraph from "@/components/molecules/Typographies/Paragraph";
 import { Button } from "@/components/ui/button";
 import {
   ChevronLeftIcon,
