@@ -32,15 +32,11 @@ export default function UploadSection(): React.ReactElement {
             uploadOpenAndCloseAnimation,
           )}
         >
-          <OutsideClickHandler
-            onOutsideClick={() => {
-              router.push(pathname);
-            }}
-          >
+          <OutsideClickHandler onOutsideClick={() => router.push(pathname)}>
             <Tabs
               defaultValue="picture"
               className={cn(
-                "h-[100dvh] w-[100vw] rounded-lg border bg-black p-1 pt-2 @md:h-[25rem] @md:w-[25rem] @md:pt-1",
+                "h-[100dvh] w-[100vw] rounded-lg border bg-black p-1 pt-2 @md:h-[28rem] @md:w-[25rem] @md:pt-1",
               )}
             >
               <UploadTrigger />
