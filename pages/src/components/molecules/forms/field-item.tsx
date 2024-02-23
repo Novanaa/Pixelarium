@@ -24,11 +24,13 @@ export default function FormFieldItem<T>({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label || "Your label"}</FormLabel>
+          <div className="flex items-center justify-between">
+            <FormLabel>{label || "Your label"}</FormLabel>
+            <FormMessage className="text-[0.8rem]" />
+          </div>
           <FormControl>
             <Input placeholder={placeholder || "Your placeholder"} {...field} />
           </FormControl>
-          <FormMessage />
         </FormItem>
       )}
     />
