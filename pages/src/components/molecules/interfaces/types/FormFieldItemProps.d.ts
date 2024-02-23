@@ -1,10 +1,10 @@
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 
 export default interface FormFieldItemProps<T>
   extends React.ComponentProps<"div"> {
   name: string;
   placeholder?: string;
-  form: UseFormReturn<T>;
+  form: z.infer<T>;
   label?: string;
 }
