@@ -43,7 +43,7 @@ function Forms(): React.ReactElement {
       <form
         onSubmit={form.handleSubmit(
           (data: z.infer<typeof PictureFieldFormSchema>) =>
-            onSubmitForm({ data, form }),
+            onSubmitForm({ data, form, router, pathname }),
         )}
         className="flex w-[85%] flex-col gap-3"
       >
