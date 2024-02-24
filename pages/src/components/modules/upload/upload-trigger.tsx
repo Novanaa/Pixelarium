@@ -6,14 +6,16 @@ import activeUploadTabs from "./constant/readonly/activeUploadTabs";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 
 export default function UploadTrigger(): React.ReactElement {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTabs, setActiveTabs] = useQueryState(
     "upload_by",
     parseAsStringLiteral(activeUploadTabs).withDefault("picture"),
   );
 
+  // @ts-expect-error promise error
   useEffect(() => {
     setActiveTabs(activeTabs);
+
+    return () => setActiveTabs(null);
   });
 
   return (
