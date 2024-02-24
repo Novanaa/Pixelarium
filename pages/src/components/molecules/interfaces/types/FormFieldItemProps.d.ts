@@ -7,4 +7,5 @@ export default interface FormFieldItemProps<T>
   placeholder?: string;
   form: z.infer<T>;
   label?: string;
+  isLoading?: boolean;
 }
