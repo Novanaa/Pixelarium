@@ -9,12 +9,12 @@ const PictureFieldFormSchema = z.object({
     })
     .url({ message: "Link must be an URL!" }),
   expires_in: z
-    .number({
+    .string({
       required_error: "Choose your expires picture",
       invalid_type_error: invalidTypeErrorMessege,
     })
     .nullable(),
-  is_private: z.boolean({
+  is_private: z.string({
     required_error: "Choose your picture status",
     invalid_type_error: invalidTypeErrorMessege,
   }),
