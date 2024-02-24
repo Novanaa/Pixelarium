@@ -16,6 +16,7 @@ export default function FormFieldItem<T>({
   label,
   form,
   name,
+  isLoading,
 }: FormFieldItemProps<T>): React.ReactElement {
   return (
     <FormField
@@ -29,7 +30,11 @@ export default function FormFieldItem<T>({
             <FormMessage className="text-[0.8rem]" />
           </div>
           <FormControl>
-            <Input {...field} placeholder={placeholder || "Your placeholder"} />
+            <Input
+              {...field}
+              placeholder={placeholder || "Your placeholder"}
+              disabled={isLoading}
+            />
           </FormControl>
         </FormItem>
       )}
