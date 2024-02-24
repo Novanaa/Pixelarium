@@ -6,5 +6,10 @@ import { z } from "zod";
 export default function useUploadForm() {
   return useForm<z.infer<typeof PictureFieldFormSchema>>({
     resolver: zodResolver(PictureFieldFormSchema),
+    defaultValues: {
+      link: "",
+      expires_in: "",
+      is_private: "",
+    },
   });
 }
