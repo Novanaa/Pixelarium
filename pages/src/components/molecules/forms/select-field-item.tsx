@@ -29,10 +29,11 @@ export default function FormSelectFieldItem<T>({
   placeholder,
   label,
   selectValue,
+  isLoading,
 }: FormSelectFieldItemProps<T>): React.ReactElement {
   return (
     <FormField
-      // @ts-expect-error error types
+      // @ts-expect-error types error
       control={form.control}
       name={name}
       render={({ field }) => (
@@ -43,8 +44,8 @@ export default function FormSelectFieldItem<T>({
           </div>
           <Select
             onValueChange={field.onChange}
-            defaultValue={field.value}
-            name={field.name}
+            defaultValue={field.value?.toString()}
+            disabled={isLoading}
           >
             <FormControl>
               <SelectTrigger>
