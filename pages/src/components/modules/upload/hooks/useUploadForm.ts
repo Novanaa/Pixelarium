@@ -8,8 +8,6 @@ export default function useUploadForm() {
     resolver: zodResolver(PictureFieldFormSchema),
     defaultValues: {
       link: "",
-      expires_in: "",
-      is_private: "",
     },
   });
 }
