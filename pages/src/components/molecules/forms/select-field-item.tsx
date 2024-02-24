@@ -44,7 +44,7 @@ export default function FormSelectFieldItem<T>({
           </div>
           <Select
             onValueChange={field.onChange}
-            defaultValue={field.value?.toString()}
+            value={field.value?.toString()}
             disabled={isLoading}
           >
             <FormControl>
