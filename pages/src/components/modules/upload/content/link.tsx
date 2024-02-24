@@ -1,18 +1,22 @@
 "use client";
 
-import Paragraph from "@/components/molecules/typographies/Paragraph";
-import { Form } from "@/components/ui/form";
-import { TabsContent } from "@/components/ui/tabs";
-import { z } from "zod";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import PictureFieldFormSchema from "@/validations/pictureField";
-import FormFieldItem from "@/components/molecules/forms/field-item";
+import { z } from "zod";
+import Paragraph from "@/components/molecules/typographies/Paragraph";
+import { TabsContent } from "@/components/ui/tabs";
 import OnLoadingButton from "@/components/molecules/button/on-loading";
-import { RocketIcon } from "@radix-ui/react-icons";
+import { CrossCircledIcon, RocketIcon } from "@radix-ui/react-icons";
+import linkContentSelectExpiresValue from "../constant/readonly/linkContentSelectExpiresValue";
+import linkContentSelectStatusValue from "../constant/readonly/linkContentSelectStatusValue";
+import useUploadForm from "../hooks/useUploadForm";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { usePathname, useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import FormFieldItem from "@/components/molecules/forms/field-item";
+import onSubmitForm from "../services/onSubmitForm";
 import FormSelectFieldItem from "@/components/molecules/forms/select-field-item";
-import FormSelectFieldItemValue from "@/components/molecules/interfaces/types/FormSelectFieldItemValue";
+import PictureFieldFormSchema from "@/validations/pictureField";
 
 export default function LinkContent(): React.ReactElement {
   return (
@@ -29,65 +33,59 @@ export default function LinkContent(): React.ReactElement {
 }
 
 function Forms(): React.ReactElement {
-  const form = useForm<z.infer<typeof PictureFieldFormSchema>>({
-    resolver: zodResolver(PictureFieldFormSchema),
-    defaultValues: {
-      expires_in: 30,
-    },
-  });
-
-  function onSubmit(data: z.infer<typeof PictureFieldFormSchema>) {
-    console.log(data);
-  }
-
-  const linkContentSelectExpiresValue: Array<FormSelectFieldItemValue> = [
-    { title: "30 Days", value: 30 },
-    { title: "90 Days", value: 90 },
-    { title: "120 Days", value: 120 },
-    { title: "Infinity", value: null },
-  ];
-
-  const linkContentSelectStatusValue: Array<FormSelectFieldItemValue> = [
-    {
-      title: "Public",
-      value: false,
-    },
-    {
-      title: "Private",
-      value: true,
-    },
-  ];
+  const router: AppRouterInstance = useRouter();
+  const pathname: string = usePathname();
+  const form = useUploadForm();
+  const isLoadingForm: boolean = form.formState.isSubmitting;
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(
+          (data: z.infer<typeof PictureFieldFormSchema>) =>
+            onSubmitForm({ data, form }),
+        )}
         className="flex w-[85%] flex-col gap-3"
       >
         <FormFieldItem
           name="link"
           form={form}
-          label="Picture link"
           placeholder="Your picture link"
+          label="Picture Link"
+          isLoading={isLoadingForm}
         />
         <FormSelectFieldItem
+          form={form}
           name="expires_in"
-          form={form}
+          placeholder="Your pictures expires time"
           label="Picture expires"
-          placeholder="Your picture expires time"
           selectValue={linkContentSelectExpiresValue}
+          isLoading={isLoadingForm}
         />
         <FormSelectFieldItem
-          name="is_private"
           form={form}
+          name="is_private"
+          placeholder="Your pictures status"
           label="Picture status"
-          placeholder="Your picture status"
           selectValue={linkContentSelectStatusValue}
+          isLoading={isLoadingForm}
         />
-        <OnLoadingButton onLoading={false} type="submit" className="mt-2">
-          <RocketIcon className="mr-2 h-4 w-4" />
-          Submit
-        </OnLoadingButton>
+        <div className="mt-2 flex flex-col gap-3">
+          <OnLoadingButton onLoading={isLoadingForm} type="submit">
+            <RocketIcon className="mr-2 h-4 w-4" />
+            Submit
+          </OnLoadingButton>
+          <Button
+            variant="secondary"
+            onClick={() => router.push(pathname)}
+            type="button"
+            className="font-medium"
+            disabled={isLoadingForm}
+          >
+            <CrossCircledIcon className="mr-2 h-4 w-4" />
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );
