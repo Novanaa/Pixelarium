@@ -19,9 +19,9 @@ export default function FormFieldItem<T>({
 }: FormFieldItemProps<T>): React.ReactElement {
   return (
     <FormField
-      // @ts-expect-error not asignable types
-      control={form.control}
       name={name}
+      // @ts-expect-error types error
+      control={form.control}
       render={({ field }) => (
         <FormItem>
           <div className="flex items-center justify-between">
@@ -29,7 +29,7 @@ export default function FormFieldItem<T>({
             <FormMessage className="text-[0.8rem]" />
           </div>
           <FormControl>
-            <Input placeholder={placeholder || "Your placeholder"} {...field} />
+            <Input {...field} placeholder={placeholder || "Your placeholder"} />
           </FormControl>
         </FormItem>
       )}
