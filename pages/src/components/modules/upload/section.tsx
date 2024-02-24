@@ -10,14 +10,22 @@ import useActiveSearchParams from "@/hooks/useActiveSearchParams";
 import OutsideClickHandler from "react-outside-click-handler";
 import { usePathname, useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import activeUploadTabs from "./constant/readonly/activeUploadTabs";
+import { useQueryState, parseAsStringLiteral } from "nuqs";
 
 export default function UploadSection(): React.ReactElement {
+  const [activeTabs] = useQueryState(
+    "upload_by",
+    parseAsStringLiteral(activeUploadTabs).withDefault("picture"),
+  );
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router: AppRouterInstance = useRouter();
   const pathname: string = usePathname();
   const uploadOpenAndCloseAnimation: string = isOpen
     ? "animate-in fade-in-0 zoom-in-95 slide-out-to-left-1/2 slide-out-to-top-[48%]"
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
+  const isOutsideClickHandlerDisabled: boolean =
+    activeTabs == "link" ? true : false;
 
   useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "upload" });
 
@@ -32,11 +40,15 @@ export default function UploadSection(): React.ReactElement {
             uploadOpenAndCloseAnimation,
           )}
         >
-          <OutsideClickHandler onOutsideClick={() => router.push(pathname)}>
+          <OutsideClickHandler
+            onOutsideClick={() => router.push(pathname)}
+            disabled={isOutsideClickHandlerDisabled}
+          >
             <Tabs
               defaultValue="picture"
+              value={activeTabs}
               className={cn(
-                "h-[100dvh] w-[100vw] rounded-lg border bg-black p-1 pt-2 @md:h-[28rem] @md:w-[25rem] @md:pt-1",
+                "h-[100dvh] w-[100vw] rounded-lg border bg-black p-1 pt-2 @md:h-[28.5rem] @md:w-[25rem] @md:pt-1",
               )}
             >
               <UploadTrigger />
