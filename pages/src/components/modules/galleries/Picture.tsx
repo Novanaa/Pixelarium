@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
-import onErrorHandler from "./utils/onErrorHandler";
+import onErrorHandler from "../../../utils/onErrorHandler";
 import type { default as IPicture } from "@/components/interfaces/types/Picture";
 import EmptyPictures from "./EmptyPictures";
 import Paragraph from "@/components/molecules/typographies/Paragraph";
@@ -88,7 +88,7 @@ function HoverCardPicture({
             {picture.title} - ({picture.filename})
           </Paragraph>
           <Paragraph className="text-sm font-medium text-primary/50">
-            {picture.description}
+            {picture.description && "This picture doesn't have a description"}
           </Paragraph>
           <Paragraph className="text-sm font-medium text-primary/50">
             ({picture.is_private ? "Private" : "Public"}){" "}
