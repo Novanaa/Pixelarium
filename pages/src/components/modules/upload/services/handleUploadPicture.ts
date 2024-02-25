@@ -14,26 +14,25 @@ import getUserSubscriptionStatus, {
   GetUserSubscriptionStatusReturnType,
 } from "@/services/getUserSubscriptionStatus";
 import pictureLimitSize from "@/constant/readonly/pictureSizeLimit";
+import {
+  setPictureUploadImageBloblSrcState,
+  setPictureUploadProgressState,
+  setPictureUploadStartedState,
+} from "@/stores/reducers/pictureUpload";
+import { AppDispatch } from "@/stores";
 
 interface HandleUploadPictureParams {
   ev: React.ChangeEvent<HTMLInputElement>;
   router: AppRouterInstance;
   pathname: string;
-  progressEventSetter: React.Dispatch<
-    React.SetStateAction<{
-      started: boolean;
-      progress: number;
-    }>
-  >;
-  imageSrcBlobSetter: React.Dispatch<React.SetStateAction<string>>;
+  dispatch: AppDispatch;
 }
 
 export default async function handleUploadPicture({
   ev,
   router,
   pathname,
-  progressEventSetter,
-  imageSrcBlobSetter,
+  dispatch,
 }: HandleUploadPictureParams) {
   const controller: AbortController = new AbortController();
   const pictures: FileList | null = ev.target.files;
@@ -49,7 +48,7 @@ export default async function handleUploadPicture({
       let userLimitUploadSize: number = pictureLimitSize[
         subscription?.plan || "none"
       ] as number;
-      if (subscription?.plan == "none") userLimitUploadSize = 15;
+      if (subscription?.status == "deactive") userLimitUploadSize = 15;
 
       if (pictureFileSize > userLimitUploadSize * 1024 * 1024) {
         controller.abort();
@@ -81,19 +80,18 @@ export default async function handleUploadPicture({
       formData.append("use_external_image_url", "false");
 
       const pictureUrl: string = URL.createObjectURL(picture);
-      imageSrcBlobSetter(pictureUrl);
-      progressEventSetter((prev) => ({ ...prev, started: true }));
+      dispatch(setPictureUploadImageBloblSrcState(pictureUrl));
+      dispatch(setPictureUploadStartedState(true));
 
       await axios.post(endpoint, formData, {
         onUploadProgress: (p) =>
-          progressEventSetter((prev) => ({
-            ...prev,
-            progress: p.progress ? p.progress * 100 : prev.progress,
-          })),
+          dispatch(setPictureUploadProgressState(p.progress! * 100)),
       });
 
       router.push(pathname);
       router.refresh();
+
+      dispatch(setPictureUploadStartedState(false));
 
       toast({
         title: "Your Masterpiece Has Landed!",
