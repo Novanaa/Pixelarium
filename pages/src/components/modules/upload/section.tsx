@@ -17,7 +17,7 @@ import { AppDispatch } from "@/stores";
 import { useDispatch } from "react-redux";
 
 export default function UploadSection(): React.ReactElement {
-  const [onDragEnter] = useState<boolean>(false);
+  const [onDragEnter, setOnDragEnter] = useState<boolean>(false);
   const [activeTabs] = useQueryState(
     "upload_by",
     parseAsStringLiteral(activeUploadTabs).withDefault("picture"),
@@ -54,10 +54,14 @@ export default function UploadSection(): React.ReactElement {
             <Tabs
               defaultValue="picture"
               value={activeTabs}
-              onDragOver={(ev) => ev.preventDefault()}
-              onDrop={(ev: React.DragEvent<HTMLDivElement>) =>
-                onDropUploadHandler({ dispatch, ev, pathname, router })
-              }
+              onDragOver={(ev) => {
+                ev.preventDefault();
+                setOnDragEnter(true);
+              }}
+              onDrop={(ev: React.DragEvent<HTMLDivElement>) => {
+                onDropUploadHandler({ dispatch, ev, pathname, router });
+                setOnDragEnter(false);
+              }}
               className={cn(
                 "h-[100dvh] w-[100vw] rounded-lg border bg-black p-1 pt-2 @md:h-[28.5rem] @md:w-[25rem] @md:pt-1",
                 onDroppedFilesStyles,
