@@ -6,7 +6,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import { CrossCircledIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
-import React, { useState } from "react";
+import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -17,38 +17,23 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import allowedPictureType from "../constant/readonly/allowedPictureType";
 import onErrorHandler from "@/utils/onErrorHandler";
 import handleCancelRequest from "../services/handleCancelRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/stores";
 
 export default function PictureContent(): React.ReactElement {
-  const [imageBlobSrc, setImageBlobSrc] = useState<string>("");
-  const [uploadProgress, setUploadProgress] = useState({
-    started: false,
-    progress: 0,
-  });
+  const isUploadProgressStarted = useSelector(
+    (state: RootState) => state.pictureUpload.started,
+  );
 
-  return uploadProgress.started ? (
-    <OnUploadPictureContent imageSrc={imageBlobSrc} />
+  return isUploadProgressStarted ? (
+    <OnUploadPictureContent />
   ) : (
-    <UploadPictureContent
-      progressEventSetter={setUploadProgress}
-      imageSrcBlobSetter={setImageBlobSrc}
-    />
+    <UploadPictureContent />
   );
 }
 
-interface UploadPictureContentProps {
-  progressEventSetter: React.Dispatch<
-    React.SetStateAction<{
-      started: boolean;
-      progress: number;
-    }>
-  >;
-  imageSrcBlobSetter: React.Dispatch<React.SetStateAction<string>>;
-}
-
-function UploadPictureContent({
-  progressEventSetter,
-  imageSrcBlobSetter,
-}: UploadPictureContentProps): React.ReactElement {
+function UploadPictureContent(): React.ReactElement {
+  const dispatch: AppDispatch = useDispatch();
   const router: AppRouterInstance = useRouter();
   const pathname: string = usePathname();
   const windowWitdh: number = useWindowWidth();
@@ -95,8 +80,7 @@ function UploadPictureContent({
                 ev,
                 pathname,
                 router,
-                progressEventSetter,
-                imageSrcBlobSetter,
+                dispatch,
               })
             }
           />
@@ -113,13 +97,10 @@ function UploadPictureContent({
   );
 }
 
-interface OnUploadPictureContentProps {
-  imageSrc: string;
-}
-
-function OnUploadPictureContent({
-  imageSrc,
-}: OnUploadPictureContentProps): React.ReactElement {
+function OnUploadPictureContent(): React.ReactElement {
+  const imageSrc: string = useSelector(
+    (state: RootState) => state.pictureUpload.imageBlobSrc,
+  );
   const router: AppRouterInstance = useRouter();
   const pathname: string = usePathname();
 
