@@ -1,11 +1,11 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useEffect } from "react";
 import { useWindowWidth } from "@react-hook/window-size";
+import { usePathname } from "next/navigation";
 
 interface UseToggleOuterPageClickProps {
   ref: React.MutableRefObject<HTMLDivElement>;
   router: AppRouterInstance;
-  pagePathname: string;
 }
 
 /**
@@ -21,9 +21,9 @@ interface UseToggleOuterPageClickProps {
 export default function useToggleOuterPageClick({
   ref,
   router,
-  pagePathname,
 }: UseToggleOuterPageClickProps): void {
   const windowWidth: number = useWindowWidth();
+  const pagePathname: string = usePathname()
   useEffect(() => {
     if (windowWidth > 640) {
       const handleClick = (e: MouseEvent) => {

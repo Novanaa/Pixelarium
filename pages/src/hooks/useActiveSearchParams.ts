@@ -1,10 +1,11 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 
 interface UseActiveSearchParamsProps {
-  searchParams: ReadonlyURLSearchParams;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
+  expectedValue: string;
 }
 
 /**
@@ -19,18 +20,20 @@ interface UseActiveSearchParamsProps {
  */
 export default function useActiveSearchParams({
   isOpen,
-  searchParams,
   setIsOpen,
+  expectedValue,
 }: UseActiveSearchParamsProps): void {
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+
   useEffect(() => {
+    const hasActiveQueryParams: boolean = searchParams.has("active");
     const activeSearchParams: string | null = searchParams.get("active");
-    if (!activeSearchParams || activeSearchParams !== "search") {
+    if (!hasActiveQueryParams || activeSearchParams !== expectedValue) {
       setIsOpen(false);
       return;
     }
 
     setIsOpen(true);
-
-    return () => setIsOpen(isOpen);
-  }, [setIsOpen, searchParams, isOpen]);
+    return;
+  }, [setIsOpen, searchParams, isOpen, expectedValue]);
 }

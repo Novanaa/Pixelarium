@@ -20,10 +20,6 @@ export default function useKeyboardToggle({
 }: UseKeyboardToggleProps): void {
   useEffect(() => {
     const clickHandler = (ev: KeyboardEvent) => {
-      if (ev.key == "/") {
-        ev.preventDefault();
-        router.push(`${pagePathname}?active=search`);
-      }
       if (ev.key == "Escape") {
         ev.preventDefault();
         router.push(pagePathname);

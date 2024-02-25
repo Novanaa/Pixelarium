@@ -10,13 +10,8 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import AccountsSearchGroup from "../AccountsSearchGroup";
-import {
-  ReadonlyURLSearchParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import useActiveSearchParams from "../hooks/useActiveSearchParams";
+import { usePathname, useRouter } from "next/navigation";
+import useActiveSearchParams from "@/hooks/useActiveSearchParams";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import { cn } from "@/lib/utils";
 import MobileSearchProps from "@/components/interfaces/types/MobileSearchProps";
@@ -32,7 +27,6 @@ export default function MobileSearch({
   placeholder,
 }: MobileSearchProps): React.ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const search: ReadonlyURLSearchParams = useSearchParams();
   const router: AppRouterInstance = useRouter();
   const pathname: string = usePathname();
   const searchOpenAndCloseAnimation: string = isOpen
@@ -40,7 +34,7 @@ export default function MobileSearch({
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
   const searchStateValidation: string = isOpen ? `` : `hidden`;
 
-  useActiveSearchParams({ isOpen, setIsOpen, searchParams: search });
+  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "search" });
 
   useTogglePageScrollOverflow(isOpen);
 

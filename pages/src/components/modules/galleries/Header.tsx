@@ -33,7 +33,7 @@ function GalleryHeader({ pictures }: GalleryHeader): React.ReactElement {
         </div>
         <div className="flex gap-2">
           <TooltipOnHover title="Add a new picture">
-            <Link href="/?active=upload">
+            <Link href="/galleries?active=upload">
               <Button className="font-medium" variant="ghost">
                 <PlusIcon className="mr-1 h-4 w-4" />
                 New Picture

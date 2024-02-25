@@ -7,7 +7,7 @@ export default function userPictureManagementRequestBodyValidation(
   req: Request
 ): joi.ValidationResult<UserPictureManagementRequestBodyValidationTypes> {
   const userPictureManagementValidation = joi.object({
-    expiresInDays: joi.number().default(30),
+    expiresInDays: joi.number().default(30).allow(null),
     is_private: joi.boolean().default(false),
     use_external_image_url: joi.boolean().default(false),
     picture_details: customValidationObject

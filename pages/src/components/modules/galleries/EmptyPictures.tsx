@@ -26,7 +26,7 @@ export default function EmptyPictures(): React.ReactElement {
         </Paragraph>
       </Balancer>
       <div className="mt-3 flex w-full flex-col gap-3 @md:w-fit @md:flex-row">
-        <Link href="/galleries?tabActive=upload">
+        <Link href="/galleries?active=upload">
           <Button variant="default" className="w-full font-medium">
             <RocketIcon className="mr-2 h-4 w-4" />
             Upload

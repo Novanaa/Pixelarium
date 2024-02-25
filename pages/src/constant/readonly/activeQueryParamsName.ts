@@ -1,3 +1,3 @@
-const activeQueryParamsName: Array<string> = ["upload"];
+const activeQueryParamsName: Array<string> = ["upload", "search"];
 
 export default activeQueryParamsName;
