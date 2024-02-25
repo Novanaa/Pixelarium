@@ -126,19 +126,23 @@ function OnUploadPictureContent({
   return (
     <TabsContent
       value="picture"
-      className="mt-5 flex w-full flex-col items-center justify-center gap-3"
+      className="mt-5 flex w-full flex-col items-center justify-center gap-3 @container"
     >
-      <LazyLoadImage
-        alt="picture"
-        effect="black-and-white"
-        src={imageSrc}
-        className="h-full w-full animate-pulse rounded-lg border border-2 object-cover object-center grayscale"
-        width={350}
-        height={310}
-        onError={({ target }: React.SyntheticEvent<HTMLImageElement, Event>) =>
-          onErrorHandler(target)
-        }
-      />
+      <div className="flex w-[90%] items-center justify-center rounded-lg border border-2 @md:w-full">
+        <LazyLoadImage
+          alt="picture"
+          effect="black-and-white"
+          src={imageSrc}
+          className="mx-0 h-full w-full animate-pulse object-cover object-center grayscale"
+          width={350}
+          height={310}
+          onError={({
+            target,
+          }: React.SyntheticEvent<HTMLImageElement, Event>) =>
+            onErrorHandler(target)
+          }
+        />
+      </div>
       <Button
         className="w-[90%] font-medium"
         onClick={() => handleCancelRequest({ pathname, router })}
