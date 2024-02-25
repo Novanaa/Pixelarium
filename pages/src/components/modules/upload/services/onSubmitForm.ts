@@ -37,7 +37,7 @@ export default async function useOnSubmitForm({
 
     const pictureDetails: PictureDetails = {
       title: faker.system.fileName().split(".")[0],
-      description: faker.lorem.sentences(1),
+      description: "This picture doesn't have a description",
       image_url: data.link,
     };
 
