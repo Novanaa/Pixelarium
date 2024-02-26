@@ -6,7 +6,7 @@ import UploadTrigger from "./upload-trigger";
 import UploadContent from "./content/index";
 import cn from "@/utils/cn";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
-import useActiveSearchParams from "@/hooks/useActiveSearchParams";
+import useQueryParamsState from "@/hooks/useQueryParamsState";
 import OutsideClickHandler from "react-outside-click-handler";
 import { usePathname, useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -34,7 +34,12 @@ export default function UploadSection(): React.ReactElement {
   const onDroppedFilesStyles: string | boolean =
     onDragEnter && "bg-primary-foreground";
 
-  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "upload" });
+  useQueryParamsState({
+    isOpen,
+    setIsOpen,
+    expectedValue: "upload",
+    paramsName: "active",
+  });
 
   useTogglePageScrollOverflow(isOpen);
 
