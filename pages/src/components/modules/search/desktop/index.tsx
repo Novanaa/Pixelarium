@@ -22,7 +22,6 @@ import OutsideClickHandler from "react-outside-click-handler";
 
 export default function DesktopSearch({
   datas,
-  heading,
   emptyItemsMessege,
   placeholder,
 }: DesktopSearchProps): React.ReactElement {
@@ -65,15 +64,15 @@ export default function DesktopSearch({
               <CommandInput placeholder={placeholder} />
               <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading={heading}>
-                  {!datas.length ? (
-                    <div className="mb-4 mt-2 text-center opacity-80">
+                {!datas[0].search.length ? (
+                  <CommandGroup>
+                    <div className="my-6 text-center opacity-80">
                       {emptyItemsMessege}
                     </div>
-                  ) : (
-                    <DesktopSearchGroup datas={datas} />
-                  )}
-                </CommandGroup>
+                  </CommandGroup>
+                ) : (
+                  <DesktopSearchGroup datas={datas} />
+                )}
                 <CommandSeparator />
                 <AccountsSearchGroup />
               </CommandList>
