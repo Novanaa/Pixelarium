@@ -1,24 +1,23 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   DoubleArrowRightIcon,
   MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/stores";
-import {
-  setSidebarSearchIsOpenState,
-  setSidebarIsOpenState,
-} from "@/stores/reducers/docsSidebar";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
 import Container from "@/components/molecules/container";
+import { parseAsStringLiteral, useQueryState } from "nuqs";
+import activeQueryParamsName from "@/constant/readonly/activeQueryParamsName";
+import useQueryParamsState from "@/hooks/useQueryParamsState";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function DevelopersDocsSidebarMobile(): React.ReactElement {
   return (
@@ -30,7 +29,11 @@ export default function DevelopersDocsSidebarMobile(): React.ReactElement {
 }
 
 function DevelopersDocsSidebarMobileNavigationMenu() {
-  const dispatch: AppDispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setActiveQueryParams] = useQueryState(
+    "active",
+    parseAsStringLiteral(activeQueryParamsName),
+  );
 
   const bluryBackground: string =
     "bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10";
@@ -44,14 +47,14 @@ function DevelopersDocsSidebarMobileNavigationMenu() {
     >
       <Container className="flex items-center justify-between">
         <div
-          onClick={() => dispatch(setSidebarIsOpenState(true))}
+          onClick={() => setActiveQueryParams("menu")}
           className={cn("flex h-0 items-center", navigationMenuTriggerStyle())}
         >
           <DoubleArrowRightIcon className="mr-2 h-4 w-4" />
           <span className="font-medium">Menu</span>
         </div>
         <MagnifyingGlassIcon
-          onClick={() => dispatch(setSidebarSearchIsOpenState(true))}
+          onClick={() => setActiveQueryParams("search")}
           className={cn("h-4 w-4", navigationMenuTriggerStyle())}
         />
       </Container>
@@ -60,29 +63,20 @@ function DevelopersDocsSidebarMobileNavigationMenu() {
 }
 
 function DevelopersDocsSidebarMobileMenu(): React.ReactElement {
-  const dispatch: AppDispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router: AppRouterInstance = useRouter();
+  const pathname: string = usePathname();
 
-  const isSidebarOpen: boolean = useSelector(
-    (state: RootState) => state.docsSidebar.isSidebarOpen,
-  );
-
-  // @ts-expect-error miss types
-  useEffect(() => {
-    isSidebarOpen
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "auto");
-
-    return () => (document.body.style.overflow = "auto");
-  }, [isSidebarOpen]);
+  useQueryParamsState({
+    expectedValue: "menu",
+    isOpen,
+    setIsOpen,
+    paramsName: "active",
+  });
 
   return (
     <section className="absolute">
-      <Sheet
-        open={isSidebarOpen}
-        onOpenChange={(isOpen: boolean) =>
-          dispatch(setSidebarIsOpenState(isOpen))
-        }
-      >
+      <Sheet open={isOpen} onOpenChange={() => router.push(pathname)}>
         <SheetContent
           side="left"
           className="flex flex-col gap-4 overflow-y-scroll"
@@ -98,19 +92,16 @@ function DevelopersDocsSidebarMobileMenu(): React.ReactElement {
 }
 
 function DevelopersDocsSidebarMobileMenuSearchInput(): React.ReactElement {
-  const dispatch: AppDispatch = useDispatch();
-
-  const isSidebarSearchOpen: boolean = useSelector(
-    (state: RootState) => state.docsSidebar.isSidebarSearchOpen,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setActiveQueryParams] = useQueryState(
+    "active",
+    parseAsStringLiteral(activeQueryParamsName),
   );
 
   return (
     <div className="flex">
       <Input
-        onClick={() => {
-          dispatch(setSidebarSearchIsOpenState(!isSidebarSearchOpen));
-          dispatch(setSidebarIsOpenState(false));
-        }}
+        onClick={() => setActiveQueryParams("search")}
         readOnly={true}
         className="relative inline-flex cursor-pointer items-center justify-start whitespace-nowrap rounded-[0.5rem] border border-input bg-background px-4 py-2 text-sm font-medium text-muted-foreground shadow-none transition-colors hover:bg-accent hover:text-accent-foreground hover:placeholder:text-primary focus:outline-none focus:outline-0 focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50"
         placeholder="Search (Press '/' to focus)"
