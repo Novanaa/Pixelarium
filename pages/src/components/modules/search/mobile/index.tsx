@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/button";
 export default function MobileSearch({
   emptyItemsMessege,
   datas,
-  heading,
   placeholder,
 }: MobileSearchProps): React.ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -54,15 +53,15 @@ export default function MobileSearch({
         <CommandInput placeholder={placeholder} />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading={heading}>
-            {!datas.length ? (
-              <div className="mb-4 mt-2 text-center opacity-80">
+          {!datas[0].search.length ? (
+            <CommandGroup>
+              <div className="my-6 text-center opacity-80">
                 {emptyItemsMessege}
               </div>
-            ) : (
-              <MobileSearchGroup datas={datas} />
-            )}
-          </CommandGroup>
+            </CommandGroup>
+          ) : (
+            <MobileSearchGroup datas={datas} />
+          )}
           <CommandSeparator />
           <AccountsSearchGroup />
         </CommandList>
