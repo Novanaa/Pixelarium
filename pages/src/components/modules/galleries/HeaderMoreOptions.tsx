@@ -1,22 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import TooltipOnHover from "@/components/molecules/tooltip-on-hover";
 import { Button } from "@/components/ui/button";
-import {
-  DotsVerticalIcon,
-  InfoCircledIcon,
-  ReloadIcon,
-  TrashIcon,
-} from "@radix-ui/react-icons";
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { DotsVerticalIcon, ReloadIcon } from "@radix-ui/react-icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,10 +17,26 @@ import {
 } from "@/components/ui/alert-dialog";
 import deletesPictures from "./services/deletesPictures";
 import Picture from "@/components/interfaces/types/Picture";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useToast } from "@/components/ui/use-toast";
 import UseToastProps from "@/components/interfaces/types/UseToastProps";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useQueryState, parseAsStringLiteral } from "nuqs";
+import activeQueryParamsName from "@/constant/readonly/activeQueryParamsName";
+import sortBy from "@/constant/readonly/sortBy";
 
 interface HeaderMoreOptionsProps {
   pictures: Array<Picture> | undefined;
@@ -42,37 +45,35 @@ interface HeaderMoreOptionsProps {
 export default function HeaderMoreOptions({
   pictures,
 }: HeaderMoreOptionsProps): React.ReactElement {
+  const [activeQueryParams] = useQueryState(
+    "active",
+    parseAsStringLiteral(activeQueryParamsName),
+  );
+
   return (
-    <Popover>
-      <PopoverTrigger>
-        <TooltipOnHover title="Options">
+    <DropdownMenu open={activeQueryParams == "deletes" || undefined}>
+      <TooltipOnHover title="Options">
+        <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
             <DotsVerticalIcon className="h-5 w-5" />
           </Button>
-        </TooltipOnHover>
-      </PopoverTrigger>
-      <PopoverContent className="mr-6 mt-2 w-64">
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Need More?</h4>
-          </div>
-          <div className="grid w-full gap-1">
-            <Link
-              href="/galleries?active=info"
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "flex h-9 w-full cursor-pointer items-center justify-start gap-1 px-[0.3rem] text-[0.9rem] font-medium opacity-80",
-              )}
-            >
-              <InfoCircledIcon className="h-[1.1rem] w-[1.1rem]" />
-              Gallery Info
-            </Link>
-            <div className="h-[0.4rem] w-full border-b"></div>
-            <DeletePictures pictures={pictures} />
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
+        </DropdownMenuTrigger>
+      </TooltipOnHover>
+      <DropdownMenuContent className="mr-12 w-56">
+        <DropdownMenuLabel>Options</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <SortGalleriesPictures />
+          <DropdownMenuItem className="cursor-pointer">
+            Metadata
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DeletePictures pictures={pictures} />
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -83,22 +84,26 @@ interface DeletesPicturesProps {
 function DeletePictures({
   pictures,
 }: DeletesPicturesProps): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setActiveQueryParams] = useQueryState(
+    "active",
+    parseAsStringLiteral(activeQueryParamsName),
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router: AppRouterInstance = useRouter();
+  const pathname: string = usePathname();
   const toaster: UseToastProps = useToast();
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button
+        <DropdownMenuItem
           disabled={!pictures?.length}
-          className={cn(
-            "group relative top-[0.2rem] flex h-9 w-full cursor-pointer items-center justify-start gap-1 rounded-md px-[0.3rem] py-2 text-[0.9rem] font-medium text-destructive data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 hover:bg-accent focus:bg-accent focus:opacity-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-          )}
+          className="cursor-pointer text-destructive focus:text-destructive"
+          onClick={() => setActiveQueryParams("deletes")}
         >
-          <TrashIcon className="h-[1.15rem] w-[1.15rem]" />
-          Deletes Pictures
-        </button>
+          Deletes pictures
+        </DropdownMenuItem>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -109,7 +114,9 @@ function DeletePictures({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => router.push(pathname)}>
+            Cancel
+          </AlertDialogCancel>
           {isLoading ? (
             <Button disabled>
               <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
@@ -120,7 +127,7 @@ function DeletePictures({
               onClick={() =>
                 deletesPictures({
                   router,
-                  onSuccessRedirectLink: "/galleries",
+                  onSuccessRedirectLink: pathname,
                   toaster,
                   setIsLoading,
                 })
@@ -132,5 +139,41 @@ function DeletePictures({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+}
+
+function SortGalleriesPictures(): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setSortPicture] = useQueryState(
+    "sort_by",
+    parseAsStringLiteral(sortBy),
+  );
+
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>Sort by</DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setSortPicture("alpha")}
+          >
+            A-Z
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setSortPicture("oldest")}
+          >
+            Oldest
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setSortPicture("recent")}
+          >
+            Most recent
+          </DropdownMenuItem>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   );
 }
