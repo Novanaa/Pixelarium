@@ -1,5 +1,6 @@
 "use client";
 
+import moment from "moment";
 import capitalize from "capitalize";
 import {
   HoverCard,
@@ -13,7 +14,6 @@ import onErrorHandler from "../../../utils/onErrorHandler";
 import type { default as IPicture } from "@/components/interfaces/types/Picture";
 import EmptyPictures from "./EmptyPictures";
 import Paragraph from "@/components/molecules/typographies/Paragraph";
-import moment from "moment";
 
 interface PictureProps extends React.ComponentProps<"div"> {
   pictures: Array<IPicture> | undefined;
@@ -82,12 +82,12 @@ function HoverCardPicture({
   return (
     <HoverCard>
       <HoverCardTrigger>{children}</HoverCardTrigger>
-      <HoverCardContent className="flex justify-start gap-2">
-        <div className="flex flex-col gap-1">
-          <Paragraph className="text-base font-medium">
+      <HoverCardContent className="relative z-50 flex h-full justify-start gap-2 bg-background">
+        <div className="flex w-56 flex-col gap-1">
+          <Paragraph className="overflow-hidden text-ellipsis text-wrap text-base font-medium">
             {picture.title} - ({picture.filename})
           </Paragraph>
-          <Paragraph className="text-sm font-medium text-primary/50">
+          <Paragraph className="overflow-hidden text-ellipsis text-sm font-medium text-primary/50">
             {picture.description && "This picture doesn't have a description"}
           </Paragraph>
           <Paragraph className="text-sm font-medium text-primary/50">
