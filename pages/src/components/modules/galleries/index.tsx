@@ -8,6 +8,7 @@ import getGalleryPictures, {
 import Picture from "@/components/interfaces/types/Picture";
 import SearchDatas from "@/components/interfaces/types/SearchDatas";
 import Upload from "../upload";
+import { ImageIcon } from "@radix-ui/react-icons";
 
 export default async function UserGallery(): Promise<React.ReactElement> {
   const gallery: Awaited<GalleryResponseAPI | null> =
@@ -15,7 +16,12 @@ export default async function UserGallery(): Promise<React.ReactElement> {
 
   const pictures: Array<Picture> | undefined = gallery?.data.gallery.pictures;
 
-  const searchDatas: Array<SearchDatas> = [];
+  const searchDatas: Array<SearchDatas> =
+    pictures?.map((pic) => ({
+      title: pic.title,
+      link: "/", // it will change in future
+      Icon: <ImageIcon className="mr-2 h-5 w-5 rounded-lg" />,
+    })) || [];
 
   return (
     <>
