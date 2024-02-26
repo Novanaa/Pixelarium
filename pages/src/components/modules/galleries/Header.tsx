@@ -11,11 +11,18 @@ import {
 } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import React from "react";
-import Link from "next/link";
 import HeaderMoreOptions from "./HeaderMoreOptions";
 import GalleryHeader from "@/components/interfaces/types/GalleryHeader";
+import { useQueryState, parseAsStringLiteral } from "nuqs";
+import activeQueryParamsName from "@/constant/readonly/activeQueryParamsName";
 
 function GalleryHeader({ pictures }: GalleryHeader): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setActiveQueryParams] = useQueryState(
+    "active",
+    parseAsStringLiteral(activeQueryParamsName),
+  );
+
   return (
     <>
       <section className="flex items-center justify-between gap-5">
@@ -33,19 +40,23 @@ function GalleryHeader({ pictures }: GalleryHeader): React.ReactElement {
         </div>
         <div className="flex gap-2">
           <TooltipOnHover title="Add a new picture">
-            <Link href="/galleries?active=upload">
-              <Button className="font-medium" variant="ghost">
-                <PlusIcon className="mr-1 h-4 w-4" />
-                New Picture
-              </Button>
-            </Link>
+            <Button
+              className="font-medium"
+              variant="ghost"
+              onClick={() => setActiveQueryParams("upload")}
+            >
+              <PlusIcon className="mr-1 h-4 w-4" />
+              New Picture
+            </Button>
           </TooltipOnHover>
           <TooltipOnHover title="Search pictures">
-            <Link href="/galleries?active=search">
-              <Button variant="ghost" size="icon">
-                <MagnifyingGlassIcon className="h-5 w-5" />
-              </Button>
-            </Link>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setActiveQueryParams("search")}
+            >
+              <MagnifyingGlassIcon className="h-5 w-5" />
+            </Button>
           </TooltipOnHover>
           <HeaderMoreOptions pictures={pictures} />
         </div>
@@ -60,6 +71,7 @@ function Loading(): React.ReactElement {
       <Skeleton className="h-7 w-7 rounded sm:w-[16rem]" />
       <div className="flex gap-3">
         <Skeleton className="h-7 w-[5rem] rounded @sm:w-[7rem] sm:w-[8rem]" />
+        <Skeleton className="h-7 w-7 rounded" />
         <Skeleton className="h-7 w-7 rounded" />
       </div>
     </div>
