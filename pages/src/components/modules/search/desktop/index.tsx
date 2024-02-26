@@ -16,7 +16,7 @@ import DesktopSearchProps from "@/components/interfaces/types/DesktopSearchProps
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import AccountsSearchGroup from "../AccountsSearchGroup";
 import useKeyboardToggle from "@/hooks/useKeyboardToggle";
-import useActiveSearchParams from "@/hooks/useActiveSearchParams";
+import useQueryParamsState from "@/hooks/useQueryParamsState";
 import DesktopSearchGroup from "./SearchGroup";
 import OutsideClickHandler from "react-outside-click-handler";
 
@@ -35,7 +35,12 @@ export default function DesktopSearch({
     ? ``
     : `hidden opacity-0 w-0 h-0 overflow-hidden`;
 
-  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "search" });
+  useQueryParamsState({
+    isOpen,
+    setIsOpen,
+    expectedValue: "search",
+    paramsName: "active",
+  });
 
   useKeyboardToggle({ pagePathname: pathname, router });
 

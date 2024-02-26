@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/command";
 import AccountsSearchGroup from "../AccountsSearchGroup";
 import { usePathname, useRouter } from "next/navigation";
-import useActiveSearchParams from "@/hooks/useActiveSearchParams";
+import useQueryParamsState from "@/hooks/useQueryParamsState";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import { cn } from "@/lib/utils";
 import MobileSearchProps from "@/components/interfaces/types/MobileSearchProps";
@@ -33,7 +33,12 @@ export default function MobileSearch({
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
   const searchStateValidation: string = isOpen ? `` : `hidden`;
 
-  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "search" });
+  useQueryParamsState({
+    isOpen,
+    setIsOpen,
+    expectedValue: "search",
+    paramsName: "active",
+  });
 
   useTogglePageScrollOverflow(isOpen);
 
