@@ -2,12 +2,16 @@ import ReactNodeChild from "@/components/interfaces/types/ReactNodeChild";
 import DevelopersDocsSidebar from "@/components/modules/developers/sidebar";
 import DevelopersDocsSidebarMobile from "@/components/modules/developers/sidebar/DevelopersDocsSidebarMobile";
 import Next from "@/components/modules/developers/contents/Next";
-import Search from "@/components/modules/developers/sidebar/Search";
 import TableOfContents from "@/components/modules/toc";
-import React from "react";
+import React, { Suspense } from "react";
 import FrontMatter from "@/interfaces/types/FrontMatter";
 import type TocElementData from "@/interfaces/types/Toc";
 import Navbar from "@/components/modules/navbar";
+import Search from "@/components/modules/search";
+import type SearchDatas from "@/components/interfaces/types/SearchDatas";
+import developresDocsNavMenuLinks from "@/resources/developersDocsNavigationMenuLinks.json";
+import { FileIcon } from "@radix-ui/react-icons";
+import GlobalLoading from "@/universal/loading";
 
 interface DevelopersDocsLayoutProps extends ReactNodeChild {
   frontMatter: FrontMatter;
@@ -19,10 +23,22 @@ export default function DevelopersDocsLayout({
   frontMatter,
   toc,
 }: DevelopersDocsLayoutProps): React.ReactElement {
+  const searchDatas: Array<SearchDatas> = developresDocsNavMenuLinks.map(
+    (docs) => ({
+      heading: docs.title,
+      search:
+        docs.items.map((doc) => ({
+          title: doc.title,
+          link: doc.url,
+          Icon: <FileIcon className="mr-2 h-5 w-5" />,
+        })) || [],
+    }),
+  );
+
   return (
-    <>
+    <Suspense fallback={<GlobalLoading />}>
       <Navbar />
-      <Search />
+      <Search datas={searchDatas} />
       <DevelopersDocsSidebarMobile />
       <main className="relative top-[3.9rem] flex h-full w-full flex-col px-6 2xl:container lg:flex-row lg:px-8 2xl:px-16">
         <div className="relative">
@@ -34,6 +50,6 @@ export default function DevelopersDocsLayout({
           <TableOfContents toc={toc} />
         </section>
       </main>
-    </>
+    </Suspense>
   );
 }
