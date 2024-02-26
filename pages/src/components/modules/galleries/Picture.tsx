@@ -14,6 +14,9 @@ import onErrorHandler from "../../../utils/onErrorHandler";
 import type { default as IPicture } from "@/components/interfaces/types/Picture";
 import EmptyPictures from "./EmptyPictures";
 import Paragraph from "@/components/molecules/typographies/Paragraph";
+import sortPicture from "./utils/sortPicture";
+import { parseAsStringLiteral, useQueryState } from "nuqs";
+import sortBy from "@/constant/readonly/sortBy";
 
 interface PictureProps extends React.ComponentProps<"div"> {
   pictures: Array<IPicture> | undefined;
@@ -22,11 +25,21 @@ interface PictureProps extends React.ComponentProps<"div"> {
 export default function Picture({
   pictures,
 }: PictureProps): Array<React.ReactElement> | React.ReactElement {
+  const [pictureSortBy] = useQueryState(
+    "sort_by",
+    parseAsStringLiteral(sortBy).withDefault("recent"),
+  );
+
+  const sortedPictures: Array<IPicture> | undefined = sortPicture({
+    array: pictures,
+    by: pictureSortBy,
+  });
+
   if (!pictures?.length) return <EmptyPictures />;
 
   return (
     <section className="grid grid-cols-2 gap-3 @container @2xl:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-      {pictures?.map((p, i) => (
+      {sortedPictures?.map((p, i) => (
         <HoverCardPicture
           picture={p}
           key={i}
