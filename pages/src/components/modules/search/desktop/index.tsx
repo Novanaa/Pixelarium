@@ -16,13 +16,12 @@ import DesktopSearchProps from "@/components/interfaces/types/DesktopSearchProps
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import AccountsSearchGroup from "../AccountsSearchGroup";
 import useKeyboardToggle from "@/hooks/useKeyboardToggle";
-import useActiveSearchParams from "@/hooks/useActiveSearchParams";
+import useQueryParamsState from "@/hooks/useQueryParamsState";
 import DesktopSearchGroup from "./SearchGroup";
 import OutsideClickHandler from "react-outside-click-handler";
 
 export default function DesktopSearch({
   datas,
-  heading,
   emptyItemsMessege,
   placeholder,
 }: DesktopSearchProps): React.ReactElement {
@@ -36,7 +35,12 @@ export default function DesktopSearch({
     ? ``
     : `hidden opacity-0 w-0 h-0 overflow-hidden`;
 
-  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "search" });
+  useQueryParamsState({
+    isOpen,
+    setIsOpen,
+    expectedValue: "search",
+    paramsName: "active",
+  });
 
   useKeyboardToggle({ pagePathname: pathname, router });
 
@@ -65,15 +69,15 @@ export default function DesktopSearch({
               <CommandInput placeholder={placeholder} />
               <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading={heading}>
-                  {!datas.length ? (
-                    <div className="mb-4 mt-2 text-center opacity-80">
+                {!datas[0].search.length ? (
+                  <CommandGroup>
+                    <div className="my-6 text-center opacity-80">
                       {emptyItemsMessege}
                     </div>
-                  ) : (
-                    <DesktopSearchGroup datas={datas} />
-                  )}
-                </CommandGroup>
+                  </CommandGroup>
+                ) : (
+                  <DesktopSearchGroup datas={datas} />
+                )}
                 <CommandSeparator />
                 <AccountsSearchGroup />
               </CommandList>

@@ -7,7 +7,6 @@ import MobileSearchLoading from "./mobile/Loading";
 
 export default function Search({
   datas,
-  heading,
   emptyItemsMessege,
   placeholder,
 }: SearchProps): React.ReactElement {
@@ -15,13 +14,13 @@ export default function Search({
     ? emptyItemsMessege
     : "You doesn't have any data";
   placeholder = placeholder || "Type a command or search...";
+
   return (
     <main>
       <section className="hidden sm:block">
         <Suspense fallback={<DesktopSearchLoading />}>
           <DesktopSearch
             datas={datas}
-            heading={heading}
             emptyItemsMessege={emptyItemsMessege}
             placeholder={placeholder}
           />
@@ -31,7 +30,6 @@ export default function Search({
         <Suspense fallback={<MobileSearchLoading />}>
           <MobileSearch
             datas={datas}
-            heading={heading}
             emptyItemsMessege={emptyItemsMessege}
             placeholder={placeholder}
           />

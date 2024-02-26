@@ -4,11 +4,10 @@ import { HeadingFour } from "@/components/molecules/typographies/Heading";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/stores";
-import { setSidebarSearchIsOpenState } from "@/stores/reducers/docsSidebar";
 import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
 import { cn } from "@/lib/utils";
+import { parseAsStringLiteral, useQueryState } from "nuqs";
+import activeQueryParamsName from "@/constant/readonly/activeQueryParamsName";
 
 export default function DevelopersDocsSidebar(): React.ReactElement {
   return (
@@ -25,17 +24,16 @@ export default function DevelopersDocsSidebar(): React.ReactElement {
 }
 
 function DevelopersDocsSidebarSearchInput(): React.ReactElement {
-  const isSidebarSearchOpen: boolean = useSelector(
-    (state: RootState) => state.docsSidebar.isSidebarSearchOpen,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setActiveQueryParams] = useQueryState(
+    "active",
+    parseAsStringLiteral(activeQueryParamsName),
   );
-  const dispatch: AppDispatch = useDispatch();
 
   return (
     <div className="flex">
       <Input
-        onClick={() =>
-          dispatch(setSidebarSearchIsOpenState(!isSidebarSearchOpen))
-        }
+        onClick={() => setActiveQueryParams("search")}
         readOnly={true}
         className="relative inline-flex w-[14rem] cursor-pointer items-center justify-start whitespace-nowrap rounded-[0.5rem] border border-input bg-background px-4 py-2 text-sm font-medium text-muted-foreground shadow-none transition-colors hover:bg-accent hover:text-accent-foreground hover:placeholder:text-primary focus:outline-none focus:outline-0 focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50"
         placeholder="Search (Press '/' to focus)"
@@ -51,8 +49,8 @@ function DevelopersDocsSidebarContent(): Array<React.ReactElement> {
     const locationPathname: string = window.location.pathname;
     setPathname(locationPathname);
 
-    return () => setPathname("");
-  }, []);
+    return () => setPathname(pathname);
+  }, [pathname]);
 
   return dummyData.map((d, i) => {
     return (

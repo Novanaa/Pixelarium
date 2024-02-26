@@ -16,12 +16,17 @@ export default async function UserGallery(): Promise<React.ReactElement> {
 
   const pictures: Array<Picture> | undefined = gallery?.data.gallery.pictures;
 
-  const searchDatas: Array<SearchDatas> =
-    pictures?.map((pic) => ({
-      title: pic.title,
-      link: "/", // it will change in future
-      Icon: <ImageIcon className="mr-2 h-5 w-5 rounded-lg" />,
-    })) || [];
+  const searchDatas: Array<SearchDatas> = [
+    {
+      heading: "Pictures",
+      search:
+        pictures?.map((pic) => ({
+          title: pic.title,
+          link: "/", // it will be changed in the future
+          Icon: <ImageIcon className="mr-2 h-4 w-4" />,
+        })) || [],
+    },
+  ];
 
   return (
     <>
@@ -31,7 +36,6 @@ export default async function UserGallery(): Promise<React.ReactElement> {
       </main>
       <Search
         datas={searchDatas}
-        heading="Pictures"
         emptyItemsMessege="You doesn't have any pictures"
       />
       <Upload />

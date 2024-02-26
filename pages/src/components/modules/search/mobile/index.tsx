@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/command";
 import AccountsSearchGroup from "../AccountsSearchGroup";
 import { usePathname, useRouter } from "next/navigation";
-import useActiveSearchParams from "@/hooks/useActiveSearchParams";
+import useQueryParamsState from "@/hooks/useQueryParamsState";
 import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
 import { cn } from "@/lib/utils";
 import MobileSearchProps from "@/components/interfaces/types/MobileSearchProps";
@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/button";
 export default function MobileSearch({
   emptyItemsMessege,
   datas,
-  heading,
   placeholder,
 }: MobileSearchProps): React.ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,7 +33,12 @@ export default function MobileSearch({
     : "animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]";
   const searchStateValidation: string = isOpen ? `` : `hidden`;
 
-  useActiveSearchParams({ isOpen, setIsOpen, expectedValue: "search" });
+  useQueryParamsState({
+    isOpen,
+    setIsOpen,
+    expectedValue: "search",
+    paramsName: "active",
+  });
 
   useTogglePageScrollOverflow(isOpen);
 
@@ -54,15 +58,15 @@ export default function MobileSearch({
         <CommandInput placeholder={placeholder} />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading={heading}>
-            {!datas.length ? (
-              <div className="mb-4 mt-2 text-center opacity-80">
+          {!datas[0].search.length ? (
+            <CommandGroup>
+              <div className="my-6 text-center opacity-80">
                 {emptyItemsMessege}
               </div>
-            ) : (
-              <MobileSearchGroup datas={datas} />
-            )}
-          </CommandGroup>
+            </CommandGroup>
+          ) : (
+            <MobileSearchGroup datas={datas} />
+          )}
           <CommandSeparator />
           <AccountsSearchGroup />
         </CommandList>
