@@ -64,9 +64,6 @@ export default function HeaderMoreOptions({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <SortGalleriesPictures />
-          <DropdownMenuItem className="cursor-pointer">
-            Metadata
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
