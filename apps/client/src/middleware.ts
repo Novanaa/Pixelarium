@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import getServerSideUserLoginStatus from "./services/getServerSideUserLoginStatus";
+import getServerSideUserLoginStatus from "./services/get-serverside-user-login-status";
 import DecodedUser from "./interfaces/types/DecodedUser";
-import getServerSideUserData from "./services/getServerSideUserData";
-import tabActiveName from "./constant/readonly/tabActiveName";
+import getServerSideUserData from "./services/get-serverside-user-data";
+import tabActiveName from "./constant/readonly/tab-active-name";
 import queryString, { ParsedQuery } from "query-string";
 
 export async function middleware(req: NextRequest): Promise<NextResponse> {

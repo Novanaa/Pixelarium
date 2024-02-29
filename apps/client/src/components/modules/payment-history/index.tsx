@@ -1,8 +1,8 @@
 import React from "react";
 import PaymentHistory from "@/interfaces/types/PaymentHistory";
-import PaymentHistoryHeader from "./PaymentHistoryHeader";
-import PaymentHistoryCards from "./PaymentHistoryCards";
-import PaymentHistoryDataTable from "./PaymentHistoryDataTable";
+import PaymentHistoryHeader from "./components/header";
+import PaymentHistoryCards from "./components/cards";
+import PaymentHistoryDataTable from "./components/data-table";
 
 export default function PaymentHistory(): React.ReactElement {
   return (

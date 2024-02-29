@@ -13,11 +13,11 @@ import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import DesktopSearchProps from "@/components/interfaces/types/DesktopSearchProps";
-import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
-import AccountsSearchGroup from "../AccountsSearchGroup";
-import useKeyboardToggle from "@/hooks/useKeyboardToggle";
-import useQueryParamsState from "@/hooks/useQueryParamsState";
-import DesktopSearchGroup from "./SearchGroup";
+import useTogglePageScrollOverflow from "@/hooks/use-toggle-page-scroll";
+import AccountsSearchGroup from "../accounts-search-group";
+import useKeyboardToggle from "@/hooks/use-keyboard-toggle";
+import useQueryParamsState from "@/hooks/use-query-params-state";
+import DesktopSearchGroup from "./search-group";
 import OutsideClickHandler from "react-outside-click-handler";
 
 export default function DesktopSearch({

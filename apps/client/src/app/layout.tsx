@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import { jakartaSans } from "@/configs/fonts";
-import { ThemeProvider } from "@/lib/ThemesProvider";
-import ReduxProvider from "@/stores/Provider";
-import GlobalToaster from "@/lib/GlobalToaster";
+import { ThemeProvider } from "@/lib/themes-provider";
+import ReduxProvider from "@/stores/provider";
+import GlobalToaster from "@/lib/global-toaster";
 
 export const metadata: Metadata = {
   title: "Pixelarium",

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import PictureFieldFormSchema from "@/validations/pictureField";
+import PictureFieldFormSchema from "@/validations/picture-field";
 import { z } from "zod";
 
 export default function useUploadForm() {

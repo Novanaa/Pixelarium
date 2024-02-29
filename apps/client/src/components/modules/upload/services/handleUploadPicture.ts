@@ -1,24 +1,24 @@
 import SuccessToastAction from "@/components/molecules/toaster-action/on-success";
 import { toast } from "@/components/ui/use-toast";
-import apiUrlEndpoint from "@/constant/readonly/apiUrlEndpoint";
+import apiUrlEndpoint from "@/constant/readonly/api-url-endpoint";
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import PictureDetails from "@/interfaces/types/PictureDetails";
-import getUserData from "@/services/getUserData";
+import getUserData from "@/services/get-user-data";
 import axios from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import React from "react";
-import unexpectedErrorToasterMessege from "@/constant/readonly/unexpectedErrorToasterMessege";
+import unexpectedErrorToasterMessege from "@/constant/readonly/unexpected-error-toaster-messege";
 import ErrorToastAction from "@/components/molecules/toaster-action/on-error";
 import Subscription from "@/interfaces/types/Subscription";
 import getUserSubscriptionStatus, {
   GetUserSubscriptionStatusReturnType,
-} from "@/services/getUserSubscriptionStatus";
-import pictureLimitSize from "@/constant/readonly/pictureSizeLimit";
+} from "@/services/get-user-subscription-status";
+import pictureLimitSize from "@/constant/readonly/picture-size-limit";
 import {
   setPictureUploadImageBloblSrcState,
   setPictureUploadProgressState,
   setPictureUploadStartedState,
-} from "@/stores/reducers/pictureUpload";
+} from "@/stores/reducers/picture-upload";
 import { AppDispatch } from "@/stores";
 
 interface HandleUploadPictureParams {

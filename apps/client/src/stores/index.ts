@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
-import pictureUpload from "./reducers/pictureUpload";
+import pictureUpload from "./reducers/picture-upload";
 
 const store = configureStore({
   reducer: {

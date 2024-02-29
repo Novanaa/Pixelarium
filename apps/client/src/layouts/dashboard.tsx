@@ -1,6 +1,6 @@
 import React from "react";
 import DashboardSidebar from "@/components/modules/dashboard-sidebar";
-import DashboardSidebarMobile from "@/components/modules/dashboard-sidebar/Mobile";
+import DashboardSidebarMobile from "@/components/modules/dashboard-sidebar/mobile";
 import Footer from "@/components/modules/footer";
 import Navbar from "@/components/modules/navbar";
 

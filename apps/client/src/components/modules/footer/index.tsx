@@ -2,26 +2,26 @@
 
 import React from "react";
 import Image from "next/image";
-import getLogoSource from "@/utils/getLogoSource";
+import getLogoSource from "@/utils/get-logo-source";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 import type FooterHeaderProps from "@/components/interfaces/types/FooterHeaderProps";
-import { HeadingFour } from "@/components/molecules/typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/heading";
 import { cn } from "@/lib/utils";
 import { jakartaSans } from "@/configs/fonts";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type ReactNodeChild from "@/components/interfaces/types/ReactNodeChild";
 import type FooterLinkProps from "@/components/interfaces/types/FooterLinkProps";
-import NavbarLinksMenu from "@/resources/navbarLinksMenu.json";
-import githubRepositoryLink from "@/constant/readonly/githubRepositoryLink";
+import NavbarLinksMenu from "@/resources/navbar-links-menu.json";
+import githubRepositoryLink from "@/constant/readonly/github-repository-link";
 import {
   GitHubLogoIcon,
   InstagramLogoIcon,
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { SiBuymeacoffee, SiFacebook } from "react-icons/si";
-import MutedText from "@/components/molecules/typographies/MutedText";
+import MutedText from "@/components/molecules/typographies/muted-text";
 import Container from "@/components/molecules/container";
 
 function Footer(): React.ReactElement {

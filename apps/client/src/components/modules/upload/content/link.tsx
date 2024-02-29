@@ -2,7 +2,7 @@
 
 import React from "react";
 import { z } from "zod";
-import Paragraph from "@/components/molecules/typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/paragraph";
 import { TabsContent } from "@/components/ui/tabs";
 import OnLoadingButton from "@/components/molecules/button/on-loading";
 import { CrossCircledIcon, RocketIcon } from "@radix-ui/react-icons";
@@ -16,7 +16,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import FormFieldItem from "@/components/molecules/forms/field-item";
 import onSubmitForm from "../services/onSubmitForm";
 import FormSelectFieldItem from "@/components/molecules/forms/select-field-item";
-import PictureFieldFormSchema from "@/validations/pictureField";
+import PictureFieldFormSchema from "@/validations/picture-field";
 
 export default function LinkContent(): React.ReactElement {
   return (

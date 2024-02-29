@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import SearchProps from "@/components/interfaces/types/SearchProps";
 import DesktopSearch from "./desktop";
-import DesktopSearchLoading from "./desktop/Loading";
+import DesktopSearchLoading from "./desktop/loading";
 import MobileSearch from "./mobile";
-import MobileSearchLoading from "./mobile/Loading";
+import MobileSearchLoading from "./mobile/loading";
 
 export default function Search({
   datas,

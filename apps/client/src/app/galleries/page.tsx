@@ -1,7 +1,7 @@
 import DashboardLayout from "@/layouts/dashboard";
 import { Metadata } from "next";
 import React from "react";
-import getServerSideUserData from "@/services/getServerSideUserData";
+import getServerSideUserData from "@/services/get-serverside-user-data";
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import capitalize from "capitalize";
 import UserGallery from "@/components/modules/galleries";

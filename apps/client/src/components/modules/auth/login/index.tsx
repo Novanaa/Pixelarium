@@ -1,14 +1,14 @@
 "use client";
 
-import { HeadingTwo } from "@/components/molecules/typographies/Heading";
-import MutedText from "@/components/molecules/typographies/MutedText";
+import { HeadingTwo } from "@/components/molecules/typographies/heading";
+import MutedText from "@/components/molecules/typographies/muted-text";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import { jakartaSans } from "@/configs/fonts";
-import apiUrlEndpoint from "@/constant/readonly/apiUrlEndpoint";
+import apiUrlEndpoint from "@/constant/readonly/api-url-endpoint";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
