@@ -1,0 +1,2692 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Pixelarium",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Kadek Nova Cahaya Putra",
+      "email": "Kadeknovacahayaputra@gmail.com"
+    },
+    "license": {
+      "name": "MIT license",
+      "url": "https://github.com/ItsNvaa/Pixelarium/blob/main/LICENSE"
+    },
+    "description": "The Infinite Pixels Experience."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Development Environment"
+    },
+    { "url": "http://localhost:8000", "description": "Staging Environment" },
+    { "url": "api.pixelarium.my.id", "description": "Production Environment" }
+  ],
+  "paths": {
+    "/auth/v1/google": {
+      "summary": "Google Authentication",
+      "get": {
+        "deprecated": false,
+        "summary": "Google Authentication",
+        "operationId": "loginWithGoolge",
+        "tags": ["Authentication"],
+        "description": "Sign in with Google Provider",
+        "responses": {
+          "302": {
+            "description": "Redirected to pixelarium dashboard"
+          },
+          "301": {
+            "description": "Redirected to pixelarium login page while the authentication process is failed"
+          },
+          "400": {
+            "description": "The Login Session Was Failed."
+          }
+        }
+      }
+    },
+    "/v1/auth/github": {
+      "summary": "Github Authentication",
+      "get": {
+        "summary": "Github Authentication",
+        "description": "Sign in with Github Provider",
+        "tags": ["Authentication"],
+        "deprecated": false,
+        "operationId": "loginWithGithub",
+        "responses": {
+          "400": {
+            "description": "The Login Session Was Failed."
+          },
+          "302": {
+            "description": "Redirected to pixelarium dashboard"
+          }
+        }
+      }
+    },
+    "/v1/auth/token": {
+      "summary": "Refresh Session Token Rotation",
+      "get": {
+        "description": "Get new access token by using refresh token.",
+        "summary": "Refresh Session Token Rotation",
+        "tags": ["Authentication"],
+        "deprecated": false,
+        "operationId": "token",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/unauthorizedUser"
+          },
+          "422": {
+            "description": "The session token is invalid"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Newly generated JWT token and a cookie for tracking user sessions.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "token": {
+                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ....",
+                    "expiresInSecond": 1800,
+                    "expiresDate": 1703852872386
+                  },
+                  "generated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/logout": {
+      "summary": "Logout User API Endpoint",
+      "post": {
+        "deprecated": false,
+        "summary": "Logout User API Endpoint",
+        "description": "Logout User",
+        "operationId": "logoutUser",
+        "tags": ["Authentication"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "400": {
+            "description": "Cannot find user request!"
+          },
+          "200": {
+            "description": "Success Logouted User",
+            "content": {
+              "application/json": {
+                "example": {
+                  "logutedUser": {
+                    "id": 1,
+                    "provider_id": 623977,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "logouted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{name}": {
+      "summary": "Get Single User Data",
+      "patch": {
+        "tags": ["Users"],
+        "operationId": "updateUser",
+        "deprecated": false,
+        "summary": "Update Existing User",
+        "description": "Update Existing User By Id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "User Data",
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "John Doe",
+                "bio": "My name is John Doe"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/userIdValidation"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "description": "The image file extension was not supported."
+          },
+          "200": {
+            "description": "Success Updated User Data",
+            "content": {
+              "application/json": {
+                "example": {
+                  "updatedUser": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T05:07:55.886Z",
+                    "updatedAt": "2023-12-29T05:07:55.886Z"
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "deprecated": false,
+        "tags": ["Users"],
+        "operationId": "singleUser",
+        "description": "Get Single User Data From User Name",
+        "summary": "Get Single User Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Returns a single user data by username.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "user": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "deprecated": false,
+        "operationId": "deleteUser",
+        "summary": "Delete Existing User",
+        "description": "Delete Existing User By Id",
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "description": "The ID was not valid."
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "deletedUser": {
+                    "id": 1,
+                    "provider_id": 130564362,
+                    "name": "ItsNvaa",
+                    "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                    "type": "User",
+                    "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                    "site_admin": false,
+                    "createdAt": "2023-12-29T02:04:38.726Z",
+                    "updatedAt": "2023-12-29T02:04:38.726Z"
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/client-keys/generate": {
+      "post": {
+        "tags": ["Client Keys"],
+        "summary": "Generate User Client Keys",
+        "deprecated": false,
+        "operationId": "generateClientKeys",
+        "security": [{ "JsonWebTokenAuthorization": [] }],
+        "description": "Generate User Client Keys Credentials",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "400": {
+            "description": "The request cannot be found"
+          },
+          "201": {
+            "description": "Created a new user client keys credentials",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "This is my bioooo",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T05:07:55.886Z",
+                      "updatedAt": "2023-12-29T05:08:57.153Z"
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/client-keys/{name}": {
+      "get": {
+        "tags": ["Client Keys"],
+        "deprecated": false,
+        "security": [{ "JsonWebTokenAuthorization": [] }],
+        "operationId": "userClientKeys",
+        "summary": "Get User Client Keys",
+        "description": "Get User Client Keys From Username",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "This is my bioooo",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T05:07:55.886Z",
+                      "updatedAt": "2023-12-29T05:08:57.153Z"
+                    },
+                    "client_keys": {
+                      "user_client_id": "pxlmid-03924b8ee55911aa...",
+                      "user_client_secret": "84f7149615a608302bdcb05076eccd7...."
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/client-keys": {
+      "delete": {
+        "tags": ["Client Keys"],
+        "summary": "Delete Existing User Client Keys",
+        "deprecated": false,
+        "security": [{ "JsonWebTokenAuthorization": [] }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "operationId": "deleteUSerClientKeys",
+        "responses": {
+          "401": {
+            "$ref": "#/components/responses/unauthorizedUser"
+          },
+          "404": {
+            "description": "Your request doesn't be found"
+          },
+          "422": {
+            "description": "The User Client Secret Ins't Exist."
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "This is my bioooo",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T05:07:55.886Z",
+                      "updatedAt": "2023-12-29T05:08:57.153Z"
+                    },
+                    "deletedClientKeys": {
+                      "user_client_id": "pxlmid-03924b8ee....",
+                      "user_client_secret": "84f7149615a608302bdcb05076eccd..."
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/galleries/{name}": {
+      "get": {
+        "tags": ["Galleries"],
+        "summary": "Get User Galleries",
+        "deprecated": false,
+        "operationId": "gallery",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "gallery": {
+                      "id": 5,
+                      "user_id": 1,
+                      "pictures": [
+                        {
+                          "id": 3,
+                          "title": "example picture",
+                          "description": "this is a description",
+                          "url": "https://example.com/img/galleries/pictures/image.png",
+                          "is_favorited": false,
+                          "filename": "image.png",
+                          "extension": ".png",
+                          "is_private": false,
+                          "gallery_id": 5,
+                          "album_picture_id": null,
+                          "favorite_id": null,
+                          "createdAt": "2023-12-29T06:33:47.737Z",
+                          "updatedAt": "2023-12-29T06:34:51.923Z"
+                        }
+                      ],
+                      "createdAt": "2023-12-24T02:17:41.549Z",
+                      "updatedAt": "2023-12-24T02:17:41.549Z"
+                    },
+                    "total_gallery_pictures": 2
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/galleries/{name}/search": {
+      "get": {
+        "tags": ["Galleries"],
+        "summary": "Search for galleries pictures by picture title ",
+        "deprecated": false,
+        "operationId": "searchPicturesGalery",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/searchParams"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/emptyRequestBodyValidationError"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "A list of found gallery's pictures.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "pictures": [
+                      {
+                        "id": 3,
+                        "title": "example picture",
+                        "description": "this is a description",
+                        "url": "https://example.com/img/galleries/pictures/image.png",
+                        "is_favorited": false,
+                        "filename": "image.png",
+                        "extension": ".png",
+                        "is_private": false,
+                        "gallery_id": 5,
+                        "album_picture_id": null,
+                        "favorite_id": null,
+                        "createdAt": "2023-12-29T06:33:47.737Z",
+                        "updatedAt": "2023-12-29T06:34:51.923Z"
+                      }
+                    ],
+                    "total_found": 1
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pictures/{name}/upload": {
+      "post": {
+        "summary": "Add new Gallery",
+        "description": "Add new User Gallery",
+        "tags": ["Pictures"],
+        "deprecated": false,
+        "operationId": "addGallery",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Add Gallery Request Body",
+          "content": {
+            "application/json": {
+              "example": {
+                "expiresInDays": 27,
+                "is_private": false,
+                "use_external_image_url": true,
+                "picture_details": {
+                  "title": "example picture",
+                  "description": "this is a description",
+                  "image_url": "https://example.com/img/galleries/pictures/image.png"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/emptyRequestBodyValidationError"
+          },
+          "422": {
+            "$ref": "#/components/responses/validateInvalidRequestBodyObject"
+          },
+          "201": {
+            "description": "Added Successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "inserted_data": {
+                      "id": 5,
+                      "user_id": 1,
+                      "pictures": [
+                        {
+                          "id": 3,
+                          "title": "example picture",
+                          "description": "this is a description",
+                          "url": "https://example.com/img/galleries/pictures/image.png",
+                          "is_favorited": false,
+                          "filename": "image.png",
+                          "extension": ".png",
+                          "is_private": false,
+                          "gallery_id": 5,
+                          "album_picture_id": null,
+                          "favorite_id": null,
+                          "createdAt": "2023-12-29T06:33:47.737Z",
+                          "updatedAt": "2023-12-29T06:34:51.923Z"
+                        }
+                      ],
+                      "createdAt": "2023-12-24T02:17:41.549Z",
+                      "updatedAt": "2023-12-24T02:17:41.549Z"
+                    },
+                    "total_gallery_pictures": 1,
+                    "inserted": true
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pictures/{picture_uniquekey}": {
+      "get": {
+        "tags": ["Pictures"],
+        "deprecated": false,
+        "operationId": "singleUserPicture",
+        "summary": "Get Single User Existing Picture",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "picture": {
+                      "id": 1,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "embed_pictures_links": {
+                      "id": 1,
+                      "picture_id": 1,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
+                    }
+                  },
+                  "isSucces": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/emptyRequestBodyValidationError"
+          }
+        }
+      }
+    },
+    "/v1/pictures/{name}/{picture_uniquekey}": {
+      "delete": {
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "summary": "Delete Single Existing User Picture",
+        "operationId": "deleteSingleExistingUserPicture",
+        "tags": ["Pictures"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "The Verification process was failed"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deleted_data": {
+                      "id": 3,
+                      "title": "example picture",
+                      "description": "this is a description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": false,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Existing User Picture",
+        "tags": ["Pictures"],
+        "operationId": "updateUserPicture",
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          }
+        ],
+        "requestBody": {
+          "description": "Update User Picture Field",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "new title",
+                "description": "new description",
+                "isFavorited": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "The Verification process was failed"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "old_data": {
+                      "id": 3,
+                      "title": "example picture",
+                      "description": "this is a description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": false,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "updated_data": {
+                      "id": 3,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    }
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pictures/{name}/removes": {
+      "delete": {
+        "summary": "Delete All User Pictures API Endpoint",
+        "deprecated": false,
+        "operationId": "deleteAllUserPictures",
+        "tags": ["Pictures"],
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "The Verification process was failed"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "total_deleted": 10
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pictures/download/{name}/{picture_uniquekey}": {
+      "get": {
+        "summary": "Download user picture",
+        "deprecated": false,
+        "operationId": "downloadUserPicture",
+        "tags": ["Pictures"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Successfully download user picture!"
+          }
+        }
+      }
+    },
+    "/v1/albums/{name}": {
+      "get": {
+        "summary": "Get User Albums",
+        "operationId": "userAlbums",
+        "tags": ["Albums"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "user_albums": [
+                      {
+                        "id": 1,
+                        "title": "this is a album",
+                        "description": "heheh",
+                        "is_private": false,
+                        "thumbnail": "...",
+                        "user_id": 1,
+                        "createdAt": "2023-12-29T13:28:23.977Z",
+                        "updatedAt": "2023-12-29T13:27:59.269Z"
+                      },
+                      {
+                        "id": 2,
+                        "title": "this is a album version 2.0",
+                        "description": "heheh",
+                        "is_private": false,
+                        "thumbnail": "...",
+                        "user_id": 1,
+                        "createdAt": "2023-12-29T13:28:23.977Z",
+                        "updatedAt": "2023-12-29T13:27:59.269Z"
+                      }
+                    ],
+                    "total_user_albums": 2
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add User Album Data",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "addAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "This is your title album",
+                "description": "This is your description album",
+                "is_private": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "422": {
+            "description": "The album is already exist"
+          },
+          "201": {
+            "description": "Created user albums data",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "inserted_data": {
+                      "id": 4,
+                      "title": "My album title",
+                      "description": "My album description",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/albums/pictures/{name}/{album_id}/{picture_uniquekey}": {
+      "post": {
+        "deprecated": false,
+        "operationId": "addAlbumPictures",
+        "tags": ["Albums"],
+        "summary": "Add a picture to an existing album by name and album id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "album_data": {
+                      "id": 3,
+                      "title": "cupressus fugiat thesis",
+                      "description": "Tantillus barba bibo tonsor paulatim soleo triumphus angustus delibero. Trucido strenuus timidus totam via casus virgo. Quo debilito tristis spargo una culpo necessitatibus speculum. Auctus depulso cauda depromo.",
+                      "is_private": false,
+                      "thumbnail": "https://striking-porter.name",
+                      "user_id": 168,
+                      "createdAt": "2024-01-15T08:54:50.090Z",
+                      "updatedAt": "2024-01-15T08:54:50.090Z",
+                      "pictures": []
+                    },
+                    "inserted_picture": {
+                      "id": 1,
+                      "uniquekey": "31eeb447-eb75-49c2-8073-715a4560c599",
+                      "title": "This is a title",
+                      "description": "hhehehe",
+                      "url": "url",
+                      "is_favorited": false,
+                      "filename": "field.png",
+                      "extension": "image/png",
+                      "expires_in": null,
+                      "is_private": false,
+                      "gallery_id": 1,
+                      "album_picture_id": 1,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-30T01:34:05.831Z",
+                      "updatedAt": "2023-12-30T01:35:06.988Z"
+                    }
+                  },
+                  "inserted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete User Album Picture",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "deleteUserAlbumPicture",
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success Operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deleted_picture": {
+                      "id": 3,
+                      "title": "example picture",
+                      "description": "this is a description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": false,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/albums/{name}/{album_id}": {
+      "get": {
+        "tags": ["Albums"],
+        "summary": "Get Single User Album",
+        "deprecated": false,
+        "operationId": "singleUserAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "user_albums": {
+                      "id": 1,
+                      "title": "this is a album",
+                      "description": "heheh",
+                      "is_private": false,
+                      "thumbnail": "...",
+                      "pictures": [],
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Existing User Album",
+        "deprecated": false,
+        "tags": ["Albums"],
+        "operationId": "updateAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          }
+        ],
+        "requestBody": {
+          "description": "Album Update Request Body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "title": "new title",
+                "description": "new description"
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success User Album Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "old_data": {
+                      "id": 2,
+                      "title": "this is a album version 2.0",
+                      "description": "heheh",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    },
+                    "updated_data": {
+                      "id": 2,
+                      "title": "new title",
+                      "description": "new description",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Existing User Album",
+        "tags": ["Albums"],
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "deprecated": false,
+        "operationId": "deleteUserAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/albumIdParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deleted_data": {
+                      "id": 2,
+                      "title": "new title",
+                      "description": "new description",
+                      "pictures": [],
+                      "total_pictures": 0,
+                      "user_id": 1,
+                      "createdAt": "2023-12-29T13:28:23.977Z",
+                      "updatedAt": "2023-12-29T13:27:59.269Z"
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/embed-links/{name}/{picture_uniquekey}": {
+      "get": {
+        "summary": "Get the embed link for a picture in an album by its unique key.",
+        "deprecated": false,
+        "tags": ["Embed Links"],
+        "operationId": "userPictureEmbedLinks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "picture_data": {
+                      "id": 1,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "embed_pictures_links": {
+                      "id": 1,
+                      "picture_id": 1,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a link to an image in the user's profile picture.",
+        "deprecated": true,
+        "operationId": "addEmbedLinksPicture",
+        "tags": ["Embed Links"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "picture_data": {
+                      "id": 2,
+                      "title": "this is a title",
+                      "description": "my description is here",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "image.png",
+                      "extension": ".png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "inserted_data": {
+                      "id": 2,
+                      "picture_id": 2,
+                      "html_link": {
+                        "anchor_link": "....",
+                        "img_link": "...."
+                      },
+                      "direct_link": {
+                        "image_link": "....",
+                        "image_url": "...."
+                      },
+                      "markdown_link": {
+                        "tooltip_link": "...."
+                      }
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/favorites/{name}": {
+      "get": {
+        "tags": ["User Favorires Pictures"],
+        "summary": "Get user favorite pictures by name",
+        "deprecated": false,
+        "operationId": "userFavoritePictures",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "favorites_pictures": [
+                      {
+                        "id": 1,
+                        "title": "new title",
+                        "description": "new description",
+                        "url": "https://example.com/img/galleries/pictures/image.png",
+                        "is_favorited": true,
+                        "filename": "image.png",
+                        "extension": ".png",
+                        "is_private": false,
+                        "gallery_id": 5,
+                        "album_picture_id": null,
+                        "favorite_id": null,
+                        "createdAt": "2023-12-29T06:33:47.737Z",
+                        "updatedAt": "2023-12-29T06:34:51.923Z"
+                      }
+                    ],
+                    "total_favorites_pictures": 1
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/favorites/{name}/{picture_uniquekey}": {
+      "post": {
+        "tags": ["User Favorires Pictures"],
+        "summary": "Add a favorite picture to the user profile by name",
+        "operationId": "addFavoritePictureByName",
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "Returns added favorite pictures.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "inserted_favorites_data_picture": {
+                      "id": 1,
+                      "title": "new title",
+                      "description": "new description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "boo.png",
+                      "extension": "image/png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    },
+                    "total_inserted_pictures": 2
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteFavoritePicture",
+        "deprecated": false,
+        "tags": ["User Favorires Pictures"],
+        "summary": "Delete a favorite by user name",
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/pictureUniquekey"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorizedUser"
+          },
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deleted_favorite_picture": {
+                      "id": 2,
+                      "title": "my image title",
+                      "description": "new asf description",
+                      "url": "https://example.com/img/galleries/pictures/image.png",
+                      "is_favorited": true,
+                      "filename": "boo.png",
+                      "extension": "image/png",
+                      "is_private": false,
+                      "gallery_id": 5,
+                      "album_picture_id": null,
+                      "favorite_id": null,
+                      "createdAt": "2023-12-29T06:33:47.737Z",
+                      "updatedAt": "2023-12-29T06:34:51.923Z"
+                    }
+                  },
+                  "deleted": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/payment-history/{name}": {
+      "get": {
+        "summary": "Get All User Payments history",
+        "deprecated": false,
+        "operationId": "userPaymentsHistories",
+        "tags": ["Payments History"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "histories": [
+                      {
+                        "id": 1,
+                        "user_id": 1,
+                        "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                        "plan": "Gold",
+                        "interval_count": 1,
+                        "amount": {
+                          "USD": 2.99,
+                          "IDR": 47000
+                        },
+                        "status": "success",
+                        "order_date": "2024-01-21T03:20:29.503Z"
+                      }
+                    ]
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add User Payments History",
+        "operationId": "addPaymentHistory",
+        "tags": ["Payments History"],
+        "deprecated": false,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                "plan": "Gold",
+                "interval_count": 1,
+                "amount": {
+                  "USD": 2.99,
+                  "IDR": 47000
+                },
+                "status": "success",
+                "order_date": "2024-01-21T03:20:29.503Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "inserted_data": {
+                      "id": 1,
+                      "user_id": 1,
+                      "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                      "plan": "Gold",
+                      "interval_count": 1,
+                      "amount": {
+                        "USD": 2.99,
+                        "IDR": 47000
+                      },
+                      "status": "success",
+                      "order_date": "2024-01-21T03:20:29.503Z"
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/payment-history/{name}/{orderId}": {
+      "patch": {
+        "summary": "Update Existing User Payment History",
+        "tags": ["Payments History"],
+        "operationId": "updateUserPaymentHistory",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/orderIdSubscriptionParams"
+          }
+        ],
+        "deprecated": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "status": "failed"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "owner": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "updated_data": {
+                      "id": 1,
+                      "user_id": 1,
+                      "order_id": "plxmoid-185e7c00-c113-4223-8efa-b4ba90ac9591",
+                      "plan": "Gold",
+                      "interval_count": 1,
+                      "amount": {
+                        "USD": 2.99,
+                        "IDR": 47000
+                      },
+                      "status": "failed",
+                      "order_date": "2024-01-21T03:20:29.503Z"
+                    }
+                  },
+                  "updated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/prices": {
+      "get": {
+        "tags": ["Subscriptions"],
+        "summary": "Get all subscription prices",
+        "operationId": "prices",
+        "deprecated": false,
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "A list of subscription prices",
+            "content": {
+              "application/json": {
+                "example": {
+                  "prices": [
+                    {
+                      "id": "8768f1f8-d1f0-4275-aa0f-8872fba72d27",
+                      "title": "None",
+                      "description": "A default starter pricing plans",
+                      "price": 0,
+                      "currency": "USD",
+                      "interval": "Forever",
+                      "benefits": [
+                        {
+                          "id": 1,
+                          "title": "No Ads",
+                          "description": "Enjoy an ad-free experience, free from interruptions and distractions. Navigate through our platform seamlessly without any advertising clutter, providing you with a focused and immersive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 2,
+                          "title": "15MB Limitation File Size",
+                          "description": "Experience our services with a file size limitation of 15MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 3,
+                          "title": "Unlimited Direct Linking",
+                          "description": "Navigate your platform with Pixelarium direct linking.",
+                          "isIncluded": false
+                        },
+                        {
+                          "id": 4,
+                          "title": "Unlimited Albums",
+                          "description": "Explore the versatility of our platform with unlimited album creation capabilities.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 5,
+                          "title": "Accelerates Image Upload",
+                          "description": "Speed up your experience with accelerated image upload functionality. Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": false
+                        },
+                        {
+                          "id": 6,
+                          "title": "Unlimited Space",
+                          "description": "Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": false
+                        },
+                        {
+                          "id": 7,
+                          "title": "Badge Title On Your Profile",
+                          "description": "Showcase your achievements with a badge title displayed prominently on your profile. ",
+                          "isIncluded": false
+                        },
+                        {
+                          "id": 8,
+                          "title": "Grant Public API Access",
+                          "description": "Unlock the potential of our platform by granting public API access.",
+                          "isIncluded": true
+                        }
+                      ]
+                    },
+                    {
+                      "id": "638d42c1-37fd-42d7-80eb-987963b38191",
+                      "title": "Gold",
+                      "description": "The 'Gold' pricing plan offers a comprehensive set of features for a monthly subscription fee of $2 USD. This plan provides users with a premium experience, ensuring access to an array of advanced functionalities.",
+                      "price": 2.99,
+                      "currency": "USD",
+                      "interval": "Month",
+                      "benefits": [
+                        {
+                          "id": 1,
+                          "title": "No Ads",
+                          "description": "Enjoy an ad-free experience, free from interruptions and distractions. Navigate through our platform seamlessly without any advertising clutter, providing you with a focused and immersive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 2,
+                          "title": "40MB Limitation File Size",
+                          "description": "Experience our services with a file size limitation of 40MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 3,
+                          "title": "Unlimited Direct Linking",
+                          "description": "Navigate your platform with Pixelarium direct linking.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 4,
+                          "title": "Unlimited Albums",
+                          "description": "Explore the versatility of our platform with unlimited album creation capabilities.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 5,
+                          "title": "Accelerates Image Upload",
+                          "description": "Speed up your experience with accelerated image upload functionality. Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 6,
+                          "title": "Unlimited Space",
+                          "description": "Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": false
+                        },
+                        {
+                          "id": 7,
+                          "title": "Badge Title On Your Profile",
+                          "description": "Showcase your achievements with a badge title displayed prominently on your profile. ",
+                          "isIncluded": false
+                        },
+                        {
+                          "id": 8,
+                          "title": "Grant API Access",
+                          "description": "Unlock the potential of our platform by granting API access.",
+                          "isIncluded": true
+                        }
+                      ]
+                    },
+                    {
+                      "id": "a780721e-67cc-4a4b-be47-64182957a372",
+                      "title": "Diamond",
+                      "description": "Elevate your experience with the Diamond subscription, a premium offering tailored to enhance your access and privileges on our platform. Unlock exclusive content, advanced features, and a heightened level of service, ensuring a seamless and enriched user experience.",
+                      "price": 6.99,
+                      "currency": "USD",
+                      "interval": "Month",
+                      "benefits": [
+                        {
+                          "id": 1,
+                          "title": "No Ads",
+                          "description": "Enjoy an ad-free experience, free from interruptions and distractions. Navigate through our platform seamlessly without any advertising clutter, providing you with a focused and immersive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 2,
+                          "title": "80MB Limitation File Size",
+                          "description": "Experience our services with a file size limitation of 80MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 3,
+                          "title": "Unlimited Direct Linking",
+                          "description": "Navigate your platform with Pixelarium direct linking.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 4,
+                          "title": "Unlimited Albums",
+                          "description": "Explore the versatility of our platform with unlimited album creation capabilities.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 5,
+                          "title": "Accelerates Image Upload",
+                          "description": "Speed up your experience with accelerated image upload functionality. Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 6,
+                          "title": "Unlimited Space",
+                          "description": "Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 7,
+                          "title": "Badge Title On Your Profile",
+                          "description": "Showcase your achievements with a badge title displayed prominently on your profile. ",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 8,
+                          "title": "Grant API Access",
+                          "description": "Unlock the potential of our platform by granting public API access.",
+                          "isIncluded": true
+                        }
+                      ]
+                    },
+                    {
+                      "id": "0ecff444-8c11-4bbe-8342-9b08f9c3df4c",
+                      "title": "Netherite",
+                      "description": "The Netherite subscription offers a comprehensive package, ensuring a heightened and enriched user experience. Subscribe today to enjoy a seamless journey through our platform",
+                      "price": 9.99,
+                      "currency": "USD",
+                      "interval": "Month",
+                      "benefits": [
+                        {
+                          "id": 1,
+                          "title": "No Ads",
+                          "description": "Enjoy an ad-free experience, free from interruptions and distractions. Navigate through our platform seamlessly without any advertising clutter, providing you with a focused and immersive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 2,
+                          "title": "100MB Limitation File Size",
+                          "description": "Experience our services with a file size limitation of 100MB. This restriction ensures efficient usage of our platform while maintaining a balance between functionality and resource optimization.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 3,
+                          "title": "Unlimited Direct Linking",
+                          "description": "Navigate your platform with Pixelarium direct linking.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 4,
+                          "title": "Unlimited Albums",
+                          "description": "Explore the versatility of our platform with unlimited album creation capabilities.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 5,
+                          "title": "Accelerates Image Upload",
+                          "description": "Speed up your experience with accelerated image upload functionality. Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 6,
+                          "title": "Unlimited Space",
+                          "description": "Enjoy a swift and efficient process for uploading images to our platform, ensuring a seamless and responsive user experience.",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 7,
+                          "title": "Badge Title On Your Profile",
+                          "description": "Showcase your achievements with a badge title displayed prominently on your profile. ",
+                          "isIncluded": true
+                        },
+                        {
+                          "id": 8,
+                          "title": "Grant API Access",
+                          "description": "Unlock the potential of our platform by granting public API access.",
+                          "isIncluded": true
+                        }
+                      ]
+                    }
+                  ],
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/payments/tokenizer/{name}": {
+      "post": {
+        "deprecated": false,
+        "operationId": "tokenizer",
+        "summary": "Payments Tokenizer",
+        "tags": ["Subscriptions"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "data": {
+                  "item_details": {
+                    "price": 2.99,
+                    "plan": "Gold",
+                    "currency": "USD"
+                  },
+                  "interval_count_in_month": 2
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "description": "Invalid currency format error"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "request_from": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "transaction_secret": {
+                      "transaction_token": ".....",
+                      "redirect_url": ".....",
+                      "order_id": "...."
+                    },
+                    "ordered_plan": {
+                      "name": "Gold",
+                      "price": 2.99,
+                      "currency": "USD",
+                      "interval": "Month",
+                      "interval_count": 2,
+                      "total_price": 5.98
+                    }
+                  },
+                  "created": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/payments/callback/{name}": {
+      "get": {
+        "summary": "Callback for subscription payment",
+        "deprecated": false,
+        "operationId": "subscriptionPaymentsCallback",
+        "tags": ["Subscriptions"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subscriptionTypeParams"
+          },
+          {
+            "$ref": "#/components/parameters/orderIdSubscriptionParams"
+          }
+        ],
+        "responses": {
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "301": {
+            "description": "Redirected to failed payments page"
+          },
+          "302": {
+            "description": "Redirected to finish page or pending page"
+          }
+        }
+      }
+    },
+    "/v1/subscription/status/{name}": {
+      "get": {
+        "tags": ["Subscriptions"],
+        "summary": "Get the subscription status of a specific plan by name.",
+        "deprecated": false,
+        "operationId": "subscriptionStatus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "200": {
+            "description": "A JSON object containing information about the user's subscription status.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "user_details": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "subscription_details": {
+                      "plan": "Gold",
+                      "isActive": true,
+                      "interval_count": 2,
+                      "interval": "monthly",
+                      "start_date": "....",
+                      "end_date": "....",
+                      "next_payment_date": "...."
+                    }
+                  },
+                  "isSuccess": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/subscription/deactivate/{name}": {
+      "delete": {
+        "tags": ["Subscriptions"],
+        "security": [
+          {
+            "JsonWebTokenAuthorization": []
+          }
+        ],
+        "summary": "Deactivate User Subscription",
+        "deprecated": false,
+        "operationId": "deactivateUserSubscription",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subscriptionPaymentsId"
+          },
+          {
+            "$ref": "#/components/parameters/usernameParams"
+          },
+          {
+            "$ref": "#/components/parameters/sessionTokenCookiesParams"
+          }
+        ],
+        "responses": {
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorizedUser"
+          },
+          "200": {
+            "description": "The subscription has been deactivated.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "user_details": {
+                      "id": 1,
+                      "provider_id": 130564362,
+                      "name": "ItsNvaa",
+                      "picture": "https://avatars.githubusercontent.com/u/130564362?v=4",
+                      "type": "User",
+                      "bio": "The real loser is somebody that so afraid of not wining, they don't even try.",
+                      "site_admin": false,
+                      "createdAt": "2023-12-29T02:04:38.726Z",
+                      "updatedAt": "2023-12-29T02:04:38.726Z"
+                    },
+                    "deactivated_plan_details": {
+                      "plan": "Gold",
+                      "interval_count": 2,
+                      "interval": "Month"
+                    }
+                  },
+                  "deactivated": true,
+                  "status": "OK"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "requestBodies": {
+      "pictureUniquekeyPayload": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "example": {
+              "data": {
+                "pictures_uniquekey": ["....", "...."]
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JsonWebTokenAuthorization": {
+        "scheme": "bearer",
+        "bearerFormat": "Bearer",
+        "description": "Authentication for User",
+        "type": "http"
+      }
+    },
+    "parameters": {
+      "sessionTokenCookiesParams": {
+        "name": "session",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Refresh Session Token",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ....",
+        "in": "cookie",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      },
+      "usernameParams": {
+        "name": "name",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Name Data",
+        "in": "path",
+        "required": true,
+        "example": "ItsNvaa",
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      },
+      "paymentHistoryId": {
+        "name": "payment_history_id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Existing Payment History ID",
+        "in": "path",
+        "required": true,
+        "example": 1,
+        "schema": {
+          "deprecated": false,
+          "type": "number"
+        }
+      },
+      "userIdParams": {
+        "name": "id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Id Data",
+        "in": "path",
+        "required": true,
+        "example": 1,
+        "schema": {
+          "deprecated": false,
+          "type": "number"
+        }
+      },
+      "searchParams": {
+        "name": "q",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Search Query",
+        "in": "query",
+        "required": true,
+        "example": "Pictures title",
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      },
+      "pictureUniquekey": {
+        "name": "picture_uniquekey",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Picture Uniquekey",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      },
+      "albumIdParams": {
+        "name": "album_id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Album Id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "number"
+        }
+      },
+      "orderIdSubscriptionParams": {
+        "name": "order_id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Order Payments Id",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      },
+      "subscriptionTypeParams": {
+        "name": "type",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "Type of subscription payments",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "string",
+          "enum": ["success", "failed", "pending"]
+        }
+      },
+      "subscriptionPaymentsId": {
+        "name": "payment_id",
+        "allowEmptyValue": false,
+        "deprecated": false,
+        "description": "User Subscription Payments Id",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "deprecated": false,
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "notFound": {
+        "description": "Oops! The data you are looking for could not be found."
+      },
+      "badRequest": {
+        "description": "Oops! Your request cannot be processed due to a bad request. Please check your input and try again."
+      },
+      "unauthorizedUser": {
+        "description": "The user must be login first!"
+      },
+      "unauthorized": {
+        "description": "You are not authorized to access this resource. Please provide valid credentials or authentication."
+      },
+      "userIdValidation": {
+        "description": "The ID was not valid."
+      },
+      "emptyRequestBodyValidationError": {
+        "description": "The input fields must be filled."
+      },
+      "validateInvalidRequestBodyObject": {
+        "description": "Validate if the request body object is contains invalid request body field"
+      }
+    }
+  }
+}

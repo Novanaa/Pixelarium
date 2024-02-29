@@ -1,0 +1,174 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/client"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id               Int               @id @default(autoincrement())
+  provider_id      Int               @unique
+  name             String            @unique
+  email            String?
+  password         String?
+  picture          String
+  type             UserType          @default(User)
+  bio              String
+  site_admin       Boolean           @default(false)
+  is_member        Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  client_keys      ClientKey?
+  paymentHistory   PaymentsHistory[]
+  gallery          Gallery?
+  favorite_picture Favorite?
+  album            Album[]
+  subscription     Subscription?
+
+  @@index([name], type: BTree)
+}
+
+enum UserType {
+  User
+  Admin
+  Owner
+}
+
+model ClientKey {
+  id            Int     @id @default(autoincrement())
+  user_id       Int     @unique
+  client_id     String? @unique
+  client_secret String?
+  user          User    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id], type: BTree)
+}
+
+model Gallery {
+  id        Int       @id @default(autoincrement())
+  user_id   Int       @unique
+  pictures  Picture[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id, user_id], type: BTree)
+}
+
+model Album {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  is_private  Boolean   @default(false)
+  thumbnail   String?
+  pictures    Picture[]
+  user_id     Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id, user_id], type: BTree)
+}
+
+model Favorite {
+  id                 Int       @id @default(autoincrement())
+  user_id            Int       @unique
+  pictures           Picture[]
+  favorited_pictures Int // Total Favorited Pictures
+  user               User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([user_id], type: BTree)
+}
+
+model Picture {
+  id                  Int         @id @default(autoincrement())
+  uniquekey           String      @unique @default(uuid())
+  title               String
+  description         String
+  url                 String
+  filename            String
+  extension           String
+  expires_in          Int?
+  is_external_picture Boolean
+  is_private          Boolean     @default(false)
+  gallery_id          Int
+  album_id            Int?
+  favorite_id         Int?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  embed_link          EmbedLinks?
+  favorite            Favorite?   @relation(fields: [favorite_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  gallery             Gallery     @relation(fields: [gallery_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  album               Album?      @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([uniquekey, title, description], type: BTree)
+}
+
+model Subscription {
+  id                 Int       @id @default(autoincrement())
+  user_id            Int       @unique
+  start_date         DateTime?
+  end_date           DateTime?
+  next_payments_date DateTime?
+  payment_id         String?
+  interval           String    @default("Monthly")
+  interval_count     Int?
+  status             status    @default(deactive)
+  plan               plan      @default(none)
+  user               User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id, user_id], type: BTree)
+}
+
+model PaymentsHistory {
+  id             Int                @id @default(autoincrement())
+  user_id        Int
+  order_id       String             @unique
+  plan           plan
+  interval_count Int
+  amount         Json
+  status         subscriptionStatus
+  order_date     DateTime
+  user           User               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([user_id, order_id], type: BTree)
+}
+
+enum plan {
+  none
+  Gold
+  Diamond
+  Netherite
+}
+
+enum subscriptionStatus {
+  failed
+  success
+  pending
+}
+
+enum status {
+  deactive
+  active
+}
+
+model EmbedLinks {
+  id            Int     @id @default(autoincrement())
+  html_link     Json
+  direct_link   Json
+  markdown_link Json
+  picture_id    Int     @unique
+  picture       Picture @relation(fields: [picture_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id], type: BTree)
+}
