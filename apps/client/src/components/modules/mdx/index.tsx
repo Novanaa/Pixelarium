@@ -3,7 +3,7 @@ import sanitizeHtml from "sanitize-html";
 import type MDXProps from "@/components/interfaces/types/MDXProps";
 import { cn } from "@/lib/utils";
 import { firaCode, jakartaSans } from "@/configs/fonts";
-import sanitizeOptionsConfiguration from "@/configs/sanitizeHtmlOptions";
+import sanitizeOptionsConfiguration from "@/configs/sanitize-html-options";
 import Container from "@/components/molecules/container";
 
 function MDX({ mdxContent, className }: MDXProps): React.ReactElement {

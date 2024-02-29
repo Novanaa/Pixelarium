@@ -9,13 +9,13 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import AccountsSearchGroup from "../AccountsSearchGroup";
+import AccountsSearchGroup from "../accounts-search-group";
 import { usePathname, useRouter } from "next/navigation";
-import useQueryParamsState from "@/hooks/useQueryParamsState";
-import useTogglePageScrollOverflow from "@/hooks/useTogglePageScrollOverflow";
+import useQueryParamsState from "@/hooks/use-query-params-state";
+import useTogglePageScrollOverflow from "@/hooks/use-toggle-page-scroll";
 import { cn } from "@/lib/utils";
 import MobileSearchProps from "@/components/interfaces/types/MobileSearchProps";
-import MobileSearchGroup from "./SearchGroup";
+import MobileSearchGroup from "./search-group";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";

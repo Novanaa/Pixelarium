@@ -1,6 +1,6 @@
 "use client";
 
-import Paragraph from "@/components/molecules/typographies/Paragraph";
+import Paragraph from "@/components/molecules/typographies/paragraph";
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
 import { CrossCircledIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
@@ -15,7 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 import handleUploadPicture from "../services/handleUploadPicture";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import allowedPictureType from "../constant/readonly/allowedPictureType";
-import onErrorHandler from "@/utils/onErrorHandler";
+import onErrorHandler from "@/utils/on-error-picture-handler";
 import handleCancelRequest from "../services/handleCancelRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/stores";

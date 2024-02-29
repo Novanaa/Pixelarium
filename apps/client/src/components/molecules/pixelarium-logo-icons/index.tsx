@@ -1,6 +1,6 @@
 "use client";
 
-import getLogoSource from "@/utils/getLogoSource";
+import getLogoSource from "@/utils/get-logo-source";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 import Image from "next/image";

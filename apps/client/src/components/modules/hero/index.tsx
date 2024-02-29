@@ -2,12 +2,12 @@
 
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { HeadingOne } from "@/components/molecules/typographies/Heading";
-import Paragraph from "@/components/molecules/typographies/Paragraph";
+import { HeadingOne } from "@/components/molecules/typographies/heading";
+import Paragraph from "@/components/molecules/typographies/paragraph";
 import { jakartaSans } from "@/configs/fonts";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import getLogoSource from "@/utils/getLogoSource";
+import getLogoSource from "@/utils/get-logo-source";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
 import { RocketIcon } from "@radix-ui/react-icons";

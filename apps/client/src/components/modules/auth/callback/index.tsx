@@ -1,6 +1,6 @@
 "use client";
 
-import errorException from "@/exceptions/errorException";
+import errorException from "@/exceptions/error-exception";
 import { useEffect } from "react";
 import React from "react";
 import {
@@ -9,8 +9,8 @@ import {
   useSearchParams,
 } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import setUserLogin from "@/services/setUserLogin";
-import LoginCallbackLoader from "./Loader";
+import setUserLogin from "@/services/set-user-login";
+import LoginCallbackLoader from "./loader";
 
 function UserAuthLoginCallback() {
   const routerNav: AppRouterInstance = useRouterNav();

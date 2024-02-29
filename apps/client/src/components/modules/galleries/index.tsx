@@ -1,10 +1,10 @@
 import React from "react";
-import GalleryHeader from "./Header";
-import GalleryPictures from "./PictureList";
+import GalleryHeader from "./components/header";
+import GalleryPictures from "./components/picture-list";
 import Search from "../search";
 import getGalleryPictures, {
   GalleryResponseAPI,
-} from "@/services/getGalleryPictures";
+} from "@/services/get-gallery-pictures";
 import Picture from "@/components/interfaces/types/Picture";
 import SearchDatas from "@/components/interfaces/types/SearchDatas";
 import Upload from "../upload";

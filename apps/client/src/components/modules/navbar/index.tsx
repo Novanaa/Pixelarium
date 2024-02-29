@@ -11,7 +11,7 @@ import {
 import cn from "@/utils/cn";
 import { jakartaSans } from "@/configs/fonts";
 import Image from "next/image";
-import { HeadingFour } from "@/components/molecules/typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/heading";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { UseThemeProps } from "next-themes/dist/types";
@@ -24,17 +24,17 @@ import {
   MoonIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
-import githubRepositoryLink from "@/constant/readonly/githubRepositoryLink";
+import githubRepositoryLink from "@/constant/readonly/github-repository-link";
 import { useState } from "react";
 import type { default as NavbarHeadersParams } from "@/components/interfaces/types/NavbarHeaders";
 import type { default as NavbarFooterParams } from "@/components/interfaces/types/NavbarFooter";
 import type { default as NavbarMobileMenuParams } from "@/components/interfaces/types/NavbarMobileMenu";
-import NavbarMobile from "./NavbarMobile";
-import navbarLinksMenu from "@/resources/navbarLinksMenu.json";
-import isLoggedIn from "@/services/isLoggedIn";
-import getLogoSource from "@/utils/getLogoSource";
+import NavbarMobile from "./mobile";
+import navbarLinksMenu from "@/resources/navbar-links-menu.json";
+import isLoggedIn from "@/services/is-loggedin";
+import getLogoSource from "@/utils/get-logo-source";
 import { Skeleton } from "@/components/ui/skeleton";
-import UserProfilePicture from "./UserProfilePicture";
+import UserProfilePicture from "./components/user-profile-picture";
 import Container from "@/components/molecules/container";
 
 function Navbar() {

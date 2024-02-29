@@ -1,15 +1,15 @@
-import PictureFieldFormSchema from "@/validations/pictureField";
+import PictureFieldFormSchema from "@/validations/picture-field";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
-import unexpectedErrorToasterMessege from "@/constant/readonly/unexpectedErrorToasterMessege";
+import unexpectedErrorToasterMessege from "@/constant/readonly/unexpected-error-toaster-messege";
 import ErrorToastAction from "@/components/molecules/toaster-action/on-error";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import getUserData from "@/services/getUserData";
+import getUserData from "@/services/get-user-data";
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import SuccessToastAction from "@/components/molecules/toaster-action/on-success";
 import { faker } from "@faker-js/faker";
-import { uploadUserPictureByLink } from "@/services/uploadUserPicture";
+import { uploadUserPictureByLink } from "@/services/upload-user-picture";
 import UploadUserPictureData from "@/interfaces/types/UploadUserPictureData";
 import PictureDetails from "@/interfaces/types/PictureDetails";
 

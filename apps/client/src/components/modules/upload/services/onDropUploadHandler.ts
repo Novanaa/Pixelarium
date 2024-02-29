@@ -1,25 +1,25 @@
 import ErrorToastAction from "@/components/molecules/toaster-action/on-error";
 import { toast } from "@/components/ui/use-toast";
-import pictureLimitSize from "@/constant/readonly/pictureSizeLimit";
+import pictureLimitSize from "@/constant/readonly/picture-size-limit";
 import DecodedUser from "@/interfaces/types/DecodedUser";
 import Subscription from "@/interfaces/types/Subscription";
-import getUserData from "@/services/getUserData";
+import getUserData from "@/services/get-user-data";
 import getUserSubscriptionStatus, {
   GetUserSubscriptionStatusReturnType,
-} from "@/services/getUserSubscriptionStatus";
+} from "@/services/get-user-subscription-status";
 import mime from "mime";
 import allowedPictureType from "../constant/readonly/allowedPictureType";
-import apiUrlEndpoint from "@/constant/readonly/apiUrlEndpoint";
+import apiUrlEndpoint from "@/constant/readonly/api-url-endpoint";
 import PictureDetails from "@/interfaces/types/PictureDetails";
 import {
   setPictureUploadImageBloblSrcState,
   setPictureUploadProgressState,
   setPictureUploadStartedState,
-} from "@/stores/reducers/pictureUpload";
+} from "@/stores/reducers/picture-upload";
 import axios from "axios";
 import React from "react";
 import SuccessToastAction from "@/components/molecules/toaster-action/on-success";
-import unexpectedErrorToasterMessege from "@/constant/readonly/unexpectedErrorToasterMessege";
+import unexpectedErrorToasterMessege from "@/constant/readonly/unexpected-error-toaster-messege";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { AppDispatch } from "@/stores";
 

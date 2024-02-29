@@ -1,13 +1,13 @@
 "use client";
 
-import { HeadingFour } from "@/components/molecules/typographies/Heading";
+import { HeadingFour } from "@/components/molecules/typographies/heading";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import dummyData from "@/resources/developersDocsNavigationMenuLinks.json";
+import dummyData from "@/resources/developers-docs-navigation-menu-links.json";
 import { cn } from "@/lib/utils";
 import { parseAsStringLiteral, useQueryState } from "nuqs";
-import activeQueryParamsName from "@/constant/readonly/activeQueryParamsName";
+import activeQueryParamsName from "@/constant/readonly/active-query-params-name";
 
 export default function DevelopersDocsSidebar(): React.ReactElement {
   return (

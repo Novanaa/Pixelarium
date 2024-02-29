@@ -1,7 +1,7 @@
 import ReactNodeChild from "@/components/interfaces/types/ReactNodeChild";
 import DevelopersDocsSidebar from "@/components/modules/developers/sidebar";
-import DevelopersDocsSidebarMobile from "@/components/modules/developers/sidebar/DevelopersDocsSidebarMobile";
-import Next from "@/components/modules/developers/contents/Next";
+import DevelopersDocsSidebarMobile from "@/components/modules/developers/sidebar/mobile";
+import Next from "@/components/modules/developers/contents/next";
 import TableOfContents from "@/components/modules/toc";
 import React, { Suspense } from "react";
 import FrontMatter from "@/interfaces/types/FrontMatter";
@@ -9,7 +9,7 @@ import type TocElementData from "@/interfaces/types/Toc";
 import Navbar from "@/components/modules/navbar";
 import Search from "@/components/modules/search";
 import type SearchDatas from "@/components/interfaces/types/SearchDatas";
-import developresDocsNavMenuLinks from "@/resources/developersDocsNavigationMenuLinks.json";
+import developresDocsNavMenuLinks from "@/resources/developers-docs-navigation-menu-links.json";
 import { FileIcon } from "@radix-ui/react-icons";
 import GlobalLoading from "@/universal/loading";
 

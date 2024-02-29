@@ -1,6 +1,6 @@
 import React from "react";
-import PricingHeader from "./Header";
-import PricingList from "./List";
+import PricingHeader from "./header";
+import PricingList from "./list";
 import { jakartaSans } from "@/configs/fonts";
 import { cn } from "@/lib/utils";
 import Container from "@/components/molecules/container";

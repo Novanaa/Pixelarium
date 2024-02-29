@@ -1,6 +1,6 @@
 import React from "react";
-import DashboardSidebarHeader from "./components/DashboardSidebarHeader";
-import DashboardSidebarMenuLinksList from "./components/DashboardSidebarMenuLinksList";
+import DashboardSidebarHeader from "./components/desktop/header";
+import DashboardSidebarMenuLinksList from "./components/desktop/menu-links-list";
 
 export default function DashboardSidebar(): React.ReactElement {
   return (

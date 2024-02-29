@@ -1,7 +1,7 @@
 import React from "react";
 import LogoIcons from "@/components/molecules/pixelarium-logo-icons";
-import { HeadingThree } from "@/components/molecules/typographies/Heading";
-import LogoutUserCard from "@/components/modules/auth/logout/UserCard";
+import { HeadingThree } from "@/components/molecules/typographies/heading";
+import LogoutUserCard from "@/components/modules/auth/logout/user-card";
 import RootLayout from "@/layouts";
 import { Metadata } from "next";
 import Container from "@/components/molecules/container";

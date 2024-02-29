@@ -1,4 +1,4 @@
-import renderMDX, { type RenderMDXReturnType } from "@/services/renderMDX";
+import renderMDX, { type RenderMDXReturnType } from "@/services/render-mdx";
 import MDX from "@/components/modules/mdx";
 import DevelopersDocsLayout from "@/layouts/developer";
 import React from "react";

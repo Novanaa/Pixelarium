@@ -1,5 +1,5 @@
 import UserAuthLoginCallback from "@/components/modules/auth/callback";
-import LoginCallbackLoader from "@/components/modules/auth/callback/Loader";
+import LoginCallbackLoader from "@/components/modules/auth/callback/loader";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
 
