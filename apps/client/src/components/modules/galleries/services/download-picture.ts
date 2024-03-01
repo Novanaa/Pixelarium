@@ -22,9 +22,9 @@ export default async function downloadPicture({
     const user: Awaited<DecodedUser | null> = await getUserData();
     const endpoint: string = `${apiUrlEndpoint}/v1/pictures/download/${user?.name}/${uniquekey}`;
 
-    await axios.get(endpoint);
-
     router.push(endpoint);
+
+    await axios.get(endpoint);
 
     return toast({
       title: "Enjoy the beauty captured picture!",
