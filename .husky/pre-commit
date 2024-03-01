@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-bun run lint
+cd ./apps/server/v1 && bun lint ; cd ../../client && bun lint
 
-bun run lint:fix
+bun lint:fix ; cd ../server/v1 && bun lint:fix
