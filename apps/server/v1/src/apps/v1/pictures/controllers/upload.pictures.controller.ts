@@ -156,7 +156,7 @@ export default async function addUserGalleryPicture(
         value,
         url: pictureUrlpath,
         expires_in: pictureExpiresIn,
-        isExternalPicture: true,
+        isExternalPicture: false,
       });
 
       if (!insertedPicture.is_private) {
@@ -219,7 +219,7 @@ export default async function addUserGalleryPicture(
         value,
         url: externalPictureUrl,
         expires_in: pictureExpiresIn,
-        isExternalPicture: false,
+        isExternalPicture: true,
       });
 
       if (!insertedPicture.is_private) {

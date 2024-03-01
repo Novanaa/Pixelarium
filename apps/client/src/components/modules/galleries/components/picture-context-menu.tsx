@@ -18,6 +18,9 @@ import {
 import Picture from "@/components/interfaces/types/Picture";
 import DeletePicture from "../actions/delete-picture";
 import ActionState from "../interfaces/types/ActionsState";
+import downloadPicture from "../services/download-picture";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 
 interface PictureContextMenuProps extends React.ComponentProps<"section"> {
   picture: Picture;
@@ -27,6 +30,7 @@ export default function PictureContextMenu({
   children,
   picture,
 }: PictureContextMenuProps): React.ReactElement {
+  const router: AppRouterInstance = useRouter();
   const [dialogOpenState, setDialogOpenState] = useState<ActionState>({
     delete: false,
     edit: false,
@@ -50,9 +54,13 @@ export default function PictureContextMenu({
             Add to favorites
           </ContextMenuItem>
           <ContextMenuSeparator />
-          <ContextMenuItem>
+          <ContextMenuItem
+            onClick={() =>
+              downloadPicture({ uniquekey: picture.uniquekey, router })
+            }
+          >
             <DownloadIcon className="mr-2 h-4 w-4" />
-            Download
+            Download (Beta)
           </ContextMenuItem>
           <ContextMenuItem
             className="text-destructive hover:text-destructive focus:text-destructive"
