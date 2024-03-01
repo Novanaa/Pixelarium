@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -16,6 +16,8 @@ import {
   TrashIcon,
 } from "@radix-ui/react-icons";
 import Picture from "@/components/interfaces/types/Picture";
+import DeletePicture from "../actions/delete-picture";
+import ActionState from "../interfaces/types/ActionsState";
 
 interface PictureContextMenuProps extends React.ComponentProps<"section"> {
   picture: Picture;
@@ -23,33 +25,51 @@ interface PictureContextMenuProps extends React.ComponentProps<"section"> {
 
 export default function PictureContextMenu({
   children,
+  picture,
 }: PictureContextMenuProps): React.ReactElement {
+  const [dialogOpenState, setDialogOpenState] = useState<ActionState>({
+    delete: false,
+    edit: false,
+  });
+
   return (
-    <ContextMenu>
-      <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
-      <ContextMenuContent className="w-56">
-        <ContextMenuItem>
-          <EyeOpenIcon className="mr-2 h-4 w-4" />
-          View
-        </ContextMenuItem>
-        <ContextMenuItem>
-          <TokensIcon className="mr-2 h-4 w-4" />
-          Edit
-        </ContextMenuItem>
-        <ContextMenuItem>
-          <HeartFilledIcon className="mr-2 h-4 w-4" />
-          Add to favorites
-        </ContextMenuItem>
-        <ContextMenuSeparator />
-        <ContextMenuItem>
-          <DownloadIcon className="mr-2 h-4 w-4" />
-          Download
-        </ContextMenuItem>
-        <ContextMenuItem className="text-destructive hover:text-destructive focus:text-destructive">
-          <TrashIcon className="mr-2 h-4 w-4" />
-          Delete
-        </ContextMenuItem>
-      </ContextMenuContent>
-    </ContextMenu>
+    <>
+      <ContextMenu>
+        <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+        <ContextMenuContent className="w-56">
+          <ContextMenuItem>
+            <EyeOpenIcon className="mr-2 h-4 w-4" />
+            View
+          </ContextMenuItem>
+          <ContextMenuItem>
+            <TokensIcon className="mr-2 h-4 w-4" />
+            Edit
+          </ContextMenuItem>
+          <ContextMenuItem>
+            <HeartFilledIcon className="mr-2 h-4 w-4" />
+            Add to favorites
+          </ContextMenuItem>
+          <ContextMenuSeparator />
+          <ContextMenuItem>
+            <DownloadIcon className="mr-2 h-4 w-4" />
+            Download
+          </ContextMenuItem>
+          <ContextMenuItem
+            className="text-destructive hover:text-destructive focus:text-destructive"
+            onClick={() =>
+              setDialogOpenState((prev) => ({ ...prev, delete: !prev.delete }))
+            }
+          >
+            <TrashIcon className="mr-2 h-4 w-4" />
+            Delete
+          </ContextMenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
+      <DeletePicture
+        uniquekey={picture.uniquekey}
+        state={dialogOpenState.delete}
+        setterState={setDialogOpenState}
+      />
+    </>
   );
 }
