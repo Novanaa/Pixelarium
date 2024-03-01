@@ -41,7 +41,7 @@ import validateEmptyRequestBody from "../../../../utils/validateEmptyRequestBody
 import getFilename from "../../../../utils/getFilename";
 import http from "../../../../const/readonly/httpStatusCode";
 import generatePictureEmbedLinks from "../../../../services/generatePictureEmbedLinks";
-// import compressUserPicture from "../../../../services/compressUserPicture";
+import compressUserPicture from "../../../../services/compressUserPicture";
 
 export default async function addUserGalleryPicture(
   req: Request,
@@ -169,13 +169,17 @@ export default async function addUserGalleryPicture(
       const responseData: AddUserGalleryPictureResponseData =
         generateUploadPictureResponseData({ insertedPicture, user });
 
-      // const pictureFilesize: number = picture.data.length;
-      // const minimumPictureFilesizeToCompress: number = 15 * 1024 * 1024;
-      // if (pictureFilesize < minimumPictureFilesizeToCompress) {
-      //   saveFile({ file: picture, response: res, path: pictureDest });
-      // }
+      const pictureFilesize: number = picture.data.length;
+      const minimumPictureFilesizeToCompress: number = 10 * 1024 * 1024;
+      if (pictureFilesize > minimumPictureFilesizeToCompress) {
+        await compressUserPicture({ data: picture.data, path: pictureDest });
 
-      // await compressUserPicture({ data: picture.data, path: pictureDest });
+        return SendJsonResultHttpResponse<AddUserGalleryPictureResponseData>({
+          response: res,
+          responseData,
+          options: { statusCode: http.StatusCreated, resultKey: "created" },
+        });
+      }
 
       saveFile({ file: picture, response: res, path: pictureDest });
 
