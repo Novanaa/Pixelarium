@@ -81,7 +81,7 @@ interface DeletesPicturesProps {
 function DeletePictures({
   pictures,
 }: DeletesPicturesProps): React.ReactElement {
-  const [_, setActiveQueryParams] = useQueryState(
+  const [activeQueryParams, setActiveQueryParams] = useQueryState(
     "active",
     parseAsStringLiteral(activeQueryParamsName),
   );
@@ -91,7 +91,7 @@ function DeletePictures({
   const toaster: UseToastProps = useToast();
 
   return (
-    <AlertDialog>
+    <AlertDialog open={activeQueryParams == "deletes"}>
       <AlertDialogTrigger asChild>
         <DropdownMenuItem
           disabled={!pictures?.length}
@@ -119,7 +119,7 @@ function DeletePictures({
               Please wait
             </Button>
           ) : (
-            <AlertDialogAction
+            <Button
               onClick={() =>
                 deletesPictures({
                   router,
@@ -130,7 +130,7 @@ function DeletePictures({
               }
             >
               Continue
-            </AlertDialogAction>
+            </Button>
           )}
         </AlertDialogFooter>
       </AlertDialogContent>
