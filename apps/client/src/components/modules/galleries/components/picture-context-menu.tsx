@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   ContextMenu,
@@ -13,10 +15,15 @@ import {
   TokensIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
+import Picture from "@/components/interfaces/types/Picture";
+
+interface PictureContextMenuProps extends React.ComponentProps<"section"> {
+  picture: Picture;
+}
 
 export default function PictureContextMenu({
   children,
-}: React.ComponentProps<"section">): React.ReactElement {
+}: PictureContextMenuProps): React.ReactElement {
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
