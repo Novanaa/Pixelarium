@@ -22,6 +22,9 @@ import getUserGallery, {
   UserGallery,
 } from "../../galleries/services/getUserGallery";
 import http from "../../../../const/readonly/httpStatusCode";
+import mime from "mime";
+import download from "download";
+import { default as fsNode } from "fs";
 
 type SingleUserPictureResponseData = {
   picture: Picture;
@@ -119,26 +122,48 @@ export async function downloadUserPicture(
         errorMessage: "The picture doesn't exist",
       });
 
-    const filename: string = userPicture.filename;
+    if (!userPicture.is_external_picture) {
+      const filename: string = userPicture.filename;
 
-    const userPicturePath: string = getPublicDirectoryPicturepath({
-      usage: "galleries",
-      filename,
-      name: slugifiedUsername,
-    });
-
-    const isFileExist: boolean | null = fs.isExist(userPicturePath);
-
-    if (!isFileExist)
-      return httpBadRequestResponse({
-        response: res,
-        errorMessage: "Unexpected Errors Occurred",
+      const userPicturePath: string = getPublicDirectoryPicturepath({
+        usage: "galleries",
+        filename,
+        name: slugifiedUsername,
       });
 
-    res.status(http.StatusOk).download(userPicturePath);
+      const isFileExist: boolean | null = fs.isExist(userPicturePath);
+
+      if (!isFileExist)
+        return httpBadRequestResponse({
+          response: res,
+          errorMessage: "Cannot find the picture",
+        });
+
+      return res.status(http.StatusOk).download(userPicturePath);
+    }
+
+    const fileExt: string =
+      String("." + mime.getExtension(userPicture.extension)) || ".png";
+    const filename: string = userPicture.filename + fileExt;
+
+    const dest: string = getPublicDirectoryPicturepath({
+      filename,
+      usage: "galleries",
+      name: user.name,
+    });
+
+    const downloadPicture: Awaited<Buffer> = await download(userPicture.url);
+
+    fsNode.writeFileSync(dest, downloadPicture);
+
+    return res.status(http.StatusOk).download(dest);
   } catch (err) {
     logger.error(err);
-    return httpBadRequestResponse({ response: res });
+
+    return httpBadRequestResponse({
+      response: res,
+      errorMessage: "Cannot find the picture",
+    });
   } finally {
     await client.$disconnect();
   }
