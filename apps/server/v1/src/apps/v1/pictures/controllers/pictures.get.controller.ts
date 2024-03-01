@@ -143,7 +143,7 @@ export async function downloadUserPicture(
     }
 
     const fileExt: string =
-      String("." + mime.getExtension(userPicture.extension)) || ".png";
+      String("." + mime.getExtension(userPicture.extension)) && ".png";
     const filename: string = userPicture.filename + fileExt;
 
     const dest: string = getPublicDirectoryPicturepath({
@@ -152,9 +152,13 @@ export async function downloadUserPicture(
       name: user.name,
     });
 
-    const downloadPicture: Awaited<Buffer> = await download(userPicture.url);
+    if (!fs.isExist(dest)) {
+      const downloadPicture: Awaited<Buffer> = await download(userPicture.url);
 
-    fsNode.writeFileSync(dest, downloadPicture);
+      fsNode.writeFileSync(dest, downloadPicture);
+
+      return res.status(http.StatusOk).download(dest);
+    }
 
     return res.status(http.StatusOk).download(dest);
   } catch (err) {
