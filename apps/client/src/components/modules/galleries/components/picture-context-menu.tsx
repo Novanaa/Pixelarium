@@ -60,7 +60,7 @@ export default function PictureContextMenu({
             }
           >
             <DownloadIcon className="mr-2 h-4 w-4" />
-            Download
+            Download (Beta)
           </ContextMenuItem>
           <ContextMenuItem
             className="text-destructive hover:text-destructive focus:text-destructive"
