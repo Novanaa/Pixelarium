@@ -5,6 +5,8 @@ import DecodedUser from "@/interfaces/types/DecodedUser";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import UseToastProps from "@/components/interfaces/types/UseToastProps";
 import UserSessionTokennizerResponseData from "@/interfaces/types/UserSessionTokennizerResponseData";
+import SuccessToastAction from "@/components/molecules/toaster-action/on-success";
+import ErrorToastAction from "@/components/molecules/toaster-action/on-error";
 
 interface DeletesPicturesParams {
   router: AppRouterInstance;
@@ -47,6 +49,7 @@ export default async function deletesPictures({
       toaster.toast({
         title: "Deleted!",
         description: "Successfully deletes your pictures!",
+        action: SuccessToastAction({}),
       });
     }
   } catch (err) {
@@ -55,6 +58,7 @@ export default async function deletesPictures({
     toaster.toast({
       title: "Uh oh! Something went wrong.",
       description: "There was a problem with your request.",
+      action: ErrorToastAction({}),
     });
   }
 }
