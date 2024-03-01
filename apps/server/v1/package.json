@@ -29,7 +29,6 @@
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
     "@prisma/client": "^5.9.1",
-    "@prisma/engine": "^1.0.18",
     "@types/base-64": "^1.0.2",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.6",
@@ -41,7 +40,6 @@
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/moment": "^2.13.0",
-    "@types/multer": "^1.4.11",
     "@types/supertest": "^2.0.16",
     "@types/swagger-ui-express": "^4.1.6",
     "@types/uuid": "^9.0.7",
