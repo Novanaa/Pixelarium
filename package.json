@@ -3,10 +3,16 @@
   "description": "The Infinite Pixels Experience.",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "prepare": "husky"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "husky": "^9.0.11"
   }
 }
