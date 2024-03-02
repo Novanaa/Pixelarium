@@ -23,7 +23,7 @@ export default function validateUpdateUserRequestBody(
     joi.object({
       title: joi.string(),
       description: joi.string(),
-      expiresInDays: joi.number(),
+      expiresInDays: joi.number().allow(null),
       image_url: joi.string(),
       is_private: joi.boolean(),
     });
