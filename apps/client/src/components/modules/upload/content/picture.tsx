@@ -109,7 +109,7 @@ function OnUploadPictureContent(): React.ReactElement {
       value="picture"
       className="mt-5 flex w-full flex-col items-center justify-center gap-3 @container"
     >
-      <div className="flex w-[90%] items-center justify-center rounded-lg border border-2 @md:w-full">
+      <div className="flex w-[90%] items-center justify-center rounded-lg border @md:w-full">
         <LazyLoadImage
           alt="picture"
           effect="black-and-white"
