@@ -64,6 +64,16 @@ export default async function updateUserPicture(
     delete user.email;
     delete user.password;
 
+    const userSubs: Awaited<Subscription | null> = await getUserSubscription(
+      user.id
+    );
+
+    if (!userSubs)
+      return httpBadRequestResponse({
+        response: res,
+        errorMessage: "Unexpected Errors Occurred",
+      });
+
     if (!Object.keys(req.body).length && !req.files)
       return httpBadRequestResponse({
         response: res,
@@ -112,6 +122,13 @@ export default async function updateUserPicture(
         });
 
       if (externalPictureUrl) {
+        if (userSubs.plan == "none")
+          return httpBadRequestResponse({
+            response: res,
+            errorMessage:
+              "To update picture must required Gold, Diamond, or Netherite plans",
+          });
+
         const isValidPictureUrl: boolean = validator.isURL(externalPictureUrl);
 
         if (!isValidPictureUrl)
@@ -162,13 +179,11 @@ export default async function updateUserPicture(
           requestFileFieldName
         ] as UploadedFile;
 
-        const userSubs: Awaited<Subscription | null> =
-          await getUserSubscription(user.id);
-
-        if (!userSubs)
+        if (userSubs.plan == "none")
           return httpBadRequestResponse({
             response: res,
-            errorMessage: "Unexpected Errors Occurred",
+            errorMessage:
+              "To update picture must required Gold, Diamond, or Netherite plans",
           });
 
         const requestFilesFieldValidation: void | Response =
