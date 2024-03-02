@@ -14,10 +14,8 @@ import getUserGallery, {
 import dummyExternalPictureUrl from "../../../../const/readonly/dummyExternalPictureUrl";
 import { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import jsonifyUserObject from "../../../../tests/utils/jsonifyUserObject";
-import JsonWebToken from "../../../../services/JsonWebToken";
 import getTestUserClientKeys from "../../../../tests/utils/getTestUserClientKeys";
 
-const jwt: JsonWebToken = new JsonWebToken();
 describe("Unit-test Update User Gallery Picture API Endpoint", () => {
   test("should be return 400 status code if the request file and request body is undefined", async () => {
     const user: Awaited<User | null> = await getTestUser(payload.providerId);
@@ -494,8 +492,8 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
     expect(request.status).toBe(422);
     expect(request.body.status).toBe("KO");
   });
-  test("should be return 422 if the picture file size is more than 15mb when the user plan is none", async () => {
-    const user: Awaited<User | null> = await getTestUser(6);
+  test("should be return 400 if the user plan is none but want to update the picture", async () => {
+    const user: Awaited<User | null> = await getTestUser(898);
     const userGallery: Awaited<UserGallery | null> = await getUserGallery(
       user?.id || 0
     );
@@ -507,11 +505,32 @@ describe("Unit-test Update User Gallery Picture API Endpoint", () => {
         .field({
           title: "tesssettt",
         })
-        .attach("picture", "./public/img/test/20mb.png")
+        .attach("picture", "./public/img/test/test.avif")
         .set("Content-Type", "application/json");
 
     console.log(request.body);
-    expect(request.status).toBe(422);
+    expect(request.status).toBe(400);
+    expect(request.body.status).toBe("KO");
+  });
+  test("should be return 400 if the user plan is none but want to update the picture by link", async () => {
+    const user: Awaited<User | null> = await getTestUser(898);
+    const userGallery: Awaited<UserGallery | null> = await getUserGallery(
+      user?.id || 0
+    );
+    const request: Awaited<supertest.Response | supertest.Request> =
+      await supertest(app)
+        .patch(
+          `/v1/pictures/${user?.name}/${userGallery.pictures[0].uniquekey}`
+        )
+        .field({
+          title: "tesssettt",
+          description: "testt",
+          image_url: "tefjsha",
+        })
+        .set("Content-Type", "application/json");
+
+    console.log(request.body);
+    expect(request.status).toBe(400);
     expect(request.body.status).toBe("KO");
   });
   test("should be return 422 if the picture file size is more than 30mb when the user plan is Gold", async () => {
