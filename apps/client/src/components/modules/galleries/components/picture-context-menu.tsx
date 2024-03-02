@@ -21,6 +21,7 @@ import ActionState from "../interfaces/types/ActionsState";
 import downloadPicture from "../services/download-picture";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
+import EditPicture from "../actions/edit-picture";
 
 interface PictureContextMenuProps extends React.ComponentProps<"section"> {
   picture: Picture;
@@ -45,7 +46,11 @@ export default function PictureContextMenu({
             <EyeOpenIcon className="mr-2 h-4 w-4" />
             View
           </ContextMenuItem>
-          <ContextMenuItem>
+          <ContextMenuItem
+            onClick={() =>
+              setDialogOpenState((prev) => ({ ...prev, edit: !prev.edit }))
+            }
+          >
             <TokensIcon className="mr-2 h-4 w-4" />
             Edit
           </ContextMenuItem>
@@ -76,6 +81,12 @@ export default function PictureContextMenu({
       <DeletePicture
         uniquekey={picture.uniquekey}
         state={dialogOpenState.delete}
+        setterState={setDialogOpenState}
+      />
+      <EditPicture
+      picture={picture}
+        uniquekey={picture.uniquekey}
+        state={dialogOpenState.edit}
         setterState={setDialogOpenState}
       />
     </>
