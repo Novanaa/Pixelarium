@@ -31,7 +31,7 @@ export default function PricingList() {
     .map((list) => {
       return (
         <div
-          className={`${!list.isPrimary ? `relative @5xl:top-[1.5rem]` : `relative top-0`} flex h-[43.5rem] w-[95vw] flex-col items-center rounded-lg border bg-primary-foreground/10 p-8 @xs:h-[39.5rem] @xs:w-[20rem]`}
+          className={`${!list.isPrimary ? `relative @5xl:top-[1.5rem]` : `relative top-0`} flex h-[43.5rem] w-[95vw] flex-col items-center rounded-lg border bg-primary-foreground/10 p-8 @xs:h-[40.5rem] @xs:w-[20rem]`}
           key={list.id}
         >
           <div className="flex items-center justify-center gap-2">
