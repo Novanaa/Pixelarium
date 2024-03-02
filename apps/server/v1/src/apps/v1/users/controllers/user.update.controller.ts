@@ -1,3 +1,4 @@
+import path from "path";
 import logger from "../../../../libs/configs/logger";
 import client from "../../../../libs/configs/prisma";
 import { Request, Response } from "express";
@@ -12,7 +13,6 @@ import { isUserExistByNameOrEmail } from "../../../../utils/isUser";
 import checkIfUsernameHasBeenTaken from "../../../../utils/checkIfUsernameHasBeenTaken";
 import type TUserValidation from "../interfaces/types/UserValidationTypes";
 import updateUserData from "../services/updateUserData";
-import validateImagesUpload from "../../../../utils/validateImagesUpload";
 import saveFile from "../../../../utils/saveFile";
 import getPictureUrlpath from "../../../../utils/getPictureUrlpath";
 import createHashedFilename from "../../../../utils/createHashedFilename";
@@ -32,6 +32,8 @@ import http from "../../../../const/readonly/httpStatusCode";
 import type { UserWithOptionalChaining } from "../../../../interfaces/UserWithOptionalChaining";
 import requestFileFieldName from "../../../../const/readonly/requestFileFieldName";
 import getUserSubscription from "../../../../utils/getUserSubscription";
+import messege from "../../../../const/readonly/messege";
+import { default as allowedImgExt } from "../../../../const/readonly/extentsion";
 
 export default async function updateUser(
   req: Request,
@@ -98,13 +100,18 @@ export default async function updateUser(
 
       if (validateFieldResult) return;
 
-      const validateImagesresult: void | Response = validateImagesUpload({
-        file: picture,
-        response: res,
-        userSubs,
-      });
+      const ext: string = path.extname(picture.name);
+      if (!allowedImgExt.includes(ext.toLowerCase()))
+        return httpUnprocessableContentResponse({
+          response: res,
+          errorMessage: messege.unsupportedImageExt,
+        });
 
-      if (validateImagesresult) return;
+      if (picture.data.length > 2 * 1024 * 1024)
+        return httpUnprocessableContentResponse({
+          response: res,
+          errorMessage: `The image file size must be less than 2mb.`,
+        });
 
       const filename: string = createHashedFilename({ file: picture });
       const pathname: string = getPublicDirectoryPicturepath({
