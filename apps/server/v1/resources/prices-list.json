@@ -54,6 +54,12 @@
         "title": "Grant Public API Access",
         "description": "Unlock the potential of our platform by granting public API access.",
         "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
+        "isIncluded": false
       }
     ]
   },
@@ -112,6 +118,12 @@
         "id": 8,
         "title": "Grant API Access",
         "description": "Unlock the potential of our platform by granting API access.",
+        "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
         "isIncluded": true
       }
     ]
@@ -172,6 +184,12 @@
         "title": "Grant API Access",
         "description": "Unlock the potential of our platform by granting public API access.",
         "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
+        "isIncluded": true
       }
     ]
   },
@@ -230,6 +248,12 @@
         "id": 8,
         "title": "Grant API Access",
         "description": "Unlock the potential of our platform by granting public API access.",
+        "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
         "isIncluded": true
       }
     ]

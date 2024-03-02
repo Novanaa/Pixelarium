@@ -4,8 +4,8 @@
     "title": "None",
     "description": "A default starter pricing plans",
     "price": 0,
-    "priceInIDR": 0,
     "currency": "USD",
+    "priceInIDR": 0,
     "interval": "Forever",
     "benefits": [
       {
@@ -55,6 +55,12 @@
         "title": "Grant Public API Access",
         "description": "Unlock the potential of our platform by granting public API access.",
         "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
+        "isIncluded": false
       }
     ]
   },
@@ -114,6 +120,12 @@
         "id": 8,
         "title": "Grant API Access",
         "description": "Unlock the potential of our platform by granting API access.",
+        "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
         "isIncluded": true
       }
     ]
@@ -175,6 +187,12 @@
         "title": "Grant API Access",
         "description": "Unlock the potential of our platform by granting public API access.",
         "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
+        "isIncluded": true
       }
     ]
   },
@@ -234,6 +252,12 @@
         "id": 8,
         "title": "Grant API Access",
         "description": "Unlock the potential of our platform by granting public API access.",
+        "isIncluded": true
+      },
+      {
+        "id": 9,
+        "title": "Update / Replace Picture",
+        "description": "Upgrade your visual content effortlessly with our Update / Replace Picture subscription service. ",
         "isIncluded": true
       }
     ]
