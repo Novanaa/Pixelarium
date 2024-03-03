@@ -25,7 +25,7 @@ export default async function useOnSubmitForm({
   form,
   router,
   pathname,
-}: OnSubmitFormParams): Promise<void> {
+}: OnSubmitFormParams) {
   try {
     const user: Awaited<DecodedUser | null> = await getUserData();
 
@@ -53,14 +53,16 @@ export default async function useOnSubmitForm({
     router.push(pathname);
     router.refresh();
 
-    toast({
+    return toast({
       title: "Your Masterpiece Has Landed!",
       description: "The journey of your creativity begins here. Keep shining!",
       action: SuccessToastAction({ title: "Great!" }),
     });
   } catch (err) {
     router.push(pathname);
-    toast({
+    router.refresh();
+
+    return toast({
       ...unexpectedErrorToasterMessege,
       action: ErrorToastAction({}),
     });
