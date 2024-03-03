@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "bun run src/main.ts",
-    "dev": "env-cmd -f .env.dev bun run --hot src/main.ts",
-    "staging": "env-cmd -f .env.staging bun run --hot src/main.ts",
+    "dev": "env-cmd -f .env.dev bun run --watch --hot src/main.ts",
+    "staging": "env-cmd -f .env.staging bun run --watch --hot src/main.ts",
     "test:dev": "env-cmd -f .env.dev bun test --watch --timeout 20000",
     "test:staging": "env-cmd -f .env.staging bun test --watch --timeout 20000",
     "lint": "bun eslint ./src --ext .ts",
