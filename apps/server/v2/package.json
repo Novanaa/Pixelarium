@@ -1,8 +1,19 @@
 {
+  "name": "pixelarium",
+  "description": "The Infinite Pixels Experience.",
+  "module": "main.ts",
+  "type": "module",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "start": "bun run src/main.ts",
+    "dev": "env-cmd -f .env.dev bun run --hot src/main.ts",
+    "staging": "env-cmd -f .env.staging bun run --hot src/main.ts",
+    "test:dev": "env-cmd -f .env.dev bun test --watch --timeout 20000",
+    "test:staging": "env-cmd -f .env.staging bun test --watch --timeout 20000",
+    "lint": "bun eslint ./src --ext .ts",
+    "lint:fix": "bun eslint ./src --ext .ts --fix"
   },
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
     "hono": "^4.0.8",
     "prettier": "^3.2.5"
