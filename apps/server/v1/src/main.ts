@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import swaggerUi from "swagger-ui-express";
 import compression from "compression";
+import morgan from "morgan";
 /* `const app = express();` is creating an instance of the Express.js application. This instance will
 be used to configure and run the server. */
 const app: express.Application = express();
@@ -19,6 +20,7 @@ app.set("trust proxy", 1);
 app.use(requestErrorValidation);
 app.use(rateLimitter);
 app.use(compression(compressionConfigs));
+app.use(morgan("short"));
 
 // Application Routes
 /* The code block is importing various modules and routes and using them in the Express.js application. */
