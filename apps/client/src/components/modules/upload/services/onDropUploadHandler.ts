@@ -35,7 +35,7 @@ export default async function onDropUploadHandler({
   ev,
   pathname,
   router,
-}: OnDropUploadHandlerParams): Promise<void> {
+}: OnDropUploadHandlerParams) {
   ev.preventDefault();
   const controller: AbortController = new AbortController();
   const formData: FormData = new FormData();
@@ -60,45 +60,33 @@ export default async function onDropUploadHandler({
 
     if (subscription?.status == "deactive") userLimitUploadSize = 15;
 
-    if (!picture) {
-      toast({
+    if (!picture)
+      return toast({
         title: "Reader error",
         description: "Please drop a your masterpiece picture.",
         action: ErrorToastAction({}),
       });
 
-      return;
-    }
-
-    if (picturesList.length > 1) {
-      toast({
+    if (picturesList.length > 1)
+      return toast({
         title: "Reader error",
         description: "Pixelarium doesn't support multiple pictures upload.",
         action: ErrorToastAction({}),
       });
 
-      return;
-    }
-
-    if (!mimeTypeFile.startsWith("image")) {
-      toast({
+    if (!mimeTypeFile.startsWith("image"))
+      return toast({
         title: "Reader error",
         description: invalidFileTypeErrorMessege,
         action: ErrorToastAction({}),
       });
 
-      return;
-    }
-
-    if (!allowedPictureType.includes(String(extFile).toLowerCase())) {
-      toast({
+    if (!allowedPictureType.includes(String(extFile).toLowerCase()))
+      return toast({
         title: "Reader error",
         description: "The picture file extension was not supported.",
         action: ErrorToastAction({}),
       });
-
-      return;
-    }
 
     if (picture.size > userLimitUploadSize * 1024 * 1024) {
       controller.abort();
@@ -106,13 +94,11 @@ export default async function onDropUploadHandler({
       router.push(pathname);
       router.refresh();
 
-      toast({
+      return toast({
         title: "Its time to upgrade your account!!",
         description: `The picture file size must be less than ${userLimitUploadSize}mb.`,
         action: ErrorToastAction({}),
       });
-
-      return;
     }
 
     const endpoint: string = `${apiUrlEndpoint}/v1/pictures/${user?.name}/upload`;
@@ -142,7 +128,7 @@ export default async function onDropUploadHandler({
 
     dispatch(setPictureUploadStartedState(false));
 
-    toast({
+    return toast({
       title: "Your Masterpiece Has Landed!",
       description: "The journey of your creativity begins here. Keep shining!",
       action: SuccessToastAction({ title: "Great!" }),
@@ -151,11 +137,9 @@ export default async function onDropUploadHandler({
     router.push(pathname);
     router.refresh();
 
-    toast({
+    return toast({
       ...unexpectedErrorToasterMessege,
       action: ErrorToastAction({}),
     });
-
-    return;
   }
 }

@@ -56,13 +56,11 @@ export default async function handleUploadPicture({
         router.push(pathname);
         router.refresh();
 
-        toast({
+        return toast({
           title: "Its time to upgrade your account!!",
           description: `The picture file size must be less than ${userLimitUploadSize}mb.`,
           action: ErrorToastAction({}),
         });
-
-        return;
       }
 
       const pictureName: string = picture.name.split(".")[0];
@@ -93,7 +91,7 @@ export default async function handleUploadPicture({
 
       dispatch(setPictureUploadStartedState(false));
 
-      toast({
+      return toast({
         title: "Your Masterpiece Has Landed!",
         description:
           "The journey of your creativity begins here. Keep shining!",
