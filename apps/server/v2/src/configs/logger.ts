@@ -4,7 +4,7 @@ const loggerConfig: PinoLoggerOptions = {
   transport: {
     target: "pino-pretty",
     options: {
-      ignore: "pid,hostname,res,reqId,responseTime,req,test",
+      ignore: "pid,hostname,res,reqId,responseTime,req,test,err",
       timestamp: "SYS:yyyy-mm-dd HH:MM:ss.l",
     },
   },
