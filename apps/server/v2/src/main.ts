@@ -1,4 +1,11 @@
 import Fastify, { FastifyInstance } from "fastify";
+import { fastifyExpress } from "@fastify/express";
+import { fastifyCors } from "@fastify/cors";
+import { fastifyStatic } from "@fastify/static";
+import { fastifyCookie } from "@fastify/cookie";
+import { fastifyMultipart } from "@fastify/multipart";
+import { fastifyCompress } from "@fastify/compress";
+import { fastifyRateLimit } from "@fastify/rate-limit";
 
 /* This line of code is creating an instance of the Fastify server by calling the `Fastify` function
 with the `appConfig` as an argument. The `FastifyInstance` type is used to define the type of the
@@ -7,6 +14,17 @@ const app: FastifyInstance = Fastify(appConfig);
 
 import startServer from "./server";
 import appConfig from "@/configs";
+import corsConfig from "@/configs/cors";
+import staticConfig from "@/configs/static";
+import rateLimitConfig from "@/configs/rate-limit";
+
+app.register(fastifyExpress);
+app.register(fastifyRateLimit, rateLimitConfig);
+app.register(fastifyCors, corsConfig);
+app.register(fastifyStatic, staticConfig);
+app.register(fastifyCookie);
+app.register(fastifyMultipart);
+app.register(fastifyCompress);
 
 /* `await startServer(app);` is calling the `startServer` function with the `app` instance as an
 argument and using the `await` keyword to wait for the function to complete its execution before
