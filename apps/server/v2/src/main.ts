@@ -1,5 +1,4 @@
 import Fastify, { FastifyInstance } from "fastify";
-import { fastifyExpress } from "@fastify/express";
 import { fastifyCors } from "@fastify/cors";
 import { fastifyStatic } from "@fastify/static";
 import { fastifyCookie } from "@fastify/cookie";
@@ -18,7 +17,8 @@ import corsConfig from "@/configs/cors";
 import staticConfig from "@/configs/static";
 import rateLimitConfig from "@/configs/rate-limit";
 
-app.register(fastifyExpress);
+/* These lines of code are registering various Fastify plugins with the Fastify server instance
+(`app`). Here's a breakdown of each registration: */
 app.register(fastifyRateLimit, rateLimitConfig);
 app.register(fastifyCors, corsConfig);
 app.register(fastifyStatic, staticConfig);
