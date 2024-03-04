@@ -1,30 +1,17 @@
-/* These import statements in the TypeScript code are importing various modules or functions from the
-"hono" package or modules within the "hono" package. Here's a breakdown of what each import
-statement is doing: */
-import { Hono } from "hono";
-import { logger } from "hono/logger";
-import { serveStatic } from "hono/bun";
-import { prettyJSON } from "hono/pretty-json";
-import { cors } from "hono/cors";
-import { secureHeaders } from "hono/secure-headers";
+import Fastify, { FastifyInstance } from "fastify";
 
-/* `const app = new Hono();` is creating a new instance of the `Hono` class. This instance `app` is then
-being configured with various middleware functions using the `app.use()` method to handle logging,
-serving static files, formatting JSON output, compressing responses, and enabling CORS (Cross-Origin
-Resource Sharing) using the `cors` middleware with options defined in `corsOptions`. */
-const app = new Hono();
+/* This line of code is creating an instance of the Fastify server by calling the `Fastify` function
+with the `appConfig` as an argument. The `FastifyInstance` type is used to define the type of the
+`app` variable as an instance of the Fastify server. */
+const app: FastifyInstance = Fastify(appConfig);
 
-/* These lines of code are configuring the `app` instance of the `Hono` class with various middleware
-functions to handle different aspects of the application: */
-app.use(logger());
-app.use(serveStatic({ path: "public/*" }));
-app.use(prettyJSON());
-app.use(cors(corsOptions));
-app.use(secureHeaders());
+import startServer from "./server";
+import appConfig from "@/configs";
 
-import corsOptions from "@/configs/cors";
+/* `await startServer(app);` is calling the `startServer` function with the `app` instance as an
+argument and using the `await` keyword to wait for the function to complete its execution before
+moving on to the next line of code. This allows the server to start up and be ready to handle
+incoming requests before any further operations are performed. */
+await startServer(app);
 
-export default {
-  port: 8000,
-  fetch: app.fetch,
-};
+export default app;
