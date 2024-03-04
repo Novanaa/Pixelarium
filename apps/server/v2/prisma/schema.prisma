@@ -1,0 +1,169 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/client"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id              String            @id @default(uuid())
+  origin_code     Int               @unique
+  name            String            @unique
+  email           String?
+  password        String?
+  avatar          String
+  type            UserType
+  bio             String?
+  is_member       Boolean           @default(false)
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  payment_history PaymentsHistory[]
+  subscription    Subscription?
+  client_key      ClientKey?
+  favorite        Favorite?
+  album           Album[]
+
+  @@index([name, origin_code], type: BTree)
+}
+
+model PaymentsHistory {
+  id             String      @id @default(uuid())
+  plan           UserPlan
+  interval_count Int
+  status         OrderStatus
+  amount         Json
+  order_id       String      @unique
+  order_date     BigInt
+  user_id        String
+  user           User        @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  @@index([user_id, order_id], type: BTree)
+}
+
+model Subscription {
+  id                String             @id @default(uuid())
+  start_date        BigInt?
+  end_date          BigInt?
+  next_payment_date BigInt?
+  interval_count    Int?
+  payment_id        String?
+  interval          String             @default("Monthly")
+  status            SubscriptionStatus
+  plan              UserPlan
+  user_id           String             @unique
+  user              User               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id, user_id, payment_id], type: BTree)
+}
+
+model ClientKey {
+  id            String   @id @default(uuid())
+  client_id     String
+  client_secret String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  user_id       String   @unique
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id, user_id], type: BTree)
+}
+
+model Favorite {
+  id       String    @id @default(uuid())
+  pictures Picture[]
+  total    Int
+  user_id  String    @unique
+  user     User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Gallery {
+  id         String    @id @default(uuid())
+  user_id    String    @unique
+  pictures   Picture[]
+  created_at BigInt
+}
+
+model Album {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  thumbnail   String
+  pictures    Picture[]
+  user_id     String
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Picture {
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  link         String
+  expires_time Json
+  size         Int
+  filename     String
+  type         PictureType
+  extension    String
+  status       PictureStatus
+  embed_links  EmbedLinks?
+  created_at   BigInt
+  favorite_id  String?
+  album_id     String?
+  gallery_id   String
+  favorite     Favorite?     @relation(fields: [favorite_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  gallery      Gallery       @relation(fields: [gallery_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  album        Album?        @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model EmbedLinks {
+  id             String  @id @default(uuid())
+  html_links     Json
+  direct_links   Json
+  markdown_links Json
+  picture_id     String  @unique
+  picture        Picture @relation(fields: [picture_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+enum SubscriptionStatus {
+  Active
+  Inactive
+}
+
+enum UserPlan {
+  None
+  Gold
+  Diamond
+  Netherite
+}
+
+enum OrderStatus {
+  Success
+  Failed
+  Pending
+}
+
+enum PictureType {
+  Internal
+  External
+}
+
+enum PictureStatus {
+  Public
+  Private
+}
+
+enum UserType {
+  User
+  Admin
+  Owner
+}
