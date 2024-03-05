@@ -1,0 +1,37 @@
+[
+  {
+    "id": "8fb5a7d1-e2d7-4a02-b81e-253d4f981a6a",
+    "title": "Summer Vacation",
+    "description": "Memories from our summer vacation trip",
+    "thumbnail": "summer_vacation_thumbnail.jpg",
+    "user_id": "fa033a42-3650-4b1f-b27b-0e926ea953f7"
+  },
+  {
+    "id": "2c04e2a2-ee2b-4abf-a6e1-0427f17247c3",
+    "title": "Family Reunion",
+    "description": "Gathered moments from the family reunion",
+    "thumbnail": "family_reunion_thumbnail.jpg",
+    "user_id": "0c14fb9d-2056-4634-94c0-fd44482dd42e"
+  },
+  {
+    "id": "bc6aa870-3fd1-4eb4-8148-76a97a6b2a9d",
+    "title": "Graduation Day",
+    "description": "Celebrating the achievements of our graduates",
+    "thumbnail": "graduation_day_thumbnail.jpg",
+    "user_id": "afaf376c-1983-4906-bc71-2de1633cd836"
+  },
+  {
+    "id": "2b94b6f1-5f97-4dd4-8e49-9edf12a7c0f2",
+    "title": "Birthday Bash",
+    "description": "Fun-filled moments from the birthday bash",
+    "thumbnail": "birthday_bash_thumbnail.jpg",
+    "user_id": "0e3c92b8-798f-4b0e-988f-ef2df04d6bc7"
+  },
+  {
+    "id": "83757de0-60ec-4868-8571-eb59b7995f60",
+    "title": "Road Trip Adventures",
+    "description": "Exploring the countryside on a road trip",
+    "thumbnail": "road_trip_thumbnail.jpg",
+    "user_id": "7245b90d-90e0-4724-a8a2-5b94c7aef0d5"
+  }
+]

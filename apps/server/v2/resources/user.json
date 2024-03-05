@@ -1,0 +1,57 @@
+[
+  {
+    "id": "fa033a42-3650-4b1f-b27b-0e926ea953f7",
+    "origin_code": 1,
+    "name": "Admin1",
+    "email": "admin1@example.com",
+    "password": "password123",
+    "avatar": "avatar1.jpg",
+    "type": "User",
+    "bio": "Admin user 1",
+    "is_member": true
+  },
+  {
+    "id": "0c14fb9d-2056-4634-94c0-fd44482dd42e",
+    "origin_code": 2,
+    "name": "Admin2",
+    "email": "admin2@example.com",
+    "password": "password456",
+    "avatar": "avatar2.jpg",
+    "type": "User",
+    "bio": "Admin user 2",
+    "is_member": true
+  },
+  {
+    "id": "afaf376c-1983-4906-bc71-2de1633cd836",
+    "origin_code": 3,
+    "name": "Admin3",
+    "email": null,
+    "password": null,
+    "avatar": "avatar3.jpg",
+    "type": "User",
+    "bio": "Admin user 3",
+    "is_member": true
+  },
+  {
+    "id": "0e3c92b8-798f-4b0e-988f-ef2df04d6bc7",
+    "origin_code": 4,
+    "name": "Admin4",
+    "email": null,
+    "password": null,
+    "avatar": "avatar4.jpg",
+    "type": "User",
+    "bio": null,
+    "is_member": false
+  },
+  {
+    "id": "7245b90d-90e0-4724-a8a2-5b94c7aef0d5",
+    "origin_code": 5,
+    "name": "Admin5",
+    "email": "admin5@example.com",
+    "password": "password789",
+    "avatar": "avatar5.jpg",
+    "type": "User",
+    "bio": "Admin user 5",
+    "is_member": true
+  }
+]

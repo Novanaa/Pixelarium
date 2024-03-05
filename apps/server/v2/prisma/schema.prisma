@@ -30,6 +30,7 @@ model User {
   updated_at      DateTime          @updatedAt
   payment_history PaymentsHistory[]
   subscription    Subscription?
+  gallery         Gallery?
   client_key      ClientKey?
   favorite        Favorite?
   album           Album[]
@@ -89,9 +90,10 @@ model Favorite {
 
 model Gallery {
   id         String    @id @default(uuid())
-  user_id    String    @unique
   pictures   Picture[]
   created_at BigInt
+  user_id    String    @unique
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Album {

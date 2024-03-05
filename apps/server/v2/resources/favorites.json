@@ -1,0 +1,27 @@
+[
+  {
+    "id": "c389c512-63bf-4f50-b4e7-f1eae7b65c5f",
+    "total": 50,
+    "user_id": "fa033a42-3650-4b1f-b27b-0e926ea953f7"
+  },
+  {
+    "id": "3c7c6c86-2073-4d53-ae7b-1ecb8e4b8c13",
+    "total": 75,
+    "user_id": "0c14fb9d-2056-4634-94c0-fd44482dd42e"
+  },
+  {
+    "id": "a3f87b1d-7a57-4b7e-8a0d-0bf49f11622d",
+    "total": 100,
+    "user_id": "afaf376c-1983-4906-bc71-2de1633cd836"
+  },
+  {
+    "id": "df5a135b-1b53-4d48-bd61-fb56a0f1b5b2",
+    "total": 30,
+    "user_id": "0e3c92b8-798f-4b0e-988f-ef2df04d6bc7"
+  },
+  {
+    "id": "e0f78641-8b57-4b0d-856e-7e14cf9df2a9",
+    "total": 80,
+    "user_id": "7245b90d-90e0-4724-a8a2-5b94c7aef0d5"
+  }
+]

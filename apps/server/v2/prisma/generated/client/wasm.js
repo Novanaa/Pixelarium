@@ -162,8 +162,8 @@ exports.Prisma.FavoriteScalarFieldEnum = {
 
 exports.Prisma.GalleryScalarFieldEnum = {
   id: 'id',
-  user_id: 'user_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  user_id: 'user_id'
 };
 
 exports.Prisma.AlbumScalarFieldEnum = {
