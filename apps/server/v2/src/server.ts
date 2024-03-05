@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
+import generateTestUser from "./services/generate-user-test";
 import env from "./configs/env";
-
 /**
  * The function `startServer` asynchronously starts a server using Fastify on port 8000 and handles any
  * errors that may occur.
@@ -12,6 +12,7 @@ import env from "./configs/env";
 export default async function startServer(app: FastifyInstance) {
   try {
     await app.listen({ port: env.port });
+    await generateTestUser();
   } catch (err) {
     app.log.error(err);
     process.exit(1);
