@@ -1,6 +1,6 @@
 import { RateLimitPluginOptions } from "@fastify/rate-limit";
-import maxWindowMs from "../constant/max-window-ms";
-import http from "../constant/code";
+import maxWindowMs from "@/constant/max-window-ms";
+import http from "@/constant/code";
 
 /* This code snippet is defining a rate limiting configuration object named `rateLimitConfig`. It is of
 type `RateLimitOptions` which is imported from `@fastify/rate-limit` module. */
