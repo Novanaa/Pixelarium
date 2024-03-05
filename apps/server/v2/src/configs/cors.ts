@@ -1,4 +1,4 @@
-import env from "../configs/env";
+import env from "@/configs/env";
 import { FastifyCorsOptions } from "@fastify/cors";
 
 /* This code snippet is defining a variable `corsOptions` of type `FastifyCorsOptions` which is used

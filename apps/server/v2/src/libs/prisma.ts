@@ -1,5 +1,5 @@
 import { PrismaClient } from "../../prisma/generated/client";
-import prismaConfig from "../configs/prisma";
+import prismaConfig from "@/configs/prisma";
 
 /* This line of code is creating a new instance of the `PrismaClient` class and assigning it to the
 constant variable `prisma`. The `PrismaClient` class is provided by the Prisma ORM library and is

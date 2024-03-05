@@ -1,5 +1,5 @@
 import { Logger, pino } from "pino";
-import loggerConfig from "../configs/logger";
+import loggerConfig from "@/configs/logger";
 
 /* This line of code is creating a logger instance using the `pino` library with the configuration
 provided in `loggerConfig`. The `const logger: Logger` part declares a constant variable named
