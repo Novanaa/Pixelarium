@@ -10,6 +10,11 @@ interface RetrieveUserRequestParams {
   name: string;
 }
 
+interface RetrieveUserResponseData {
+  user: User;
+  status: "OK";
+}
+
 /**
  * This TypeScript function retrieves user data based on the provided username and handles errors
  * appropriately.
@@ -38,14 +43,16 @@ export default async function retrieveUser(
       const log: string = `${req.ip} - Not Found: Requested user data with username => ${name}`;
       req.log.info(log);
 
-      return error.notFound();
+      return rep.status(http.StatusNotFound).send(error.notFound());
     }
+
+    const responseData: RetrieveUserResponseData = { user, status: "OK" };
 
     await prisma.$disconnect();
     const log: string = `${req.ip} - Success: Requested user data with username => ${name}`;
     req.log.info(log);
 
-    return rep.status(200).send(user);
+    return rep.status(http.StatusOk).send(responseData);
   } catch (err) {
     logger.error(err);
     await prisma.$disconnect();
