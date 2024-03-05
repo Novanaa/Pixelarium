@@ -1,4 +1,4 @@
-const http: { [key: string]: number } = {
+const http = {
   StatusContinue: 100,
   StatusSwitchingProtocols: 101,
   StatusProcessing: 102,

@@ -16,6 +16,7 @@ import appConfig from "@/configs";
 import corsConfig from "@/configs/cors";
 import staticConfig from "@/configs/static";
 import rateLimitConfig from "@/configs/rate-limit";
+import prefix from "./configs/prefix";
 
 /* These lines of code are registering various Fastify plugins with the Fastify server instance
 (`app`). Here's a breakdown of each registration: */
@@ -25,6 +26,10 @@ app.register(fastifyStatic, staticConfig);
 app.register(fastifyCookie);
 app.register(fastifyMultipart);
 app.register(fastifyCompress);
+
+/* The line `app.register(import("@/app/user/routes"));` is registering routes for the user-related
+functionality of the application. */
+app.register(import("@/app/user/routes"), prefix("user"));
 
 /* `await startServer(app);` is calling the `startServer` function with the `app` instance as an
 argument and using the `await` keyword to wait for the function to complete its execution before
