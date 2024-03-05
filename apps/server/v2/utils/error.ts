@@ -18,12 +18,13 @@ export function instance({
   TypeError: name,
   code,
   messege,
-}: Omit<ErrorResponse, "date">): ErrorResponse {
+}: Omit<ErrorResponse, "date" | "status">): ErrorResponse {
   return {
     TypeError: name,
     messege,
     code,
     date: moment(new Date()).format(dateFormat),
+    status: "KO",
   };
 }
 
