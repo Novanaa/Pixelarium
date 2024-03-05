@@ -1,4 +1,5 @@
 import { FastifyInstance } from "fastify";
+import env from "./configs/env";
 
 /**
  * The function `startServer` asynchronously starts a server using Fastify on port 8000 and handles any
@@ -10,7 +11,7 @@ import { FastifyInstance } from "fastify";
  */
 export default async function startServer(app: FastifyInstance) {
   try {
-    await app.listen({ port: 8000 });
+    await app.listen({ port: env.port });
   } catch (err) {
     app.log.error(err);
     process.exit(1);
