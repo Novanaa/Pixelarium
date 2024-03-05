@@ -1996,6 +1996,7 @@ export namespace Prisma {
     updated_at?: boolean
     payment_history?: boolean | User$payment_historyArgs<ExtArgs>
     subscription?: boolean | User$subscriptionArgs<ExtArgs>
+    gallery?: boolean | User$galleryArgs<ExtArgs>
     client_key?: boolean | User$client_keyArgs<ExtArgs>
     favorite?: boolean | User$favoriteArgs<ExtArgs>
     album?: boolean | User$albumArgs<ExtArgs>
@@ -2019,6 +2020,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     payment_history?: boolean | User$payment_historyArgs<ExtArgs>
     subscription?: boolean | User$subscriptionArgs<ExtArgs>
+    gallery?: boolean | User$galleryArgs<ExtArgs>
     client_key?: boolean | User$client_keyArgs<ExtArgs>
     favorite?: boolean | User$favoriteArgs<ExtArgs>
     album?: boolean | User$albumArgs<ExtArgs>
@@ -2031,6 +2033,7 @@ export namespace Prisma {
     objects: {
       payment_history: Prisma.$PaymentsHistoryPayload<ExtArgs>[]
       subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+      gallery: Prisma.$GalleryPayload<ExtArgs> | null
       client_key: Prisma.$ClientKeyPayload<ExtArgs> | null
       favorite: Prisma.$FavoritePayload<ExtArgs> | null
       album: Prisma.$AlbumPayload<ExtArgs>[]
@@ -2415,6 +2418,8 @@ export namespace Prisma {
     payment_history<T extends User$payment_historyArgs<ExtArgs> = {}>(args?: Subset<T, User$payment_historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentsHistoryPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     subscription<T extends User$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$subscriptionArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    gallery<T extends User$galleryArgs<ExtArgs> = {}>(args?: Subset<T, User$galleryArgs<ExtArgs>>): Prisma__GalleryClient<$Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     client_key<T extends User$client_keyArgs<ExtArgs> = {}>(args?: Subset<T, User$client_keyArgs<ExtArgs>>): Prisma__ClientKeyClient<$Result.GetResult<Prisma.$ClientKeyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
@@ -2806,6 +2811,22 @@ export namespace Prisma {
      */
     include?: SubscriptionInclude<ExtArgs> | null
     where?: SubscriptionWhereInput
+  }
+
+
+  /**
+   * User.gallery
+   */
+  export type User$galleryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Gallery
+     */
+    select?: GallerySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GalleryInclude<ExtArgs> | null
+    where?: GalleryWhereInput
   }
 
 
@@ -6791,20 +6812,20 @@ export namespace Prisma {
 
   export type GalleryMinAggregateOutputType = {
     id: string | null
-    user_id: string | null
     created_at: bigint | null
+    user_id: string | null
   }
 
   export type GalleryMaxAggregateOutputType = {
     id: string | null
-    user_id: string | null
     created_at: bigint | null
+    user_id: string | null
   }
 
   export type GalleryCountAggregateOutputType = {
     id: number
-    user_id: number
     created_at: number
+    user_id: number
     _all: number
   }
 
@@ -6819,20 +6840,20 @@ export namespace Prisma {
 
   export type GalleryMinAggregateInputType = {
     id?: true
-    user_id?: true
     created_at?: true
+    user_id?: true
   }
 
   export type GalleryMaxAggregateInputType = {
     id?: true
-    user_id?: true
     created_at?: true
+    user_id?: true
   }
 
   export type GalleryCountAggregateInputType = {
     id?: true
-    user_id?: true
     created_at?: true
+    user_id?: true
     _all?: true
   }
 
@@ -6924,8 +6945,8 @@ export namespace Prisma {
 
   export type GalleryGroupByOutputType = {
     id: string
-    user_id: string
     created_at: bigint
+    user_id: string
     _count: GalleryCountAggregateOutputType | null
     _avg: GalleryAvgAggregateOutputType | null
     _sum: GallerySumAggregateOutputType | null
@@ -6949,20 +6970,22 @@ export namespace Prisma {
 
   export type GallerySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    user_id?: boolean
     created_at?: boolean
+    user_id?: boolean
     pictures?: boolean | Gallery$picturesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | GalleryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["gallery"]>
 
   export type GallerySelectScalar = {
     id?: boolean
-    user_id?: boolean
     created_at?: boolean
+    user_id?: boolean
   }
 
   export type GalleryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pictures?: boolean | Gallery$picturesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | GalleryCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -6971,11 +6994,12 @@ export namespace Prisma {
     name: "Gallery"
     objects: {
       pictures: Prisma.$PicturePayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      user_id: string
       created_at: bigint
+      user_id: string
     }, ExtArgs["result"]["gallery"]>
     composites: {}
   }
@@ -7343,6 +7367,8 @@ export namespace Prisma {
 
     pictures<T extends Gallery$picturesArgs<ExtArgs> = {}>(args?: Subset<T, Gallery$picturesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PicturePayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7372,8 +7398,8 @@ export namespace Prisma {
    */ 
   interface GalleryFieldRefs {
     readonly id: FieldRef<"Gallery", 'String'>
-    readonly user_id: FieldRef<"Gallery", 'String'>
     readonly created_at: FieldRef<"Gallery", 'BigInt'>
+    readonly user_id: FieldRef<"Gallery", 'String'>
   }
     
 
@@ -10772,8 +10798,8 @@ export namespace Prisma {
 
   export const GalleryScalarFieldEnum: {
     id: 'id',
-    user_id: 'user_id',
-    created_at: 'created_at'
+    created_at: 'created_at',
+    user_id: 'user_id'
   };
 
   export type GalleryScalarFieldEnum = (typeof GalleryScalarFieldEnum)[keyof typeof GalleryScalarFieldEnum]
@@ -11145,6 +11171,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"User"> | Date | string
     payment_history?: PaymentsHistoryListRelationFilter
     subscription?: XOR<SubscriptionNullableRelationFilter, SubscriptionWhereInput> | null
+    gallery?: XOR<GalleryNullableRelationFilter, GalleryWhereInput> | null
     client_key?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
     favorite?: XOR<FavoriteNullableRelationFilter, FavoriteWhereInput> | null
     album?: AlbumListRelationFilter
@@ -11164,6 +11191,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     payment_history?: PaymentsHistoryOrderByRelationAggregateInput
     subscription?: SubscriptionOrderByWithRelationAndSearchRelevanceInput
+    gallery?: GalleryOrderByWithRelationAndSearchRelevanceInput
     client_key?: ClientKeyOrderByWithRelationAndSearchRelevanceInput
     favorite?: FavoriteOrderByWithRelationAndSearchRelevanceInput
     album?: AlbumOrderByRelationAggregateInput
@@ -11187,6 +11215,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"User"> | Date | string
     payment_history?: PaymentsHistoryListRelationFilter
     subscription?: XOR<SubscriptionNullableRelationFilter, SubscriptionWhereInput> | null
+    gallery?: XOR<GalleryNullableRelationFilter, GalleryWhereInput> | null
     client_key?: XOR<ClientKeyNullableRelationFilter, ClientKeyWhereInput> | null
     favorite?: XOR<FavoriteNullableRelationFilter, FavoriteWhereInput> | null
     album?: AlbumListRelationFilter
@@ -11501,16 +11530,18 @@ export namespace Prisma {
     OR?: GalleryWhereInput[]
     NOT?: GalleryWhereInput | GalleryWhereInput[]
     id?: StringFilter<"Gallery"> | string
-    user_id?: StringFilter<"Gallery"> | string
     created_at?: BigIntFilter<"Gallery"> | bigint | number
+    user_id?: StringFilter<"Gallery"> | string
     pictures?: PictureListRelationFilter
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }
 
   export type GalleryOrderByWithRelationAndSearchRelevanceInput = {
     id?: SortOrder
-    user_id?: SortOrder
     created_at?: SortOrder
+    user_id?: SortOrder
     pictures?: PictureOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationAndSearchRelevanceInput
     _relevance?: GalleryOrderByRelevanceInput
   }
 
@@ -11522,12 +11553,13 @@ export namespace Prisma {
     NOT?: GalleryWhereInput | GalleryWhereInput[]
     created_at?: BigIntFilter<"Gallery"> | bigint | number
     pictures?: PictureListRelationFilter
+    user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id" | "user_id">
 
   export type GalleryOrderByWithAggregationInput = {
     id?: SortOrder
-    user_id?: SortOrder
     created_at?: SortOrder
+    user_id?: SortOrder
     _count?: GalleryCountOrderByAggregateInput
     _avg?: GalleryAvgOrderByAggregateInput
     _max?: GalleryMaxOrderByAggregateInput
@@ -11540,8 +11572,8 @@ export namespace Prisma {
     OR?: GalleryScalarWhereWithAggregatesInput[]
     NOT?: GalleryScalarWhereWithAggregatesInput | GalleryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Gallery"> | string
-    user_id?: StringWithAggregatesFilter<"Gallery"> | string
     created_at?: BigIntWithAggregatesFilter<"Gallery"> | bigint | number
+    user_id?: StringWithAggregatesFilter<"Gallery"> | string
   }
 
   export type AlbumWhereInput = {
@@ -11785,6 +11817,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     client_key?: ClientKeyCreateNestedOneWithoutUserInput
     favorite?: FavoriteCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
@@ -11804,6 +11837,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     client_key?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     favorite?: FavoriteUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
@@ -11823,6 +11857,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
@@ -11842,6 +11877,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
@@ -12164,48 +12200,47 @@ export namespace Prisma {
 
   export type GalleryCreateInput = {
     id?: string
-    user_id: string
     created_at: bigint | number
     pictures?: PictureCreateNestedManyWithoutGalleryInput
+    user: UserCreateNestedOneWithoutGalleryInput
   }
 
   export type GalleryUncheckedCreateInput = {
     id?: string
-    user_id: string
     created_at: bigint | number
+    user_id: string
     pictures?: PictureUncheckedCreateNestedManyWithoutGalleryInput
   }
 
   export type GalleryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     created_at?: BigIntFieldUpdateOperationsInput | bigint | number
     pictures?: PictureUpdateManyWithoutGalleryNestedInput
+    user?: UserUpdateOneRequiredWithoutGalleryNestedInput
   }
 
   export type GalleryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     created_at?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: StringFieldUpdateOperationsInput | string
     pictures?: PictureUncheckedUpdateManyWithoutGalleryNestedInput
   }
 
   export type GalleryCreateManyInput = {
     id?: string
-    user_id: string
     created_at: bigint | number
+    user_id: string
   }
 
   export type GalleryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     created_at?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
   export type GalleryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     created_at?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type AlbumCreateInput = {
@@ -12517,6 +12552,11 @@ export namespace Prisma {
   export type SubscriptionNullableRelationFilter = {
     is?: SubscriptionWhereInput | null
     isNot?: SubscriptionWhereInput | null
+  }
+
+  export type GalleryNullableRelationFilter = {
+    is?: GalleryWhereInput | null
+    isNot?: GalleryWhereInput | null
   }
 
   export type ClientKeyNullableRelationFilter = {
@@ -13063,8 +13103,8 @@ export namespace Prisma {
 
   export type GalleryCountOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
     created_at?: SortOrder
+    user_id?: SortOrder
   }
 
   export type GalleryAvgOrderByAggregateInput = {
@@ -13073,14 +13113,14 @@ export namespace Prisma {
 
   export type GalleryMaxOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
     created_at?: SortOrder
+    user_id?: SortOrder
   }
 
   export type GalleryMinOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
     created_at?: SortOrder
+    user_id?: SortOrder
   }
 
   export type GallerySumOrderByAggregateInput = {
@@ -13273,6 +13313,12 @@ export namespace Prisma {
     connect?: SubscriptionWhereUniqueInput
   }
 
+  export type GalleryCreateNestedOneWithoutUserInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    connect?: GalleryWhereUniqueInput
+  }
+
   export type ClientKeyCreateNestedOneWithoutUserInput = {
     create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
     connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput
@@ -13303,6 +13349,12 @@ export namespace Prisma {
     create?: XOR<SubscriptionCreateWithoutUserInput, SubscriptionUncheckedCreateWithoutUserInput>
     connectOrCreate?: SubscriptionCreateOrConnectWithoutUserInput
     connect?: SubscriptionWhereUniqueInput
+  }
+
+  export type GalleryUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    connect?: GalleryWhereUniqueInput
   }
 
   export type ClientKeyUncheckedCreateNestedOneWithoutUserInput = {
@@ -13376,6 +13428,16 @@ export namespace Prisma {
     update?: XOR<XOR<SubscriptionUpdateToOneWithWhereWithoutUserInput, SubscriptionUpdateWithoutUserInput>, SubscriptionUncheckedUpdateWithoutUserInput>
   }
 
+  export type GalleryUpdateOneWithoutUserNestedInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    upsert?: GalleryUpsertWithoutUserInput
+    disconnect?: GalleryWhereInput | boolean
+    delete?: GalleryWhereInput | boolean
+    connect?: GalleryWhereUniqueInput
+    update?: XOR<XOR<GalleryUpdateToOneWithWhereWithoutUserInput, GalleryUpdateWithoutUserInput>, GalleryUncheckedUpdateWithoutUserInput>
+  }
+
   export type ClientKeyUpdateOneWithoutUserNestedInput = {
     create?: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
     connectOrCreate?: ClientKeyCreateOrConnectWithoutUserInput
@@ -13432,6 +13494,16 @@ export namespace Prisma {
     delete?: SubscriptionWhereInput | boolean
     connect?: SubscriptionWhereUniqueInput
     update?: XOR<XOR<SubscriptionUpdateToOneWithWhereWithoutUserInput, SubscriptionUpdateWithoutUserInput>, SubscriptionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GalleryUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    connectOrCreate?: GalleryCreateOrConnectWithoutUserInput
+    upsert?: GalleryUpsertWithoutUserInput
+    disconnect?: GalleryWhereInput | boolean
+    delete?: GalleryWhereInput | boolean
+    connect?: GalleryWhereUniqueInput
+    update?: XOR<XOR<GalleryUpdateToOneWithWhereWithoutUserInput, GalleryUpdateWithoutUserInput>, GalleryUncheckedUpdateWithoutUserInput>
   }
 
   export type ClientKeyUncheckedUpdateOneWithoutUserNestedInput = {
@@ -13609,6 +13681,12 @@ export namespace Prisma {
     connect?: PictureWhereUniqueInput | PictureWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutGalleryInput = {
+    create?: XOR<UserCreateWithoutGalleryInput, UserUncheckedCreateWithoutGalleryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGalleryInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type PictureUncheckedCreateNestedManyWithoutGalleryInput = {
     create?: XOR<PictureCreateWithoutGalleryInput, PictureUncheckedCreateWithoutGalleryInput> | PictureCreateWithoutGalleryInput[] | PictureUncheckedCreateWithoutGalleryInput[]
     connectOrCreate?: PictureCreateOrConnectWithoutGalleryInput | PictureCreateOrConnectWithoutGalleryInput[]
@@ -13628,6 +13706,14 @@ export namespace Prisma {
     update?: PictureUpdateWithWhereUniqueWithoutGalleryInput | PictureUpdateWithWhereUniqueWithoutGalleryInput[]
     updateMany?: PictureUpdateManyWithWhereWithoutGalleryInput | PictureUpdateManyWithWhereWithoutGalleryInput[]
     deleteMany?: PictureScalarWhereInput | PictureScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutGalleryNestedInput = {
+    create?: XOR<UserCreateWithoutGalleryInput, UserUncheckedCreateWithoutGalleryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGalleryInput
+    upsert?: UserUpsertWithoutGalleryInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGalleryInput, UserUpdateWithoutGalleryInput>, UserUncheckedUpdateWithoutGalleryInput>
   }
 
   export type PictureUncheckedUpdateManyWithoutGalleryNestedInput = {
@@ -14217,6 +14303,23 @@ export namespace Prisma {
     create: XOR<SubscriptionCreateWithoutUserInput, SubscriptionUncheckedCreateWithoutUserInput>
   }
 
+  export type GalleryCreateWithoutUserInput = {
+    id?: string
+    created_at: bigint | number
+    pictures?: PictureCreateNestedManyWithoutGalleryInput
+  }
+
+  export type GalleryUncheckedCreateWithoutUserInput = {
+    id?: string
+    created_at: bigint | number
+    pictures?: PictureUncheckedCreateNestedManyWithoutGalleryInput
+  }
+
+  export type GalleryCreateOrConnectWithoutUserInput = {
+    where: GalleryWhereUniqueInput
+    create: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+  }
+
   export type ClientKeyCreateWithoutUserInput = {
     id?: string
     client_id: string
@@ -14346,6 +14449,29 @@ export namespace Prisma {
     plan?: EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   }
 
+  export type GalleryUpsertWithoutUserInput = {
+    update: XOR<GalleryUpdateWithoutUserInput, GalleryUncheckedUpdateWithoutUserInput>
+    create: XOR<GalleryCreateWithoutUserInput, GalleryUncheckedCreateWithoutUserInput>
+    where?: GalleryWhereInput
+  }
+
+  export type GalleryUpdateToOneWithWhereWithoutUserInput = {
+    where?: GalleryWhereInput
+    data: XOR<GalleryUpdateWithoutUserInput, GalleryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GalleryUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: BigIntFieldUpdateOperationsInput | bigint | number
+    pictures?: PictureUpdateManyWithoutGalleryNestedInput
+  }
+
+  export type GalleryUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: BigIntFieldUpdateOperationsInput | bigint | number
+    pictures?: PictureUncheckedUpdateManyWithoutGalleryNestedInput
+  }
+
   export type ClientKeyUpsertWithoutUserInput = {
     update: XOR<ClientKeyUpdateWithoutUserInput, ClientKeyUncheckedUpdateWithoutUserInput>
     create: XOR<ClientKeyCreateWithoutUserInput, ClientKeyUncheckedCreateWithoutUserInput>
@@ -14436,6 +14562,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     client_key?: ClientKeyCreateNestedOneWithoutUserInput
     favorite?: FavoriteCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
@@ -14454,6 +14581,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     client_key?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     favorite?: FavoriteUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
@@ -14488,6 +14616,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
@@ -14506,6 +14635,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
@@ -14524,6 +14654,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     payment_history?: PaymentsHistoryCreateNestedManyWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     client_key?: ClientKeyCreateNestedOneWithoutUserInput
     favorite?: FavoriteCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
@@ -14542,6 +14673,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     payment_history?: PaymentsHistoryUncheckedCreateNestedManyWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     client_key?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     favorite?: FavoriteUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
@@ -14576,6 +14708,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
@@ -14594,6 +14727,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUncheckedUpdateManyWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
@@ -14613,6 +14747,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     favorite?: FavoriteCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
   }
@@ -14631,6 +14766,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     favorite?: FavoriteUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
   }
@@ -14665,6 +14801,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
   }
@@ -14683,6 +14820,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -14745,6 +14883,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     client_key?: ClientKeyCreateNestedOneWithoutUserInput
     album?: AlbumCreateNestedManyWithoutUserInput
   }
@@ -14763,6 +14902,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     client_key?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     album?: AlbumUncheckedCreateNestedManyWithoutUserInput
   }
@@ -14833,6 +14973,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUpdateOneWithoutUserNestedInput
     album?: AlbumUpdateManyWithoutUserNestedInput
   }
@@ -14851,6 +14992,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -14899,6 +15041,49 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutGalleryInput = {
+    id?: string
+    origin_code: number
+    name: string
+    email?: string | null
+    password?: string | null
+    avatar: string
+    type: $Enums.UserType
+    bio?: string | null
+    is_member?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    payment_history?: PaymentsHistoryCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    client_key?: ClientKeyCreateNestedOneWithoutUserInput
+    favorite?: FavoriteCreateNestedOneWithoutUserInput
+    album?: AlbumCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGalleryInput = {
+    id?: string
+    origin_code: number
+    name: string
+    email?: string | null
+    password?: string | null
+    avatar: string
+    type: $Enums.UserType
+    bio?: string | null
+    is_member?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    payment_history?: PaymentsHistoryUncheckedCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    client_key?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
+    favorite?: FavoriteUncheckedCreateNestedOneWithoutUserInput
+    album?: AlbumUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGalleryInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGalleryInput, UserUncheckedCreateWithoutGalleryInput>
+  }
+
   export type PictureUpsertWithWhereUniqueWithoutGalleryInput = {
     where: PictureWhereUniqueInput
     update: XOR<PictureUpdateWithoutGalleryInput, PictureUncheckedUpdateWithoutGalleryInput>
@@ -14913,6 +15098,55 @@ export namespace Prisma {
   export type PictureUpdateManyWithWhereWithoutGalleryInput = {
     where: PictureScalarWhereInput
     data: XOR<PictureUpdateManyMutationInput, PictureUncheckedUpdateManyWithoutGalleryInput>
+  }
+
+  export type UserUpsertWithoutGalleryInput = {
+    update: XOR<UserUpdateWithoutGalleryInput, UserUncheckedUpdateWithoutGalleryInput>
+    create: XOR<UserCreateWithoutGalleryInput, UserUncheckedCreateWithoutGalleryInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGalleryInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGalleryInput, UserUncheckedUpdateWithoutGalleryInput>
+  }
+
+  export type UserUpdateWithoutGalleryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    origin_code?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: StringFieldUpdateOperationsInput | string
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    is_member?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment_history?: PaymentsHistoryUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    client_key?: ClientKeyUpdateOneWithoutUserNestedInput
+    favorite?: FavoriteUpdateOneWithoutUserNestedInput
+    album?: AlbumUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGalleryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    origin_code?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: StringFieldUpdateOperationsInput | string
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    is_member?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment_history?: PaymentsHistoryUncheckedUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    client_key?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
+    favorite?: FavoriteUncheckedUpdateOneWithoutUserNestedInput
+    album?: AlbumUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PictureCreateWithoutAlbumInput = {
@@ -14973,6 +15207,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    gallery?: GalleryCreateNestedOneWithoutUserInput
     client_key?: ClientKeyCreateNestedOneWithoutUserInput
     favorite?: FavoriteCreateNestedOneWithoutUserInput
   }
@@ -14991,6 +15226,7 @@ export namespace Prisma {
     updated_at?: Date | string
     payment_history?: PaymentsHistoryUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    gallery?: GalleryUncheckedCreateNestedOneWithoutUserInput
     client_key?: ClientKeyUncheckedCreateNestedOneWithoutUserInput
     favorite?: FavoriteUncheckedCreateNestedOneWithoutUserInput
   }
@@ -15041,6 +15277,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUpdateOneWithoutUserNestedInput
   }
@@ -15059,6 +15296,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payment_history?: PaymentsHistoryUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    gallery?: GalleryUncheckedUpdateOneWithoutUserNestedInput
     client_key?: ClientKeyUncheckedUpdateOneWithoutUserNestedInput
     favorite?: FavoriteUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -15101,14 +15339,14 @@ export namespace Prisma {
 
   export type GalleryCreateWithoutPicturesInput = {
     id?: string
-    user_id: string
     created_at: bigint | number
+    user: UserCreateNestedOneWithoutGalleryInput
   }
 
   export type GalleryUncheckedCreateWithoutPicturesInput = {
     id?: string
-    user_id: string
     created_at: bigint | number
+    user_id: string
   }
 
   export type GalleryCreateOrConnectWithoutPicturesInput = {
@@ -15198,14 +15436,14 @@ export namespace Prisma {
 
   export type GalleryUpdateWithoutPicturesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     created_at?: BigIntFieldUpdateOperationsInput | bigint | number
+    user?: UserUpdateOneRequiredWithoutGalleryNestedInput
   }
 
   export type GalleryUncheckedUpdateWithoutPicturesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     created_at?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type AlbumUpsertWithoutPicturesInput = {
