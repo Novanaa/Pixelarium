@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./dist",
     "lib": ["ESNext"],
     "module": "esnext",
@@ -19,11 +20,9 @@
     ],
     "strict": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/*"],
   "exclude": ["node_modules"]
 }
