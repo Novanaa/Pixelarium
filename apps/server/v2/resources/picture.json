@@ -1,0 +1,75 @@
+[
+  {
+    "id": "f15b5f6f-93d1-4c79-9f76-4b5c4f75fd8a",
+    "title": "Sunset at Beach",
+    "description": "A beautiful sunset captured at the beach.",
+    "link": "https://example.com/sunset.jpg",
+    "expires_time": {
+      "start": "2024-03-05T18:00:00Z",
+      "end": "2024-03-05T20:00:00Z"
+    },
+    "size": 1024,
+    "filename": "sunset.jpg",
+    "type": "Internal",
+    "extension": "jpg",
+    "status": "Public",
+    "created_at": 1646502000,
+    "gallery_id": "7d0a9b6e-3cf7-4f6b-9b6d-8b7ff14ef4cc"
+  },
+  {
+    "id": "de67ff50-3a7d-4293-8624-dfd98b48eab8",
+    "title": "Mountain Landscape",
+    "description": "A breathtaking view of mountains.",
+    "link": "https://example.com/mountain.jpg",
+    "expires_time": null,
+    "size": 2048,
+    "filename": "mountain.jpg",
+    "type": "Internal",
+    "extension": "jpg",
+    "status": "Public",
+    "created_at": 1646502000,
+    "gallery_id": "68a7e759-8d46-44f7-bcf3-2b0e2f17d9b5"
+  },
+  {
+    "id": "3a8507fc-07d0-47af-9020-7c36f8c5b1aa",
+    "title": "Cityscape",
+    "description": "A stunning view of the city skyline.",
+    "link": "https://example.com/city.jpg",
+    "expires_time": null,
+    "size": 1536,
+    "filename": "city.jpg",
+    "type": "External",
+    "extension": "jpg",
+    "status": "Public",
+    "created_at": 1646502000,
+    "gallery_id": "af4c45d1-295e-4518-8436-481dd8cf99c4"
+  },
+  {
+    "id": "8a21f7a3-01e2-4c16-bd48-78baf00c5e6d",
+    "title": "Nature Trail",
+    "description": "Scenic view of a nature trail.",
+    "link": "https://example.com/nature.jpg",
+    "expires_time": null,
+    "size": 3072,
+    "filename": "nature.jpg",
+    "type": "Internal",
+    "extension": "jpg",
+    "status": "Public",
+    "created_at": 1646502000,
+    "gallery_id": "9efc67f5-b57a-4f11-8273-f8c47b98f905"
+  },
+  {
+    "id": "d4f98b4e-90e4-4c0f-ae3d-8254d71f55d0",
+    "title": "Holiday Memories",
+    "description": "Capturing memorable moments during holidays.",
+    "link": "https://example.com/holiday.jpg",
+    "expires_time": null,
+    "size": 4096,
+    "filename": "holiday.jpg",
+    "type": "External",
+    "extension": "jpg",
+    "status": "Public",
+    "created_at": 1646502000,
+    "gallery_id": "6ab8fbf3-2e05-431d-b1cf-b3e257c2e87f"
+  }
+]
