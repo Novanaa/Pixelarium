@@ -6,6 +6,7 @@ export interface ErrorResponse {
   messege: string;
   code: number;
   date: string | Date;
+  status: "KO";
 }
 
 export default interface ErrorResponses {
