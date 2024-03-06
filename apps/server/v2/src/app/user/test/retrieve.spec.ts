@@ -3,7 +3,6 @@ import app from "@/main";
 import supertest from "supertest";
 import { expect, describe, test, afterAll } from "bun:test";
 import http from "@/constant/code";
-import defaultErrorMessege from "@/constant/default-error-messege";
 import prisma from "@/libs/prisma";
 import { User } from "prisma/generated/client";
 
@@ -13,12 +12,14 @@ afterAll(() => {
 
 describe("GET /user/:name", () => {
   test("should be return 404 status code if the user doesn't exist", async () => {
+    const errorMessege: string =
+      "The user was doesn't exist, please try again with another account!";
     const request: Awaited<supertest.Request | supertest.Response> =
       await supertest(app.server).get("/user/0");
 
     console.log(request.body);
     expect(request.status).toBe(http.StatusNotFound);
-    expect(request.body.messege).toBe(defaultErrorMessege.notFound);
+    expect(request.body.messege).toBe(errorMessege);
     expect(request.body.status).toBe("KO");
   });
   test("should be return 200 status code", async () => {
