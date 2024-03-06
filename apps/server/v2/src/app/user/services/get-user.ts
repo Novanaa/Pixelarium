@@ -11,7 +11,11 @@ import { User } from "prisma/generated/client";
  * `null`.
  */
 export default async function getUser(name: string): Promise<User | null> {
-  return (await prisma.user.findUnique({
-    where: { name },
-  })) satisfies User | null;
+  try {
+    return (await prisma.user.findUnique({
+      where: { name },
+    })) satisfies User | null;
+  } finally {
+    await prisma.$disconnect();
+  }
 }
