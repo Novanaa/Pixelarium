@@ -1,8 +1,12 @@
 /* eslint-disable no-console */
-import { expect, describe, test } from "bun:test";
+import { expect, describe, test, afterAll } from "bun:test";
 import getUser from "../services/get-user";
 import prisma from "@/libs/prisma";
 import { User } from "prisma/generated/client";
+
+afterAll(() => {
+  prisma.$disconnect();
+});
 
 describe("TEST / Get User", () => {
   test("should be return null", async () => {
