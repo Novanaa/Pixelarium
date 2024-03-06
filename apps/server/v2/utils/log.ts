@@ -1,8 +1,7 @@
-import { FastifyRequest } from "fastify";
 import moment from "moment";
 
 interface LogParams {
-  req: FastifyRequest;
+  ip: string;
   status: string;
 }
 
@@ -23,7 +22,7 @@ export default class LogMessege {
    * status of the request, and the timestamp of when the request was made in a formatted string using
    * the moment library.
    */
-  messege({ req, status }: LogParams): string {
-    return `${req.ip} - (${this.name}) - ${status}: Requested at ${moment(new Date().getTime()).format("LLLL")}`;
+  messege({ ip, status }: LogParams): string {
+    return `${ip} - (${this.name}) - ${status}: Requested at ${moment(new Date().getTime()).format("LLLL")}`;
   }
 }
