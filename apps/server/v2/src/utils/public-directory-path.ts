@@ -7,7 +7,7 @@
  * @returns the path to the public avatar directory with the provided filename appended to it.
  */
 export function getAvatarDirectoryPath(filename: string): string {
-  return "./public/avatar" + filename;
+  return "./public/avatar/" + filename;
 }
 
 interface GetPublicGalleryDirectoryPathParams {
