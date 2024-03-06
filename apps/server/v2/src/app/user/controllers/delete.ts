@@ -33,7 +33,7 @@ export default async function deleteUser(
 
     if (!user) {
       await prisma.$disconnect();
-      req.log.info(log.messege({ req, status: "Not Found" }));
+      req.log.info(log.messege({ ip: req.ip, status: "Not Found" }));
 
       return rep
         .status(http.StatusNotFound)
@@ -59,13 +59,13 @@ export default async function deleteUser(
     };
 
     await prisma.$disconnect();
-    req.log.info(log.messege({ req, status: "Success" }));
+    req.log.info(log.messege({ ip: req.ip, status: "Success" }));
 
     return rep.status(http.StatusOk).send(responseData);
   } catch (err) {
     await prisma.$disconnect();
     logger.error(err);
-    logger.info(log.messege({ req, status: "Internal Server Error" }));
+    logger.info(log.messege({ ip: req.ip, status: "Internal Server Error" }));
 
     return rep
       .status(http.StatusInternalServerError)
