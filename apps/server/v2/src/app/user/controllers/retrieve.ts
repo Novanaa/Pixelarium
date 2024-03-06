@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import logger from "@/libs/logger";
 import prisma from "@/libs/prisma";
-import error from "utils/error";
+import error from "@/utils/error";
 import http from "@/constant/code";
 import getUser from "../services/get-user";
 import { User } from "prisma/generated/client";

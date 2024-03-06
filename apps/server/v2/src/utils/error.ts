@@ -35,31 +35,31 @@ export default {
   badRequest: (messege?: string) =>
     instance({
       code: http.StatusBadRequest,
-      messege: errorMessege.badRequest || messege!,
+      messege: !messege ? errorMessege.badRequest : messege,
       TypeError: "Bad Request",
     }),
   notFound: (messege?: string) =>
     instance({
       code: http.StatusNotFound,
-      messege: errorMessege.notFound || messege!,
+      messege: !messege ? errorMessege.notFound : messege,
       TypeError: "Not Found",
     }),
   unauthorized: (messege?: string) =>
     instance({
       code: http.StatusUnauthorized,
-      messege: errorMessege.unauth || messege!,
+      messege: !messege ? errorMessege.unauth : messege,
       TypeError: "Unauthorized",
     }),
   unprocessableContent: (messege?: string) =>
     instance({
       code: http.StatusUnprocessableEntity,
-      messege: errorMessege.unprocessable || messege!,
+      messege: !messege ? errorMessege.unprocessable : messege,
       TypeError: "Unprocessable Entity",
     }),
   internalServerError: (messege?: string) =>
     instance({
       code: http.StatusInternalServerError,
-      messege: errorMessege.internalServerError || messege!,
+      messege: !messege ? errorMessege.internalServerError : messege,
       TypeError: "Internal Server Error",
     }),
 } satisfies ErrorResponses;

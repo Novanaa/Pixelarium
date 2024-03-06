@@ -8,4 +8,5 @@ import user from "@/app/user/controllers";
  */
 export default async function userRoutes(app: FastifyInstance) {
   app.get("/:name", user.retrieveUser);
+  app.delete("/:name", user.deleteUser);
 }

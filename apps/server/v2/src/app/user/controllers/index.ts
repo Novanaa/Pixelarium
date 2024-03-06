@@ -1,3 +1,4 @@
 import retrieveUser from "./retrieve";
+import deleteUser from "./delete";
 
-export default { retrieveUser };
+export default { retrieveUser, deleteUser };

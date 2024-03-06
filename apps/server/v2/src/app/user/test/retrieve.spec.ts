@@ -1,11 +1,15 @@
 /* eslint-disable no-console */
 import app from "@/main";
 import supertest from "supertest";
-import { expect, describe, test } from "bun:test";
+import { expect, describe, test, afterAll } from "bun:test";
 import http from "@/constant/code";
 import defaultErrorMessege from "@/constant/default-error-messege";
 import prisma from "@/libs/prisma";
 import { User } from "prisma/generated/client";
+
+afterAll(() => {
+  prisma.$disconnect();
+});
 
 describe("GET /user/:name", () => {
   test("should be return 404 status code if the user doesn't exist", async () => {
