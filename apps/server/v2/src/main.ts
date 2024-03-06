@@ -9,7 +9,7 @@ import { fastifyRateLimit } from "@fastify/rate-limit";
 /* This line of code is creating an instance of the Fastify server by calling the `Fastify` function
 with the `appConfig` as an argument. The `FastifyInstance` type is used to define the type of the
 `app` variable as an instance of the Fastify server. */
-const app: FastifyInstance = Fastify(appConfig);
+const app: FastifyInstance = await Fastify(appConfig);
 
 import startServer from "./server";
 import appConfig from "@/configs";
