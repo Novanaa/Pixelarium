@@ -3,14 +3,14 @@ import path from "path";
 import logger from "@/libs/logger";
 import prisma from "@/libs/prisma";
 import { FastifyReply, FastifyRequest } from "fastify";
-import error from "utils/error";
-import LogMessege from "utils/log";
+import error from "@/utils/error";
+import LogMessege from "@/utils/log";
 import http from "@/constant/code";
 import { User } from "prisma/generated/client";
 import getUser from "../services/get-user";
 import deleteUserData from "../services/delete-user";
-import { getPublicAvatarDirectoryUrl } from "utils/public-directory-url";
-import { getAvatarDirectoryPath } from "utils/public-directory-path";
+import { getPublicAvatarDirectoryUrl } from "@/utils/public-directory-url";
+import { getAvatarDirectoryPath } from "@/utils/public-directory-path";
 
 interface DeleteUserRequestParams {
   name: string;
