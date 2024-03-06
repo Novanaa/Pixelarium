@@ -2,7 +2,7 @@
 
 import { expect, test, describe } from "bun:test";
 import moment from "moment";
-import LogMessege from "utils/log";
+import LogMessege from "@/utils/log";
 
 const log: LogMessege = new LogMessege("Unit-test");
 describe("Log Messege Instance", () => {
