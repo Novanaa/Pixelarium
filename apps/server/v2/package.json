@@ -19,6 +19,7 @@
     "studio:staging": "env-cmd -f .env.staging prisma studio"
   },
   "dependencies": {
+    "@digitalcube/username-validator": "^1.0.2",
     "@fastify/compress": "^7.0.0",
     "@fastify/cookie": "^9.3.1",
     "@fastify/cors": "^9.0.1",
