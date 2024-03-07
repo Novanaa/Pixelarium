@@ -15,4 +15,5 @@ export default interface ErrorResponses {
   unauthorized: (messege?: string) => ErrorResponse;
   unprocessableContent: (messege?: string) => ErrorResponse;
   internalServerError: (messege?: string) => ErrorResponse;
+  forbidden: (messege?: string) => ErrorResponse;
 }
