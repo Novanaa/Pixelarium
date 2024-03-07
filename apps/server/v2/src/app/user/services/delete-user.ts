@@ -12,9 +12,13 @@ import { User } from "prisma/generated/client";
  * deleting the user data with the specified name using Prisma.
  */
 export default async function deleteUserData(name: string): Promise<User> {
-  return (await prisma.user.delete({
-    where: {
-      name,
-    },
-  })) as User;
+  try {
+    return (await prisma.user.delete({
+      where: {
+        name,
+      },
+    })) as User;
+  } finally {
+    await prisma.$disconnect();
+  }
 }

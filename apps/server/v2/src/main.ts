@@ -2,9 +2,9 @@ import Fastify, { FastifyInstance } from "fastify";
 import { fastifyCors } from "@fastify/cors";
 import { fastifyStatic } from "@fastify/static";
 import { fastifyCookie } from "@fastify/cookie";
-import { fastifyMultipart } from "@fastify/multipart";
 import { fastifyCompress } from "@fastify/compress";
 import { fastifyRateLimit } from "@fastify/rate-limit";
+import fileUpload from "fastify-file-upload";
 
 /* This line of code is creating an instance of the Fastify server by calling the `Fastify` function
 with the `appConfig` as an argument. The `FastifyInstance` type is used to define the type of the
@@ -23,8 +23,8 @@ import prefix from "./configs/prefix";
 app.register(fastifyRateLimit, rateLimitConfig);
 app.register(fastifyCors, corsConfig);
 app.register(fastifyStatic, staticConfig);
+app.register(fileUpload);
 app.register(fastifyCookie);
-app.register(fastifyMultipart);
 app.register(fastifyCompress);
 
 /* The line `app.register(import("@/app/user/routes"));` is registering routes for the user-related

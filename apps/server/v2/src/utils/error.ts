@@ -62,4 +62,10 @@ export default {
       messege: !messege ? errorMessege.internalServerError : messege,
       TypeError: "Internal Server Error",
     }),
+  forbidden: (messege?: string) =>
+    instance({
+      code: http.StatusForbidden,
+      messege: !messege ? errorMessege.forbidden : messege,
+      TypeError: "Forbidden",
+    }),
 } satisfies ErrorResponses;

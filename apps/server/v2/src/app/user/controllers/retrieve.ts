@@ -3,8 +3,9 @@ import logger from "@/libs/logger";
 import prisma from "@/libs/prisma";
 import error from "@/utils/error";
 import http from "@/constant/code";
-import getUser from "../services/get-user";
 import { User } from "prisma/generated/client";
+import getUserWithValidation from "@/services/user-validation";
+import LogMessege from "@/utils/log";
 
 interface RetrieveUserRequestParams {
   name: string;
@@ -33,28 +34,28 @@ export default async function retrieveUser(
   req: FastifyRequest,
   rep: FastifyReply
 ) {
+  const log: LogMessege = new LogMessege("Retrieve User");
   try {
     const { name } = req.params as RetrieveUserRequestParams;
 
-    const user: Awaited<User | null> = await getUser(name);
+    const user: Awaited<User> = await getUserWithValidation({
+      username: name,
+      logInstance: log,
+      reply: rep,
+      request: req,
+    });
 
-    if (!user) {
-      await prisma.$disconnect();
-      const log: string = `${req.ip} - Not Found: Requested user data with username => ${name}`;
-      req.log.info(log);
-
-      return rep.status(http.StatusNotFound).send(error.notFound());
-    }
+    if (!user) return;
 
     const responseData: RetrieveUserResponseData = { user, status: "OK" };
 
     await prisma.$disconnect();
-    const log: string = `${req.ip} - Success: Requested user data with username => ${name}`;
-    req.log.info(log);
+    req.log.info(log.messege({ ip: req.ip, status: "Success" }));
 
     return rep.status(http.StatusOk).send(responseData);
   } catch (err) {
     logger.error(err);
+    logger.info(log.messege({ ip: req.ip, status: "Internal Server Error" }));
     await prisma.$disconnect();
 
     return rep

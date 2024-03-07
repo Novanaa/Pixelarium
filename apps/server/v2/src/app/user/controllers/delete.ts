@@ -7,10 +7,10 @@ import error from "@/utils/error";
 import LogMessege from "@/utils/log";
 import http from "@/constant/code";
 import { User } from "prisma/generated/client";
-import getUser from "../services/get-user";
 import deleteUserData from "../services/delete-user";
 import { getPublicAvatarDirectoryUrl } from "@/utils/public-directory-url";
 import { getAvatarDirectoryPath } from "@/utils/public-directory-path";
+import getUserWithValidation from "@/services/user-validation";
 
 interface DeleteUserRequestParams {
   name: string;
@@ -21,6 +21,20 @@ interface DeleteUserResponseData {
   status: "OK";
 }
 
+/**
+ * The function `deleteUser` deletes a user, including their data and avatar, and handles errors
+ * appropriately.
+ * @param {FastifyRequest} req - The `req` parameter in the `deleteUser` function is of type
+ * `FastifyRequest`, which represents the incoming request in a Fastify server. It contains information
+ * about the HTTP request such as headers, parameters, body, etc., and allows you to interact with the
+ * request data.
+ * @param {FastifyReply} rep - The `rep` parameter in the `deleteUser` function is a reference to the
+ * FastifyReply object, which is used to send responses back to the client making the request. It
+ * provides methods like `send` and `status` to send the response with the appropriate status code and
+ * data.
+ * @returns a response with status "OK" and data containing the deleted user information. If an error
+ * occurs, it will return a response with status code 500 (Internal Server Error) and an error message.
+ */
 export default async function deleteUser(
   req: FastifyRequest,
   rep: FastifyReply
@@ -29,16 +43,14 @@ export default async function deleteUser(
   try {
     const { name } = req.params as DeleteUserRequestParams;
 
-    const user: Awaited<User | null> = await getUser(name);
+    const user: Awaited<User> = await getUserWithValidation({
+      username: name,
+      logInstance: log,
+      reply: rep,
+      request: req,
+    });
 
-    if (!user) {
-      await prisma.$disconnect();
-      req.log.info(log.messege({ ip: req.ip, status: "Not Found" }));
-
-      return rep
-        .status(http.StatusNotFound)
-        .send(error.notFound("The user was doesn't exist!"));
-    }
+    if (!user) return;
 
     await deleteUserData(name);
 

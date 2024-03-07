@@ -8,4 +8,5 @@ export default {
     "You are not authorized to access this resource. Please provide valid credentials or authentication.",
   internalServerError:
     "Oops! We're sorry, but something went wrong. Our server encountered an internal error while processing your request.",
+  forbidden: "Oops! Your request conflicts with the server's security policy.",
 };

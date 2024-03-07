@@ -19,23 +19,30 @@
     "studio:staging": "env-cmd -f .env.staging prisma studio"
   },
   "dependencies": {
+    "@digitalcube/username-validator": "^1.0.2",
     "@fastify/compress": "^7.0.0",
     "@fastify/cookie": "^9.3.1",
     "@fastify/cors": "^9.0.1",
-    "@fastify/multipart": "^8.1.0",
     "@fastify/rate-limit": "^9.1.0",
     "@fastify/static": "^7.0.1",
     "@prisma/client": "5.10.2",
+    "@types/joi": "^17.2.3",
     "@types/supertest": "^6.0.2",
+    "@types/validator": "^13.11.9",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
     "fastify": "^4.26.2",
+    "fastify-file-upload": "^4.0.0",
+    "joi": "^17.12.2",
     "moment": "^2.30.1",
     "pino": "^8.19.0",
     "pino-pretty": "^10.3.1",
     "prettier": "^3.2.5",
     "prisma": "^5.10.2",
-    "supertest": "^6.3.4"
+    "slugify": "^1.6.6",
+    "supertest": "^6.3.4",
+    "validate-image-type": "^3.0.0",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
