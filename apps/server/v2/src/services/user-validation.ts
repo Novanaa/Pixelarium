@@ -1,48 +1,38 @@
 import getUser from "@/app/user/services/get-user";
-import http from "@/constant/code";
 import prisma from "@/libs/prisma";
 import error from "@/utils/error";
-import LogMessege from "@/utils/log";
-import { FastifyReply, FastifyRequest } from "fastify";
+import { ErrorResponse } from "@/utils/interfaces/error-response";
 import { User } from "prisma/generated/client";
 
-interface GetUserWithValidationParams {
-  username: string;
-  request: FastifyRequest;
-  reply: FastifyReply;
-  logInstance: LogMessege;
+export interface GetUserWithValidation {
+  user: User;
+  error: ErrorResponse | null;
 }
 
 /**
- * This TypeScript function retrieves a user with validation checks and error handling.
- * @param {GetUserWithValidationParams}  - The `getUserWithValidation` function is an asynchronous
- * function that takes in an object with the following parameters:
- * @returns the user object if it exists. If the user does not exist, it will disconnect from the
- * Prisma database, log a message with the IP address and status "Not Found", and then send a 404 Not
- * Found response with an error message stating that the user doesn't exist.
+ * This TypeScript function retrieves a user with validation and returns either the user object or an
+ * error response.
+ * @param {string} name - The `name` parameter in the `getUserWithValidation` function is a string
+ * representing the name of the user you want to retrieve from the database.
+ * @returns The function `getUserWithValidation` returns a `Promise` that resolves to either a `User`
+ * object if the user is found, or an `ErrorResponse` object if the user is not found.
  */
-export default async function getUserWithValidation({
-  username,
-  reply,
-  request,
-  logInstance,
-}: GetUserWithValidationParams): Promise<User> {
-  const user: Awaited<User | null> = await getUser(username);
+export default async function getUserWithValidation(
+  name: string
+): Promise<GetUserWithValidation> {
+  const user: Awaited<User | null> = await getUser(name);
 
   if (!user) {
     await prisma.$disconnect();
-    request.log.info(
-      logInstance.messege({ ip: request.ip, status: "Not Found" })
+
+    const notFound: ErrorResponse = error.notFound(
+      "The user was doesn't exist, please try again with another account!"
     );
 
-    return reply
-      .status(http.StatusNotFound)
-      .send(
-        error.notFound(
-          "The user was doesn't exist, please try again with another account!"
-        )
-      );
+    return { user: new Object() as User, error: notFound };
   }
 
-  return user;
+  await prisma.$disconnect();
+
+  return { user, error: null };
 }
