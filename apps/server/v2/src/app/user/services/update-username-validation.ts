@@ -2,34 +2,29 @@ import prisma from "@/libs/prisma";
 import usernameValidation from "@/services/username-validation";
 import getUser from "./get-user";
 import { User } from "prisma/generated/client";
-import UpdateUserPayload from "../interfaces/update-user-payload";
 import error from "@/utils/error";
 import { ErrorResponse } from "@/utils/interfaces/error-response";
 
-interface UpdateUsernameValidationParams {
-  payload: UpdateUserPayload;
-}
-
 /**
- * The function `updateUsernameValidation` performs validation checks on a new username and returns an
- * error message if the username is already taken.
- * @param {UpdateUsernameValidationParams}  - The code you provided is an async function named
- * `updateUsernameValidation` that takes an object as a parameter with properties `payload` and
- * `reply`. The function performs the following steps:
- * @returns The function `updateUsernameValidation` is returning either an error message if the
- * username validation fails or if the username is already taken, or it will disconnect from the Prisma
- * client and return nothing if the validation passes.
+ * The function `updateUsernameValidation` checks if a username is valid and not already taken in a
+ * database.
+ * @param {string} name - The `updateUsernameValidation` function is an asynchronous function that
+ * takes a `name` parameter of type string. This function performs validation on the provided username
+ * and checks if it is already taken by an existing user. If the username is valid and not already in
+ * use, the function completes successfully. Otherwise,
+ * @returns The function `updateUsernameValidation` returns a `Promise` that resolves to an
+ * `ErrorResponse` object if there is an error during the username validation process. If the username
+ * is valid and not already taken, the function does not return anything (void).
  */
-export default async function updateUsernameValidation({
-  payload,
-}: UpdateUsernameValidationParams): Promise<ErrorResponse | void> {
-  const verifyUsernameError: Awaited<string | void> = await usernameValidation(
-    payload.name
-  );
+export default async function updateUsernameValidation(
+  name: string
+): Promise<ErrorResponse | void> {
+  const verifyUsernameError: Awaited<string | void> =
+    await usernameValidation(name);
 
   if (verifyUsernameError) return error.badRequest(verifyUsernameError);
 
-  const searchUser: Awaited<User | null> = await getUser(payload.name);
+  const searchUser: Awaited<User | null> = await getUser(name);
 
   if (searchUser) {
     await prisma.$disconnect();

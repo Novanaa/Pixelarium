@@ -17,6 +17,9 @@ export default async function usernameValidation(
     if (/[A-Z]/.test(name))
       return "Username with uppercase letter should not allowed, please choose another username.";
 
+    if (/\d/.test(name))
+      return "Username with numberic number should not allowed, please choose another username.";
+
     return (await validateUsername(name)) satisfies void;
   } catch (error) {
     const err: Error = error as Error;

@@ -80,7 +80,7 @@ export default async function updateUser(
 
     if (value.name && value.name !== user.name) {
       const usernameValidationError: Awaited<ErrorResponse | void> =
-        await updateUsernameValidation({ payload: value });
+        await updateUsernameValidation(value.name);
 
       if (usernameValidationError)
         return rep
