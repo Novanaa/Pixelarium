@@ -1,3 +1,4 @@
+import fs from "fs";
 import Joi from "joi";
 import path from "path";
 import http from "@/constant/code";
@@ -90,11 +91,16 @@ export default async function updateUser(
 
     if (avatar) {
       const extname: string = path.extname(avatar.name);
-      const avatarName: string = prettifyFilename(avatar.name);
+      const avatarName: string = prettifyFilename(user.name);
       const filename: string = avatarName.concat(extname);
+      const baseAvatarPublicDirectoryUrl: string =
+        getPublicAvatarDirectoryUrl(req);
       const avatarUrlpath: string =
-        getPublicAvatarDirectoryUrl(req).concat("/") + filename;
+        baseAvatarPublicDirectoryUrl.concat("/") + filename;
       const avatarDirectoryPath: string = getAvatarDirectoryPath(filename);
+      const oldAvatarDirectoryPath: string = getAvatarDirectoryPath(
+        path.basename(user.avatar)
+      );
 
       const avatarValidation: ErrorResponse | void = updateUserAvatarValidation(
         { avatar, extname }
@@ -113,6 +119,12 @@ export default async function updateUser(
               "Sorry, the picture file you uploaded appears to be corrupted and cannot be processed, this could be due to various reasons."
             )
           );
+
+      if (
+        user.avatar.includes(baseAvatarPublicDirectoryUrl) &&
+        fs.existsSync(oldAvatarDirectoryPath)
+      )
+        fs.unlinkSync(oldAvatarDirectoryPath);
 
       const responseData: UpdateUserResponseData =
         (await updateUserResponseData({
