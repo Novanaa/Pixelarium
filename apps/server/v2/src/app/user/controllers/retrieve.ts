@@ -4,7 +4,9 @@ import prisma from "@/libs/prisma";
 import error from "@/utils/error";
 import http from "@/constant/code";
 import { User } from "prisma/generated/client";
-import getUserWithValidation from "@/services/user-validation";
+import getUserWithValidation, {
+  GetUserWithValidation,
+} from "@/services/user-validation";
 import LogMessege from "@/utils/log";
 
 interface RetrieveUserRequestParams {
@@ -38,14 +40,10 @@ export default async function retrieveUser(
   try {
     const { name } = req.params as RetrieveUserRequestParams;
 
-    const user: Awaited<User> = await getUserWithValidation({
-      username: name,
-      logInstance: log,
-      reply: rep,
-      request: req,
-    });
+    const { user, error }: Awaited<GetUserWithValidation> =
+      await getUserWithValidation(name);
 
-    if (!user) return;
+    if (error) return rep.status(error.code).send(error);
 
     const responseData: RetrieveUserResponseData = { user, status: "OK" };
 

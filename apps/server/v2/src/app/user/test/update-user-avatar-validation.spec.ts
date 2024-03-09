@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-import path from "path";
-=======
 /* eslint-disable no-console */
 
 import path from "path";
 import filetestPath from "@/constant/filetest-path";
->>>>>>> 7bccb3f783ab55ddf44a625e70de733c514b86fa
 import { test, expect, describe } from "bun:test";
 import type { default as FileDate } from "@/interfaces/file";
 import updateUserAvatarValidation from "../services/update-user-avatar-validation";
@@ -14,24 +10,16 @@ import error from "@/utils/error";
 
 describe("Update User Avatar Validation", () => {
   test("should be return bad request error when the file is invalid", () => {
-<<<<<<< HEAD
-    const avatar: FileDate = dummyFile("");
-    const extname: string = path.extname(avatar.name);
-
-=======
     const avatar: FileDate = dummyFile(filetestPath.json);
     const extname: string = path.extname(avatar.name);
 
     console.log(avatar);
->>>>>>> 7bccb3f783ab55ddf44a625e70de733c514b86fa
     expect(updateUserAvatarValidation({ avatar, extname })).toEqual(
       error.badRequest(
         "Invalid file type, please provide a valid picture or avatar!"
       )
     );
   });
-<<<<<<< HEAD
-=======
   test("should be return bad request error when the file is more than 1mb", () => {
     const avatar: FileDate = dummyFile(filetestPath["20mb"]);
     const extname: string = path.extname(avatar.name);
@@ -75,5 +63,4 @@ describe("Update User Avatar Validation", () => {
     console.log(avatar);
     expect(updateUserAvatarValidation({ avatar, extname })).toBeUndefined();
   });
->>>>>>> 7bccb3f783ab55ddf44a625e70de733c514b86fa
 });
