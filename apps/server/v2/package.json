@@ -45,6 +45,7 @@
     "validate-image-type": "^3.0.0"
   },
   "devDependencies": {
+    "@ngneat/falso": "^7.2.0",
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
