@@ -11,4 +11,5 @@ export default {
   jpeg: base + "test.jpg",
   sgi: base + "test.sgi",
   json: base + "test.json",
+  broken: base + "test.png",
 };
