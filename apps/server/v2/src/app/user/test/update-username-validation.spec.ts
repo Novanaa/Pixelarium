@@ -56,8 +56,9 @@ describe("Update Username Validation", () => {
   });
   test("should be return bad request error when usename has a already taken", async () => {
     const user: Awaited<User | null> = await prisma.user.findFirst();
+    console.log(user);
     const instance: Awaited<void | ErrorResponse> =
-      await updateUsernameValidation(user?.name || "Admin1");
+      await updateUsernameValidation(user?.name || "john doe");
 
     console.log(instance);
     expect(instance).toEqual(
