@@ -4,7 +4,7 @@ const base: string = "./public/test/";
 specific image format or file type, and the corresponding value is the path to the file within the
 `base` directory. */
 export default {
-  "85mb": base + "85mb.png",
+  "80mb": base + "80mb.png",
   "20mb": base + "20mb.png",
   "40mb": base + "40mb",
   avif: base + "test.avif",

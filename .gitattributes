@@ -5,3 +5,11 @@ public/img/test/20mb.png filter=lfs diff=lfs merge=lfs -text
 public/img/test/100mb.png filter=lfs diff=lfs merge=lfs -text
 public/img/test/120mb.png filter=lfs diff=lfs merge=lfs -text
 public/img/test/85mb.png filter=lfs diff=lfs merge=lfs -text
+85mb.png filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/20mb.png filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/40mb.png filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/80mb.png filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/test.avif filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/test.jpg filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/test.json filter=lfs diff=lfs merge=lfs -text
+apps/server/v2/public/test/test.sgi filter=lfs diff=lfs merge=lfs -text
