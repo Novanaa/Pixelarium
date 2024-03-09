@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import nodePath from "path"
-=======
 import nodePath from "path";
->>>>>>> 7bccb3f783ab55ddf44a625e70de733c514b86fa
 import fs from "fs";
 import mime from "mime";
 import type { default as FileData } from "@/interfaces/file";
@@ -24,13 +20,8 @@ import logger from "@/libs/logger";
  */
 export default function dummyFile(path: string): FileData {
   const buffer: Buffer = fs.readFileSync(path);
-<<<<<<< HEAD
-  const name: string = nodePath.basename(path) 
-  const mimetype: string = mime.getType(name) && "image/jpeg"
-=======
   const name: string = nodePath.basename(path);
   const mimetype: string = mime.getType(name) || "image/jpeg";
->>>>>>> 7bccb3f783ab55ddf44a625e70de733c514b86fa
 
   return {
     data: buffer,

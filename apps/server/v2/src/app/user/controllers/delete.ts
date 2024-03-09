@@ -10,7 +10,9 @@ import { User } from "prisma/generated/client";
 import deleteUserData from "../services/delete-user";
 import { getPublicAvatarDirectoryUrl } from "@/utils/public-directory-url";
 import { getAvatarDirectoryPath } from "@/utils/public-directory-path";
-import getUserWithValidation from "@/services/user-validation";
+import getUserWithValidation, {
+  GetUserWithValidation,
+} from "@/services/user-validation";
 
 interface DeleteUserRequestParams {
   name: string;
@@ -43,14 +45,10 @@ export default async function deleteUser(
   try {
     const { name } = req.params as DeleteUserRequestParams;
 
-    const user: Awaited<User> = await getUserWithValidation({
-      username: name,
-      logInstance: log,
-      reply: rep,
-      request: req,
-    });
+    const { user, error }: Awaited<GetUserWithValidation> =
+      await getUserWithValidation(name);
 
-    if (!user) return;
+    if (error) return rep.status(error.code).send(error);
 
     await deleteUserData(name);
 
