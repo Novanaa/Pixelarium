@@ -6,7 +6,7 @@ specific image format or file type, and the corresponding value is the path to t
 export default {
   "80mb": base + "80mb.png",
   "20mb": base + "20mb.png",
-  "40mb": base + "40mb",
+  "40mb": base + "40mb.png",
   avif: base + "test.avif",
   jpeg: base + "test.jpg",
   sgi: base + "test.sgi",
