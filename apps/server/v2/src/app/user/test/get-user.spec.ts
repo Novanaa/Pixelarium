@@ -20,10 +20,9 @@ describe("TEST / Get User", () => {
   });
   test("user data should be match to requested user data", async () => {
     const user: Awaited<User | null> = await prisma.user.findFirst();
+    const userData: Awaited<User | null> = await getUser(user?.name as string);
 
     console.log(user);
-    expect(JSON.stringify(await getUser(user?.name as string))).toMatch(
-      JSON.stringify(user)
-    );
+    expect(JSON.stringify(userData)).toMatch(JSON.stringify(user));
   });
 });
