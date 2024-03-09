@@ -10,9 +10,10 @@ import error from "@/utils/error";
 
 describe("Update User Avatar Validation", () => {
   test("should be return bad request error when the file is invalid", () => {
-    const avatar: FileDate = dummyFile("");
+    const avatar: FileDate = dummyFile(filetestPath.json);
     const extname: string = path.extname(avatar.name);
 
+    console.log(avatar);
     expect(updateUserAvatarValidation({ avatar, extname })).toEqual(
       error.badRequest(
         "Invalid file type, please provide a valid picture or avatar!"
