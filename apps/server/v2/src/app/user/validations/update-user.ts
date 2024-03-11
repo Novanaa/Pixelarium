@@ -17,7 +17,7 @@ export default function updateUserPayload(body: UpdateUserPayload) {
     .object<UpdateUserPayload>({
       bio: joi.string(),
       name: joi.string(),
-      email: joi.string(),
+      email: joi.string().email(),
       avatar: joi.any(),
     })
     .validate(body);

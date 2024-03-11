@@ -24,7 +24,7 @@ export default async function updateUserResponseData({
   user,
   avatarUrlpath,
 }: UpdateUserResponseDataParams): Promise<UpdateUserResponseData> {
-  await updateUserData({
+  const updatedUser: Awaited<User | null> = await updateUserData({
     name: user.name,
     payload: { ...payload, avatar: avatarUrlpath },
   });
@@ -32,7 +32,7 @@ export default async function updateUserResponseData({
   await prisma.$disconnect();
 
   const responseData: UpdateUserResponseData = {
-    updated_user: user,
+    updated_user: updatedUser || user,
     status: "OK",
   } satisfies UpdateUserResponseData;
 
