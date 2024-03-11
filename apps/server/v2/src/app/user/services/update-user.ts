@@ -1,6 +1,7 @@
 import logger from "@/libs/logger";
 import prisma from "@/libs/prisma";
 import UpdateUserPayload from "../interfaces/update-user-payload";
+import { User } from "prisma/generated/client";
 
 interface UpdateUserParams {
   payload: Payload;
@@ -20,16 +21,17 @@ interface Payload extends Omit<UpdateUserPayload, "avatar"> {
 export default async function updateUserData({
   name,
   payload,
-}: UpdateUserParams): Promise<void> {
+}: UpdateUserParams): Promise<User | null> {
   try {
-    await prisma.user.update({
+    return await prisma.user.update({
       where: { name },
       data: payload,
     });
-
-    await prisma.$disconnect();
   } catch (err) {
     logger.error(err);
+
+    return null;
+  } finally {
     await prisma.$disconnect();
   }
 }
