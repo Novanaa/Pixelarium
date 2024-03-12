@@ -3,6 +3,7 @@ import updateUserData from "./update-user";
 import { UpdateUserResponseData } from "../controllers/update";
 import UpdateUserPayload from "../interfaces/update-user-payload";
 import { User } from "prisma/generated/client";
+import UserWithOptionalChaining from "@/interfaces/user";
 
 interface UpdateUserResponseDataParams {
   payload: UpdateUserPayload;
@@ -24,15 +25,16 @@ export default async function updateUserResponseData({
   user,
   avatarUrlpath,
 }: UpdateUserResponseDataParams): Promise<UpdateUserResponseData> {
-  const updatedUser: Awaited<User | null> = await updateUserData({
-    name: user.name,
-    payload: { ...payload, avatar: avatarUrlpath },
-  });
+  const updatedUser: Awaited<UserWithOptionalChaining | null> =
+    await updateUserData({
+      name: user.name,
+      payload: { ...payload, avatar: avatarUrlpath },
+    });
 
   await prisma.$disconnect();
 
   const responseData: UpdateUserResponseData = {
-    updated_user: updatedUser || user,
+    updated_user: updatedUser,
     status: "OK",
   } satisfies UpdateUserResponseData;
 
