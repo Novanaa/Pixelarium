@@ -5,6 +5,8 @@ import { expect, describe, test, afterAll } from "bun:test";
 import http from "@/constant/code";
 import prisma from "@/libs/prisma";
 import { User } from "prisma/generated/client";
+import UserWithOptionalChaining from "@/interfaces/user";
+import { RetrieveUserResponseData } from "../controllers/retrieve";
 
 afterAll(() => {
   prisma.$disconnect();
@@ -44,12 +46,39 @@ describe("GET /user/:name", () => {
     expect(request.body.user).not.toBeNull();
   });
   test("user field should be match to user data", async () => {
-    const user: Awaited<User | null> = await prisma.user.findFirst();
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await prisma.user.findFirst();
+    delete user?.email;
+    delete user?.password;
     const request: Awaited<supertest.Request | supertest.Response> =
       await supertest(app.server).get("/user/" + user?.name);
 
     console.log(request.body);
     expect(request.status).toBe(http.StatusOk);
     expect(JSON.stringify(request.body.user)).toMatch(JSON.stringify(user));
+  });
+  test("response data user should be not included email field", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await prisma.user.findFirst();
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app.server).get("/user/" + user?.name);
+    const body: RetrieveUserResponseData =
+      request.body as RetrieveUserResponseData;
+
+    console.log(request.body);
+    expect(request.status).toBe(http.StatusOk);
+    expect(body.user.email).toBeUndefined();
+  });
+  test("response data user should be not included password field", async () => {
+    const user: Awaited<UserWithOptionalChaining | null> =
+      await prisma.user.findFirst();
+    const request: Awaited<supertest.Request | supertest.Response> =
+      await supertest(app.server).get("/user/" + user?.name);
+    const body: RetrieveUserResponseData =
+      request.body as RetrieveUserResponseData;
+
+    console.log(request.body);
+    expect(request.status).toBe(http.StatusOk);
+    expect(body.user.password).toBeUndefined();
   });
 });
