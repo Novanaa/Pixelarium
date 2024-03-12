@@ -8,7 +8,6 @@ import error from "@/utils/error";
 import type File from "@/interfaces/file";
 import LogMessege from "@/utils/log";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { User } from "prisma/generated/client";
 import getUserWithValidation, {
   GetUserWithValidation,
 } from "@/services/user-validation";
@@ -24,13 +23,14 @@ import updateUsernameValidation from "../services/update-username-validation";
 import { ErrorResponse } from "@/utils/interfaces/error-response";
 import updateUserAvatarValidation from "../services/update-user-avatar-validation";
 import updateUserResponseData from "../services/update-user-response-data";
+import UserWithOptionalChaining from "@/interfaces/user";
 
 interface UpdateUserRequestParams {
   name: string;
 }
 
 export interface UpdateUserResponseData {
-  updated_user: User;
+  updated_user: UserWithOptionalChaining;
   status: "OK";
 }
 
