@@ -13,7 +13,7 @@ interface RetrieveUserRequestParams {
   name: string;
 }
 
-interface RetrieveUserResponseData {
+export interface RetrieveUserResponseData {
   user: User;
   status: "OK";
 }
