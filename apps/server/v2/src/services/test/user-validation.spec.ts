@@ -7,6 +7,7 @@ import getUserWithValidation, {
 import { User } from "prisma/generated/client";
 import prisma from "@/libs/prisma";
 import error from "@/utils/error";
+import UserWithOptionalChaining from "@/interfaces/user";
 
 afterAll(async () => await prisma.$disconnect());
 
@@ -27,9 +28,13 @@ describe("Get User With Validation", () => {
     expect(Object.keys(user).length).toBe(0);
   });
   test("user should be return user data", async () => {
-    const findUser: Awaited<User | null> = await prisma.user.findFirst();
+    const findUser: Awaited<UserWithOptionalChaining | null> =
+      await prisma.user.findFirst();
     const { user }: Awaited<GetUserWithValidation> =
       await getUserWithValidation(findUser?.name || "john_doe");
+
+    delete findUser?.email;
+    delete findUser?.password;
 
     console.log(user);
     expect(JSON.stringify(user)).toBe(JSON.stringify(findUser));

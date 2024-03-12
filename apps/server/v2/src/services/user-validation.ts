@@ -34,5 +34,10 @@ export default async function getUserWithValidation(
 
   await prisma.$disconnect();
 
+  // @ts-expect-error optional error
+  delete user.email;
+  // @ts-expect-error optional error
+  delete user.password;
+
   return { user, error: null };
 }
