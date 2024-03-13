@@ -30,6 +30,7 @@ app.register(fastifyCompress);
 /* The line `app.register(import("@/app/user/routes"));` is registering routes for the user-related
 functionality of the application. */
 app.register(import("@/app/user/routes"), prefix("user"));
+app.register(import("@/app/authentication/routes"), prefix("auth"));
 
 /* `await startServer(app);` is calling the `startServer` function with the `app` instance as an
 argument and using the `await` keyword to wait for the function to complete its execution before
