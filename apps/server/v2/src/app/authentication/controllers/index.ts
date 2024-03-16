@@ -1,3 +1,4 @@
 import logout from "./logout";
+import tokenizer from "./tokenizer";
 
-export default { logout };
+export default { logout, tokenizer };
