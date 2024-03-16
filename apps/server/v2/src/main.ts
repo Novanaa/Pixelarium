@@ -17,14 +17,15 @@ import corsConfig from "@/configs/cors";
 import staticConfig from "@/configs/static";
 import rateLimitConfig from "@/configs/rate-limit";
 import prefix from "./configs/prefix";
+import cookieConfig from "./configs/cookie";
 
 /* These lines of code are registering various Fastify plugins with the Fastify server instance
 (`app`). Here's a breakdown of each registration: */
 app.register(fastifyRateLimit, rateLimitConfig);
 app.register(fastifyCors, corsConfig);
 app.register(fastifyStatic, staticConfig);
+app.register(fastifyCookie, cookieConfig);
 app.register(fileUpload);
-app.register(fastifyCookie);
 app.register(fastifyCompress);
 
 /* The line `app.register(import("@/app/user/routes"));` is registering routes for the user-related
