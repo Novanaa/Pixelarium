@@ -6,6 +6,7 @@ import LogMessege from "@/utils/log";
 import serverErrorHandler from "@/utils/server-error-handler";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { verify, type VerifyValue } from "@/utils/jsonwebtoken";
+import invalidCookies from "../utils/invalid-cookies";
 
 export interface LogoutResponseData {
   status: "OK";
@@ -20,10 +21,10 @@ export default async function logout(
   try {
     const cookies: AuthenticationCookies = req.cookies as AuthenticationCookies;
 
-    if (!Object.keys(cookies).length || !cookies.session)
+    if (invalidCookies(cookies))
       return rep.status(http.StatusUnauthorized).send(error.unauthorized());
 
-    const decoded: VerifyValue = verify(cookies.session);
+    const decoded: VerifyValue = verify(cookies.session as string);
 
     if (typeof decoded == "string")
       return rep.status(http.StatusForbidden).send(error.forbidden());
