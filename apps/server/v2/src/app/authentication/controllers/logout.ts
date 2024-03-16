@@ -7,7 +7,7 @@ import serverErrorHandler from "@/utils/server-error-handler";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { verify, type VerifyValue } from "@/utils/jsonwebtoken";
 
-interface LogoutResponseData {
+export interface LogoutResponseData {
   status: "OK";
   messege: string;
 }
