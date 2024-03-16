@@ -12,9 +12,9 @@
     "tests:staging": "env-cmd -f .env.staging bun test --watch --timeout 20000",
     "lint": "bun eslint ./src --ext .ts",
     "lint:fix": "bun eslint ./src --ext .ts --fix",
-    "push": "prisma db push",
-    "push:dev": "env-cmd -f .env.dev prisma db push",
-    "push:staging": "env-cmd -f .env.staging prisma db push",
+    "migrate": "prisma db push",
+    "migrate:dev": "env-cmd -f .env.dev prisma db push",
+    "migrate:staging": "env-cmd -f .env.staging prisma db push",
     "studio": "prisma studio",
     "studio:dev": "env-cmd -f .env.dev prisma studio",
     "studio:staging": "env-cmd -f .env.staging prisma studio"
