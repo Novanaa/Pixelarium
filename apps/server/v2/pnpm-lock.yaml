@@ -26,6 +26,12 @@ dependencies:
   env-cmd:
     specifier: ^10.1.0
     version: 10.1.0
+  express-rate-limit:
+    specifier: ^7.2.0
+    version: 7.2.0(express@4.18.3)
+  moment:
+    specifier: ^2.30.1
+    version: 2.30.1
   reflect-metadata:
     specifier: ^0.2.0
     version: 0.2.1
@@ -2609,6 +2615,15 @@ packages:
       jest-util: 29.7.0
     dev: true
 
+  /express-rate-limit@7.2.0(express@4.18.3):
+    resolution: {integrity: sha512-T7nul1t4TNyfZMJ7pKRKkdeVJWa2CqB8NA1P8BwYaoDI5QSBZARv5oMS43J7b7I5P+4asjVXjb7ONuwDKucahg==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      express: 4 || 5 || ^5.0.0-beta.1
+    dependencies:
+      express: 4.18.3
+    dev: false
+
   /express@4.18.3:
     resolution: {integrity: sha512-6VyCijWQ+9O7WuVMTRBTl+cjNNIzD5cY5mQ1WM8r/LEkI2u8EYpOotESNwzNlyCn3g+dmjKYI6BmNneSr/FSRw==}
     engines: {node: '>= 0.10.0'}
@@ -3969,6 +3984,10 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.8
+
+  /moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+    dev: false
 
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
