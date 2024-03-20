@@ -19,9 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate": "env-cmd -f .env prisma push",
-    "migrate:dev": "env-cmd -f .env.dev prisma push",
-    "migrate:staging": "env-cmd -f .env.staging prisma push"
+    "migrate": "env-cmd -f .env prisma db push",
+    "migrate:dev": "env-cmd -f .env.dev prisma db push",
+    "migrate:staging": "env-cmd -f .env.staging prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
