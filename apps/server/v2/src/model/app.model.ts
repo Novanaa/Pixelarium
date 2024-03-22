@@ -7,3 +7,8 @@ export class WelcomeResponse {
   version: string;
   license: string;
 }
+
+export class WebResponse {
+  status: "OK" | "KO";
+  code: number;
+}
