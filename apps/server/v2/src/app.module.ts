@@ -3,9 +3,10 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { LibsModule } from "./libs/libs.module";
 import { UserModule } from "./cores/user/user.module";
+import { CommonModule } from "./common/common.module";
 
 @Module({
-  imports: [LibsModule, UserModule],
+  imports: [LibsModule, UserModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
 })
