@@ -1,6 +1,6 @@
 import { PrismaService } from "@/libs/prisma.service";
 import { Injectable, NotFoundException, HttpStatus } from "@nestjs/common";
-import { User } from "prisma/generated/client";
+import { User } from "@prisma/client";
 import { RetrieveUserResponse } from "../models/retrieve-user.model";
 import { ErrorService } from "@/common/error.service";
 
