@@ -74,7 +74,7 @@ devDependencies:
     specifier: ^20.3.1
     version: 20.11.29
   '@types/supertest':
-    specifier: ^6.0.0
+    specifier: ^6.0.2
     version: 6.0.2
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.0.0
@@ -104,7 +104,7 @@ devDependencies:
     specifier: ^0.5.21
     version: 0.5.21
   supertest:
-    specifier: ^6.3.3
+    specifier: ^6.3.4
     version: 6.3.4
   ts-jest:
     specifier: ^29.1.0
