@@ -1,8 +1,7 @@
 import { Global, Module } from "@nestjs/common";
-import { PrismaService } from "./prisma.service";
 import { ConfigModule } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
-import { FileSystemService } from "./file-system.service";
+import * as libsProvider from "./providers";
 import * as winston from "winston";
 
 @Global()
@@ -14,7 +13,7 @@ import * as winston from "winston";
       transports: [new winston.transports.Console()],
     }),
   ],
-  providers: [PrismaService, FileSystemService],
-  exports: [PrismaService, FileSystemService],
+  providers: [libsProvider.PrismaProvider, libsProvider.FileSystemProvider],
+  exports: [libsProvider.PrismaProvider, libsProvider.FileSystemProvider],
 })
 export class LibsModule {}
