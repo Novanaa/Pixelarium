@@ -1,8 +1,8 @@
 import * as path from "path";
-import { PrismaService } from "@/libs/prisma.service";
+import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { DeleteUserResponseDto } from "../dtos/delete-user.dto";
-import { FileSystemService } from "@/libs/file-system.service";
+import { FileSystemProvider } from "@/libs/providers/file-system/file-system.provider";
 import { RetrieveUserService } from "./retrieve-user.service";
 import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
 import { StaticDirectoryProvider } from "@/common/providers/static-directoty/static-directory.provider";
@@ -10,8 +10,8 @@ import { StaticDirectoryProvider } from "@/common/providers/static-directoty/sta
 @Injectable()
 export class DeleteUserService {
   constructor(
-    private readonly prisma: PrismaService,
-    private readonly fileSystem: FileSystemService,
+    private readonly prisma: PrismaProvider,
+    private readonly fileSystem: FileSystemProvider,
     private readonly retrieveUserService: RetrieveUserService,
     private readonly staticDirectory: StaticDirectoryProvider
   ) {}
