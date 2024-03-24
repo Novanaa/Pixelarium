@@ -3,17 +3,17 @@ import { UserModule } from "../user.module";
 import { HttpStatus, INestApplication } from "@nestjs/common";
 import * as supertest from "supertest";
 import { ResponseError } from "@/model/error.model";
-import { ErrorService } from "@/common/error.service";
+import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { LibsModule } from "@/libs/libs.module";
 import { CommonModule } from "@/common/common.module";
 import { User } from "@prisma/client";
-import { MockData } from "@/common/mock.service";
+import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;
-  let errorService: ErrorService;
-  let mockDataService: MockData;
+  let errorService: ErrorProvider;
+  let mockDataService: MockDataProvider;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -21,8 +21,8 @@ describe("User Controller (e2e)", () => {
     }).compile();
 
     app = module.createNestApplication();
-    errorService = module.get<ErrorService>(ErrorService);
-    mockDataService = module.get<MockData>(MockData);
+    errorService = module.get<ErrorProvider>(ErrorProvider);
+    mockDataService = module.get<MockDataProvider>(MockDataProvider);
     await app.init();
   });
 

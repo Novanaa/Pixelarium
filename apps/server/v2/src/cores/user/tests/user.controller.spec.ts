@@ -2,29 +2,30 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { UserController } from "../user.controller";
 import { RetrieveUserService } from "../services/retrieve-user.service";
 import { CommonModule } from "@/common/common.module";
-import { ErrorService } from "@/common/error.service";
+import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { LibsModule } from "@/libs/libs.module";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
-import { MockData } from "@/common/mock.service";
+import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { User } from "@prisma/client";
 import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
+import { DeleteUserService } from "../services/delete-user.service";
 
 describe("User Controller", () => {
   let controller: UserController;
-  let errorService: ErrorService;
-  let mockData: MockData;
+  let errorService: ErrorProvider;
+  let mockData: MockDataProvider;
 
   beforeEach(async () => {
     const app: Awaited<TestingModule> = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [RetrieveUserService],
+      providers: [RetrieveUserService, DeleteUserService],
       imports: [CommonModule, LibsModule],
     }).compile();
 
     controller = app.get<UserController>(UserController);
-    errorService = app.get<ErrorService>(ErrorService);
-    mockData = app.get<MockData>(MockData);
+    errorService = app.get<ErrorProvider>(ErrorProvider);
+    mockData = app.get<MockDataProvider>(MockDataProvider);
   });
 
   describe("GET /user/:name", () => {
