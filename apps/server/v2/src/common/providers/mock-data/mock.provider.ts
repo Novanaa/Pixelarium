@@ -3,7 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 
 @Injectable()
-export class MockData {
+export class MockDataProvider {
   constructor(private readonly prisma: PrismaService) {}
 
   public async getRandomser(): Promise<User> {

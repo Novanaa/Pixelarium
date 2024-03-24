@@ -2,7 +2,7 @@ import * as path from "path";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class StaticDirectorySerive {
+export class StaticDirectoryProvider {
   public getUserAvatarDirectory(filename?: string): string {
     const dirpath: string = "./public/avatar";
 

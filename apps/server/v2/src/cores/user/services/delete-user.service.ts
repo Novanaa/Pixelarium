@@ -5,7 +5,7 @@ import { DeleteUserResponseDto } from "../dtos/delete-user.dto";
 import { FileSystemService } from "@/libs/file-system.service";
 import { RetrieveUserService } from "./retrieve-user.service";
 import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
-import { StaticDirectorySerive } from "@/common/static-directory.service";
+import { StaticDirectoryProvider } from "@/common/providers/static-directoty/static-directory.provider";
 
 @Injectable()
 export class DeleteUserService {
@@ -13,7 +13,7 @@ export class DeleteUserService {
     private readonly prisma: PrismaService,
     private readonly fileSystem: FileSystemService,
     private readonly retrieveUserService: RetrieveUserService,
-    private readonly staticDirectory: StaticDirectorySerive
+    private readonly staticDirectory: StaticDirectoryProvider
   ) {}
 
   public async deleteSingleUser(name: string): Promise<void> {

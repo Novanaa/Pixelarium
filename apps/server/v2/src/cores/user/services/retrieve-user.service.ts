@@ -1,14 +1,14 @@
 import { PrismaService } from "@/libs/prisma.service";
 import { Injectable, NotFoundException, HttpStatus } from "@nestjs/common";
 import { User } from "@prisma/client";
-import { ErrorService } from "@/common/error.service";
+import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
 
 @Injectable()
 export class RetrieveUserService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly error: ErrorService
+    private readonly error: ErrorProvider
   ) {}
 
   public async retrieveUserByName(name: string): Promise<User> {

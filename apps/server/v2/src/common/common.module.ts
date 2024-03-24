@@ -1,11 +1,17 @@
 import { Global, Module } from "@nestjs/common";
-import { ErrorService } from "./error.service";
-import { MockData } from "./mock.service";
-import { StaticDirectorySerive } from "./static-directory.service";
+import * as commonProviders from "./providers";
 
 @Global()
 @Module({
-  providers: [ErrorService, MockData, StaticDirectorySerive],
-  exports: [ErrorService, MockData, StaticDirectorySerive],
+  providers: [
+    commonProviders.ErrorProvider,
+    commonProviders.MockDataProvider,
+    commonProviders.StaticDirectoryProvider,
+  ],
+  exports: [
+    commonProviders.ErrorProvider,
+    commonProviders.MockDataProvider,
+    commonProviders.StaticDirectoryProvider,
+  ],
 })
 export class CommonModule {}

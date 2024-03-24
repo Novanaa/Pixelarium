@@ -3,7 +3,7 @@ import { HttpStatus, Injectable } from "@nestjs/common";
 import * as moment from "moment";
 
 @Injectable()
-export class ErrorService {
+export class ErrorProvider {
   public custom({
     TypeError,
     code,
