@@ -7,8 +7,8 @@ import {
   Param,
 } from "@nestjs/common";
 import { PrismaService } from "@/libs/prisma.service";
-import { RetrieveUserResponse } from "./models/retrieve-user.model";
 import { RetrieveUserService } from "./services/retrieve-user.service";
+import { RetrieveUserResponseDto } from "./dtos/retrieve-user.dto";
 
 @Controller("user")
 export class UserController {
@@ -22,7 +22,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   public async retrieveUser(
     @Param("name") name: string
-  ): Promise<RetrieveUserResponse> {
+  ): Promise<RetrieveUserResponseDto> {
     try {
       return await this.userService.retrieveSingleUser(name);
     } finally {

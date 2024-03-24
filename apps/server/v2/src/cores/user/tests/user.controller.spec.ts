@@ -8,7 +8,7 @@ import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { MockData } from "@/common/mock.service";
 import { User } from "@prisma/client";
-import { RetrieveUserResponse } from "../models/retrieve-user.model";
+import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
 
 describe("User Controller", () => {
   let controller: UserController;
@@ -61,7 +61,7 @@ describe("User Controller", () => {
     });
     it("should be return 200 status code", async () => {
       const user: Awaited<User> = await mockData.getRandomser();
-      const response: RetrieveUserResponse = await controller.retrieveUser(
+      const response: RetrieveUserResponseDto = await controller.retrieveUser(
         user.name
       );
 
@@ -69,7 +69,7 @@ describe("User Controller", () => {
     });
     it("should be return user data", async () => {
       const user: Awaited<User> = await mockData.getRandomser();
-      const response: RetrieveUserResponse = await controller.retrieveUser(
+      const response: RetrieveUserResponseDto = await controller.retrieveUser(
         user.name
       );
 
@@ -77,7 +77,7 @@ describe("User Controller", () => {
     });
     it("user data should be not included email field", async () => {
       const user: Awaited<User> = await mockData.getRandomser();
-      const response: RetrieveUserResponse = await controller.retrieveUser(
+      const response: RetrieveUserResponseDto = await controller.retrieveUser(
         user.name
       );
 
@@ -85,7 +85,7 @@ describe("User Controller", () => {
     });
     it("user data should be not included password field", async () => {
       const user: Awaited<User> = await mockData.getRandomser();
-      const response: RetrieveUserResponse = await controller.retrieveUser(
+      const response: RetrieveUserResponseDto = await controller.retrieveUser(
         user.name
       );
 
@@ -93,7 +93,7 @@ describe("User Controller", () => {
     });
     it("user data should be match with requested user data", async () => {
       const user: Awaited<User> = await mockData.getRandomser();
-      const response: RetrieveUserResponse = await controller.retrieveUser(
+      const response: RetrieveUserResponseDto = await controller.retrieveUser(
         user.name
       );
 
