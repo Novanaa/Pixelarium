@@ -8,7 +8,7 @@ import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { User } from "@prisma/client";
-import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
+import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
 import { DeleteUserProvider } from "../providers/delete-user/delete-user.provider";
 
 describe("User Controller", () => {

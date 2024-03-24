@@ -8,7 +8,7 @@ import { LibsModule } from "@/libs/libs.module";
 import { CommonModule } from "@/common/common.module";
 import { User } from "@prisma/client";
 import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
-import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
+import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;

@@ -9,8 +9,8 @@ import {
 } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
 import { RetrieveUserProvider } from "./providers/retrieve-user/retrieve-user.provider";
-import { RetrieveUserResponseDto } from "./dtos/retrieve-user.dto";
-import { DeleteUserResponseDto } from "./dtos/delete-user.dto";
+import { RetrieveUserResponseDto } from "./providers/retrieve-user/retrieve-user.dto";
+import { DeleteUserResponseDto } from "./providers/delete-user/delete-user.dto";
 import { DeleteUserProvider } from "./providers/delete-user/delete-user.provider";
 
 @Controller("user")

@@ -1,10 +1,10 @@
 import * as path from "path";
 import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
 import { HttpStatus, Injectable } from "@nestjs/common";
-import { DeleteUserResponseDto } from "../../dtos/delete-user.dto";
+import { DeleteUserResponseDto } from "./delete-user.dto";
 import { FileSystemProvider } from "@/libs/providers/file-system/file-system.provider";
 import { RetrieveUserProvider } from "../retrieve-user/retrieve-user.provider";
-import { RetrieveUserResponseDto } from "../../dtos/retrieve-user.dto";
+import { RetrieveUserResponseDto } from "../retrieve-user/retrieve-user.dto";
 import { StaticDirectoryProvider } from "@/common/providers/static-directoty/static-directory.provider";
 
 @Injectable()
