@@ -1,11 +1,10 @@
 import { Module } from "@nestjs/common";
-import { RetrieveUserService } from "./services/retrieve-user.service";
 import { UserController } from "./user.controller";
-import { DeleteUserService } from "./services/delete-user.service";
+import * as provider from "./providers";
 
 @Module({
   controllers: [UserController],
-  providers: [RetrieveUserService, DeleteUserService],
-  exports: [RetrieveUserService],
+  providers: [provider.RetrieveUserProvider, provider.DeleteUserProvider],
+  exports: [provider.RetrieveUserProvider],
 })
 export class UserModule {}
