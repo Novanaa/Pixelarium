@@ -9,11 +9,13 @@ import { CommonModule } from "@/common/common.module";
 import { User } from "@prisma/client";
 import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
+import { PrismaProvider } from "@/libs/providers";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;
   let errorService: ErrorProvider;
   let mockDataService: MockDataProvider;
+  let prisma: PrismaProvider;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -23,8 +25,12 @@ describe("User Controller (e2e)", () => {
     app = module.createNestApplication();
     errorService = module.get<ErrorProvider>(ErrorProvider);
     mockDataService = module.get<MockDataProvider>(MockDataProvider);
+    prisma = module.get<PrismaProvider>(PrismaProvider);
+
     await app.init();
   });
+
+  afterEach(async () => await prisma.$disconnect());
 
   describe("GET /user/:name", () => {
     it("should be return not found exeption when the user doesn't exist", async () => {
