@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   Header,
   HttpCode,
@@ -9,12 +10,15 @@ import {
 import { PrismaService } from "@/libs/prisma.service";
 import { RetrieveUserService } from "./services/retrieve-user.service";
 import { RetrieveUserResponseDto } from "./dtos/retrieve-user.dto";
+import { DeleteUserResponseDto } from "./dtos/delete-user.dto";
+import { DeleteUserService } from "./services/delete-user.service";
 
 @Controller("user")
 export class UserController {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly userService: RetrieveUserService
+    private readonly retrieveUserService: RetrieveUserService,
+    private readonly deleteUserService: DeleteUserService
   ) {}
 
   @Get("/:name")
@@ -24,7 +28,20 @@ export class UserController {
     @Param("name") name: string
   ): Promise<RetrieveUserResponseDto> {
     try {
-      return await this.userService.retrieveSingleUser(name);
+      return await this.retrieveUserService.retrieveSingleUser(name);
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
+
+  @Delete("/:name")
+  @Header("Content-Type", "application/json")
+  @HttpCode(HttpStatus.OK)
+  public async deleteUser(
+    @Param("name") name: string
+  ): Promise<DeleteUserResponseDto> {
+    try {
+      return await this.deleteUserService.deleteUser(name);
     } finally {
       await this.prisma.$disconnect();
     }
