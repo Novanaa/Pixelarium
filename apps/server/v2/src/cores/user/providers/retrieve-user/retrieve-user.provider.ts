@@ -2,10 +2,10 @@ import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
 import { Injectable, NotFoundException, HttpStatus } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { ErrorProvider } from "@/common/providers/error/error.provider";
-import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
+import { RetrieveUserResponseDto } from "./retrieve-user.dto";
 
 @Injectable()
-export class RetrieveUserService {
+export class RetrieveUserProvider {
   constructor(
     private readonly prisma: PrismaProvider,
     private readonly error: ErrorProvider
