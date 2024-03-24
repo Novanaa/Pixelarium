@@ -1,6 +1,6 @@
 import { WebResponse } from "@/model/app.model";
 import { User } from "@prisma/client";
 
-export class RetrieveUserResponse extends WebResponse {
+export class RetrieveUserResponseDto extends WebResponse {
   user: User;
 }

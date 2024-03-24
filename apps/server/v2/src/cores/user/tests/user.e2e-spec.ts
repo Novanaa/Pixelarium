@@ -8,7 +8,7 @@ import { LibsModule } from "@/libs/libs.module";
 import { CommonModule } from "@/common/common.module";
 import { User } from "@prisma/client";
 import { MockData } from "@/common/mock.service";
-import { RetrieveUserResponse } from "../models/retrieve-user.model";
+import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;
@@ -55,7 +55,8 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .get("/user/" + user.name)
           .set("Content-Type", "application/json");
-      const body: RetrieveUserResponse = response.body as RetrieveUserResponse;
+      const body: RetrieveUserResponseDto =
+        response.body as RetrieveUserResponseDto;
 
       expect(body.status).toBe("OK");
     });
@@ -65,7 +66,8 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .get("/user/" + user.name)
           .set("Content-Type", "application/json");
-      const body: RetrieveUserResponse = response.body as RetrieveUserResponse;
+      const body: RetrieveUserResponseDto =
+        response.body as RetrieveUserResponseDto;
 
       expect(body.user).toBeDefined();
     });
@@ -75,7 +77,8 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .get("/user/" + user.name)
           .set("Content-Type", "application/json");
-      const body: RetrieveUserResponse = response.body as RetrieveUserResponse;
+      const body: RetrieveUserResponseDto =
+        response.body as RetrieveUserResponseDto;
 
       expect(body.code).toBe(HttpStatus.OK);
       expect(response.status).toBe(HttpStatus.OK);
@@ -86,7 +89,8 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .get("/user/" + user.name)
           .set("Content-Type", "application/json");
-      const body: RetrieveUserResponse = response.body as RetrieveUserResponse;
+      const body: RetrieveUserResponseDto =
+        response.body as RetrieveUserResponseDto;
 
       expect(body.user.email).toBeUndefined();
     });
@@ -96,7 +100,8 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .get("/user/" + user.name)
           .set("Content-Type", "application/json");
-      const body: RetrieveUserResponse = response.body as RetrieveUserResponse;
+      const body: RetrieveUserResponseDto =
+        response.body as RetrieveUserResponseDto;
 
       expect(body.user.password).toBeUndefined();
     });
@@ -106,7 +111,8 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .get("/user/" + user.name)
           .set("Content-Type", "application/json");
-      const body: RetrieveUserResponse = response.body as RetrieveUserResponse;
+      const body: RetrieveUserResponseDto =
+        response.body as RetrieveUserResponseDto;
 
       delete user.email;
       delete user.password;
