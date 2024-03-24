@@ -8,17 +8,17 @@ import {
   Param,
 } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
-import { RetrieveUserService } from "./services/retrieve-user.service";
+import { RetrieveUserProvider } from "./providers/retrieve-user/retrieve-user.provider";
 import { RetrieveUserResponseDto } from "./dtos/retrieve-user.dto";
 import { DeleteUserResponseDto } from "./dtos/delete-user.dto";
-import { DeleteUserService } from "./services/delete-user.service";
+import { DeleteUserProvider } from "./providers/delete-user/delete-user.provider";
 
 @Controller("user")
 export class UserController {
   constructor(
     private readonly prisma: PrismaProvider,
-    private readonly retrieveUserService: RetrieveUserService,
-    private readonly deleteUserService: DeleteUserService
+    private readonly retrieveUserService: RetrieveUserProvider,
+    private readonly deleteUserService: DeleteUserProvider
   ) {}
 
   @Get("/:name")

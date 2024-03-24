@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { UserController } from "../user.controller";
-import { RetrieveUserService } from "../services/retrieve-user.service";
+import { RetrieveUserProvider } from "../providers/retrieve-user/retrieve-user.provider";
 import { CommonModule } from "@/common/common.module";
 import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { LibsModule } from "@/libs/libs.module";
@@ -9,7 +9,7 @@ import { ResponseError } from "@/model/error.model";
 import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { User } from "@prisma/client";
 import { RetrieveUserResponseDto } from "../dtos/retrieve-user.dto";
-import { DeleteUserService } from "../services/delete-user.service";
+import { DeleteUserProvider } from "../providers/delete-user/delete-user.provider";
 
 describe("User Controller", () => {
   let controller: UserController;
@@ -19,7 +19,7 @@ describe("User Controller", () => {
   beforeEach(async () => {
     const app: Awaited<TestingModule> = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [RetrieveUserService, DeleteUserService],
+      providers: [RetrieveUserProvider, DeleteUserProvider],
       imports: [CommonModule, LibsModule],
     }).compile();
 
