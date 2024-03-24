@@ -6,6 +6,6 @@ import { DeleteUserService } from "./services/delete-user.service";
 @Module({
   controllers: [UserController],
   providers: [RetrieveUserService, DeleteUserService],
-  exports: [RetrieveUserService, DeleteUserService],
+  exports: [RetrieveUserService],
 })
 export class UserModule {}
