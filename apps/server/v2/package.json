@@ -42,6 +42,7 @@
     "nest-winston": "^1.9.4",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "slugify": "^1.6.6",
     "validate-image-type": "^3.0.0",
     "winston": "^3.12.0"
   },
