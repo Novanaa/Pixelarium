@@ -1,8 +1,8 @@
 import { WebResponse } from "@/model/app.model";
 import { User } from "@prisma/client";
-import { Express } from "express";
 
 export class UpdateUserRequestDto {
+  avatar: string;
   name: string;
   bio: string;
 }
