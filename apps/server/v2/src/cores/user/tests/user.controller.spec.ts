@@ -1,37 +1,38 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { UserController } from "../user.controller";
-import { RetrieveUserProvider } from "../providers/retrieve-user/retrieve-user.provider";
-import { CommonModule } from "@/common/common.module";
-import { ErrorProvider } from "@/common/providers/error/error.provider";
-import { LibsModule } from "@/libs/libs.module";
-import { HttpException, HttpStatus } from "@nestjs/common";
-import { ResponseError } from "@/model/error.model";
-import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { User } from "@prisma/client";
-import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
-import { DeleteUserProvider } from "../providers/delete-user/delete-user.provider";
+import { LibsModule } from "@/libs/libs.module";
+import { UserController } from "../user.controller";
+import { ResponseError } from "@/model/error.model";
+import { CommonModule } from "@/common/common.module";
+import { Test, TestingModule } from "@nestjs/testing";
+import { HttpException, HttpStatus } from "@nestjs/common";
+import { ErrorProvider } from "@/common/providers/error/error.provider";
+import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { DeleteUserResponseDto } from "../providers/delete-user/delete-user.dto";
+import { UpdateUserProvider } from "../providers/update-user/update-user.provider";
+import { DeleteUserProvider } from "../providers/delete-user/delete-user.provider";
+import { RetrieveUserProvider } from "../providers/retrieve-user/retrieve-user.provider";
+import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
 import { PrismaProvider } from "@/libs/providers";
 
 describe("User Controller", () => {
   let controller: UserController;
   let errorService: ErrorProvider;
   let mockData: MockDataProvider;
-  let prisma: PrismaProvider;
   let retrieveUser: RetrieveUserProvider;
+  let prisma: PrismaProvider;
 
   beforeEach(async () => {
     const app: Awaited<TestingModule> = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [RetrieveUserProvider, DeleteUserProvider],
+      providers: [RetrieveUserProvider, DeleteUserProvider, UpdateUserProvider],
       imports: [CommonModule, LibsModule],
     }).compile();
 
     controller = app.get<UserController>(UserController);
     errorService = app.get<ErrorProvider>(ErrorProvider);
     mockData = app.get<MockDataProvider>(MockDataProvider);
-    prisma = app.get<PrismaProvider>(PrismaProvider);
     retrieveUser = app.get<RetrieveUserProvider>(RetrieveUserProvider);
+    prisma = app.get<PrismaProvider>(PrismaProvider);
   });
 
   afterEach(async () => await prisma.$disconnect());
