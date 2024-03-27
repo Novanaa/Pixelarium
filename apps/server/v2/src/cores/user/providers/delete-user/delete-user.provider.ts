@@ -1,8 +1,8 @@
+import * as fs from "fs";
 import * as path from "path";
-import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
+import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { DeleteUserResponseDto } from "./delete-user.dto";
-import { FileSystemProvider } from "@/libs/providers/file-system/file-system.provider";
 import { RetrieveUserProvider } from "../retrieve-user/retrieve-user.provider";
 import { RetrieveUserResponseDto } from "../retrieve-user/retrieve-user.dto";
 import { StaticDirectoryProvider } from "@/common/providers/static-directoty/static-directory.provider";
@@ -11,7 +11,6 @@ import { StaticDirectoryProvider } from "@/common/providers/static-directoty/sta
 export class DeleteUserProvider {
   constructor(
     private readonly prisma: PrismaProvider,
-    private readonly fileSystem: FileSystemProvider,
     private readonly retrieveUserService: RetrieveUserProvider,
     private readonly staticDirectory: StaticDirectoryProvider
   ) {}
@@ -28,7 +27,7 @@ export class DeleteUserProvider {
     const dirpath: string =
       this.staticDirectory.getUserAvatarDirectory(filename);
 
-    this.fileSystem.deleteFile(dirpath);
+    if (fs.existsSync(dirpath)) fs.unlinkSync(dirpath);
 
     await this.deleteSingleUser(name);
 
