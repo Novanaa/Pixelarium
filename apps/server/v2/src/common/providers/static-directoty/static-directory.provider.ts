@@ -1,5 +1,6 @@
 import * as path from "path";
 import { Injectable } from "@nestjs/common";
+import env from "@/configs/env";
 
 @Injectable()
 export class StaticDirectoryProvider {
@@ -13,5 +14,13 @@ export class StaticDirectoryProvider {
     const dirpath: string = "./public/galleries/" + name;
 
     return filename ? path.join(dirpath, filename) : dirpath;
+  }
+
+  public getUserAvatarUrlpath(filename: string) {
+    return `${env.hostname}/avatar/${filename}`;
+  }
+
+  public getUserGalleryUrlpath(name: string, filename: string) {
+    return `${env.hostname}/galleries/${name}/${filename}`;
   }
 }

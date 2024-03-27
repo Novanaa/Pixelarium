@@ -7,11 +7,15 @@ import * as commonProviders from "./providers";
     commonProviders.ErrorProvider,
     commonProviders.MockDataProvider,
     commonProviders.StaticDirectoryProvider,
+    commonProviders.ValidationProvider,
+    commonProviders.PrettierProvider,
   ],
   exports: [
     commonProviders.ErrorProvider,
     commonProviders.MockDataProvider,
     commonProviders.StaticDirectoryProvider,
+    commonProviders.ValidationProvider,
+    commonProviders.PrettierProvider,
   ],
 })
 export class CommonModule {}

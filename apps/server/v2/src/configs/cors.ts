@@ -1,9 +1,9 @@
 import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.interface";
 import env from "./env";
-import http from "@/constant/http-code";
+import { HttpStatus } from "@nestjs/common";
 
 export default {
   credentials: true,
   origin: env.clientHostname,
-  optionsSuccessStatus: http.StatusOk,
+  optionsSuccessStatus: HttpStatus.OK,
 } satisfies CorsOptions;

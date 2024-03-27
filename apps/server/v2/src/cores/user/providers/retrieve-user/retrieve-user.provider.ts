@@ -1,6 +1,6 @@
-import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
-import { Injectable, NotFoundException, HttpStatus } from "@nestjs/common";
 import { User } from "@prisma/client";
+import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
+import { Injectable, NotFoundException, HttpStatus } from "@nestjs/common";
 import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { RetrieveUserResponseDto } from "./retrieve-user.dto";
 

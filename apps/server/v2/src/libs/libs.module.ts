@@ -13,7 +13,7 @@ import * as winston from "winston";
       transports: [new winston.transports.Console()],
     }),
   ],
-  providers: [libsProvider.PrismaProvider, libsProvider.FileSystemProvider],
-  exports: [libsProvider.PrismaProvider, libsProvider.FileSystemProvider],
+  providers: [libsProvider.PrismaProvider],
+  exports: [libsProvider.PrismaProvider],
 })
 export class LibsModule {}

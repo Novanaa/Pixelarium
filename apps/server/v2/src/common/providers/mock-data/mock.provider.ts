@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
-import { PrismaProvider } from "@/libs/providers/prisma/prisma.provider";
+import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 
 @Injectable()
 export class MockDataProvider {

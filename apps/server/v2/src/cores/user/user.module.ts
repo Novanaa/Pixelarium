@@ -4,7 +4,11 @@ import * as provider from "./providers";
 
 @Module({
   controllers: [UserController],
-  providers: [provider.RetrieveUserProvider, provider.DeleteUserProvider],
+  providers: [
+    provider.RetrieveUserProvider,
+    provider.DeleteUserProvider,
+    provider.UpdateUserProvider,
+  ],
   exports: [provider.RetrieveUserProvider],
 })
 export class UserModule {}

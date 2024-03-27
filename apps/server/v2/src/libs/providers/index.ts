@@ -1,4 +1,3 @@
-import { FileSystemProvider } from "./file-system/file-system.provider";
-import { PrismaProvider } from "./prisma/prisma.provider";
+import { PrismaProvider } from "./prisma-client/prisma.provider";
 
-export { PrismaProvider, FileSystemProvider };
+export { PrismaProvider };
