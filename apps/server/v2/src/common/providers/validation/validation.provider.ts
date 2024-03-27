@@ -19,7 +19,7 @@ export class ValidationProvider {
   }
 
   public invalidPicture(mime: string): boolean {
-    return mime.startsWith("image");
+    return !mime.includes("image");
   }
 
   public invalidPictureExt(mime: string) {
