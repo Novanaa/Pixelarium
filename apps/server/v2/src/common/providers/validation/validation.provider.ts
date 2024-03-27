@@ -1,6 +1,8 @@
 import { ObjectSchema, ValidationResult } from "joi";
 import { Injectable } from "@nestjs/common";
 import { InvalidFileSizeParam } from "./validation.dto";
+import { validateBufferMIMEType } from "validate-image-type";
+import { PictureConstant } from "@/constant/picture.constant";
 
 @Injectable()
 export class ValidationProvider {
@@ -14,5 +16,21 @@ export class ValidationProvider {
 
   public invalidFileSize({ file, size }: InvalidFileSizeParam) {
     return file.buffer.length > size * 1024 * 1024;
+  }
+
+  public invalidPicture(mime: string): boolean {
+    return mime.startsWith("image");
+  }
+
+  public invalidPictureExt(mime: string) {
+    return !PictureConstant.ALLOWED_MIME_TYPES.includes(mime);
+  }
+
+  public async brokenPicture(data: Buffer): Promise<boolean> {
+    return !(
+      await validateBufferMIMEType(data, {
+        allowMimeTypes: PictureConstant.ALLOWED_MIME_TYPES,
+      })
+    ).ok;
   }
 }
