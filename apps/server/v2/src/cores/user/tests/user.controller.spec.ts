@@ -13,6 +13,7 @@ import { DeleteUserProvider } from "../providers/delete-user/delete-user.provide
 import { RetrieveUserProvider } from "../providers/retrieve-user/retrieve-user.provider";
 import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
 import { PrismaProvider } from "@/libs/providers";
+import { UpdateUserRequestDto } from "../providers/update-user/update-user.dto";
 
 describe("User Controller", () => {
   let controller: UserController;
@@ -200,6 +201,67 @@ describe("User Controller", () => {
         await retrieveUser.retrieveUserByName(user.name);
 
       expect(isUserDeleted).toBeNull();
+    });
+  });
+
+  describe("PATCH /user/:name", () => {
+    it("should be return not found exeption when the user doens't exist", async () => {
+      try {
+        const payload: UpdateUserRequestDto = {
+          bio: "testt",
+          name: "john doe",
+        } as UpdateUserRequestDto;
+
+        await controller.updateUser(
+          "0",
+          payload,
+          undefined as Express.Multer.File
+        );
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(errorService.notFound());
+      }
+    });
+    it("should be return 404 status code when the user doens't exist", async () => {
+      try {
+        const payload: UpdateUserRequestDto = {
+          bio: "testt",
+          name: "john doe",
+        } as UpdateUserRequestDto;
+
+        await controller.updateUser(
+          "0",
+          payload,
+          undefined as Express.Multer.File
+        );
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response error should be 'KO' when the user doesn't exist", async () => {
+      try {
+        const payload: UpdateUserRequestDto = {
+          bio: "testt",
+          name: "john doe",
+        } as UpdateUserRequestDto;
+
+        await controller.updateUser(
+          "0",
+          payload,
+          undefined as Express.Multer.File
+        );
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
     });
   });
 });
