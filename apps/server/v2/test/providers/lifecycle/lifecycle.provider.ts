@@ -1,16 +1,38 @@
 import * as fs from "fs";
 import { Injectable, Logger } from "@nestjs/common";
-import { StaticDirectoryProvider } from "@/common/providers";
+import { MockDataProvider, StaticDirectoryProvider } from "@/common/providers";
 import { PrismaProvider } from "@/libs/providers";
+import env from "@/configs/env";
 
 @Injectable()
 export class LifecycleProvider {
   constructor(
     private readonly staticDirectory: StaticDirectoryProvider,
-    private readonly prisma: PrismaProvider
+    private readonly prisma: PrismaProvider,
+    private readonly mockData: MockDataProvider
   ) {}
 
   private readonly logger: Logger = new Logger("LifecycleTest");
+
+  private envChecker(): boolean {
+    return env.nodeEnv == "development" || env.nodeEnv == "staging";
+  }
+
+  public async ModuleTestInit() {
+    try {
+      if (!this.envChecker() && !(await this.prisma.user.count())) return;
+
+      await Promise.all(
+        Array.from({ length: 5 }, () => this.mockData.createRandomUser())
+      );
+
+      this.logger.log("User Generator Has Successfully Generate 5 User");
+    } catch (err) {
+      this.logger.error(err);
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
 
   public async cleanUpDatabase(): Promise<void> {
     try {
