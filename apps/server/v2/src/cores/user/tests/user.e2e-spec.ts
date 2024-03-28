@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { Test } from "@nestjs/testing";
 import { UserModule } from "../user.module";
 import { HttpStatus, INestApplication } from "@nestjs/common";
@@ -397,7 +398,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           })
           .set("Content-Type", "application/json");
       const body: UpdateUserResponsetDto =
@@ -412,7 +413,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -426,7 +427,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -439,7 +440,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -452,7 +453,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -468,7 +469,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -481,7 +482,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -494,7 +495,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: randUserName(),
+            name: slugify(randUserName(), { lower: true }),
           });
       const body: UpdateUserResponsetDto =
         response.body as UpdateUserResponsetDto;
@@ -503,7 +504,7 @@ describe("User Controller (e2e)", () => {
     });
     it("response data updated_field should be constains updated data field", async () => {
       const payload = {
-        name: randUserName(),
+        name: slugify(randUserName(), { lower: true }),
       };
       const user: Awaited<User> = await mockDataService.getRandomser();
       const response: Awaited<supertest.Request | supertest.Response> =
