@@ -2,7 +2,7 @@ import * as fs from "fs";
 import { Injectable, Logger } from "@nestjs/common";
 import { MockDataProvider, StaticDirectoryProvider } from "@/common/providers";
 import { PrismaProvider } from "@/libs/providers";
-import env from "@/configs/env";
+import { Environment } from "@/configs/readonly";
 
 @Injectable()
 export class LifecycleProvider {
@@ -15,7 +15,9 @@ export class LifecycleProvider {
   private readonly logger: Logger = new Logger("LifecycleTest");
 
   private envChecker(): boolean {
-    return env.nodeEnv == "development" || env.nodeEnv == "staging";
+    return (
+      Environment.NODEENV == "development" || Environment.NODEENV == "staging"
+    );
   }
 
   public async ModuleTestInit() {

@@ -12,10 +12,10 @@ import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-use
 import { PrismaProvider } from "@/libs/providers";
 import { DeleteUserResponseDto } from "../providers/delete-user/delete-user.dto";
 import { UpdateUserResponsetDto } from "../providers/update-user/update-user.dto";
-import env from "@/configs/env";
 import { PictureConstant } from "@/constant/picture.constant";
 import { TestModule } from "../../../../test/test.module";
 import { LifecycleProvider } from "../../../../test/providers";
+import { Environment } from "@/configs/readonly";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;
@@ -472,7 +472,7 @@ describe("User Controller (e2e)", () => {
         await supertest(app.getHttpServer())
           .patch(encodeURI("/user/" + user.name))
           .send({
-            name: env.jsonWebToken.accessToken,
+            name: Environment.JSONWEBTOKEN.ACCESS_TOKEN,
           });
       const body: ResponseError = response.body as ResponseError;
 
