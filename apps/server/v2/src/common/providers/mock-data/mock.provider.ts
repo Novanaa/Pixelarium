@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
+import slugify from "slugify";
 
 @Injectable()
 export class MockDataProvider {
@@ -17,7 +18,7 @@ export class MockDataProvider {
 
   public generateRandomUser(): Omit<User, "created_at" | "updated_at" | "id"> {
     return {
-      name: falso.randUserName(),
+      name: slugify(falso.randUserName(), { lower: true }),
       email: falso.randEmail(),
       avatar: falso.randAvatar(),
       bio: falso.randSentence(),
