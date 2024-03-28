@@ -9,6 +9,7 @@ import * as compressionConfig from "@/configs/compression";
 import * as cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import rateLimitConfig from "@/configs/rate-limit";
+import startServer from "./server";
 
 async function bootstrap() {
   const app: NestExpressApplication =
@@ -24,7 +25,7 @@ async function bootstrap() {
   app.use(rateLimit(rateLimitConfig));
   app.set("trust proxy", 1);
 
-  await app.listen(env.port);
+  await startServer(app);
 }
 
 bootstrap();
