@@ -9,7 +9,6 @@ import * as compressionConfig from "@/configs/compression";
 import * as cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import rateLimitConfig from "@/configs/rate-limit";
-import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 async function bootstrap() {
   const app: NestExpressApplication =
@@ -23,7 +22,6 @@ async function bootstrap() {
   app.use(compression(compressionConfig));
   app.use(cookieParser(env.jsonWebToken.accessToken));
   app.use(rateLimit(rateLimitConfig));
-  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.set("trust proxy", 1);
 
   await app.listen(env.port);
