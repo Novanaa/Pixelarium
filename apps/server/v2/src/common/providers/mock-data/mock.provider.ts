@@ -18,7 +18,7 @@ export class MockDataProvider {
 
   public generateRandomUser(): Omit<User, "created_at" | "updated_at" | "id"> {
     return {
-      name: slugify(falso.randUserName(), { lower: true }),
+      name: slugify(falso.randUserName(), { lower: true, remove: /\d+/ }),
       email: falso.randEmail(),
       avatar: falso.randAvatar(),
       bio: falso.randSentence(),
