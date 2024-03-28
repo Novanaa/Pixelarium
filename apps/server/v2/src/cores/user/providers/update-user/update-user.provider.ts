@@ -72,17 +72,21 @@ export class UpdateUserProvider {
         this.error.forbidden(validation.error.message)
       );
 
-    const isUsernameAlreadyTaken: Awaited<boolean> =
-      value.name &&
-      value.name !== user.name &&
-      (await this.usernameAlreadyTaken(value.name));
+    if (value.name && value.name !== user.name) {
+      if (await this.usernameAlreadyTaken(value.name))
+        throw new BadRequestException(
+          this.error.badRequest(
+            "The name is already taken, please choose another name!"
+          )
+        );
 
-    if (isUsernameAlreadyTaken)
-      throw new BadRequestException(
-        this.error.badRequest(
-          "The name is already taken, please choose another name!"
-        )
-      );
+      if (this.validation.invalidUsername(value.name))
+        throw new BadRequestException(
+          this.error.badRequest(
+            "The username should be 64 letters or less and is only allowed to contain alphanumeric, dot (.), hyphen (-) and underscore (_)."
+          )
+        );
+    }
 
     if (!avatar) {
       await this.updateUserByName(name, value);
