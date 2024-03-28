@@ -110,16 +110,32 @@ export class UpdateUserProvider {
     });
 
     if (this.validation.invalidPicture(avatar.mimetype))
-      throw new UnprocessableEntityException(this.error.unprocessableEntity());
+      throw new UnprocessableEntityException(
+        this.error.unprocessableEntity(
+          "The avatar provided is not in a valid format. Please ensure the avatar image is in an accepted format (e.g., JPEG, PNG) and try again."
+        )
+      );
 
     if (isInvalidFileSize)
-      throw new BadRequestException(this.error.badRequest("testttttt"));
+      throw new BadRequestException(
+        this.error.badRequest(
+          "The avatar you are trying to upload exceeds the maximum allowed file size. Please ensure that the file size is within 1mb."
+        )
+      );
 
     if (this.validation.invalidPictureExt(avatar.mimetype))
-      throw new BadRequestException(this.error.badRequest());
+      throw new BadRequestException(
+        this.error.badRequest(
+          "The picture extension is not supported. Please upload an image with a valid extension (e.g., JPG, PNG, AVIF, SVG)."
+        )
+      );
 
     if (await this.validation.brokenPicture(avatar.buffer))
-      throw new ForbiddenException(this.error.forbidden(""));
+      throw new ForbiddenException(
+        this.error.forbidden(
+          "The picture you are trying to access is either missing or corrupted."
+        )
+      );
 
     await this.updateUserByName(name, { ...value, avatar: avatarUrlpath });
 
