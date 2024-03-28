@@ -3,7 +3,7 @@ import * as provider from "./providers";
 
 @Global()
 @Module({
-  providers: [provider.GeneratorProvider],
-  exports: [provider.GeneratorProvider],
+  providers: [provider.LifecycleProvider],
+  exports: [provider.LifecycleProvider],
 })
 export class TestModule {}

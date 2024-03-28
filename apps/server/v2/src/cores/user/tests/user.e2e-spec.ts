@@ -14,24 +14,34 @@ import { DeleteUserResponseDto } from "../providers/delete-user/delete-user.dto"
 import { UpdateUserResponsetDto } from "../providers/update-user/update-user.dto";
 import env from "@/configs/env";
 import { PictureConstant } from "@/constant/picture.constant";
+import { TestModule } from "../../../../test/test.module";
+import { LifecycleProvider } from "../../../../test/providers";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;
   let errorService: ErrorProvider;
   let mockDataService: MockDataProvider;
   let prisma: PrismaProvider;
+  let lifecycle: LifecycleProvider;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module = await Test.createTestingModule({
-      imports: [UserModule, LibsModule, CommonModule],
+      imports: [UserModule, LibsModule, CommonModule, TestModule],
     }).compile();
 
     app = module.createNestApplication();
     errorService = module.get<ErrorProvider>(ErrorProvider);
     mockDataService = module.get<MockDataProvider>(MockDataProvider);
     prisma = module.get<PrismaProvider>(PrismaProvider);
+    lifecycle = module.get<LifecycleProvider>(LifecycleProvider);
 
     await app.init();
+    await lifecycle.ModuleTestInit();
+  });
+
+  afterAll(async () => {
+    lifecycle.cleanUpDirectory();
+    await lifecycle.cleanUpDatabase();
   });
 
   afterEach(async () => await prisma.$disconnect());
