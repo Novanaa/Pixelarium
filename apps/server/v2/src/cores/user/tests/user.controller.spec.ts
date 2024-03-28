@@ -4,6 +4,7 @@ import { UserController } from "../user.controller";
 import { ResponseError } from "@/model/error.model";
 import { CommonModule } from "@/common/common.module";
 import { Test, TestingModule } from "@nestjs/testing";
+import { TestModule } from "../../../../test/test.module";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
@@ -14,6 +15,7 @@ import { RetrieveUserProvider } from "../providers/retrieve-user/retrieve-user.p
 import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
 import { PrismaProvider } from "@/libs/providers";
 import { UpdateUserRequestDto } from "../providers/update-user/update-user.dto";
+import { LifecycleProvider } from "../../../../test/providers";
 
 describe("User Controller", () => {
   let controller: UserController;
@@ -21,12 +23,13 @@ describe("User Controller", () => {
   let mockData: MockDataProvider;
   let retrieveUser: RetrieveUserProvider;
   let prisma: PrismaProvider;
+  let testLifecycle: LifecycleProvider;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const app: Awaited<TestingModule> = await Test.createTestingModule({
       controllers: [UserController],
       providers: [RetrieveUserProvider, DeleteUserProvider, UpdateUserProvider],
-      imports: [CommonModule, LibsModule],
+      imports: [CommonModule, LibsModule, TestModule],
     }).compile();
 
     controller = app.get<UserController>(UserController);
@@ -34,6 +37,14 @@ describe("User Controller", () => {
     mockData = app.get<MockDataProvider>(MockDataProvider);
     retrieveUser = app.get<RetrieveUserProvider>(RetrieveUserProvider);
     prisma = app.get<PrismaProvider>(PrismaProvider);
+    testLifecycle = app.get<LifecycleProvider>(LifecycleProvider);
+
+    await testLifecycle.ModuleTestInit();
+  });
+
+  afterAll(async () => {
+    testLifecycle.cleanUpDirectory();
+    await testLifecycle.cleanUpDatabase();
   });
 
   afterEach(async () => await prisma.$disconnect());
