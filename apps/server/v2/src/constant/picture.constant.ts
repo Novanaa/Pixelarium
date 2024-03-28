@@ -17,4 +17,15 @@ export class PictureConstant {
     "image/x-pentax-pef",
     "image/webp",
   ];
+
+  static readonly DUMMY_PICTUREPATH = {
+    "80mb": "./public/test/80mb.png",
+    "20mb": "./public/test/20mb.png",
+    "40mb": "./public/test/40mb.png",
+    avif: "./public/test/test.avif",
+    jpeg: "./public/test/test.jpg",
+    sgi: "./public/test/test.sgi",
+    json: "./public/test/test.json",
+    broken: "./public/test/test.png",
+  };
 }

@@ -27,7 +27,7 @@ export class ValidationProvider {
   }
 
   public invalidUsername(name: string): boolean {
-    return !/^[a-z0-9.\-_]{1,64}$/.test(name);
+    return !/^[a-z.\-_]{1,64}$/.test(name);
   }
 
   public async brokenPicture(data: Buffer): Promise<boolean> {
