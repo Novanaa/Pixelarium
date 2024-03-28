@@ -45,6 +45,7 @@ export class LifecycleProvider {
         this.prisma.gallery.deleteMany(),
         this.prisma.paymentsHistory.deleteMany(),
         this.prisma.picture.deleteMany(),
+        this.prisma.subscription.deleteMany(),
       ]);
     } catch (err) {
       this.logger.error(err);
