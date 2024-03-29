@@ -64,4 +64,17 @@ export class MockDataProvider {
       size: buffer.length,
     } satisfies Partial<Express.Multer.File>;
   }
+
+  public dummyLargeFilePicture(): Partial<Express.Multer.File> {
+    const path: string = PictureConstant.DUMMY_PICTUREPATH["80mb"];
+    const buffer: Buffer = fs.readFileSync(path);
+
+    return {
+      originalname: "test.png",
+      buffer,
+      mimetype: "image/png",
+      path,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
+  }
 }
