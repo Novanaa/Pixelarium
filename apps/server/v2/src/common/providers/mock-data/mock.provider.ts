@@ -40,15 +40,27 @@ export class MockDataProvider {
   }
 
   public dummyPicture(): Partial<Express.Multer.File> {
-    const buffer: Buffer = fs.readFileSync(
-      PictureConstant.DUMMY_PICTUREPATH.jpeg
-    );
+    const path: string = PictureConstant.DUMMY_PICTUREPATH.jpeg;
+    const buffer: Buffer = fs.readFileSync(path);
 
     return {
       originalname: "test.jpeg",
       buffer,
       mimetype: "image/jpeg",
-      path: PictureConstant.DUMMY_PICTUREPATH.jpeg,
+      path,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
+  }
+
+  public dummyBrokenPicture(): Partial<Express.Multer.File> {
+    const path: string = PictureConstant.DUMMY_PICTUREPATH.broken;
+    const buffer: Buffer = fs.readFileSync(path);
+
+    return {
+      originalname: "test.png",
+      buffer,
+      mimetype: "image/png",
+      path,
       size: buffer.length,
     } satisfies Partial<Express.Multer.File>;
   }
