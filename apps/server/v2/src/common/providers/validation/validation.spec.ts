@@ -51,4 +51,20 @@ describe("Validation Common Provider", () => {
       ).toBe(false);
     });
   });
+
+  describe("Invalid File Extension", () => {
+    it("should be return true if the file wasn't a picture", () => {
+      expect(validation.invalidPictureExt(mockData.dummyFile().mimetype)).toBe(
+        true
+      );
+    });
+    it("should be return false if the file was a picture", () => {
+      expect(
+        validation.invalidPictureExt(mockData.dummyPicture().mimetype)
+      ).toBe(false);
+    });
+    it("should be return true if the picture extension wasn't supported", () => {
+      expect(validation.invalidPictureExt("image/gif")).toBe(true);
+    });
+  });
 });
