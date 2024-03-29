@@ -1,8 +1,10 @@
+import * as fs from "fs";
 import { User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import slugify from "slugify";
+import { PictureConstant } from "@/constant/picture.constant";
 
 @Injectable()
 export class MockDataProvider {
@@ -35,5 +37,19 @@ export class MockDataProvider {
     } finally {
       await this.prisma.$disconnect();
     }
+  }
+
+  public dummyPicture(): Partial<Express.Multer.File> {
+    const buffer: Buffer = fs.readFileSync(
+      PictureConstant.DUMMY_PICTUREPATH.jpeg
+    );
+
+    return {
+      originalname: "test.jpeg",
+      buffer,
+      mimetype: "image/jpeg",
+      path: PictureConstant.DUMMY_PICTUREPATH.jpeg,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
   }
 }
