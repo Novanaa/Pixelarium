@@ -67,4 +67,17 @@ describe("Validation Common Provider", () => {
       expect(validation.invalidPictureExt("image/gif")).toBe(true);
     });
   });
+
+  describe("Invalid Picture", () => {
+    it("should be return true if the picture was invalid", () => {
+      expect(validation.invalidPicture(mockData.dummyFile().mimetype)).toBe(
+        true
+      );
+    });
+    it("should be return false if the picture was a valid picture", () => {
+      expect(validation.invalidPicture(mockData.dummyPicture().mimetype)).toBe(
+        false
+      );
+    });
+  });
 });
