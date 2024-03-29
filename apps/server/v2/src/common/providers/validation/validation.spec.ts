@@ -80,4 +80,22 @@ describe("Validation Common Provider", () => {
       );
     });
   });
+
+  describe("Broken Picture", () => {
+    it("should be detect if the picture was broken", async () => {
+      expect(
+        await validation.brokenPicture(mockData.dummyBrokenPicture().buffer)
+      ).toBe(true);
+    });
+    it("should be return false if the picture wasn't a broken picture", async () => {
+      expect(
+        await validation.brokenPicture(mockData.dummyPicture().buffer)
+      ).toBe(false);
+    });
+    it("should be return true if the file wasn't a picture", async () => {
+      expect(await validation.brokenPicture(mockData.dummyFile().buffer)).toBe(
+        true
+      );
+    });
+  });
 });
