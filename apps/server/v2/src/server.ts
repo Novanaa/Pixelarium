@@ -1,4 +1,4 @@
-import env from "./configs/env";
+import { Environment } from "./configs/readonly";
 import { PrismaProvider } from "./libs/providers";
 import { INestApplication, Logger } from "@nestjs/common";
 
@@ -8,7 +8,7 @@ export default async function startServer(
   const logger: Logger = new Logger("ApplicationServer");
   const prisma: PrismaProvider = new PrismaProvider();
   try {
-    await app.listen(env.port);
+    await app.listen(Environment.PORT);
   } catch (err) {
     logger.error(err);
   } finally {

@@ -1,15 +1,12 @@
 import { join } from "path";
-import env from "./configs/env";
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import * as compression from "compression";
-import { NestExpressApplication } from "@nestjs/platform-express";
-import { default as corsConfig } from "@/configs/cors";
-import * as compressionConfig from "@/configs/compression";
-import * as cookieParser from "cookie-parser";
-import rateLimit from "express-rate-limit";
-import rateLimitConfig from "@/configs/rate-limit";
 import startServer from "./server";
+import { AppModule } from "./app.module";
+import rateLimit from "express-rate-limit";
+import { NestFactory } from "@nestjs/core";
+import * as compression from "compression";
+import * as cookieParser from "cookie-parser";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { Environment, MiddlewaresConfigs } from "./configs/readonly";
 
 async function bootstrap() {
   const app: NestExpressApplication =
@@ -19,10 +16,10 @@ async function bootstrap() {
 
   app.useStaticAssets(staticAssestDirpath);
   app.useBodyParser("json");
-  app.enableCors(corsConfig);
-  app.use(compression(compressionConfig));
-  app.use(cookieParser(env.jsonWebToken.accessToken));
-  app.use(rateLimit(rateLimitConfig));
+  app.enableCors(MiddlewaresConfigs.CORS_CONFIGS);
+  app.use(compression(MiddlewaresConfigs.COMPRESSION_CONFIGS));
+  app.use(cookieParser(Environment.JSONWEBTOKEN.ACCESS_TOKEN));
+  app.use(rateLimit(MiddlewaresConfigs.RATE_LIMIT_CONFIGS));
   app.set("trust proxy", 1);
 
   await startServer(app);
