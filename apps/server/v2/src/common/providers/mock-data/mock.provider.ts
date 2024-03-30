@@ -1,8 +1,10 @@
+import * as fs from "fs";
 import { User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import slugify from "slugify";
+import { PictureConstant } from "@/constant/picture.constant";
 
 @Injectable()
 export class MockDataProvider {
@@ -35,5 +37,57 @@ export class MockDataProvider {
     } finally {
       await this.prisma.$disconnect();
     }
+  }
+
+  public dummyPicture(): Partial<Express.Multer.File> {
+    const path: string = PictureConstant.DUMMY_PICTUREPATH.jpeg;
+    const buffer: Buffer = fs.readFileSync(path);
+
+    return {
+      originalname: "test.jpeg",
+      buffer,
+      mimetype: "image/jpeg",
+      path,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
+  }
+
+  public dummyBrokenPicture(): Partial<Express.Multer.File> {
+    const path: string = PictureConstant.DUMMY_PICTUREPATH.broken;
+    const buffer: Buffer = fs.readFileSync(path);
+
+    return {
+      originalname: "test.png",
+      buffer,
+      mimetype: "image/png",
+      path,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
+  }
+
+  public dummyLargeFilePicture(): Partial<Express.Multer.File> {
+    const path: string = PictureConstant.DUMMY_PICTUREPATH["80mb"];
+    const buffer: Buffer = fs.readFileSync(path);
+
+    return {
+      originalname: "test.png",
+      buffer,
+      mimetype: "image/png",
+      path,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
+  }
+
+  public dummyFile(): Partial<Express.Multer.File> {
+    const path: string = PictureConstant.DUMMY_PICTUREPATH["json"];
+    const buffer: Buffer = fs.readFileSync(path);
+
+    return {
+      originalname: "test.json",
+      buffer,
+      mimetype: "application/json",
+      path,
+      size: buffer.length,
+    } satisfies Partial<Express.Multer.File>;
   }
 }
