@@ -1,5 +1,4 @@
 import { google, Auth } from "googleapis";
-import { GetTokenResponse } from "google-auth-library/build/src/auth/oauth2client";
 import { AuthConstant } from "@/constant/auth.constant";
 import { Injectable } from "@nestjs/common";
 import { Environment } from "@/configs/readonly";
@@ -21,9 +20,5 @@ export class GoogleProvider {
       include_granted_scopes: true,
       prompt: "consent",
     });
-  }
-
-  public async getToken(code: string): Promise<GetTokenResponse> {
-    return await this.getClient().getToken(code);
   }
 }
