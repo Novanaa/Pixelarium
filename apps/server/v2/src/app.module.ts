@@ -5,9 +5,10 @@ import { LibsModule } from "./libs/libs.module";
 import { UserModule } from "./cores/user/user.module";
 import { CommonModule } from "./common/common.module";
 import { TestModule } from "../test/test.module";
+import { AuthModule } from "./cores/auth/auth.module";
 
 @Module({
-  imports: [LibsModule, UserModule, CommonModule, TestModule],
+  imports: [LibsModule, UserModule, CommonModule, TestModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
