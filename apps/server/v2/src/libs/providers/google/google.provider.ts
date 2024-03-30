@@ -1,4 +1,4 @@
-import { google, Auth, oauth2_v2 } from "googleapis";
+import { google, Auth } from "googleapis";
 import { GetTokenResponse } from "google-auth-library/build/src/auth/oauth2client";
 import { AuthConstant } from "@/constant/auth.constant";
 import { Injectable } from "@nestjs/common";
@@ -25,9 +25,5 @@ export class GoogleProvider {
 
   public async getToken(code: string): Promise<GetTokenResponse> {
     return await this.getClient().getToken(code);
-  }
-
-  public getOauthConfig(): oauth2_v2.Oauth2 {
-    return google.oauth2({ version: "v2", auth: this.getClient() });
   }
 }
