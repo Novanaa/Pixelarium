@@ -32,6 +32,9 @@ dependencies:
   express-rate-limit:
     specifier: ^7.2.0
     version: 7.2.0(express@4.18.3)
+  google-auth-library:
+    specifier: ^9.7.0
+    version: 9.7.0
   googleapis:
     specifier: ^134.0.0
     version: 134.0.0
