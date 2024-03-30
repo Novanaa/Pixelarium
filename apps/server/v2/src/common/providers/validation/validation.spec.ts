@@ -98,4 +98,34 @@ describe("Validation Common Provider", () => {
       );
     });
   });
+
+  describe("Invalid Username", () => {
+    it("should be return false if the username is valid", () => {
+      expect(validation.invalidUsername("test")).toBe(false);
+    });
+    it("should be return false if the username is not containing special char", () => {
+      expect(validation.invalidUsername("john_doe")).toBe(false);
+    });
+    it("should be return false if the username is not containing special char", () => {
+      expect(validation.invalidUsername("john-doe")).toBe(false);
+    });
+    it("should be return false if the username is not containing special char", () => {
+      expect(validation.invalidUsername("john.doe")).toBe(false);
+    });
+    it("should be return true if the username is containing symbol", () => {
+      expect(validation.invalidUsername("@johndoe")).toBe(true);
+    });
+    it("should be return true if the username is containing whitespace", () => {
+      expect(validation.invalidUsername("john doe")).toBe(true);
+    });
+    it("should be return true if the username is containing munberic number", () => {
+      expect(validation.invalidUsername("john.doe123")).toBe(true);
+    });
+    it("should be return true if the username is containing uppercase letter", () => {
+      expect(validation.invalidUsername("John.Doe")).toBe(true);
+    });
+    it("should be return true if the username is containing single quote", () => {
+      expect(validation.invalidUsername("'john'.doe")).toBe(true);
+    });
+  });
 });
