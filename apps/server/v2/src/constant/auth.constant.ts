@@ -24,4 +24,6 @@ export class AuthConstant {
   static readonly ACCESS_TOKEN_EXPIRES: string = "1800s";
 
   static readonly REFRESH_TOKEN_EXPIRES: string = "15d";
+
+  static readonly GITHUB_OAUTH_URL: string = "https://github.com/login/oauth";
 }
