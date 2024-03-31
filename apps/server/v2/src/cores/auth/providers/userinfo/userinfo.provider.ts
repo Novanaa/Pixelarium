@@ -39,7 +39,9 @@ export class UserInfoProvider {
         origin_code: userinfo.originCode,
         type: "User",
         is_member: false,
-        bio: "Hello! It seems that this account does not have a bio.",
+        bio: !userinfo.bio
+          ? "Hello! It seems that this account does not have a bio."
+          : userinfo.bio,
       },
     });
   }
