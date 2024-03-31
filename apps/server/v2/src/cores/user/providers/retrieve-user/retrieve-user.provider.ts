@@ -15,6 +15,10 @@ export class RetrieveUserProvider {
     return await this.prisma.user.findUnique({ where: { name } });
   }
 
+  public async retrieveUserByOriginCode(origin_code: number): Promise<User> {
+    return await this.prisma.user.findUnique({ where: { origin_code } });
+  }
+
   public async retrieveSingleUser(
     name: string
   ): Promise<RetrieveUserResponseDto> {
