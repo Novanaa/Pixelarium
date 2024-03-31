@@ -5,7 +5,15 @@ import * as libsProvider from "./providers";
 @Global()
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
-  providers: [libsProvider.PrismaProvider, libsProvider.GoogleProvider],
-  exports: [libsProvider.PrismaProvider, libsProvider.GoogleProvider],
+  providers: [
+    libsProvider.PrismaProvider,
+    libsProvider.GoogleProvider,
+    libsProvider.GithubProvider,
+  ],
+  exports: [
+    libsProvider.PrismaProvider,
+    libsProvider.GoogleProvider,
+    libsProvider.GithubProvider,
+  ],
 })
 export class LibsModule {}
