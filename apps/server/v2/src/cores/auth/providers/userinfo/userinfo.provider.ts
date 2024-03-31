@@ -3,10 +3,7 @@ import { User } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
 import * as jsonwebtoken from "jsonwebtoken";
 import { PrismaProvider } from "@/libs/providers";
-import {
-  UserInfoCreateUserDto,
-  UserInfoCredentialsPayloadDto,
-} from "./userinfo.dto";
+import { UserInfoCreateUserDto } from "./userinfo.dto";
 import { PictureConstant } from "@/constant/picture.constant";
 import { RetrieveUserProvider } from "@/cores/user/providers";
 import { UserInfoGenerateCredentials } from "./userinfo";
@@ -44,9 +41,9 @@ export class UserInfoProvider {
     });
   }
 
-  public generateCredentials(
-    payload: UserInfoCredentialsPayloadDto
-  ): UserInfoGenerateCredentials {
+  public generateCredentials(payload: User): UserInfoGenerateCredentials {
+    delete payload.password;
+
     const accessToken: string = jsonwebtoken.sign(
       payload,
       Environment.JSONWEBTOKEN.ACCESS_TOKEN,
