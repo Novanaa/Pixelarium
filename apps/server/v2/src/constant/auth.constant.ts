@@ -1,5 +1,6 @@
 import { Environment } from "@/configs/readonly";
 import { Injectable } from "@nestjs/common";
+import { SignOptions } from "jsonwebtoken";
 import { CookieOptions } from "express";
 
 @Injectable()
@@ -15,4 +16,11 @@ export class AuthConstant {
     httpOnly: true,
     sameSite: "strict",
   };
+
+  static readonly USER_CREDENTIALS_OPTIONS: SignOptions =
+    {} satisfies SignOptions;
+
+  static readonly ACCESS_TOKEN_EXPIRES: string = "1800s";
+
+  static readonly REFRESH_TOKEN_EXPIRES: string = "15d";
 }
