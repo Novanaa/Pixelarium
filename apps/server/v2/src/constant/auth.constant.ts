@@ -15,6 +15,7 @@ export class AuthConstant {
     secure: Environment.NODEENV == "production" ? true : false,
     httpOnly: true,
     sameSite: "strict",
+    maxAge: 15 * 24 * 60 * 60 * 1000,
   };
 
   static readonly USER_CREDENTIALS_OPTIONS: SignOptions =
