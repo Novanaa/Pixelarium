@@ -8,6 +8,7 @@ export class UserInfoCreateUserDto {
 }
 
 export class UserInfoCredentialsPayloadDto extends UserInfoCreateUserDto {
+  id: string;
   type: UserType;
   bio: string;
   is_member: boolean;
