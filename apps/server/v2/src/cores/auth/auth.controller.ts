@@ -10,13 +10,14 @@ import {
 } from "@nestjs/common";
 import { Response } from "express";
 import { PrismaProvider } from "@/libs/providers";
-import { GoogleAuthProvider } from "./providers/google/google.provider";
+import { GithubAuthProvider, GoogleAuthProvider } from "./providers";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     private readonly prisma: PrismaProvider,
-    private readonly googleService: GoogleAuthProvider
+    private readonly googleService: GoogleAuthProvider,
+    private readonly githubService: GithubAuthProvider
   ) {}
 
   @Redirect()
@@ -38,5 +39,12 @@ export class AuthController {
     } finally {
       await this.prisma.$disconnect();
     }
+  }
+
+  @Redirect()
+  @Get("/github")
+  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
+  public loginWithGithub(): HttpRedirectResponse {
+    return this.githubService.loginWithGithub();
   }
 }
