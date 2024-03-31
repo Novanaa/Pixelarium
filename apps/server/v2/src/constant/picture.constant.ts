@@ -28,4 +28,7 @@ export class PictureConstant {
     json: "./public/test/test.json",
     broken: "./public/test/test.png",
   };
+
+  static readonly DEFAULT_AVATAR: string =
+    "https://i.ibb.co/vC9jN2s/IMG-mths7.jpg";
 }

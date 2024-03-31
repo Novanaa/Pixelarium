@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import compression from "compression";
+import * as compression from "compression";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.interface";
 import { Environment } from "./env.readonly";

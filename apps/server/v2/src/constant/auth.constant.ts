@@ -1,4 +1,7 @@
+import { Environment } from "@/configs/readonly";
 import { Injectable } from "@nestjs/common";
+import { SignOptions } from "jsonwebtoken";
+import { CookieOptions } from "express";
 
 @Injectable()
 export class AuthConstant {
@@ -7,4 +10,18 @@ export class AuthConstant {
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/plus.me",
   ];
+
+  static readonly COOKIE_OPTIONS: CookieOptions = {
+    secure: Environment.NODEENV == "production" ? true : false,
+    httpOnly: true,
+    sameSite: "strict",
+    maxAge: 15 * 24 * 60 * 60 * 1000,
+  };
+
+  static readonly USER_CREDENTIALS_OPTIONS: SignOptions =
+    {} satisfies SignOptions;
+
+  static readonly ACCESS_TOKEN_EXPIRES: string = "1800s";
+
+  static readonly REFRESH_TOKEN_EXPIRES: string = "15d";
 }
