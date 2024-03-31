@@ -47,4 +47,18 @@ export class AuthController {
   public loginWithGithub(): HttpRedirectResponse {
     return this.githubService.loginWithGithub();
   }
+
+  @Redirect()
+  @Get("/github/callback")
+  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
+  public async githubAuthenticationCallback(
+    @Res() res: Response,
+    @Query("code") code: string
+  ): Promise<HttpRedirectResponse> {
+    try {
+      return await this.githubService.githubAuthenticationCallback(res, code);
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
 }
