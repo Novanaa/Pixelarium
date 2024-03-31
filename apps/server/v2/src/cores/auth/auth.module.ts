@@ -6,6 +6,10 @@ import { UserModule } from "../user/user.module";
 @Module({
   imports: [UserModule],
   controllers: [AuthController],
-  providers: [provider.GoogleAuthProvider, provider.UserInfoProvider],
+  providers: [
+    provider.GoogleAuthProvider,
+    provider.UserInfoProvider,
+    provider.GithubAuthProvider,
+  ],
 })
 export class AuthModule {}
