@@ -13,6 +13,8 @@ export class GithubProvider {
 
   private readonly credentialsUrl: string = `${AuthConstant.GITHUB_OAUTH_URL}/access_token?client_id=${Environment.GITHUB.CLIENT_ID}&client_secret=${Environment.GITHUB.CLIENT_SECRET}&redirect_uri=${Environment.HOSTNAME}/auth/github/callback`;
 
+  private readonly githubApiEndpoint: string = "https://api.github.com";
+
   public getAuthenticationURL(): string {
     return this.authenticationUrl;
   }
@@ -24,6 +26,23 @@ export class GithubProvider {
           headers: { Accept: "application/json" },
         })
       ).data satisfies GithubCredentials;
+    } catch (err) {
+      throw new ForbiddenException(
+        this.error.forbidden("Something wrong during authentication!")
+      );
+    }
+  }
+
+  public async getUser(credentials: GithubCredentials) {
+    try {
+      return (
+        await axios.get(this.githubApiEndpoint + "/user", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `${credentials.token_type} ${credentials.access_token}`,
+          },
+        })
+      ).data;
     } catch (err) {
       throw new ForbiddenException(
         this.error.forbidden("Something wrong during authentication!")
