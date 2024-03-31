@@ -1,4 +1,6 @@
+import { Environment } from "@/configs/readonly";
 import { Injectable } from "@nestjs/common";
+import { CookieOptions } from "express";
 
 @Injectable()
 export class AuthConstant {
@@ -7,4 +9,10 @@ export class AuthConstant {
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/plus.me",
   ];
+
+  static readonly COOKIE_OPTIONS: CookieOptions = {
+    secure: Environment.NODEENV == "production" ? true : false,
+    httpOnly: true,
+    sameSite: "strict",
+  };
 }
