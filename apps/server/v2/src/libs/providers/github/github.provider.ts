@@ -1,10 +1,33 @@
+import axios from "axios";
 import { Environment } from "@/configs/readonly";
 import { AuthConstant } from "@/constant/auth.constant";
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import { GithubCredentials } from "../../../cores/auth/providers/github/github.dto";
+import { ErrorProvider } from "@/common/providers";
 
 @Injectable()
 export class GithubProvider {
+  constructor(private readonly error: ErrorProvider) {}
+
+  private readonly authenticationUrl: string = `${AuthConstant.GITHUB_OAUTH_URL}/authorize?client_id=${Environment.GITHUB.CLIENT_ID}&redirect_uri=${Environment.HOSTNAME}/auth/github/callback&allow_signup=true&scope=user%20user:email&prompt=consent`;
+
+  private readonly credentialsUrl: string = `${AuthConstant.GITHUB_OAUTH_URL}/access_token?client_id=${Environment.GITHUB.CLIENT_ID}&client_secret=${Environment.GITHUB.CLIENT_SECRET}&redirect_uri=${Environment.HOSTNAME}/auth/github/callback`;
+
   public getAuthenticationURL(): string {
-    return `${AuthConstant.GITHUB_OAUTH_URL}/authorize?client_id=${Environment.GITHUB.CLIENT_ID}&redirect_uri=${Environment.HOSTNAME}/auth/github/callback&allow_signup=true&scope=user%20user:email&prompt=consent`;
+    return this.authenticationUrl;
+  }
+
+  public async getCredentials(code: string): Promise<GithubCredentials> {
+    try {
+      return (
+        await axios.post(`${this.credentialsUrl}&code=${code}`, new Object(), {
+          headers: { Accept: "application/json" },
+        })
+      ).data satisfies GithubCredentials;
+    } catch (err) {
+      throw new ForbiddenException(
+        this.error.forbidden("Something wrong during authentication!")
+      );
+    }
   }
 }
