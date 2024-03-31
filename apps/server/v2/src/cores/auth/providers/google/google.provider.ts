@@ -57,7 +57,9 @@ export class GoogleAuthProvider {
         this.error.forbidden("Your authentication session was over!")
       );
 
-    const userOriginCode: number = Number(userinfo.sub) / Number(10n ** 13n);
+    const userOriginCode: number = Math.floor(
+      Number(userinfo.sub) / Number(10n ** 13n)
+    );
     const user: Awaited<User> =
       await this.userInfo.retrieveUserByOriginCode(userOriginCode);
 
