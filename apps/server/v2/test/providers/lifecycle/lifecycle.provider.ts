@@ -70,7 +70,7 @@ export class LifecycleProvider {
 
         if (!fs.existsSync(galleryFilepath)) return;
 
-        fs.rmdirSync(galleryFilepath, { recursive: true });
+        fs.rmSync(galleryFilepath, { recursive: true, force: true });
 
         fs.mkdirSync(this.staticDirectory.getUserGalleryDirectory("itsnvaa"));
         fs.writeFileSync(
