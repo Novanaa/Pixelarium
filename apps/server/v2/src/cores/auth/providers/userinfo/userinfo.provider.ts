@@ -6,7 +6,10 @@ import { PrismaProvider } from "@/libs/providers";
 import { UserInfoCreateUserDto } from "./userinfo.dto";
 import { PictureConstant } from "@/constant/picture.constant";
 import { RetrieveUserProvider } from "@/cores/user/providers";
-import { UserInfoGenerateCredentials } from "./userinfo";
+import {
+  UserInfoGenerateCredentials,
+  UserInfoGenerateResponseCookieParam,
+} from "./userinfo";
 import { AuthConstant } from "@/constant/auth.constant";
 import { Environment } from "@/configs/readonly";
 
@@ -63,5 +66,13 @@ export class UserInfoProvider {
     );
 
     return { accessToken, refreshToken };
+  }
+
+  public generateResponseCookie(
+    param: UserInfoGenerateResponseCookieParam
+  ): void {
+    param.res.cookie("session", param.session, AuthConstant.COOKIE_OPTIONS);
+    param.res.cookie("logged_in", "yes", AuthConstant.COOKIE_OPTIONS);
+    param.res.cookie("logged_as", param.username, AuthConstant.COOKIE_OPTIONS);
   }
 }
