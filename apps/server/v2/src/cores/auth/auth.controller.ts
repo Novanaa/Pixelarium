@@ -6,7 +6,9 @@ import {
   HttpStatus,
   Query,
   Redirect,
+  Res,
 } from "@nestjs/common";
+import { Response } from "express";
 import { PrismaProvider } from "@/libs/providers";
 import { GoogleAuthProvider } from "./providers/google/google.provider";
 
@@ -28,10 +30,11 @@ export class AuthController {
   @Get("/google/callback")
   @HttpCode(HttpStatus.MOVED_PERMANENTLY)
   public async googleAuthenticationCallback(
+    @Res() res: Response,
     @Query("code") code: string
   ): Promise<HttpRedirectResponse> {
     try {
-      return await this.googleService.authenticationCallback(code);
+      return await this.googleService.authenticationCallback(res, code);
     } finally {
       await this.prisma.$disconnect();
     }
