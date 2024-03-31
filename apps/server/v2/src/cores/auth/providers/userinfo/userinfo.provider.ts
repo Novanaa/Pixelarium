@@ -75,4 +75,8 @@ export class UserInfoProvider {
     param.res.cookie("logged_in", "yes", AuthConstant.COOKIE_OPTIONS);
     param.res.cookie("logged_as", param.username, AuthConstant.COOKIE_OPTIONS);
   }
+
+  public generateRedirectURL(session: string): string {
+    return `${Environment.CLIENT_HOSTNAME}/auth/login/callback?session=${session}&type=success`;
+  }
 }
