@@ -8,15 +8,16 @@ import {
   Post,
   Query,
   Redirect,
+  Req,
   Res,
 } from "@nestjs/common";
-import { Response } from "express";
-import { PrismaProvider } from "@/libs/providers";
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
   LogoutProvider,
 } from "./providers";
+import { Request, Response } from "express";
+import { PrismaProvider } from "@/libs/providers";
 import { LogoutUserResponseDto } from "./providers/logout/logout.dto";
 
 @Controller("auth")
@@ -73,9 +74,9 @@ export class AuthController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @Header("Content-Type", "application/json")
-  public async logoutUser(): Promise<LogoutUserResponseDto> {
+  public async logoutUser(@Req() req: Request): Promise<LogoutUserResponseDto> {
     try {
-      return await this.logoutService.logoutUser();
+      return await this.logoutService.logoutUser(req);
     } catch (err) {
       await this.prisma.$disconnect();
     }
