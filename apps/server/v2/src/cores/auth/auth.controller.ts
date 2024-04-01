@@ -15,10 +15,13 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   LogoutProvider,
+  TokenizerProvider,
 } from "./providers";
+import { Cookies } from "@/model/app.model";
 import { Request, Response } from "express";
 import { PrismaProvider } from "@/libs/providers";
 import { LogoutUserResponseDto } from "./providers/logout/logout.dto";
+import { TokenizerResponseDto } from "./providers/tokenizer/tokenizer.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -26,7 +29,8 @@ export class AuthController {
     private readonly prisma: PrismaProvider,
     private readonly googleService: GoogleAuthProvider,
     private readonly githubService: GithubAuthProvider,
-    private readonly logoutService: LogoutProvider
+    private readonly logoutService: LogoutProvider,
+    private readonly tokenizerService: TokenizerProvider
   ) {}
 
   @Redirect()
@@ -80,5 +84,15 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response
   ): LogoutUserResponseDto {
     return this.logoutService.logoutUser(req, res);
+  }
+
+  @Get("/tokenizer")
+  @HttpCode(HttpStatus.OK)
+  @Header("Content-Type", "application/json")
+  @Header("Accept", "application/json")
+  public tokenizer(@Req() req: Request): TokenizerResponseDto {
+    const cookies: Cookies = req.cookies as Cookies;
+
+    return this.tokenizerService.generate(cookies.session);
   }
 }
