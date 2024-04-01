@@ -6,5 +6,5 @@ export class TokenizerUserCredentials {
 }
 
 export class TokenizerResponseDto extends WebResponse {
-  credentials: string;
+  credentials: TokenizerUserCredentials;
 }
