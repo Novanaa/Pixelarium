@@ -71,17 +71,14 @@ export class AuthController {
     }
   }
 
-  @Post("logout")
+  @Post("/logout")
   @HttpCode(HttpStatus.OK)
   @Header("Content-Type", "application/json")
-  public async logoutUser(
+  @Header("Accept", "application/json")
+  public logoutUser(
     @Req() req: Request,
-    @Res() res: Response
-  ): Promise<LogoutUserResponseDto> {
-    try {
-      return await this.logoutService.logoutUser(req, res);
-    } finally {
-      await this.prisma.$disconnect();
-    }
+    @Res({ passthrough: true }) res: Response
+  ): LogoutUserResponseDto {
+    return this.logoutService.logoutUser(req, res);
   }
 }
