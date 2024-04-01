@@ -11,6 +11,7 @@ import { UserModule } from "../user/user.module";
     provider.UserInfoProvider,
     provider.GithubAuthProvider,
     provider.LogoutProvider,
+    provider.TokenizerProvider,
   ],
 })
 export class AuthModule {}
