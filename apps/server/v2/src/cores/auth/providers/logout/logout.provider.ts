@@ -21,20 +21,23 @@ export class LogoutProvider {
     if (cookies.logged_in) res.clearCookie("logged_in");
   }
 
-  public logoutUser(req: Request, res: Response): LogoutUserResponseDto {
-    let user: User;
-    const cookies: Cookies = req.cookies as Cookies;
-
-    if (!cookies || !cookies.session)
-      throw new UnauthorizedException(this.error.unauthorized());
-
+  private decode(token: string): User {
     try {
-      user = jwtDecode(cookies.session);
+      return jwtDecode(token);
     } catch (err) {
       throw new ForbiddenException(
         this.error.forbidden("Invalid user credentials information!")
       );
     }
+  }
+
+  public logoutUser(req: Request, res: Response): LogoutUserResponseDto {
+    const cookies: Cookies = req.cookies as Cookies;
+
+    if (!cookies || !cookies.session)
+      throw new UnauthorizedException(this.error.unauthorized());
+
+    const user: User = this.decode(cookies.session);
 
     this.clearCookies(cookies, res);
 
