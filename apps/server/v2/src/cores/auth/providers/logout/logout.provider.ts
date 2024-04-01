@@ -1,5 +1,5 @@
 import {
-  BadRequestException,
+  ForbiddenException,
   HttpStatus,
   Injectable,
   UnauthorizedException,
@@ -31,7 +31,9 @@ export class LogoutProvider {
     try {
       user = jwtDecode(cookies.session);
     } catch (err) {
-      throw new BadRequestException(this.error.badRequest());
+      throw new ForbiddenException(
+        this.error.forbidden("Invalid user credentials information!")
+      );
     }
 
     this.clearCookies(cookies, res);
