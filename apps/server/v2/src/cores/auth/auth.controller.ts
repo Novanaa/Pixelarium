@@ -1,23 +1,32 @@
 import {
   Controller,
   Get,
+  Header,
   HttpCode,
   HttpRedirectResponse,
   HttpStatus,
+  Post,
   Query,
   Redirect,
+  Req,
   Res,
 } from "@nestjs/common";
-import { Response } from "express";
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  LogoutProvider,
+} from "./providers";
+import { Request, Response } from "express";
 import { PrismaProvider } from "@/libs/providers";
-import { GithubAuthProvider, GoogleAuthProvider } from "./providers";
+import { LogoutUserResponseDto } from "./providers/logout/logout.dto";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     private readonly prisma: PrismaProvider,
     private readonly googleService: GoogleAuthProvider,
-    private readonly githubService: GithubAuthProvider
+    private readonly githubService: GithubAuthProvider,
+    private readonly logoutService: LogoutProvider
   ) {}
 
   @Redirect()
@@ -60,5 +69,16 @@ export class AuthController {
     } finally {
       await this.prisma.$disconnect();
     }
+  }
+
+  @Post("/logout")
+  @HttpCode(HttpStatus.OK)
+  @Header("Content-Type", "application/json")
+  @Header("Accept", "application/json")
+  public logoutUser(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ): LogoutUserResponseDto {
+    return this.logoutService.logoutUser(req, res);
   }
 }

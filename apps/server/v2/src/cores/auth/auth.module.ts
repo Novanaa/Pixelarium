@@ -10,6 +10,7 @@ import { UserModule } from "../user/user.module";
     provider.GoogleAuthProvider,
     provider.UserInfoProvider,
     provider.GithubAuthProvider,
+    provider.LogoutProvider,
   ],
 })
 export class AuthModule {}

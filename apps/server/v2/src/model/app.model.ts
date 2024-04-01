@@ -12,3 +12,9 @@ export class WebResponse {
   status: "OK" | "KO";
   code: number;
 }
+
+export class Cookies {
+  session: string;
+  logged_as: string;
+  logged_in: string;
+}
