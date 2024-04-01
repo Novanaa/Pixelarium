@@ -71,7 +71,7 @@ export class AuthController {
     }
   }
 
-  @Post()
+  @Post("logout")
   @HttpCode(HttpStatus.OK)
   @Header("Content-Type", "application/json")
   public async logoutUser(@Req() req: Request): Promise<LogoutUserResponseDto> {
