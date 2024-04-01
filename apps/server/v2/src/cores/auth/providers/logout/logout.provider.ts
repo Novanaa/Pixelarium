@@ -1,8 +1,8 @@
 import {
   BadRequestException,
-  ForbiddenException,
   HttpStatus,
   Injectable,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { jwtDecode } from "jwt-decode";
@@ -26,7 +26,7 @@ export class LogoutProvider {
     const cookies: Cookies = req.cookies as Cookies;
 
     if (!cookies || !cookies.session)
-      throw new ForbiddenException(this.error.forbidden());
+      throw new UnauthorizedException(this.error.unauthorized());
 
     try {
       user = jwtDecode(cookies.session);
