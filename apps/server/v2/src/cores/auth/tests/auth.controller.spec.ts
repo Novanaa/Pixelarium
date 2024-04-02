@@ -1,6 +1,8 @@
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
+  LogoutProvider,
+  TokenizerProvider,
   UserInfoProvider,
 } from "../providers";
 import { Test, TestingModule } from "@nestjs/testing";
@@ -16,7 +18,13 @@ describe("AuthController", () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [LibsModule, UserModule, CommonModule],
       controllers: [AuthController],
-      providers: [GithubAuthProvider, GoogleAuthProvider, UserInfoProvider],
+      providers: [
+        GithubAuthProvider,
+        GoogleAuthProvider,
+        UserInfoProvider,
+        LogoutProvider,
+        TokenizerProvider,
+      ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
