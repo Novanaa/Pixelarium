@@ -26,7 +26,7 @@ describe("Auth Controller (e2e)", () => {
     prisma = module.get<PrismaProvider>(PrismaProvider);
     errorService = module.get<ErrorProvider>(ErrorProvider);
 
-    await module.init();
+    await app.init();
     await testLifecycle.ModuleTestInit();
   });
 
