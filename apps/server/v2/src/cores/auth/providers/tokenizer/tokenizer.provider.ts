@@ -11,6 +11,7 @@ import { UserInfoProvider } from "../userinfo/userinfo.provider";
 import { Environment } from "@/configs/readonly";
 import { UserPayload } from "./tokenizer";
 import { UserInfoGenerateCredentials } from "../userinfo/userinfo";
+import { Cookies } from "@/model/app.model";
 
 @Injectable()
 export class TokenizerProvider {
@@ -29,7 +30,8 @@ export class TokenizerProvider {
     }
   }
 
-  public generate(session: string): TokenizerResponseDto {
+  public generate(cookies: Cookies): TokenizerResponseDto {
+    const session: string = cookies?.session;
     if (!session) throw new UnauthorizedException(this.error.unauthorized());
 
     const verifyCredentials: Jwt = this.verifyCredentials(session);

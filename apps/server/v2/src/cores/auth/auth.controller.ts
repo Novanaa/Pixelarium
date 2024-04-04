@@ -91,8 +91,6 @@ export class AuthController {
   @Header("Content-Type", "application/json")
   @Header("Accept", "application/json")
   public tokenizer(@Req() req: Request): TokenizerResponseDto {
-    const cookies: Cookies = req.cookies as Cookies;
-
-    return this.tokenizerService.generate(cookies.session);
+    return this.tokenizerService.generate(req.cookies as Cookies);
   }
 }
