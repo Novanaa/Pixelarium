@@ -6,7 +6,7 @@ import { TestModule } from "../../../../test/test.module";
 import { LifecycleProvider } from "../../../../test/providers";
 import { PrismaProvider } from "@/libs/providers";
 import * as supertest from "supertest";
-import { INestApplication } from "@nestjs/common";
+import { HttpStatus, INestApplication } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
 
@@ -44,6 +44,30 @@ describe("Auth Controller (e2e)", () => {
       const body: ResponseError = response.body as ResponseError;
 
       expect(body).toEqual(errorService.unauthorized());
+    });
+    it("should be return 401 status code if the session cookies is not setted", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).get("/auth/tokenizer");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toEqual(HttpStatus.UNAUTHORIZED);
+      expect(response.status).toEqual(HttpStatus.UNAUTHORIZED);
+    });
+    it("status response should be 'KO' if the session cookies is not setted", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).get("/auth/tokenizer");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw forbidden exception error response if the session cookies is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .get("/auth/tokenizer")
+          .set("Set-Cookie", "session=test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toBe(errorService.forbidden());
     });
   });
 });
