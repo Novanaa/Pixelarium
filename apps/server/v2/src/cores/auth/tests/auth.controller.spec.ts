@@ -15,16 +15,21 @@ import { CommonModule } from "@/common/common.module";
 import { ErrorProvider, MockDataProvider } from "@/common/providers";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { User } from "@prisma/client";
+import { TestModule } from "../../../../test/test.module";
+import { LifecycleProvider } from "../../../../test/providers";
+import { PrismaProvider } from "@/libs/providers";
 
 describe("AuthController", () => {
   let controller: AuthController;
   let errorService: ErrorProvider;
   let userinfoService: UserInfoProvider;
   let mockDataService: MockDataProvider;
+  let lifecycleService: LifecycleProvider;
+  let prisma: PrismaProvider;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [LibsModule, UserModule, CommonModule],
+      imports: [LibsModule, UserModule, CommonModule, TestModule],
       controllers: [AuthController],
       providers: [
         GithubAuthProvider,
@@ -39,7 +44,18 @@ describe("AuthController", () => {
     errorService = module.get<ErrorProvider>(ErrorProvider);
     userinfoService = module.get<UserInfoProvider>(UserInfoProvider);
     mockDataService = module.get<MockDataProvider>(MockDataProvider);
+    lifecycleService = module.get<LifecycleProvider>(LifecycleProvider);
+    prisma = module.get<PrismaProvider>(PrismaProvider);
+
+    await lifecycleService.ModuleTestInit();
   });
+
+  afterAll(async () => {
+    lifecycleService.cleanUpDirectory();
+    await lifecycleService.cleanUpDatabase();
+  });
+
+  afterEach(async () => await prisma.$disconnect());
 
   describe("GET /auth/tokenizer", () => {
     it("should be throw unauthorized exception error if the user credentials is undefined", () => {
