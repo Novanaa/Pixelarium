@@ -15,6 +15,8 @@ import { User } from "@prisma/client";
 import { UserInfoGenerateCredentials } from "../providers/userinfo/userinfo";
 import { TokenizerResponseDto } from "../providers/tokenizer/tokenizer.dto";
 import { AuthConstant } from "@/constant/auth.constant";
+import { LogoutUserResponseDto } from "../providers/logout/logout.dto";
+import { jwtDecode } from "jwt-decode";
 
 describe("Auth Controller (e2e)", () => {
   let app: INestApplication;
@@ -217,6 +219,194 @@ describe("Auth Controller (e2e)", () => {
       expect(
         AuthConstant.JWT_PARTTERN.test(body.credentials.access_token)
       ).toBe(true);
+    });
+  });
+
+  describe("POST /auth/logout", () => {
+    it("should be throw unauthorized error response if the cookies is empty", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).post("/auth/logout");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(errorService.unauthorized());
+    });
+    it("should be return 401 status code if the cookies is empty", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).post("/auth/logout");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.UNAUTHORIZED);
+      expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
+    });
+    it("status response should be 'KO' if the cookies is empty", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).post("/auth/logout");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw unauthorized error response if the session cookies is undefined", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("x-name", "john_doe");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(errorService.unauthorized());
+    });
+    it("should be return 401 status code if the session cookies is undefined", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("x-name", "john_doe");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.UNAUTHORIZED);
+      expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
+    });
+    it("status response should be 'KO' if the session cookies is undefined", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("x-name", "john_doe");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("status response should be 'KO' if the session cookies is invalid", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=john_doe");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be return 403 status code if the session cookies is invalid", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=john_doe");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.FORBIDDEN);
+      expect(response.status).toBe(HttpStatus.FORBIDDEN);
+    });
+    it("should be throw forbidden error response if the session cookies is invalid", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=john_doe");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        errorService.forbidden("Invalid user credentials information!")
+      );
+    });
+    it("should be return 200 status code", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken);
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      expect(body.code).toBe(HttpStatus.OK);
+      expect(response.status).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken);
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      expect(body.status).toBe("OK");
+    });
+    it("make sure it can accept application/json", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken)
+          .set("Content-Type", "application/json");
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      expect(body.status).toBe("OK");
+    });
+    it("logouted_user should be defined", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken)
+          .set("Content-Type", "application/json");
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      expect(body.logouted_user).toBeDefined();
+    });
+    it("removed_cookies should be defined", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken)
+          .set("Content-Type", "application/json");
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      expect(body.removed_cookies).toBeDefined();
+    });
+    it("removed_cookies should be a list of removed cookies", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken)
+          .set("Content-Type", "application/json");
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      expect(body.removed_cookies).toEqual([
+        "session",
+        "logged_as",
+        "logged_in",
+      ]);
+    });
+    it("logouted_user should be match to decoded user", async () => {
+      const user: Awaited<User> = await mockDataService.getRandomser();
+      const credentials: UserInfoGenerateCredentials =
+        userinfoService.generateCredentials(user);
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .post("/auth/logout")
+          .set("Cookie", "session=" + credentials.refreshToken)
+          .set("Content-Type", "application/json");
+      const body: LogoutUserResponseDto =
+        response.body as LogoutUserResponseDto;
+
+      const decodedUser: User = jwtDecode(credentials.refreshToken);
+
+      expect(JSON.stringify(body.logouted_user)).toMatch(
+        JSON.stringify(decodedUser)
+      );
     });
   });
 });
