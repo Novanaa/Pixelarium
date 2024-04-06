@@ -69,8 +69,8 @@ model Subscription {
 
 model ClientKey {
   id            String   @id @default(uuid())
-  client_id     String
-  client_secret String
+  client_id     String?
+  client_secret String?
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
   user_id       String   @unique
