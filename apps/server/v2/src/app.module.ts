@@ -6,9 +6,17 @@ import { UserModule } from "./cores/user/user.module";
 import { CommonModule } from "./common/common.module";
 import { TestModule } from "../test/test.module";
 import { AuthModule } from "./cores/auth/auth.module";
+import { ClientKeysModule } from "./cores/client-keys/client-keys.module";
 
 @Module({
-  imports: [LibsModule, UserModule, CommonModule, TestModule, AuthModule],
+  imports: [
+    LibsModule,
+    UserModule,
+    CommonModule,
+    TestModule,
+    AuthModule,
+    ClientKeysModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
