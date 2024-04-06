@@ -22,6 +22,7 @@ import { ResponseError } from "@/model/error.model";
 import { UserInfoGenerateCredentials } from "../providers/userinfo/userinfo";
 import { LogoutUserResponseDto } from "../providers/logout/logout.dto";
 import { jwtDecode } from "jwt-decode";
+import { ClientKeysModule } from "@/cores/client-keys/client-keys.module";
 
 describe("AuthController", () => {
   let controller: AuthController;
@@ -33,7 +34,13 @@ describe("AuthController", () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [LibsModule, UserModule, CommonModule, TestModule],
+      imports: [
+        LibsModule,
+        UserModule,
+        CommonModule,
+        TestModule,
+        ClientKeysModule,
+      ],
       controllers: [AuthController],
       providers: [
         GithubAuthProvider,
