@@ -26,4 +26,7 @@ export class AuthConstant {
   static readonly REFRESH_TOKEN_EXPIRES: string = "15d";
 
   static readonly GITHUB_OAUTH_URL: string = "https://github.com/login/oauth";
+
+  static readonly JWT_PARTTERN: RegExp =
+    /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_.+/=]*$/;
 }
