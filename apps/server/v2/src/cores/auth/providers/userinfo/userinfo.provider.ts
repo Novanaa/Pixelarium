@@ -12,12 +12,15 @@ import {
 } from "./userinfo";
 import { AuthConstant } from "@/constant/auth.constant";
 import { Environment } from "@/configs/readonly";
+import { CredentialsProvider } from "@/cores/client-keys/providers";
+import { GeneratedClientKeysCredentials } from "@/cores/client-keys/providers/credentials/credentials";
 
 @Injectable()
 export class UserInfoProvider {
   constructor(
     private readonly retrieveUser: RetrieveUserProvider,
-    private readonly prisma: PrismaProvider
+    private readonly prisma: PrismaProvider,
+    private readonly clientKeysCredentials: CredentialsProvider
   ) {}
 
   private readonly RegexPattern: RegExp =
@@ -28,13 +31,20 @@ export class UserInfoProvider {
   }
 
   public async createUser(userinfo: UserInfoCreateUserDto): Promise<User> {
+    const name: string = slugify(userinfo.name, {
+      lower: true,
+      remove: this.RegexPattern,
+    });
+    const credentials: GeneratedClientKeysCredentials =
+      this.clientKeysCredentials.generateClientKeys({
+        name,
+        originCode: userinfo.originCode,
+      });
+
     return await this.prisma.user.create({
       data: {
         avatar: userinfo.avatar || PictureConstant.DEFAULT_AVATAR,
-        name: slugify(userinfo.name, {
-          lower: true,
-          remove: this.RegexPattern,
-        }),
+        name,
         email: userinfo.email,
         origin_code: userinfo.originCode,
         type: "User",
@@ -42,6 +52,12 @@ export class UserInfoProvider {
         bio: !userinfo.bio
           ? "Hello! It seems that this account does not have a bio."
           : userinfo.bio,
+        client_key: {
+          create: {
+            client_id: credentials.clientId,
+            client_secret: credentials.clientSecret,
+          },
+        },
       },
     });
   }
