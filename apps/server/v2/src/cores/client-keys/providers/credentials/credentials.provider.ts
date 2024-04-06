@@ -11,7 +11,7 @@ export class CredentialsProvider {
     param: GenerateClientKeysCredentialsParams
   ): GeneratedClientKeysCredentials {
     const clientId: string = crypto
-      .createHash("sha256")
+      .createHash("md5")
       .update(param.name)
       .digest("hex");
     const clientSecret: string = crypto
