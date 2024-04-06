@@ -6,9 +6,10 @@ import { TestModule } from "../../../../test/test.module";
 import { LifecycleProvider } from "../../../../test/providers";
 import { PrismaProvider } from "@/libs/providers";
 import * as supertest from "supertest";
-import { INestApplication } from "@nestjs/common";
+import { HttpStatus, INestApplication } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
+import * as cookieParser from "cookie-parser";
 
 describe("Auth Controller (e2e)", () => {
   let app: INestApplication;
@@ -25,6 +26,8 @@ describe("Auth Controller (e2e)", () => {
     testLifecycle = module.get<LifecycleProvider>(LifecycleProvider);
     prisma = module.get<PrismaProvider>(PrismaProvider);
     errorService = module.get<ErrorProvider>(ErrorProvider);
+
+    app.use(cookieParser());
 
     await app.init();
     await testLifecycle.ModuleTestInit();
@@ -44,6 +47,30 @@ describe("Auth Controller (e2e)", () => {
       const body: ResponseError = response.body as ResponseError;
 
       expect(body).toEqual(errorService.unauthorized());
+    });
+    it("should be return 401 status code if the session cookies is not setted", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).get("/auth/tokenizer");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toEqual(HttpStatus.UNAUTHORIZED);
+      expect(response.status).toEqual(HttpStatus.UNAUTHORIZED);
+    });
+    it("status response should be 'KO' if the session cookies is not setted", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).get("/auth/tokenizer");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw forbidden exception error response if the session cookies is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .get("/auth/tokenizer")
+          .set("Cookie", "session=test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(errorService.forbidden());
     });
   });
 });
