@@ -4,7 +4,10 @@ import * as provider from "./providers";
 
 @Module({
   controllers: [ClientKeysController],
-  providers: [provider.CredentialsProvider],
+  providers: [
+    provider.CredentialsProvider,
+    provider.RetrieveUserClientCredentialsKeysProvider,
+  ],
   exports: [provider.CredentialsProvider],
 })
 export class ClientKeysModule {}
