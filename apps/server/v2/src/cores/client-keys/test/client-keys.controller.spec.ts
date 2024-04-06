@@ -46,12 +46,4 @@ describe("ClientKeysController", () => {
     lifecycle.cleanUpDirectory();
     await lifecycle.cleanUpDatabase();
   });
-
-  it("", async () => {
-    try {
-      console.log(await controller.retrieveUserClientCredentialsKeys("test"));
-    } catch (err) {
-      console.log(err);
-    }
-  });
 });
