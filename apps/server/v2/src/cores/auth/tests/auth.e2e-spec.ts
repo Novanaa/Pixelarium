@@ -9,6 +9,7 @@ import * as supertest from "supertest";
 import { HttpStatus, INestApplication } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
+import * as cookieParser from "cookie-parser";
 
 describe("Auth Controller (e2e)", () => {
   let app: INestApplication;
@@ -25,6 +26,8 @@ describe("Auth Controller (e2e)", () => {
     testLifecycle = module.get<LifecycleProvider>(LifecycleProvider);
     prisma = module.get<PrismaProvider>(PrismaProvider);
     errorService = module.get<ErrorProvider>(ErrorProvider);
+
+    app.use(cookieParser());
 
     await app.init();
     await testLifecycle.ModuleTestInit();
@@ -64,10 +67,10 @@ describe("Auth Controller (e2e)", () => {
       const response: Awaited<supertest.Request | supertest.Response> =
         await supertest(app.getHttpServer())
           .get("/auth/tokenizer")
-          .set("Set-Cookie", "session=test");
+          .set("Cookie", "session=test");
       const body: ResponseError = response.body as ResponseError;
 
-      expect(body).toBe(errorService.forbidden());
+      expect(body).toEqual(errorService.forbidden());
     });
   });
 });
