@@ -40,6 +40,7 @@ export class UserInfoProvider {
         name,
         originCode: userinfo.originCode,
       });
+    const now: number = new Date().getTime();
 
     return await this.prisma.user.create({
       data: {
@@ -56,6 +57,11 @@ export class UserInfoProvider {
           create: {
             client_id: credentials.clientId,
             client_secret: credentials.clientSecret,
+          },
+        },
+        gallery: {
+          create: {
+            created_at: now,
           },
         },
       },
