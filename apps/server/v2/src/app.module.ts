@@ -7,6 +7,7 @@ import { CommonModule } from "./common/common.module";
 import { TestModule } from "../test/test.module";
 import { AuthModule } from "./cores/auth/auth.module";
 import { ClientKeysModule } from "./cores/client-keys/client-keys.module";
+import { GalleryModule } from "./cores/gallery/gallery.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ClientKeysModule } from "./cores/client-keys/client-keys.module";
     TestModule,
     AuthModule,
     ClientKeysModule,
+    GalleryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
