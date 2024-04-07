@@ -1,21 +1,9 @@
 import { Global, Module } from "@nestjs/common";
-import * as commonProviders from "./providers";
+import providers from "./providers";
 
 @Global()
 @Module({
-  providers: [
-    commonProviders.ErrorProvider,
-    commonProviders.MockDataProvider,
-    commonProviders.StaticDirectoryProvider,
-    commonProviders.ValidationProvider,
-    commonProviders.PrettierProvider,
-  ],
-  exports: [
-    commonProviders.ErrorProvider,
-    commonProviders.MockDataProvider,
-    commonProviders.StaticDirectoryProvider,
-    commonProviders.ValidationProvider,
-    commonProviders.PrettierProvider,
-  ],
+  providers,
+  exports: providers,
 })
 export class CommonModule {}
