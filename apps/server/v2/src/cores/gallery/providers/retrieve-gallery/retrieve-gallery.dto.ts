@@ -1,6 +1,6 @@
 import { WebResponse } from "@/model/app.model";
-import { Gallery } from "@prisma/client";
+import { UserGallery } from "@/model/gallery.model";
 
 export class RetrieveUserGalleryResponseDto extends WebResponse {
-  user_gallery: Gallery;
+  user_gallery: UserGallery;
 }
