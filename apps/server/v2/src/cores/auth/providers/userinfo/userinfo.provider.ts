@@ -11,7 +11,7 @@ import {
   UserInfoGenerateResponseCookieParam,
 } from "./userinfo";
 import { AuthConstant } from "@/constant/auth.constant";
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 import { CredentialsProvider } from "@/cores/client-keys/providers";
 import { GeneratedClientKeysCredentials } from "@/cores/client-keys/providers/credentials/credentials";
 

@@ -1,6 +1,6 @@
 import * as path from "path";
 import { Injectable } from "@nestjs/common";
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 
 @Injectable()
 export class StaticDirectoryProvider {

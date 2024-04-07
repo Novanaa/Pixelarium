@@ -1,7 +1,7 @@
 import { google, Auth } from "googleapis";
 import { AuthConstant } from "@/constant/auth.constant";
 import { Injectable } from "@nestjs/common";
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 
 @Injectable()
 export class GoogleProvider {

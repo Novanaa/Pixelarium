@@ -15,7 +15,7 @@ import { UpdateUserResponsetDto } from "../providers/update-user/update-user.dto
 import { PictureConstant } from "@/constant/picture.constant";
 import { TestModule } from "../../../../test/test.module";
 import { LifecycleProvider } from "../../../../test/providers";
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 
 describe("User Controller (e2e)", () => {
   let app: INestApplication;

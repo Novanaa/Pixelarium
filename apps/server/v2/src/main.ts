@@ -6,7 +6,7 @@ import { NestFactory } from "@nestjs/core";
 import * as compression from "compression";
 import * as cookieParser from "cookie-parser";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { Environment, MiddlewaresConfigs } from "./configs/readonly";
+import { Environment, MiddlewaresConfigs } from "./configs";
 
 async function bootstrap() {
   const app: NestExpressApplication =

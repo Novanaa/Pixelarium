@@ -1,4 +1,4 @@
-import { Environment } from "./configs/readonly";
+import { Environment } from "./configs";
 import { PrismaProvider } from "./libs/providers";
 import { INestApplication, Logger } from "@nestjs/common";
 
