@@ -40,7 +40,6 @@ export class UserInfoProvider {
         name,
         originCode: userinfo.originCode,
       });
-    const now: number = new Date().getTime();
 
     return await this.prisma.user.create({
       data: {
@@ -60,9 +59,7 @@ export class UserInfoProvider {
           },
         },
         gallery: {
-          create: {
-            created_at: now,
-          },
+          create: {},
         },
       },
     });
