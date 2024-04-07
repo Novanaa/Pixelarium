@@ -135,7 +135,6 @@ describe("ClientKeysController", () => {
       const response: Awaited<RetrieveUserClientCredentialsKeysResponseDto> =
         await controller.retrieveUserClientCredentialsKeys(user.name);
 
-      console.log(response);
       expect(typeof response.credentials_keys.client_id).toBe("string");
     });
   });
