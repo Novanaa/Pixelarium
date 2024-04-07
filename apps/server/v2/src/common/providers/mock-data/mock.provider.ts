@@ -1,22 +1,16 @@
 import * as fs from "fs";
+import slugify from "slugify";
+import * as crypto from "crypto";
 import { User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
-import slugify from "slugify";
 import { PictureConstant } from "@/constant/picture.constant";
-import {
-  GenerateClientKeysCredentialsParams,
-  GeneratedClientKeysCredentials,
-} from "@/cores/client-keys/providers/credentials/credentials";
-import { CredentialsProvider } from "@/cores/client-keys/providers";
+import { GeneratedClientKeysCredentials } from "@/cores/client-keys/providers/credentials/credentials";
 
 @Injectable()
 export class MockDataProvider {
-  constructor(
-    private readonly prisma: PrismaProvider,
-    private readonly clientKeysCredentials: CredentialsProvider
-  ) {}
+  constructor(private readonly prisma: PrismaProvider) {}
 
   public async getRandomser(): Promise<User> {
     try {
@@ -45,14 +39,17 @@ export class MockDataProvider {
     };
   }
 
-  public generateRandomClientCredentialsKeys(
-    param: GenerateClientKeysCredentialsParams
-  ) {
-    const credentials: GeneratedClientKeysCredentials =
-      this.clientKeysCredentials.generateClientKeys({
-        name: param.name,
-        originCode: param.originCode,
-      });
+  public generateRandomClientCredentialsKeys() {
+    const credentials: GeneratedClientKeysCredentials = {
+      clientId: crypto
+        .createHash("md5")
+        .update(falso.randUserName())
+        .digest("hex"),
+      clientSecret: crypto
+        .createHash("sha256")
+        .update(String(falso.randNumber()))
+        .digest("hex"),
+    };
 
     return {
       client_id: credentials.clientId,
@@ -62,18 +59,12 @@ export class MockDataProvider {
 
   public async createRandomUser(): Promise<User> {
     try {
-      const generatedUser = this.generateRandomUser();
-      const generatedClientKeys = this.generateRandomClientCredentialsKeys({
-        name: generatedUser.name,
-        originCode: generatedUser.origin_code,
-      });
-
       return await this.prisma.user.create({
         data: {
-          ...generatedUser,
+          ...this.generateRandomUser(),
           client_key: {
             create: {
-              ...generatedClientKeys,
+              ...this.generateRandomClientCredentialsKeys(),
             },
           },
         },
