@@ -90,7 +90,8 @@ model Favorite {
 model Gallery {
   id         String    @id @default(uuid())
   pictures   Picture[]
-  created_at BigInt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
   user_id    String    @unique
   user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
@@ -117,7 +118,8 @@ model Picture {
   extension    String
   status       PictureStatus
   embed_links  EmbedLinks?
-  created_at   BigInt
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
   favorite_id  String?
   album_id     String?
   gallery_id   String
