@@ -11,3 +11,11 @@ export {
   ValidationProvider,
   PrettierProvider,
 };
+
+export default [
+  MockDataProvider,
+  StaticDirectoryProvider,
+  ErrorProvider,
+  ValidationProvider,
+  PrettierProvider,
+];

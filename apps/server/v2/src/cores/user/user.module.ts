@@ -1,14 +1,10 @@
 import { Module } from "@nestjs/common";
 import { UserController } from "./user.controller";
-import * as provider from "./providers";
+import providers, { RetrieveUserProvider } from "./providers";
 
 @Module({
   controllers: [UserController],
-  providers: [
-    provider.RetrieveUserProvider,
-    provider.DeleteUserProvider,
-    provider.UpdateUserProvider,
-  ],
-  exports: [provider.RetrieveUserProvider],
+  providers,
+  exports: [RetrieveUserProvider],
 })
 export class UserModule {}

@@ -1,9 +1,9 @@
 import { Global, Module } from "@nestjs/common";
-import * as provider from "./providers";
+import providers from "./providers";
 
 @Global()
 @Module({
-  providers: [provider.LifecycleProvider],
-  exports: [provider.LifecycleProvider],
+  providers,
+  exports: providers,
 })
 export class TestModule {}
