@@ -2,7 +2,7 @@ import * as moment from "moment";
 import * as compression from "compression";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.interface";
-import { Environment } from "./env.readonly";
+import { Environment } from "./env";
 import { Options } from "express-rate-limit";
 
 @Injectable()

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 import { AuthConstant } from "@/constant/auth.constant";
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { GithubCredentials } from "../../../cores/auth/providers/github/github.dto";

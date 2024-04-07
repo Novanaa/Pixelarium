@@ -2,7 +2,7 @@ import * as fs from "fs";
 import { Injectable, Logger } from "@nestjs/common";
 import { MockDataProvider, StaticDirectoryProvider } from "@/common/providers";
 import { PrismaProvider } from "@/libs/providers";
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 
 @Injectable()
 export class LifecycleProvider {

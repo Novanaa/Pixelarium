@@ -1,4 +1,4 @@
-import { Environment } from "@/configs/readonly";
+import { Environment } from "@/configs";
 import { Injectable } from "@nestjs/common";
 import { SignOptions } from "jsonwebtoken";
 import { CookieOptions } from "express";
