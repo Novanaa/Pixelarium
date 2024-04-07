@@ -58,8 +58,6 @@ export class MockDataProvider {
   }
 
   public async createRandomUser(): Promise<User> {
-    const now: number = new Date().getTime();
-
     try {
       return await this.prisma.user.create({
         data: {
@@ -70,9 +68,7 @@ export class MockDataProvider {
             },
           },
           gallery: {
-            create: {
-              created_at: now,
-            },
+            create: {},
           },
         },
       });
