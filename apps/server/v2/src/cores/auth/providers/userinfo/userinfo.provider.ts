@@ -61,6 +61,11 @@ export class UserInfoProvider {
         gallery: {
           create: {},
         },
+        favorite: {
+          create: {
+            total: 0,
+          },
+        },
       },
     });
   }
