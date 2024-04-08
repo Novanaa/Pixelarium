@@ -133,5 +133,22 @@ describe("FavoritePictureController", () => {
 
       expect(Array.isArray(response.favorites_pictures.pictures)).toBe(true);
     });
+    it("owner response data should be defined", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<RetrieveUserFavoritesPicturesResponseDto> =
+        await controller.retrieveUserFavoritesPictures(user.name);
+
+      expect(response.owner).toBeDefined();
+    });
+    it("owner response data should be match to requested user", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<RetrieveUserFavoritesPicturesResponseDto> =
+        await controller.retrieveUserFavoritesPictures(user.name);
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
+    });
   });
 });

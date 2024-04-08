@@ -42,6 +42,7 @@ export class RetrieveUserFavoritesPicturesProvider {
 
     return {
       favorites_pictures: { ...favorite, pictures: favoritedPictures },
+      owner: user,
       code: HttpStatus.OK,
       status: "OK",
     };
