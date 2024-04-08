@@ -4,6 +4,7 @@ import { RetrieveUserFavoritesPicturesResponseDto } from "./retrieve-favotires.d
 import { RetrieveUserProvider } from "@/cores/user/providers";
 import { RetrieveUserResponseDto } from "@/cores/user/providers/retrieve-user/retrieve-user.dto";
 import { Favorite, Picture } from "@prisma/client";
+import { RetrieveFavoritedPictureParams } from "./retrieve-favorite";
 
 @Injectable()
 export class RetrieveUserFavoritesPicturesProvider {
@@ -17,6 +18,17 @@ export class RetrieveUserFavoritesPicturesProvider {
   ): Promise<Favorite> {
     return await this.prisma.favorite.findUnique({
       where: { user_id: userId },
+    });
+  }
+
+  public async retrieveFavroitedPicture(
+    param: RetrieveFavoritedPictureParams
+  ): Promise<Picture> {
+    return await this.prisma.picture.findUnique({
+      where: {
+        id: param.pictureId,
+        favorite_id: param.favoriteId,
+      },
     });
   }
 
