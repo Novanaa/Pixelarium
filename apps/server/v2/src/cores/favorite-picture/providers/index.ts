@@ -1,5 +1,6 @@
 import { RetrieveUserFavoritesPicturesProvider } from "./retrieve-favorites/retrieve-favotires.provider";
+import { UnfavoritePicture } from "./unfavorite/unfavorite.provider";
 
-export { RetrieveUserFavoritesPicturesProvider };
+export { RetrieveUserFavoritesPicturesProvider, UnfavoritePicture };
 
-export default [RetrieveUserFavoritesPicturesProvider];
+export default [RetrieveUserFavoritesPicturesProvider, UnfavoritePicture];
