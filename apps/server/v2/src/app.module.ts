@@ -8,6 +8,7 @@ import { TestModule } from "../test/test.module";
 import { AuthModule } from "./cores/auth/auth.module";
 import { ClientKeysModule } from "./cores/client-keys/client-keys.module";
 import { GalleryModule } from "./cores/gallery/gallery.module";
+import { FavoritePictureModule } from "./cores/favorite-picture/favorite-picture.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { GalleryModule } from "./cores/gallery/gallery.module";
     AuthModule,
     ClientKeysModule,
     GalleryModule,
+    FavoritePictureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
