@@ -29,7 +29,7 @@ export class ApplicationExceptionFilter
     return response.status(status).json(
       new ErrorProvider().custom({
         code: status,
-        messege: exception.message,
+        messege: exceptionResponse.messege || exception.message,
         TypeError:
           exceptionResponse.TypeError ||
           exceptionResponse.error ||
