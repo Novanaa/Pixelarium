@@ -70,6 +70,11 @@ export class MockDataProvider {
           gallery: {
             create: {},
           },
+          favorite: {
+            create: {
+              total: 0,
+            },
+          },
         },
       });
     } finally {
