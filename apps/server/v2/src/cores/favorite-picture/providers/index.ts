@@ -1,3 +1,5 @@
-export {};
+import { RetrieveUserFavoritesPicturesProvider } from "./retrieve-favorites/retrieve-favotires.provider";
 
-export default [];
+export { RetrieveUserFavoritesPicturesProvider };
+
+export default [RetrieveUserFavoritesPicturesProvider];
