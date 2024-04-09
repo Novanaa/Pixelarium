@@ -27,7 +27,7 @@ export class RetrieveUserFavoritesPicturesProvider {
     return await this.prisma.picture.findUnique({
       where: {
         id: param.pictureId,
-        favorite_id: param.favoriteId,
+        favorite: { some: { id: param.favoriteId } },
       },
     });
   }
@@ -36,7 +36,9 @@ export class RetrieveUserFavoritesPicturesProvider {
     favoriteId: string
   ): Promise<Array<Picture>> {
     return await this.prisma.picture.findMany({
-      where: { favorite_id: favoriteId },
+      where: {
+        favorite: { some: { id: favoriteId } },
+      },
     });
   }
 
