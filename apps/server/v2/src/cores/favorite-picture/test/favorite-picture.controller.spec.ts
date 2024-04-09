@@ -12,7 +12,9 @@ import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider, MockDataProvider } from "@/common/providers";
 import { RetrieveUserFavoritesPicturesResponseDto } from "../providers/retrieve-favorites/retrieve-favotires.dto";
-import { User } from "@prisma/client";
+import { Gallery, Picture, User } from "@prisma/client";
+import { randUuid } from "@ngneat/falso";
+import { UnfavoritePictureResponseDTO } from "../providers/unfavorite/unfavorite.dto";
 
 describe("FavoritePictureController", () => {
   let controller: FavoritePictureController;
@@ -149,6 +151,197 @@ describe("FavoritePictureController", () => {
       delete user.password;
 
       expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
+    });
+  });
+
+  describe("DELETE /favorite/:name/:pictureId", () => {
+    it("should be throw not found exception response error if the user doesn't exist", async () => {
+      try {
+        await controller.unfavPicture("0", randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(errorService.notFound());
+      }
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      try {
+        await controller.unfavPicture("0", randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the user doesn't exist", async () => {
+      try {
+        await controller.unfavPicture("0", randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be throw not found exception response error if the picture doesn't exist in user favorite picture", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.unfavPicture(user.name, "test");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.notFound(
+            "Trying to find the picture you want to unfavorite..."
+          )
+        );
+      }
+    });
+    it("should be return 404 status code if the picture doesn't exist in user favorite picture", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.unfavPicture(user.name, "test");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the picture doesn't exist in user favorite picture", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.unfavPicture(user.name, "test");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be return 200 status code", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const userGallery: Awaited<Gallery> = await prisma.gallery.findUnique({
+        where: { user_id: user.id },
+      });
+
+      const picture: Awaited<Picture> = await prisma.picture.create({
+        data: {
+          ...(mockData.generateRandomPicture() as Picture),
+          favorite: { connect: { user_id: user.id } },
+          gallery_id: userGallery.id,
+        },
+      });
+
+      const response: Awaited<UnfavoritePictureResponseDTO> =
+        await controller.unfavPicture(user.name, picture.id);
+
+      expect(response.code).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const userGallery: Awaited<Gallery> = await prisma.gallery.findUnique({
+        where: { user_id: user.id },
+      });
+
+      const picture: Awaited<Picture> = await prisma.picture.create({
+        data: {
+          ...(mockData.generateRandomPicture() as Picture),
+          favorite: { connect: { user_id: user.id } },
+          gallery_id: userGallery.id,
+        },
+      });
+
+      const response: Awaited<UnfavoritePictureResponseDTO> =
+        await controller.unfavPicture(user.name, picture.id);
+
+      expect(response.status).toBe("OK");
+    });
+    it("owner response data should be defined", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const userGallery: Awaited<Gallery> = await prisma.gallery.findUnique({
+        where: { user_id: user.id },
+      });
+
+      const picture: Awaited<Picture> = await prisma.picture.create({
+        data: {
+          ...(mockData.generateRandomPicture() as Picture),
+          favorite: { connect: { user_id: user.id } },
+          gallery_id: userGallery.id,
+        },
+      });
+
+      const response: Awaited<UnfavoritePictureResponseDTO> =
+        await controller.unfavPicture(user.name, picture.id);
+
+      expect(response.owner).toBeDefined();
+    });
+    it("owner response data should be match to requested user data", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const userGallery: Awaited<Gallery> = await prisma.gallery.findUnique({
+        where: { user_id: user.id },
+      });
+
+      const picture: Awaited<Picture> = await prisma.picture.create({
+        data: {
+          ...(mockData.generateRandomPicture() as Picture),
+          favorite: { connect: { user_id: user.id } },
+          gallery_id: userGallery.id,
+        },
+      });
+
+      const response: Awaited<UnfavoritePictureResponseDTO> =
+        await controller.unfavPicture(user.name, picture.id);
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
+    });
+    it("unfav_picture response data should be defined", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const userGallery: Awaited<Gallery> = await prisma.gallery.findUnique({
+        where: { user_id: user.id },
+      });
+
+      const picture: Awaited<Picture> = await prisma.picture.create({
+        data: {
+          ...(mockData.generateRandomPicture() as Picture),
+          favorite: { connect: { user_id: user.id } },
+          gallery_id: userGallery.id,
+        },
+      });
+
+      const response: Awaited<UnfavoritePictureResponseDTO> =
+        await controller.unfavPicture(user.name, picture.id);
+
+      expect(response.unfav_picture).toBeDefined();
+    });
+    it("unfav_picture response data should be match to requested picture", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const userGallery: Awaited<Gallery> = await prisma.gallery.findUnique({
+        where: { user_id: user.id },
+      });
+
+      const picture: Awaited<Picture> = await prisma.picture.create({
+        data: {
+          ...(mockData.generateRandomPicture() as Picture),
+          favorite: { connect: { user_id: user.id } },
+          gallery_id: userGallery.id,
+        },
+      });
+
+      const response: Awaited<UnfavoritePictureResponseDTO> =
+        await controller.unfavPicture(user.name, picture.id);
+
+      expect(JSON.stringify(response.unfav_picture)).toMatch(
+        JSON.stringify(picture)
+      );
     });
   });
 });
