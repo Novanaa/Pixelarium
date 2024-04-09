@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import slugify from "slugify";
 import * as crypto from "crypto";
-import { User } from "@prisma/client";
+import { Picture, User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
@@ -54,6 +54,24 @@ export class MockDataProvider {
     return {
       client_id: credentials.clientId,
       client_secret: credentials.clientSecret,
+    };
+  }
+
+  public generateRandomPicture(): Partial<Picture> {
+    return {
+      title: falso.randSentence(),
+      description: falso.randProductDescription(),
+      extension: falso.randMimeType(),
+      expires_time: {
+        expires_date: new Date().getTime(),
+        interval: "Years",
+        expires_in: "1 Years",
+      },
+      filename: falso.randFileName(),
+      link: falso.randUrl(),
+      size: falso.randNumber(),
+      status: falso.rand(["Private", "Public"]),
+      type: falso.rand(["External", "Internal"]),
     };
   }
 
