@@ -13,6 +13,7 @@ import { ResponseError } from "@/model/error.model";
 import { ErrorProvider, MockDataProvider } from "@/common/providers";
 import { RetrieveUserFavoritesPicturesResponseDto } from "../providers/retrieve-favorites/retrieve-favotires.dto";
 import { User } from "@prisma/client";
+import { randUuid } from "@ngneat/falso";
 
 describe("FavoritePictureController", () => {
   let controller: FavoritePictureController;
@@ -149,6 +150,82 @@ describe("FavoritePictureController", () => {
       delete user.password;
 
       expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
+    });
+  });
+
+  describe("DELETE /favorite/:name/:pictureId", () => {
+    it("should be throw not found exception response error if the user doesn't exist", async () => {
+      try {
+        await controller.unfavPicture("0", randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(errorService.notFound());
+      }
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      try {
+        await controller.unfavPicture("0", randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the user doesn't exist", async () => {
+      try {
+        await controller.unfavPicture("0", randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be throw not found exception response error if the picture doesn't exist in user favorite picture", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.unfavPicture(user.name, "test");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.notFound(
+            "Trying to find the picture you want to unfavorite..."
+          )
+        );
+      }
+    });
+    it("should be return 404 status code if the picture doesn't exist in user favorite picture", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.unfavPicture(user.name, "test");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the picture doesn't exist in user favorite picture", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.unfavPicture(user.name, "test");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be return 200 status code", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      await controller.unfavPicture(user.name, "test");
     });
   });
 });
