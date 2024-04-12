@@ -1,3 +1,5 @@
-export {};
+import { RetrieveUserPictureProvider } from "./retrieve-picture/retrieve-picture.provider";
 
-export default [];
+export { RetrieveUserPictureProvider };
+
+export default [RetrieveUserPictureProvider];
