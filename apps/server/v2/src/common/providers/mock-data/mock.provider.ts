@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import slugify from "slugify";
 import * as crypto from "crypto";
-import { Picture, User } from "@prisma/client";
+import { EmbedLinks, Picture, User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
@@ -86,7 +86,16 @@ export class MockDataProvider {
             },
           },
           gallery: {
-            create: {},
+            create: {
+              pictures: {
+                create: {
+                  ...(this.generateRandomPicture() as Picture),
+                  embed_links: {
+                    create: this.generateRandomPictureEmbedLink() as EmbedLinks,
+                  },
+                },
+              },
+            },
           },
           favorite: {
             create: {
@@ -98,6 +107,24 @@ export class MockDataProvider {
     } finally {
       await this.prisma.$disconnect();
     }
+  }
+
+  public generateRandomPictureEmbedLink(): Partial<EmbedLinks> {
+    const pictureLink: string = falso.randUrl();
+
+    return {
+      direct_links: {
+        image_link: "https://pixelarium.my.id/picture/" + pictureLink,
+        image_url: pictureLink,
+      },
+      html_links: {
+        anchor_link: `<a href="${pictureLink}">${pictureLink}</a>`,
+        img_link: `<img src="${pictureLink}" />`,
+      },
+      markdown_links: {
+        tooltip_link: `[picture](${pictureLink})`,
+      },
+    };
   }
 
   public dummyPicture(): Partial<Express.Multer.File> {
