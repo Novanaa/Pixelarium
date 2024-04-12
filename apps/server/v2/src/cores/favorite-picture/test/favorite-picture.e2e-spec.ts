@@ -14,6 +14,7 @@ import { RetrieveUserFavoritesPicturesResponseDto } from "../providers/retrieve-
 import { Gallery, Picture, User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { UnfavoritePictureResponseDTO } from "../providers/unfavorite/unfavorite.dto";
+import { AddUserFavoritePictureResponseDTO } from "../providers/add-picture/add-favorite-picture.dto";
 
 describe("FavoritePictureController", () => {
   let app: INestApplication;
@@ -409,6 +410,194 @@ describe("FavoritePictureController", () => {
           .set("Content-Type", "application/json");
       const body: UnfavoritePictureResponseDTO =
         response.body as UnfavoritePictureResponseDTO;
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(body.owner)).toMatch(JSON.stringify(user));
+    });
+  });
+
+  describe("POST /favorite/:name/:pictureId", () => {
+    it("should be throw not found exception if the user doesn't exist", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          "/favorite/test/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(error.notFound());
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          "/favorite/test/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.NOT_FOUND);
+      expect(response.status).toBe(HttpStatus.NOT_FOUND);
+    });
+    it("status response should be 'KO' if the user doesn't exist", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          "/favorite/test/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("status response should be 'KO' if the picture doesn't exist", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/${falso.randUuid()}`
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw not found exception if the user doesn't exist", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/${falso.randUuid()}`
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.notFound("Sorry, the requested picture could not be found.")
+      );
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/${falso.randUuid()}`
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.NOT_FOUND);
+      expect(response.status).toBe(HttpStatus.NOT_FOUND);
+    });
+    it("should be return 400 status code if the picture id is not a UUID", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/test`
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the picture id is not a UUID", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/test`
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw bad request exception if the picture id is not a UUID", async () => {
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/test`
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.badRequest("Validation failed (uuid is expected)")
+      );
+    });
+    it("should be return 201 status code", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post(
+          `/favorite/${user.name}/${picture.id}`
+        );
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
+
+      expect(body.code).toBe(HttpStatus.CREATED);
+      expect(response.status).toBe(HttpStatus.CREATED);
+    });
+    it("make sure it can accept application/json", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post(`/favorite/${user.name}/${picture.id}`)
+          .set("Content-Type", "application/json");
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
+
+      expect(body.code).toBe(HttpStatus.CREATED);
+      expect(response.status).toBe(HttpStatus.CREATED);
+    });
+    it("status response should be 'OK'", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post(`/favorite/${user.name}/${picture.id}`)
+          .set("Content-Type", "application/json");
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
+
+      expect(body.status).toBe("OK");
+    });
+    it("owner response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post(`/favorite/${user.name}/${picture.id}`)
+          .set("Content-Type", "application/json");
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
+
+      expect(body.owner).toBeDefined();
+    });
+    it("added_picture response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post(`/favorite/${user.name}/${picture.id}`)
+          .set("Content-Type", "application/json");
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
+
+      expect(body.added_picture).toBeDefined();
+    });
+    it("added_picture response data should be match to requested picture data", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post(`/favorite/${user.name}/${picture.id}`)
+          .set("Content-Type", "application/json");
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
+
+      expect(JSON.stringify(body.added_picture)).toMatch(
+        JSON.stringify(picture)
+      );
+    });
+    it("owner response data should be match to requested user data", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post(`/favorite/${user.name}/${picture.id}`)
+          .set("Content-Type", "application/json");
+      const body: AddUserFavoritePictureResponseDTO =
+        response.body as AddUserFavoritePictureResponseDTO;
 
       delete user.email;
       delete user.password;
