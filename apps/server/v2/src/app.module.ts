@@ -9,6 +9,7 @@ import { AuthModule } from "./cores/auth/auth.module";
 import { ClientKeysModule } from "./cores/client-keys/client-keys.module";
 import { GalleryModule } from "./cores/gallery/gallery.module";
 import { FavoritePictureModule } from "./cores/favorite-picture/favorite-picture.module";
+import { PictureModule } from "./cores/picture/picture.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { FavoritePictureModule } from "./cores/favorite-picture/favorite-picture
     ClientKeysModule,
     GalleryModule,
     FavoritePictureModule,
+    PictureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
