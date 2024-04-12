@@ -15,6 +15,8 @@ import { RetrieveUserFavoritesPicturesResponseDto } from "../providers/retrieve-
 import { Gallery, Picture, User } from "@prisma/client";
 import { randUuid } from "@ngneat/falso";
 import { UnfavoritePictureResponseDTO } from "../providers/unfavorite/unfavorite.dto";
+import { PictureModule } from "@/cores/picture/picture.module";
+import { AddUserFavoritePictureResponseDTO } from "../providers/add-picture/add-favorite-picture.dto";
 
 describe("FavoritePictureController", () => {
   let controller: FavoritePictureController;
@@ -31,6 +33,7 @@ describe("FavoritePictureController", () => {
         LibsModule,
         CommonModule,
         TestModule,
+        PictureModule,
       ],
       controllers: [FavoritePictureController],
       providers,
@@ -342,6 +345,131 @@ describe("FavoritePictureController", () => {
       expect(JSON.stringify(response.unfav_picture)).toMatch(
         JSON.stringify(picture)
       );
+    });
+  });
+
+  describe("POST /favorite/:name/:pictureId", () => {
+    it("should be throw not found exception if the user doesn't exist", async () => {
+      try {
+        await controller.markFavoritePicture("test", "0");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(errorService.notFound());
+      }
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      try {
+        await controller.markFavoritePicture("test", "0");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the user doesn't exist", async () => {
+      try {
+        await controller.markFavoritePicture("test", "0");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be throw not found exception if the picture doesn't exist", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.markFavoritePicture(user.name, "0");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.notFound(
+            "Sorry, the requested picture could not be found."
+          )
+        );
+      }
+    });
+    it("should be return 404 status code if the picture doesn't exist", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.markFavoritePicture(user.name, "0");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the picture doesn't exist", async () => {
+      try {
+        const user: Awaited<User> = await mockData.getRandomser();
+        await controller.markFavoritePicture(user.name, "0");
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be return 201 status code", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<AddUserFavoritePictureResponseDTO> =
+        await controller.markFavoritePicture(user.name, picture.id);
+
+      expect(response.code).toBe(HttpStatus.CREATED);
+    });
+    it("status response should 'OK'", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<AddUserFavoritePictureResponseDTO> =
+        await controller.markFavoritePicture(user.name, picture.id);
+
+      expect(response.status).toBe("OK");
+    });
+    it("owner response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<AddUserFavoritePictureResponseDTO> =
+        await controller.markFavoritePicture(user.name, picture.id);
+
+      expect(response.owner).toBeDefined();
+    });
+    it("added_picture response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<AddUserFavoritePictureResponseDTO> =
+        await controller.markFavoritePicture(user.name, picture.id);
+
+      expect(response.added_picture).toBeDefined();
+    });
+    it("added_picture response data should be match to requested picture data", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<AddUserFavoritePictureResponseDTO> =
+        await controller.markFavoritePicture(user.name, picture.id);
+
+      expect(JSON.stringify(response.added_picture)).toMatch(
+        JSON.stringify(picture)
+      );
+    });
+    it("owner response data should be match to requested user data", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const user: Awaited<User> = await mockData.getRandomser();
+      const response: Awaited<AddUserFavoritePictureResponseDTO> =
+        await controller.markFavoritePicture(user.name, picture.id);
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
     });
   });
 });
