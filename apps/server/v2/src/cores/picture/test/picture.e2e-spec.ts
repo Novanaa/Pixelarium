@@ -11,7 +11,7 @@ import * as supertest from "supertest";
 import * as falso from "@ngneat/falso";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
-import { Picture } from "@prisma/client";
+import { EmbedLinks, Picture } from "@prisma/client";
 import { RetrieveUserPictureResponseDTO } from "../providers/retrieve-picture/retrieve-picture.dto";
 
 describe("Picturecontroller", () => {
@@ -156,6 +156,35 @@ describe("Picturecontroller", () => {
         response.body as RetrieveUserPictureResponseDTO;
 
       expect(JSON.stringify(body.picture)).toMatch(JSON.stringify(picture));
+    });
+    it("embed link response data should be match to requested picture embed link", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const embedLink: Awaited<EmbedLinks> = await prisma.embedLinks.findUnique(
+        {
+          where: { picture_id: picture.id },
+        }
+      );
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .get("/picture/" + picture.id)
+          .set("Content-Type", "application/json");
+      const body: RetrieveUserPictureResponseDTO =
+        response.body as RetrieveUserPictureResponseDTO;
+
+      expect(JSON.stringify(body.embed_link)).toMatch(
+        JSON.stringify(embedLink)
+      );
+    });
+    it("embed link response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .get("/picture/" + picture.id)
+          .set("Content-Type", "application/json");
+      const body: RetrieveUserPictureResponseDTO =
+        response.body as RetrieveUserPictureResponseDTO;
+
+      expect(body.embed_link).toBeDefined();
     });
   });
 });

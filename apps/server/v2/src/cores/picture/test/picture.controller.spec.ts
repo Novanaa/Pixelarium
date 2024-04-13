@@ -11,8 +11,9 @@ import { PrismaProvider } from "@/libs/providers";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
-import { Picture } from "@prisma/client";
+import { EmbedLinks, Picture } from "@prisma/client";
 import { RetrieveUserPictureResponseDTO } from "../providers/retrieve-picture/retrieve-picture.dto";
+import { EmbedLinkModule } from "@/cores/embed-link/embed-link.module";
 
 describe("Picturecontroller", () => {
   let controller: PictureController;
@@ -28,6 +29,7 @@ describe("Picturecontroller", () => {
         LibsModule,
         CommonModule,
         TestModule,
+        EmbedLinkModule,
       ],
       controllers: [PictureController],
       providers,
@@ -97,6 +99,27 @@ describe("Picturecontroller", () => {
         await controller.retrieveUserPicture(picture.id);
 
       expect(response.picture).toBeDefined();
+    });
+    it("embed_link response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<RetrieveUserPictureResponseDTO> =
+        await controller.retrieveUserPicture(picture.id);
+
+      expect(response.embed_link).toBeDefined();
+    });
+    it("embed_link response data should be match to requested picture embed link data", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const embedLink: Awaited<EmbedLinks> = await prisma.embedLinks.findUnique(
+        {
+          where: { picture_id: picture.id },
+        }
+      );
+      const response: Awaited<RetrieveUserPictureResponseDTO> =
+        await controller.retrieveUserPicture(picture.id);
+
+      expect(JSON.stringify(response.embed_link)).toMatch(
+        JSON.stringify(embedLink)
+      );
     });
     it("picture response data should be match to requested data", async () => {
       const picture: Awaited<Picture> = await prisma.picture.findFirst();
