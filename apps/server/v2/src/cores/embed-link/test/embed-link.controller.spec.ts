@@ -1,22 +1,21 @@
-import { UserModule } from "@/cores/user/user.module";
 import providers from "../providers";
 import { Test, TestingModule } from "@nestjs/testing";
-import { PictureModule } from "../picture.module";
+import { EmbedLinkController } from "../embed-link.controller";
 import { LibsModule } from "@/libs/libs.module";
 import { CommonModule } from "@/common/common.module";
+import { PictureModule } from "@/cores/picture/picture.module";
+import { EmbedLinkModule } from "../embed-link.module";
 import { TestModule } from "../../../../test/test.module";
-import { PictureController } from "../picture.controller";
 import { LifecycleProvider } from "../../../../test/providers";
 import { PrismaProvider } from "@/libs/providers";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
+import { RetrievePictureEmbedLinkResponseDTO } from "../providers/retrieve-link/retrieve-link.dto";
 import { EmbedLinks, Picture } from "@prisma/client";
-import { RetrieveUserPictureResponseDTO } from "../providers/retrieve-picture/retrieve-picture.dto";
-import { EmbedLinkModule } from "@/cores/embed-link/embed-link.module";
 
-describe("Picturecontroller", () => {
-  let controller: PictureController;
+describe("EmbedLinkController", () => {
+  let controller: EmbedLinkController;
   let lifecycleTest: LifecycleProvider;
   let prisma: PrismaProvider;
   let errorService: ErrorProvider;
@@ -24,18 +23,17 @@ describe("Picturecontroller", () => {
   beforeAll(async () => {
     const module: Awaited<TestingModule> = await Test.createTestingModule({
       imports: [
-        UserModule,
-        PictureModule,
         LibsModule,
         CommonModule,
-        TestModule,
+        PictureModule,
         EmbedLinkModule,
+        TestModule,
       ],
-      controllers: [PictureController],
+      controllers: [EmbedLinkController],
       providers,
     }).compile();
 
-    controller = module.get<PictureController>(PictureController);
+    controller = module.get<EmbedLinkController>(EmbedLinkController);
     lifecycleTest = module.get<LifecycleProvider>(LifecycleProvider);
     prisma = module.get<PrismaProvider>(PrismaProvider);
     errorService = module.get<ErrorProvider>(ErrorProvider);
@@ -50,24 +48,24 @@ describe("Picturecontroller", () => {
 
   afterEach(async () => await prisma.$disconnect());
 
-  describe("GET /picture/:pictureId", () => {
-    it("should be throw not found exception if the picture doesn't exist", async () => {
+  describe("GET /embed-link/:pictureId", () => {
+    it("should be throw not found exception if the picture embed link doesn't exist", async () => {
       try {
-        await controller.retrieveUserPicture("test");
+        await controller.retrievePicturEmbedLink("test");
       } catch (error) {
         const err: HttpException = error as HttpException;
         const response: ResponseError = err.getResponse() as ResponseError;
 
         expect(response).toEqual(
           errorService.notFound(
-            "Sorry, the requested picture could not be found."
+            "Sorry, the requested picture embed link was not found."
           )
         );
       }
     });
-    it("should be return 404 if the picture doesn't exist", async () => {
+    it("should be return 404 status code if the picture embed link doesn't exist", async () => {
       try {
-        await controller.retrieveUserPicture("test");
+        await controller.retrievePicturEmbedLink("test");
       } catch (error) {
         const err: HttpException = error as HttpException;
         const response: ResponseError = err.getResponse() as ResponseError;
@@ -76,9 +74,9 @@ describe("Picturecontroller", () => {
         expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
       }
     });
-    it("status response should be 'KO' if the picture doesn't exist", async () => {
+    it("status response should be 'KO' if the picture embed link doesn't exist", async () => {
       try {
-        await controller.retrieveUserPicture("test");
+        await controller.retrievePicturEmbedLink("test");
       } catch (error) {
         const err: HttpException = error as HttpException;
         const response: ResponseError = err.getResponse() as ResponseError;
@@ -88,52 +86,38 @@ describe("Picturecontroller", () => {
     });
     it("should be return 200 status code", async () => {
       const picture: Awaited<Picture> = await prisma.picture.findFirst();
-      const response: Awaited<RetrieveUserPictureResponseDTO> =
-        await controller.retrieveUserPicture(picture.id);
+      const response: Awaited<RetrievePictureEmbedLinkResponseDTO> =
+        await controller.retrievePicturEmbedLink(picture.id);
 
       expect(response.code).toBe(HttpStatus.OK);
     });
-    it("picture response data should be defined", async () => {
+    it("status response should be 'OK'", async () => {
       const picture: Awaited<Picture> = await prisma.picture.findFirst();
-      const response: Awaited<RetrieveUserPictureResponseDTO> =
-        await controller.retrieveUserPicture(picture.id);
+      const response: Awaited<RetrievePictureEmbedLinkResponseDTO> =
+        await controller.retrievePicturEmbedLink(picture.id);
 
-      expect(response.picture).toBeDefined();
+      expect(response.status).toBe("OK");
     });
-    it("embed_link response data should be defined", async () => {
+    it("embed-link response data should be defined", async () => {
       const picture: Awaited<Picture> = await prisma.picture.findFirst();
-      const response: Awaited<RetrieveUserPictureResponseDTO> =
-        await controller.retrieveUserPicture(picture.id);
+      const response: Awaited<RetrievePictureEmbedLinkResponseDTO> =
+        await controller.retrievePicturEmbedLink(picture.id);
 
       expect(response.embed_link).toBeDefined();
     });
-    it("embed_link response data should be match to requested picture embed link data", async () => {
+    it("embed-link response data should be match to requested picture embed link data", async () => {
       const picture: Awaited<Picture> = await prisma.picture.findFirst();
       const embedLink: Awaited<EmbedLinks> = await prisma.embedLinks.findUnique(
         {
           where: { picture_id: picture.id },
         }
       );
-      const response: Awaited<RetrieveUserPictureResponseDTO> =
-        await controller.retrieveUserPicture(picture.id);
+      const response: Awaited<RetrievePictureEmbedLinkResponseDTO> =
+        await controller.retrievePicturEmbedLink(picture.id);
 
       expect(JSON.stringify(response.embed_link)).toMatch(
         JSON.stringify(embedLink)
       );
-    });
-    it("picture response data should be match to requested data", async () => {
-      const picture: Awaited<Picture> = await prisma.picture.findFirst();
-      const response: Awaited<RetrieveUserPictureResponseDTO> =
-        await controller.retrieveUserPicture(picture.id);
-
-      expect(JSON.stringify(response.picture)).toMatch(JSON.stringify(picture));
-    });
-    it("status response should be 'OK'", async () => {
-      const picture: Awaited<Picture> = await prisma.picture.findFirst();
-      const response: Awaited<RetrieveUserPictureResponseDTO> =
-        await controller.retrieveUserPicture(picture.id);
-
-      expect(response.status).toBe("OK");
     });
   });
 });
