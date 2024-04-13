@@ -1,3 +1,5 @@
-export {};
+import { RetrievePictureEmbedLinkProvider } from "./retrieve-link/retrieve-link.provider";
 
-export default [];
+export { RetrievePictureEmbedLinkProvider };
+
+export default [RetrievePictureEmbedLinkProvider];
