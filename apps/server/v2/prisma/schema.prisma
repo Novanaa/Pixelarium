@@ -114,7 +114,7 @@ model Picture {
   size         Int
   filename     String
   data         String
-  binary       Bytes
+  binary       Bytes?
   type         PictureType
   extension    String
   status       PictureStatus
