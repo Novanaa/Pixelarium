@@ -110,10 +110,11 @@ model Picture {
   id           String        @id @default(uuid())
   title        String
   description  String
-  link         String
   expires_time Json
   size         Int
   filename     String
+  data         String
+  binary       Bytes
   type         PictureType
   extension    String
   status       PictureStatus
