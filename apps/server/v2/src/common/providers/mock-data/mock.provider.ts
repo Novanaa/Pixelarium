@@ -58,6 +58,11 @@ export class MockDataProvider {
   }
 
   public generateRandomPicture(): Partial<Picture> {
+    const binary: Buffer = fs.readFileSync(
+      PictureConstant.DUMMY_PICTUREPATH.jpeg
+    );
+    const data: string = binary.toString("base64");
+
     return {
       title: falso.randSentence(),
       description: falso.randProductDescription(),
@@ -68,7 +73,8 @@ export class MockDataProvider {
         expires_in: "1 Years",
       },
       filename: falso.randFileName(),
-      link: falso.randUrl(),
+      data,
+      binary,
       size: falso.randNumber(),
       status: falso.rand(["Private", "Public"]),
       type: falso.rand(["External", "Internal"]),

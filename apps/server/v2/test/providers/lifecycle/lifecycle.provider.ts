@@ -60,24 +60,7 @@ export class LifecycleProvider {
     try {
       const avatarDirpath: string =
         this.staticDirectory.getUserAvatarDirectory();
-      const galleryDirpath: string = "./public/galleries/";
-
       const avatarFiles: Array<string> = fs.readdirSync(avatarDirpath);
-      const galleryFiles: Array<string> = fs.readdirSync(galleryDirpath);
-
-      galleryFiles.map((file: string) => {
-        const galleryFilepath: string = galleryDirpath + file;
-
-        if (!fs.existsSync(galleryFilepath)) return;
-
-        fs.rmSync(galleryFilepath, { recursive: true, force: true });
-
-        fs.mkdirSync(this.staticDirectory.getUserGalleryDirectory("itsnvaa"));
-        fs.writeFileSync(
-          this.staticDirectory.getUserGalleryDirectory("itsnvaa", "test.png"),
-          "utf-8"
-        );
-      });
 
       avatarFiles.map((file: string) => {
         const avatarFilepath: string =
