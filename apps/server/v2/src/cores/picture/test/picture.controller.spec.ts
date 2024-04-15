@@ -14,6 +14,8 @@ import { ErrorProvider } from "@/common/providers";
 import { EmbedLinks, Picture } from "@prisma/client";
 import { RetrieveUserPictureResponseDTO } from "../providers/retrieve-picture/retrieve-picture.dto";
 import { EmbedLinkModule } from "@/cores/embed-link/embed-link.module";
+import * as httpMock from "node-mocks-http";
+import { Response } from "express";
 
 describe("Picturecontroller", () => {
   let controller: PictureController;
@@ -134,6 +136,66 @@ describe("Picturecontroller", () => {
         await controller.retrieveUserPicture(picture.id);
 
       expect(response.status).toBe("OK");
+    });
+  });
+
+  describe("GET /picture/download/:pictureId", () => {
+    it("should be throw not found exception if the picture doesn't exist", async () => {
+      try {
+        const response: httpMock.MockResponse<Response> =
+          httpMock.createResponse();
+
+        await controller.downloadPicture("test", response);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.notFound(
+            "Sorry, the requested picture could not be found."
+          )
+        );
+      }
+    });
+    it("should be return 404 status code if the picture doesn't exist", async () => {
+      try {
+        const response: httpMock.MockResponse<Response> =
+          httpMock.createResponse();
+
+        await controller.downloadPicture("test", response);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should 'KO' if the picture doesn't exist", async () => {
+      try {
+        const response: httpMock.MockResponse<Response> =
+          httpMock.createResponse();
+
+        await controller.downloadPicture("test", response);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("status response should 'KO' if the picture doesn't exist", async () => {
+      try {
+        const response: httpMock.MockResponse<Response> =
+          httpMock.createResponse();
+
+        await controller.downloadPicture("test", response);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
     });
   });
 });
