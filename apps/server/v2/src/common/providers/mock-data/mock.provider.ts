@@ -62,8 +62,10 @@ export class MockDataProvider {
       PictureConstant.DUMMY_PICTUREPATH.jpeg
     );
     const data: string = binary.toString("base64");
+    const dummyPictureLink: string =
+      "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg";
 
-    return {
+    const picture: Partial<Picture> = {
       title: falso.randSentence(),
       description: falso.randProductDescription(),
       extension: falso.randMimeType(),
@@ -79,6 +81,11 @@ export class MockDataProvider {
       status: falso.rand(["Private", "Public"]),
       type: falso.rand(["External", "Internal"]),
     };
+
+    if (picture.type == "External")
+      return { ...picture, data: dummyPictureLink, binary: null };
+
+    return picture;
   }
 
   public async createRandomUser(): Promise<User> {
