@@ -1,4 +1,9 @@
-import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
+import {
+  Injectable,
+  Logger,
+  OnModuleDestroy,
+  OnModuleInit,
+} from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { prismaLogDefinition } from "./prisma.config";
 
@@ -18,7 +23,7 @@ import { prismaLogDefinition } from "./prisma.config";
 @Injectable()
 export class PrismaProvider
   extends PrismaClient<Prisma.PrismaClientOptions, string>
-  implements OnModuleInit
+  implements OnModuleInit, OnModuleDestroy
 {
   constructor() {
     super({
@@ -27,6 +32,11 @@ export class PrismaProvider
   }
 
   private readonly logger = new Logger("PrismaClient");
+
+  async onModuleDestroy() {
+    this.logger.log("Disconnected database connection from prisma client");
+    await this.$disconnect();
+  }
 
   onModuleInit() {
     this.$on("info", (e) => this.logger.log(e.message));

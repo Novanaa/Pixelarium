@@ -14,6 +14,7 @@ async function bootstrap() {
 
   const staticAssestDirpath: string = join(__dirname, "..", "public");
 
+  app.enableShutdownHooks();
   app.useStaticAssets(staticAssestDirpath);
   app.useBodyParser("json");
   app.enableCors(MiddlewaresConfigs.CORS_CONFIGS);
