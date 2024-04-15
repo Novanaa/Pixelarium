@@ -17,6 +17,7 @@ import { Response } from "express";
 import { PrismaProvider } from "@/libs/providers";
 import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { RetrieveUserPictureResponseDTO } from "./providers/retrieve-picture/retrieve-picture.dto";
+import { DownloadUserPicture } from "./providers/download-picture/download-picture";
 
 @Controller("picture")
 export class PictureController {
@@ -48,13 +49,17 @@ export class PictureController {
   @HttpCode(HttpStatus.OK)
   public async downloadPicture(
     @Param("pictureId", ParseUUIDPipe) pictureId: string,
-    @Res() res: Response
+    @Res({ passthrough: true }) res: Response
   ): Promise<Response> {
     try {
-      return await this.downloadUserPictureService.download({
-        pictureId,
-        httpResponse: res,
-      });
+      const response: Awaited<DownloadUserPicture> =
+        await this.downloadUserPictureService.download(pictureId);
+
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=${response.filename}`
+      );
+      return res.status(HttpStatus.OK).send(response.binary);
     } finally {
       await this.prisma.$disconnect();
     }
