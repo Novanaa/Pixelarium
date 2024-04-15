@@ -49,7 +49,7 @@ export class PictureController {
   @HttpCode(HttpStatus.OK)
   public async downloadPicture(
     @Param("pictureId", ParseUUIDPipe) pictureId: string,
-    @Res({ passthrough: true }) res: Response
+    @Res() res: Response
   ): Promise<Response> {
     try {
       const response: Awaited<DownloadUserPicture> =

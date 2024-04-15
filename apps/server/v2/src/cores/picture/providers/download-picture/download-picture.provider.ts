@@ -1,7 +1,7 @@
 import * as axios from "axios";
-import { ErrorProvider, ValidationProvider } from "@/common/providers";
 import { DownloadUserPicture } from "./download-picture";
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { ErrorProvider, ValidationProvider } from "@/common/providers";
 import { RetrieveUserPictureResponseDTO } from "../retrieve-picture/retrieve-picture.dto";
 import { RetrieveUserPictureProvider } from "../retrieve-picture/retrieve-picture.provider";
 
@@ -15,8 +15,16 @@ export class DownloadUserPictureProvider {
 
   public async downloadExternalPicture(link: string): Promise<Buffer> {
     try {
-      const picture: Awaited<Buffer> = (await axios.default.get(link)).data;
-      const binary: Buffer = Buffer.from(picture);
+      const picture: Awaited<axios.AxiosResponse<Buffer>> =
+        await axios.default.get(link, {
+          responseType: "arraybuffer",
+        });
+      const binary: Buffer = picture.data;
+
+      if (!Buffer.isBuffer(binary))
+        throw new BadRequestException(
+          this.errorService.badRequest("Please provide a valid picture link!")
+        );
 
       if (this.validationService.brokenPicture(binary))
         throw new BadRequestException(
