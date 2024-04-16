@@ -125,5 +125,19 @@ describe("PaymentHistoryController", () => {
 
       expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
     });
+    it("owner response data should be not included email field data", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const response: Awaited<RetrieveUserPaymentHistoryResponseDTO> =
+        await controller.retrieveHistories(user.name);
+
+      expect(response.owner.email).toBeUndefined();
+    });
+    it("owner response data should be not included password field data", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const response: Awaited<RetrieveUserPaymentHistoryResponseDTO> =
+        await controller.retrieveHistories(user.name);
+
+      expect(response.owner.password).toBeUndefined();
+    });
   });
 });
