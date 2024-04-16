@@ -11,6 +11,7 @@ import { GalleryModule } from "./cores/gallery/gallery.module";
 import { FavoritePictureModule } from "./cores/favorite-picture/favorite-picture.module";
 import { PictureModule } from "./cores/picture/picture.module";
 import { EmbedLinkModule } from "./cores/embed-link/embed-link.module";
+import { PaymentHistoryModule } from "./cores/payment-history/payment-history.module";
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { EmbedLinkModule } from "./cores/embed-link/embed-link.module";
     FavoritePictureModule,
     PictureModule,
     EmbedLinkModule,
+    PaymentHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
