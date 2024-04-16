@@ -1,3 +1,5 @@
-export {};
+import { RetrieveUserPaymentHistoryProvider } from "./retrieve-history/retrieve-history.provider";
 
-export default [];
+export { RetrieveUserPaymentHistoryProvider };
+
+export default [RetrieveUserPaymentHistoryProvider];
