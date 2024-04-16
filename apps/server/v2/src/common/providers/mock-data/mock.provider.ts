@@ -79,20 +79,18 @@ export class MockDataProvider {
       binary,
       size: falso.randNumber(),
       status: falso.rand(["Private", "Public"]),
-      type: falso.rand(["External", "Internal"]),
     };
 
     const externalPicture: Partial<Picture> = {
       ...picture,
       data: dummyPictureLink,
       binary: null,
+      type: "External",
     };
 
     if (type == "External") return externalPicture;
 
-    if (picture.type == "External") return externalPicture;
-
-    return picture;
+    return { ...picture, type: "Internal" };
   }
 
   public async createRandomUser(): Promise<User> {
