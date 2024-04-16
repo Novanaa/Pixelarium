@@ -187,4 +187,61 @@ describe("Picturecontroller", () => {
       expect(body.embed_link).toBeDefined();
     });
   });
+
+  describe("GET /picture/download/:pictureId", () => {
+    it("should be throw bad request exception if the picture id is not UUID", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get("/picture/download/test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.badRequest("Validation failed (uuid is expected)")
+      );
+    });
+    it("should be return 400 status code if the picture id is not UUID", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get("/picture/download/test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the picture id is not UUID", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get("/picture/download/test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("status response should be 'KO' if the picture doesn't exist", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get(
+          "/picture/download/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be return 404 status code if the picture doesn't exist", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get(
+          "/picture/download/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.NOT_FOUND);
+      expect(response.status).toBe(HttpStatus.NOT_FOUND);
+    });
+    it("should be throw not found exception if the picture doesn't exist", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get(
+          "/picture/download/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.notFound("Sorry, the requested picture could not be found.")
+      );
+    });
+  });
 });
