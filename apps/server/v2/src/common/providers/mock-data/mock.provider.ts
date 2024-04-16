@@ -96,7 +96,7 @@ export class MockDataProvider {
 
     if (type == "Internal") return internalPicture;
 
-    return picture;
+    return internalPicture;
   }
 
   public async createRandomUser(): Promise<User> {
