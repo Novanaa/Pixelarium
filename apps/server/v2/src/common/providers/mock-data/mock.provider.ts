@@ -1,11 +1,11 @@
 import * as fs from "fs";
 import slugify from "slugify";
 import * as crypto from "crypto";
-import { EmbedLinks, Picture, User } from "@prisma/client";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
-import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import { PictureConstant } from "@/constant/picture.constant";
+import { EmbedLinks, Picture, PictureType, User } from "@prisma/client";
+import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import { GeneratedClientKeysCredentials } from "@/cores/client-keys/providers/credentials/credentials";
 
 @Injectable()
@@ -57,7 +57,7 @@ export class MockDataProvider {
     };
   }
 
-  public generateRandomPicture(): Partial<Picture> {
+  public generateRandomPicture(type?: PictureType): Partial<Picture> {
     const binary: Buffer = fs.readFileSync(
       PictureConstant.DUMMY_PICTUREPATH.jpeg
     );
@@ -82,8 +82,15 @@ export class MockDataProvider {
       type: falso.rand(["External", "Internal"]),
     };
 
-    if (picture.type == "External")
-      return { ...picture, data: dummyPictureLink, binary: null };
+    const externalPicture: Partial<Picture> = {
+      ...picture,
+      data: dummyPictureLink,
+      binary: null,
+    };
+
+    if (type == "External") return externalPicture;
+
+    if (picture.type == "External") return externalPicture;
 
     return picture;
   }
