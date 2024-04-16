@@ -86,9 +86,15 @@ export class MockDataProvider {
       ...picture,
       data: dummyPictureLink,
       binary: null,
+      type: "External",
     };
 
-    if (type == "External") return externalPicture;
+    const internalPicture: Partial<Picture> = { ...picture, type: "Internal" };
+
+    if (type) {
+      if (type == "External") return externalPicture;
+      if (type == "Internal") return internalPicture;
+    }
 
     if (picture.type == "External") return externalPicture;
 
