@@ -243,5 +243,158 @@ describe("Picturecontroller", () => {
         error.notFound("Sorry, the requested picture could not be found.")
       );
     });
+    it("should be throw bad request exception if the picture is not a external picture", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "External" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get(
+          "/picture/download/" + picture.id
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.badRequest(
+          "Cannot download a picture from external link, instead use pixelarium integrated download feature."
+        )
+      );
+    });
+    it("should be return 400 status code if the picture is not a external picture", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "External" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get(
+          "/picture/download/" + picture.id
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' status code if the picture is not a external picture", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "External" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).get(
+          "/picture/download/" + picture.id
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be return 200 status code", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "Internal" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .get("/picture/download/" + picture.id)
+          .buffer(true)
+          .parse((res: supertest.Response, cb) => {
+            let data: string = "";
+            res.setEncoding("binary");
+            res.on("data", (chunk) => (data = chunk));
+
+            cb(null, Buffer.from(data, "binary"));
+          });
+
+      expect(response.status).toBe(HttpStatus.OK);
+    });
+    it("content-disposition header should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "Internal" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .get("/picture/download/" + picture.id)
+          .buffer(true)
+          .parse((res: supertest.Response, cb) => {
+            let data: string = "";
+            res.setEncoding("binary");
+            res.on("data", (chunk) => (data = chunk));
+
+            cb(null, Buffer.from(data, "binary"));
+          });
+
+      expect(response.headers["content-disposition"]).toBeDefined();
+    });
+    it("content-disposition header filename should be match to picture filename", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "Internal" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .get("/picture/download/" + picture.id)
+          .buffer(true)
+          .parse((res: supertest.Response, cb) => {
+            let data: string = "";
+            res.setEncoding("binary");
+            res.on("data", (chunk) => (data = chunk));
+
+            cb(null, Buffer.from(data, "binary"));
+          });
+
+      expect(
+        response.headers["content-disposition"].includes(picture.filename)
+      ).toBe(true);
+    });
+    it("content-disposition header value should be attachment", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "Internal" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .get("/picture/download/" + picture.id)
+          .buffer(true)
+          .parse((res: supertest.Response, cb) => {
+            let data: string = "";
+            res.setEncoding("binary");
+            res.on("data", (chunk) => (data = chunk));
+
+            cb(null, Buffer.from(data, "binary"));
+          });
+
+      expect(
+        response.headers["content-disposition"].includes("attachment")
+      ).toBe(true);
+    });
+    it("picture buffer should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "Internal" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .get("/picture/download/" + picture.id)
+          .buffer(true)
+          .parse((res: supertest.Response, cb) => {
+            let data: string = "";
+            res.setEncoding("binary");
+            res.on("data", (chunk) => (data = chunk));
+
+            cb(null, Buffer.from(data, "binary"));
+          });
+
+      expect(response.body).toBeDefined();
+    });
+    it("picture buffer should be a buffer", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst({
+        where: { type: "Internal" },
+      });
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .get("/picture/download/" + picture.id)
+          .buffer(true)
+          .parse((res: supertest.Response, cb) => {
+            let data: string = "";
+            res.setEncoding("binary");
+            res.on("data", (chunk) => (data = chunk));
+
+            cb(null, Buffer.from(data, "binary"));
+          });
+
+      expect(Buffer.isBuffer(response.body)).toBe(true);
+    });
   });
 });
