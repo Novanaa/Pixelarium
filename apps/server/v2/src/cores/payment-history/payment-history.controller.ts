@@ -8,15 +8,18 @@ import {
   Param,
   Post,
   UseFilters,
+  UsePipes,
 } from "@nestjs/common";
 import {
   AddUserPaymentHistoryProvider,
   RetrieveUserPaymentHistoryProvider,
 } from "./providers";
 import { PrismaProvider } from "@/libs/providers";
+import { ValidationPipe } from "@/pipe/validation.pipe";
 import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { AddUserPaymentHistoryRequestDTO } from "./providers/add-history/add-history.dto";
 import { RetrieveUserPaymentHistoryResponseDTO } from "./providers/retrieve-history/retrieve-history.dto";
+import { PaymentHistoryValidation } from "./payment-history.validation";
 
 @Controller("payment-history")
 export class PaymentHistoryController {
@@ -45,6 +48,11 @@ export class PaymentHistoryController {
   @Header("Accept", "application/json")
   @UseFilters(ApplicationExceptionFilter)
   @HttpCode(HttpStatus.CREATED)
+  @UsePipes(
+    new ValidationPipe<AddUserPaymentHistoryRequestDTO>(
+      PaymentHistoryValidation.ADD_PAYMENT_HISTORY
+    )
+  )
   public async addUserPaymentHistory(
     @Param("name") name: string,
     @Body() body: AddUserPaymentHistoryRequestDTO
