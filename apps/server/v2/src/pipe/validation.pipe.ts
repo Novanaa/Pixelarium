@@ -10,7 +10,9 @@ export class ValidationPipe<T> implements PipeTransform {
       this.schema.validate(value);
 
     if (validatedPayload.error)
-      throw new BadRequestException(validatedPayload.error.message);
+      throw new BadRequestException(
+        validatedPayload.error.message.replace(/"/g, "")
+      );
 
     return validatedPayload.value;
   }
