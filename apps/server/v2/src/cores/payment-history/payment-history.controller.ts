@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 import {
   Body,
   Controller,
@@ -8,7 +10,6 @@ import {
   Param,
   Post,
   UseFilters,
-  UsePipes,
 } from "@nestjs/common";
 import {
   AddUserPaymentHistoryProvider,
@@ -48,14 +49,14 @@ export class PaymentHistoryController {
   @Header("Accept", "application/json")
   @UseFilters(ApplicationExceptionFilter)
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(
-    new ValidationPipe<AddUserPaymentHistoryRequestDTO>(
-      PaymentHistoryValidation.ADD_PAYMENT_HISTORY
-    )
-  )
   public async addUserPaymentHistory(
     @Param("name") name: string,
-    @Body() body: AddUserPaymentHistoryRequestDTO
+    @Body(
+      new ValidationPipe<AddUserPaymentHistoryRequestDTO>(
+        PaymentHistoryValidation.ADD_PAYMENT_HISTORY
+      )
+    )
+    body: AddUserPaymentHistoryRequestDTO
   ) {
     try {
       return await this.addUserPaymentHistoryService.addHistory(name, body);
