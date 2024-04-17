@@ -44,7 +44,7 @@ model PaymentsHistory {
   status         OrderStatus
   amount         Json
   order_id       String      @unique
-  order_date     BigInt
+  order_date     DateTime
   user_id        String
   user           User        @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
