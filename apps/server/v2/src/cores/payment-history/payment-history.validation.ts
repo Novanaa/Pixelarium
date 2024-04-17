@@ -6,17 +6,20 @@ import { SubscriptionConstant } from "@/constant/subscription.constant";
 @Injectable()
 export class PaymentHistoryValidation {
   public static ADD_PAYMENT_HISTORY: joi.ObjectSchema<AddUserPaymentHistoryRequestDTO> =
-    joi
-      .object({
-        plan: joi.string().valid(...SubscriptionConstant.USERPLAN),
-        interval_count: joi.number(),
-        order_date: joi.date(),
-        order_id: joi.string(),
-        status: joi.string().valid(...SubscriptionConstant.ORDER_STATUS),
-        amount: joi.object({
-          USD: joi.number(),
-          IDR: joi.number(),
-        }),
-      })
-      .required();
+    joi.object({
+      plan: joi
+        .string()
+        .valid(...SubscriptionConstant.USERPLAN)
+        .required(),
+      interval_count: joi.number().default(1),
+      order_date: joi.date().required(),
+      order_id: joi
+        .string()
+        .required()
+        .pattern(SubscriptionConstant.ORDERID_PATTERN),
+      status: joi
+        .string()
+        .valid(...SubscriptionConstant.ORDER_STATUS)
+        .default("Pending"),
+    });
 }
