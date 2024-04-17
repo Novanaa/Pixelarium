@@ -3,6 +3,7 @@ import { StaticDirectoryProvider } from "./static-directoty/static-directory.pro
 import { ErrorProvider } from "./error/error.provider";
 import { ValidationProvider } from "./validation/validation.provider";
 import { PrettierProvider } from "./prettier/prettier.provider";
+import { ConverterProvider } from "./converter/converter.provider";
 
 export {
   MockDataProvider,
@@ -10,6 +11,7 @@ export {
   ErrorProvider,
   ValidationProvider,
   PrettierProvider,
+  ConverterProvider,
 };
 
 export default [
@@ -18,4 +20,5 @@ export default [
   ErrorProvider,
   ValidationProvider,
   PrettierProvider,
+  ConverterProvider,
 ];
