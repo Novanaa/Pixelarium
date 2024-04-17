@@ -1,4 +1,5 @@
 import * as joi from "joi";
+import { ErrorProvider } from "@/common/providers";
 import { BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
 
 @Injectable()
@@ -6,12 +7,14 @@ export class ValidationPipe<T> implements PipeTransform {
   constructor(private readonly schema: joi.ObjectSchema<T>) {}
 
   transform(value: T) {
-    const validatedPayload: joi.ValidationResult<T> =
-      this.schema.validate(value);
+    try {
+      return this.schema.validate(value);
+    } catch (error) {
+      const err: Error = error as Error;
 
-    if (validatedPayload.error)
-      throw new BadRequestException(validatedPayload.error.message);
-
-    return validatedPayload;
+      throw new BadRequestException(
+        new ErrorProvider().badRequest(err.message)
+      );
+    }
   }
 }
