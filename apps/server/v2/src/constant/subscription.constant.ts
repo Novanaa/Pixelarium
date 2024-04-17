@@ -18,4 +18,10 @@ export class SubscriptionConstant {
 
   public static ORDERID_PATTERN: RegExp =
     /plxmoid-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/;
+
+  public static PLAN_PRICES = {
+    gold: 2.99,
+    diamond: 6.99,
+    netherite: 9.99,
+  };
 }
