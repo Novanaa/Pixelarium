@@ -12,6 +12,6 @@ export class ValidationPipe<T> implements PipeTransform {
     if (validatedPayload.error)
       throw new BadRequestException(validatedPayload.error.message);
 
-    return validatedPayload;
+    return validatedPayload.value;
   }
 }
