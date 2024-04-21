@@ -9,5 +9,6 @@ import { PictureModule } from "../picture/picture.module";
   imports: [UserModule, PictureModule],
   controllers: [GalleryController],
   providers: [...providers, GalleryRepository],
+  exports: [GalleryRepository],
 })
 export class GalleryModule {}
