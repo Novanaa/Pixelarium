@@ -8,7 +8,7 @@ import { PictureRepository } from "./picture.repository";
 @Module({
   imports: [UserModule, EmbedLinkModule],
   controllers: [PictureController],
-  exports: [RetrieveUserPictureProvider],
+  exports: [RetrieveUserPictureProvider, PictureRepository],
   providers: [...providers, PictureRepository],
 })
 export class PictureModule {}
