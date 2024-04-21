@@ -46,4 +46,14 @@ export class FavoritePictureRepository {
       },
     });
   }
+
+  public async insertPictureToUserFavoriteList(
+    userId: string,
+    pictureId: string
+  ): Promise<void> {
+    await this.prisma.favorite.update({
+      where: { user_id: userId },
+      data: { pictures: { connect: { id: pictureId } } },
+    });
+  }
 }
