@@ -6,6 +6,6 @@ import { EmbedLinkRepository } from "./embed-link.repository";
 @Module({
   providers: [...providers, EmbedLinkRepository],
   controllers: [EmbedLinkController],
-  exports: [RetrievePictureEmbedLinkProvider],
+  exports: [RetrievePictureEmbedLinkProvider, EmbedLinkRepository],
 })
 export class EmbedLinkModule {}
