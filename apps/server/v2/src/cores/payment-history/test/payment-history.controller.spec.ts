@@ -13,6 +13,7 @@ import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
 import { RetrieveUserPaymentHistoryResponseDTO } from "../providers/retrieve-history/retrieve-history.dto";
 import { User } from "@prisma/client";
+import { PaymentHistoryRepository } from "../payment-history.repository";
 
 describe("PaymentHistoryController", () => {
   let controller: PaymentHistoryController;
@@ -30,7 +31,7 @@ describe("PaymentHistoryController", () => {
         PaymentHistoryModule,
       ],
       controllers: [PaymentHistoryController],
-      providers,
+      providers: [...providers, PaymentHistoryRepository],
     }).compile();
 
     controller = module.get<PaymentHistoryController>(PaymentHistoryController);
