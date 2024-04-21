@@ -1,34 +1,16 @@
-import { PrismaProvider } from "@/libs/providers";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { RetrieveUserFavoritesPicturesResponseDto } from "./retrieve-favotires.dto";
 import { RetrieveUserProvider } from "@/cores/user/providers";
 import { RetrieveUserResponseDto } from "@/cores/user/providers/retrieve-user/retrieve-user.dto";
 import { Favorite, Picture } from "@prisma/client";
+import { FavoritePictureRepository } from "../../favorite-picture.repository";
 
 @Injectable()
 export class RetrieveUserFavoritesPicturesProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
-    private readonly retrieveUser: RetrieveUserProvider
+    private readonly retrieveUser: RetrieveUserProvider,
+    private readonly favoritePictureRepo: FavoritePictureRepository
   ) {}
-
-  public async retrieveUserFavoritesPicturesByUserId(
-    userId: string
-  ): Promise<Favorite> {
-    return await this.prisma.favorite.findUnique({
-      where: { user_id: userId },
-    });
-  }
-
-  public async retrieveFavoritedPictures(
-    favoriteId: string
-  ): Promise<Array<Picture>> {
-    return await this.prisma.picture.findMany({
-      where: {
-        favorite: { some: { id: favoriteId } },
-      },
-    });
-  }
 
   public async retrieveUserFavoritesPictures(
     name: string
@@ -37,10 +19,10 @@ export class RetrieveUserFavoritesPicturesProvider {
       await this.retrieveUser.retrieveSingleUser(name);
 
     const favorite: Awaited<Favorite> =
-      await this.retrieveUserFavoritesPicturesByUserId(user.id);
+      await this.favoritePictureRepo.findByUserId(user.id);
 
     const favoritedPictures: Awaited<Array<Picture>> =
-      await this.retrieveFavoritedPictures(favorite.id);
+      await this.favoritePictureRepo.findFavoritedPictures(favorite.id);
 
     return {
       favorites_pictures: { ...favorite, pictures: favoritedPictures },
