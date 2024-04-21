@@ -1,29 +1,21 @@
 import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { RetrievePictureEmbedLinkResponseDTO } from "./retrieve-link.dto";
-import { PrismaProvider } from "@/libs/providers";
 import { ErrorProvider } from "@/common/providers";
 import { EmbedLinks } from "@prisma/client";
+import { EmbedLinkRepository } from "../../embed-link.repository";
 
 @Injectable()
 export class RetrievePictureEmbedLinkProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
-    private readonly error: ErrorProvider
+    private readonly error: ErrorProvider,
+    private readonly embedLinkRepo: EmbedLinkRepository
   ) {}
-
-  public async retrieveEmbedLinkByPictureId(
-    pictureId: string
-  ): Promise<EmbedLinks> {
-    return await this.prisma.embedLinks.findUnique({
-      where: { picture_id: pictureId },
-    });
-  }
 
   public async retrieveEmbedLink(
     pictureId: string
   ): Promise<RetrievePictureEmbedLinkResponseDTO> {
     const pictureEmbedLink: Awaited<EmbedLinks> =
-      await this.retrieveEmbedLinkByPictureId(pictureId);
+      await this.embedLinkRepo.findEmbedLinkByPictureId(pictureId);
 
     if (!pictureEmbedLink)
       throw new NotFoundException(
