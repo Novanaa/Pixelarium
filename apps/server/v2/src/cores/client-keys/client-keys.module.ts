@@ -8,6 +8,6 @@ import { ClientKeysRepository } from "./client-keys.repository";
   imports: [UserModule],
   controllers: [ClientKeysController],
   providers: [...providers, ClientKeysRepository],
-  exports: [CredentialsProvider],
+  exports: [CredentialsProvider, ClientKeysRepository],
 })
 export class ClientKeysModule {}
