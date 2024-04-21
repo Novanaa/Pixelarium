@@ -1,24 +1,16 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { RetrieveUserPaymentHistoryResponseDTO } from "./retrieve-history.dto";
 import { PaymentsHistory } from "@prisma/client";
-import { PrismaProvider } from "@/libs/providers";
 import { RetrieveUserProvider } from "@/cores/user/providers";
 import { RetrieveUserResponseDto } from "@/cores/user/providers/retrieve-user/retrieve-user.dto";
+import { PaymentHistoryRepository } from "../../payment-history.repository";
 
 @Injectable()
 export class RetrieveUserPaymentHistoryProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
+    private readonly paymentHistoryRepo: PaymentHistoryRepository,
     private readonly retrieveUserService: RetrieveUserProvider
   ) {}
-
-  public async retrieveUserPaymentsHistoriesByUserId(
-    userId: string
-  ): Promise<Array<PaymentsHistory>> {
-    return await this.prisma.paymentsHistory.findMany({
-      where: { user_id: userId },
-    });
-  }
 
   public async retrievePaymentsHistories(
     name: string
@@ -26,7 +18,7 @@ export class RetrieveUserPaymentHistoryProvider {
     const { user }: Awaited<RetrieveUserResponseDto> =
       await this.retrieveUserService.retrieveSingleUser(name);
     const paymentsHistories: Awaited<Array<PaymentsHistory>> =
-      await this.retrieveUserPaymentsHistoriesByUserId(user.id);
+      await this.paymentHistoryRepo.findManyByUserId(user.id);
 
     return {
       owner: user,
