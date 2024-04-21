@@ -14,6 +14,8 @@ import providers from "../providers";
 import { RetrieveUserGalleryResponseDto } from "../providers/retrieve-gallery/retrieve-gallery.dto";
 import { User } from "@prisma/client";
 import { GalleryRepository } from "../gallery.repository";
+import { PictureRepository } from "@/cores/picture/picture.repository";
+import { PictureModule } from "@/cores/picture/picture.module";
 
 describe("GalleryController", () => {
   let controller: GalleryController;
@@ -30,9 +32,10 @@ describe("GalleryController", () => {
         UserModule,
         GalleryModule,
         TestModule,
+        PictureModule,
       ],
       controllers: [GalleryController],
-      providers: [...providers, GalleryRepository],
+      providers: [...providers, GalleryRepository, PictureRepository],
     }).compile();
 
     controller = module.get<GalleryController>(GalleryController);
