@@ -21,4 +21,13 @@ export class FavoritePictureRepository {
       },
     });
   }
+
+  public async findFavoritedPicture(
+    pictureId: string,
+    favoriteId: string
+  ): Promise<Picture> {
+    return await this.prisma.picture.findUnique({
+      where: { id: pictureId, favorite_id: favoriteId },
+    });
+  }
 }
