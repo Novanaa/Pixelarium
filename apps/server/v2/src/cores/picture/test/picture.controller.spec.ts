@@ -17,6 +17,7 @@ import { EmbedLinkModule } from "@/cores/embed-link/embed-link.module";
 import * as httpMock from "node-mocks-http";
 import { Response } from "express";
 import { OutgoingHttpHeaders } from "http";
+import { PictureRepository } from "../picture.repository";
 
 describe("Picturecontroller", () => {
   let controller: PictureController;
@@ -35,7 +36,7 @@ describe("Picturecontroller", () => {
         EmbedLinkModule,
       ],
       controllers: [PictureController],
-      providers,
+      providers: [...providers, PictureRepository],
     }).compile();
 
     controller = module.get<PictureController>(PictureController);
