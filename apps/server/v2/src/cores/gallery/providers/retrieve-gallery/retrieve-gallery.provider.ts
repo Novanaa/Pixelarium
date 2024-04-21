@@ -4,19 +4,15 @@ import { PrismaProvider } from "@/libs/providers";
 import { RetrieveUserProvider } from "@/cores/user/providers";
 import { RetrieveUserResponseDto } from "@/cores/user/providers/retrieve-user/retrieve-user.dto";
 import { Gallery, Picture } from "@prisma/client";
+import { GalleryRepository } from "../../gallery.repository";
 
 @Injectable()
 export class RetrieveUserGalleryProvider {
   constructor(
     private readonly prisma: PrismaProvider,
-    private readonly retrieveUserService: RetrieveUserProvider
+    private readonly retrieveUserService: RetrieveUserProvider,
+    private readonly galleryRepo: GalleryRepository
   ) {}
-
-  public async retrieveUserGalleryByUserId(userId: string) {
-    return await this.prisma.gallery.findUnique({
-      where: { user_id: userId },
-    });
-  }
 
   public async retrieveUserGalleryPictures(
     galleryId: string
@@ -33,7 +29,7 @@ export class RetrieveUserGalleryProvider {
       await this.retrieveUserService.retrieveSingleUser(name);
 
     const userGallery: Awaited<Gallery> =
-      await this.retrieveUserGalleryByUserId(user.id);
+      await this.galleryRepo.findUniqueByUserId(user.id);
 
     const userGalleryPictures: Awaited<Array<Picture>> =
       await this.retrieveUserGalleryPictures(userGallery.id);
