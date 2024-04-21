@@ -13,6 +13,7 @@ import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
 import { RetrievePictureEmbedLinkResponseDTO } from "../providers/retrieve-link/retrieve-link.dto";
 import { EmbedLinks, Picture } from "@prisma/client";
+import { EmbedLinkRepository } from "../embed-link.repository";
 
 describe("EmbedLinkController", () => {
   let controller: EmbedLinkController;
@@ -30,7 +31,7 @@ describe("EmbedLinkController", () => {
         TestModule,
       ],
       controllers: [EmbedLinkController],
-      providers,
+      providers: [...providers, EmbedLinkRepository],
     }).compile();
 
     controller = module.get<EmbedLinkController>(EmbedLinkController);
