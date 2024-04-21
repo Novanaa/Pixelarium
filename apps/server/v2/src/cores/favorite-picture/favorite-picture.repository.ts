@@ -27,7 +27,10 @@ export class FavoritePictureRepository {
     favoriteId: string
   ): Promise<Picture> {
     return await this.prisma.picture.findUnique({
-      where: { id: pictureId, favorite_id: favoriteId },
+      where: {
+        id: pictureId,
+        favorite: { some: { id: favoriteId } },
+      },
     });
   }
 
