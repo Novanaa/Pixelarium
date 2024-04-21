@@ -1,32 +1,24 @@
-import { PrismaProvider } from "@/libs/providers";
 import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Picture } from "@prisma/client";
 import { RetrieveUserPictureResponseDTO } from "./retrieve-picture.dto";
 import { ErrorProvider } from "@/common/providers";
 import { RetrievePictureEmbedLinkProvider } from "@/cores/embed-link/providers";
 import { RetrievePictureEmbedLinkResponseDTO } from "@/cores/embed-link/providers/retrieve-link/retrieve-link.dto";
+import { PictureRepository } from "../../picture.repository";
 
 @Injectable()
 export class RetrieveUserPictureProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
+    private readonly pictureRepo: PictureRepository,
     private readonly error: ErrorProvider,
     private readonly retrievePictureEmbedLinkService: RetrievePictureEmbedLinkProvider
   ) {}
-
-  public async retrieveUserPictureById(pictureId: string): Promise<Picture> {
-    try {
-      return await this.prisma.picture.findUnique({ where: { id: pictureId } });
-    } finally {
-      await this.prisma.$disconnect();
-    }
-  }
 
   public async retrievePicture(
     pictureId: string
   ): Promise<RetrieveUserPictureResponseDTO> {
     const picture: Awaited<Picture> =
-      await this.retrieveUserPictureById(pictureId);
+      await this.pictureRepo.findUniqueById(pictureId);
 
     if (!picture)
       throw new NotFoundException(
