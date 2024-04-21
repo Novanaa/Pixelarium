@@ -13,6 +13,7 @@ import { ErrorProvider, MockDataProvider } from "@/common/providers";
 import providers from "../providers";
 import { RetrieveUserGalleryResponseDto } from "../providers/retrieve-gallery/retrieve-gallery.dto";
 import { User } from "@prisma/client";
+import { GalleryRepository } from "../gallery.repository";
 
 describe("GalleryController", () => {
   let controller: GalleryController;
@@ -31,7 +32,7 @@ describe("GalleryController", () => {
         TestModule,
       ],
       controllers: [GalleryController],
-      providers,
+      providers: [...providers, GalleryRepository],
     }).compile();
 
     controller = module.get<GalleryController>(GalleryController);
