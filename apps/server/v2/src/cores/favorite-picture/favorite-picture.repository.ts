@@ -30,4 +30,20 @@ export class FavoritePictureRepository {
       where: { id: pictureId, favorite_id: favoriteId },
     });
   }
+
+  public async unlinkFavoritedPicture(
+    pictureId: string,
+    favoriteId: string
+  ): Promise<Favorite> {
+    return await this.prisma.favorite.update({
+      where: { id: favoriteId },
+      data: {
+        pictures: {
+          disconnect: {
+            id: pictureId,
+          },
+        },
+      },
+    });
+  }
 }
