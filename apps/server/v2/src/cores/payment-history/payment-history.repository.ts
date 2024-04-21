@@ -1,6 +1,6 @@
 import { PrismaProvider } from "@/libs/providers";
 import { Injectable } from "@nestjs/common";
-import { PaymentsHistory } from "@prisma/client";
+import { OrderStatus, PaymentsHistory } from "@prisma/client";
 
 @Injectable()
 export class PaymentHistoryRepository {
@@ -20,6 +20,16 @@ export class PaymentHistoryRepository {
   ): Promise<Array<PaymentsHistory>> {
     return await this.prisma.paymentsHistory.findMany({
       where: { user_id: userId },
+    });
+  }
+
+  public async updatePaymentHistoryStatus(
+    id: string,
+    status: OrderStatus
+  ): Promise<PaymentsHistory> {
+    return await this.prisma.paymentsHistory.update({
+      where: { id },
+      data: { status },
     });
   }
 }
