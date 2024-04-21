@@ -1,7 +1,11 @@
 import { WebResponse } from "@/model/app.model";
-import { OrderStatus } from "@prisma/client";
+import { OrderStatus, PaymentsHistory, User } from "@prisma/client";
 
-export class UpdatePaymentHistoryResponseDTO extends WebResponse {}
+export class UpdatePaymentHistoryResponseDTO extends WebResponse {
+  updated_field: Record<string, string>;
+  updated_history: PaymentsHistory;
+  owner: User;
+}
 
 export class UpdatePaymentHistoryRequestDTO {
   order_status: OrderStatus;
