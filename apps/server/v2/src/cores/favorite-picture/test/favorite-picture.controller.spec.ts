@@ -17,6 +17,7 @@ import { randUuid } from "@ngneat/falso";
 import { UnfavoritePictureResponseDTO } from "../providers/unfavorite/unfavorite.dto";
 import { PictureModule } from "@/cores/picture/picture.module";
 import { AddUserFavoritePictureResponseDTO } from "../providers/add-picture/add-favorite-picture.dto";
+import { FavoritePictureRepository } from "../favorite-picture.repository";
 
 describe("FavoritePictureController", () => {
   let controller: FavoritePictureController;
@@ -36,7 +37,7 @@ describe("FavoritePictureController", () => {
         PictureModule,
       ],
       controllers: [FavoritePictureController],
-      providers,
+      providers: [...providers, FavoritePictureRepository],
     }).compile();
 
     controller = module.get<FavoritePictureController>(

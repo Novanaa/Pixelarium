@@ -1,34 +1,18 @@
+import { Picture } from "@prisma/client";
 import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { UnfavoritePictureResponseDTO } from "./unfavorite.dto";
-import { PrismaProvider } from "@/libs/providers";
-import { RetrieveUserFavoritesPicturesProvider } from "../retrieve-favorites/retrieve-favotires.provider";
 import { RetrieveUserFavoritesPicturesResponseDto } from "../retrieve-favorites/retrieve-favotires.dto";
-import { Favorite, Picture } from "@prisma/client";
 import { ErrorProvider } from "@/common/providers";
-import { UnlinkFavoritedPictureParams } from "./unfavorite";
+import { FavoritePictureRepository } from "../../favorite-picture.repository";
+import { RetrieveUserFavoritesPicturesProvider } from "../retrieve-favorites/retrieve-favotires.provider";
 
 @Injectable()
 export class UnfavoritePictureProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
-    private readonly retrieveFavoritePictureService: RetrieveUserFavoritesPicturesProvider,
-    private readonly errorService: ErrorProvider
+    private readonly errorService: ErrorProvider,
+    private readonly favoritePictureRepo: FavoritePictureRepository,
+    private readonly retrieveFavoritePictureService: RetrieveUserFavoritesPicturesProvider
   ) {}
-
-  public async unlinkFavoritedPicture(
-    param: UnlinkFavoritedPictureParams
-  ): Promise<Favorite> {
-    return await this.prisma.favorite.update({
-      where: { id: param.favoriteId },
-      data: {
-        pictures: {
-          disconnect: {
-            id: param.pictureId,
-          },
-        },
-      },
-    });
-  }
 
   public async unfavPicture(
     name: string,
@@ -43,10 +27,10 @@ export class UnfavoritePictureProvider {
       )) satisfies Awaited<RetrieveUserFavoritesPicturesResponseDto>;
 
     const favoritedPicture: Awaited<Picture> =
-      await this.retrieveFavoritePictureService.retrieveFavroitedPicture({
-        favoriteId: userFavoritePicture.id,
+      await this.favoritePictureRepo.findFavoritedPicture(
         pictureId,
-      });
+        userFavoritePicture.id
+      );
 
     if (!favoritedPicture)
       throw new NotFoundException(
@@ -55,10 +39,10 @@ export class UnfavoritePictureProvider {
         )
       );
 
-    await this.unlinkFavoritedPicture({
-      favoriteId: userFavoritePicture.id,
-      pictureId: favoritedPicture.id,
-    });
+    await this.favoritePictureRepo.unlinkFavoritedPicture(
+      favoritedPicture.id,
+      userFavoritePicture.id
+    );
 
     return {
       unfav_picture: favoritedPicture,
