@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import * as joi from "joi";
 import { AddUserPaymentHistoryRequestDTO } from "./providers/add-history/add-history.dto";
 import { SubscriptionConstant } from "@/constant/subscription.constant";
+import { UpdatePaymentHistoryRequestDTO } from "./providers/update-history/update-history.dto";
 
 @Injectable()
 export class PaymentHistoryValidation {
@@ -21,5 +22,13 @@ export class PaymentHistoryValidation {
         .string()
         .valid(...SubscriptionConstant.ORDER_STATUS)
         .default("Pending"),
+    });
+
+  public static UPDATE_HISTORY: joi.ObjectSchema<UpdatePaymentHistoryRequestDTO> =
+    joi.object({
+      order_status: joi
+        .string()
+        .required()
+        .valid(...SubscriptionConstant.ORDER_STATUS),
     });
 }
