@@ -14,6 +14,7 @@ import {
 import {
   AddUserPaymentHistoryProvider,
   RetrieveUserPaymentHistoryProvider,
+  UpdatePaymentHistoryProvider,
 } from "./providers";
 import { PrismaProvider } from "@/libs/providers";
 import { ValidationPipe } from "@/pipe/validation.pipe";
@@ -21,13 +22,18 @@ import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { AddUserPaymentHistoryRequestDTO } from "./providers/add-history/add-history.dto";
 import { RetrieveUserPaymentHistoryResponseDTO } from "./providers/retrieve-history/retrieve-history.dto";
 import { PaymentHistoryValidation } from "./payment-history.validation";
+import {
+  UpdatePaymentHistoryRequestDTO,
+  UpdatePaymentHistoryResponseDTO,
+} from "./providers/update-history/update-history.dto";
 
 @Controller("payment-history")
 export class PaymentHistoryController {
   constructor(
     private readonly prisma: PrismaProvider,
     private readonly retrieveHistoryService: RetrieveUserPaymentHistoryProvider,
-    private readonly addUserPaymentHistoryService: AddUserPaymentHistoryProvider
+    private readonly addUserPaymentHistoryService: AddUserPaymentHistoryProvider,
+    private readonly updatePaymentHistoryService: UpdatePaymentHistoryProvider
   ) {}
 
   @Get("/:name")
@@ -60,6 +66,32 @@ export class PaymentHistoryController {
   ) {
     try {
       return await this.addUserPaymentHistoryService.addHistory(name, body);
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
+
+  @Post("/:name/:orderId")
+  @Header("Content-Type", "application/json")
+  @Header("Accept", "application/json")
+  @UseFilters(ApplicationExceptionFilter)
+  @HttpCode(HttpStatus.OK)
+  public async updatePaymentHistory(
+    @Param("name") name: string,
+    @Param("orderId") orderId: string,
+    @Body(
+      new ValidationPipe<UpdatePaymentHistoryRequestDTO>(
+        PaymentHistoryValidation.UPDATE_HISTORY
+      )
+    )
+    body: UpdatePaymentHistoryRequestDTO
+  ): Promise<UpdatePaymentHistoryResponseDTO> {
+    try {
+      return await this.updatePaymentHistoryService.updatePaymentHistory({
+        name,
+        orderId,
+        body,
+      });
     } finally {
       await this.prisma.$disconnect();
     }
