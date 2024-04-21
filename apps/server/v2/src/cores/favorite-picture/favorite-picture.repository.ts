@@ -1,6 +1,6 @@
 import { PrismaProvider } from "@/libs/providers";
 import { Injectable } from "@nestjs/common";
-import { Favorite } from "@prisma/client";
+import { Favorite, Picture } from "@prisma/client";
 
 @Injectable()
 export class FavoritePictureRepository {
@@ -9,6 +9,16 @@ export class FavoritePictureRepository {
   public async findByUserId(userId: string): Promise<Favorite> {
     return await this.prisma.favorite.findUnique({
       where: { user_id: userId },
+    });
+  }
+
+  public async findFavoritedPictures(
+    favoriteId: string
+  ): Promise<Array<Picture>> {
+    return await this.prisma.picture.findMany({
+      where: {
+        favorite: { some: { id: favoriteId } },
+      },
     });
   }
 }
