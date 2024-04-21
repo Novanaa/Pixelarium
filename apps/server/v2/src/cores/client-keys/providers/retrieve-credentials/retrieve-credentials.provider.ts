@@ -3,20 +3,14 @@ import { RetrieveUserProvider } from "@/cores/user/providers";
 import { RetrieveUserClientCredentialsKeysResponseDto } from "./retrieve-credentials.dto";
 import { RetrieveUserResponseDto } from "@/cores/user/providers/retrieve-user/retrieve-user.dto";
 import { ClientKey } from "@prisma/client";
-import { PrismaProvider } from "@/libs/providers";
+import { ClientKeysRepository } from "../../client-keys.repository";
 
 @Injectable()
 export class RetrieveUserClientCredentialsKeysProvider {
   constructor(
     private readonly retrieveUser: RetrieveUserProvider,
-    private readonly prisma: PrismaProvider
+    private readonly clientKeysRepo: ClientKeysRepository
   ) {}
-
-  public async retrieveUserClientKeys(userId: string): Promise<ClientKey> {
-    return await this.prisma.clientKey.findUnique({
-      where: { user_id: userId },
-    });
-  }
 
   public async retrieveCredentials(
     name: string
@@ -25,7 +19,7 @@ export class RetrieveUserClientCredentialsKeysProvider {
       await this.retrieveUser.retrieveSingleUser(name);
 
     const userCredentialsKeys: Awaited<ClientKey> =
-      await this.retrieveUserClientKeys(user.id);
+      await this.clientKeysRepo.findByUserId(user.id);
 
     return {
       credentials_keys: userCredentialsKeys,
