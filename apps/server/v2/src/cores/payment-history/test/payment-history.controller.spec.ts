@@ -15,7 +15,10 @@ import { RetrieveUserPaymentHistoryResponseDTO } from "../providers/retrieve-his
 import { PaymentsHistory, User } from "@prisma/client";
 import { PaymentHistoryRepository } from "../payment-history.repository";
 import * as falso from "@ngneat/falso";
-import { UpdatePaymentHistoryResponseDTO } from "../providers/update-history/update-history.dto";
+import {
+  UpdatePaymentHistoryRequestDTO,
+  UpdatePaymentHistoryResponseDTO,
+} from "../providers/update-history/update-history.dto";
 
 describe("PaymentHistoryController", () => {
   let controller: PaymentHistoryController;
@@ -242,6 +245,130 @@ describe("PaymentHistoryController", () => {
         );
 
       expect(response.code).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.status).toBe("OK");
+    });
+    it("owner response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.owner).toBeDefined();
+    });
+    it("updated field response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.updated_field).toBeDefined();
+    });
+    it("updated history response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.updated_history).toBeDefined();
+    });
+    it("updated history status response data should be 'Failed'", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.updated_history.status).toBe("Failed");
+    });
+    it("updated field response data should be equal to request payload", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const payload: UpdatePaymentHistoryRequestDTO = {
+        order_status: "Failed",
+      };
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          payload
+        );
+
+      expect(response.updated_field).toEqual({ status: payload.order_status });
+    });
+    it("owner response data should be match to requested user", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const payload: UpdatePaymentHistoryRequestDTO = {
+        order_status: "Failed",
+      };
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          payload
+        );
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
     });
   });
 });
