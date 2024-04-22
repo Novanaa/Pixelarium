@@ -21,4 +21,8 @@ export class UserRepository {
   public async usernameAlreadyTaken(name: string): Promise<boolean> {
     return (await this.prisma.user.count({ where: { name } })) > 0;
   }
+
+  public async updateByName(name: string, payload: Partial<User>) {
+    return await this.prisma.user.update({ where: { name }, data: payload });
+  }
 }
