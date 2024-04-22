@@ -27,6 +27,7 @@ import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { AddUserPaymentHistoryRequestDTO } from "./providers/add-history/add-history.dto";
 import { RetrieveUserPaymentHistoryResponseDTO } from "./providers/retrieve-history/retrieve-history.dto";
 import { PaymentHistoryValidation } from "./payment-history.validation";
+import { EmptyPayloadValidationPipe } from "@/pipe/payload.pipe";
 
 @Controller("payment-history")
 export class PaymentHistoryController {
@@ -81,6 +82,7 @@ export class PaymentHistoryController {
     @Param("name") name: string,
     @Param("orderId") orderId: string,
     @Body(
+      EmptyPayloadValidationPipe,
       new ValidationPipe<UpdatePaymentHistoryRequestDTO>(
         PaymentHistoryValidation.UPDATE_HISTORY
       )
