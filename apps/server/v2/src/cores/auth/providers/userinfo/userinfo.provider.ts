@@ -1,3 +1,7 @@
+import {
+  UserInfoGenerateCredentials,
+  UserInfoGenerateResponseCookieParam,
+} from "./userinfo";
 import slugify from "slugify";
 import { User } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
@@ -5,21 +9,17 @@ import * as jsonwebtoken from "jsonwebtoken";
 import { PrismaProvider } from "@/libs/providers";
 import { UserInfoCreateUserDto } from "./userinfo.dto";
 import { PictureConstant } from "@/constant/picture.constant";
-import { RetrieveUserProvider } from "@/cores/user/providers";
-import {
-  UserInfoGenerateCredentials,
-  UserInfoGenerateResponseCookieParam,
-} from "./userinfo";
 import { AuthConstant } from "@/constant/auth.constant";
 import { Environment } from "@/configs";
 import { CredentialsProvider } from "@/cores/client-keys/providers";
 import { GeneratedClientKeysCredentials } from "@/cores/client-keys/providers/credentials/credentials";
+import { UserRepository } from "@/cores/user/user.repository";
 
 @Injectable()
 export class UserInfoProvider {
   constructor(
-    private readonly retrieveUser: RetrieveUserProvider,
     private readonly prisma: PrismaProvider,
+    private readonly userRepo: UserRepository,
     private readonly clientKeysCredentials: CredentialsProvider
   ) {}
 
@@ -27,7 +27,7 @@ export class UserInfoProvider {
     /[\s!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?0-9]/g;
 
   public async retrieveUserByOriginCode(code: number): Promise<User> {
-    return await this.retrieveUser.retrieveUserByOriginCode(code);
+    return await this.userRepo.findByOriginCode(code);
   }
 
   public async createUser(userinfo: UserInfoCreateUserDto): Promise<User> {
