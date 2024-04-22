@@ -12,8 +12,13 @@ import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
 import { RetrieveUserPaymentHistoryResponseDTO } from "../providers/retrieve-history/retrieve-history.dto";
-import { User } from "@prisma/client";
+import { PaymentsHistory, User } from "@prisma/client";
 import { PaymentHistoryRepository } from "../payment-history.repository";
+import * as falso from "@ngneat/falso";
+import {
+  UpdatePaymentHistoryRequestDTO,
+  UpdatePaymentHistoryResponseDTO,
+} from "../providers/update-history/update-history.dto";
 
 describe("PaymentHistoryController", () => {
   let controller: PaymentHistoryController;
@@ -139,6 +144,231 @@ describe("PaymentHistoryController", () => {
         await controller.retrieveHistories(user.name);
 
       expect(response.owner.password).toBeUndefined();
+    });
+  });
+
+  describe("PATCH /payment-history/:name/:orderId", () => {
+    it("should be throw not found exception response error if the user doesn't exist", async () => {
+      try {
+        await controller.updatePaymentHistory("0", falso.randUuid(), {
+          order_status: "Failed",
+        });
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(errorService.notFound());
+      }
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      try {
+        await controller.updatePaymentHistory("0", falso.randUuid(), {
+          order_status: "Failed",
+        });
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the user doesn't exist", async () => {
+      try {
+        await controller.updatePaymentHistory("0", falso.randUuid(), {
+          order_status: "Failed",
+        });
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("status response should be 'KO' if the payment history doesn't exist", async () => {
+      try {
+        const user: Awaited<User> = await prisma.user.findFirst();
+        await controller.updatePaymentHistory(user.name, falso.randUuid(), {
+          order_status: "Failed",
+        });
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be return 404 status code if the payment history doesn't exist", async () => {
+      try {
+        const user: Awaited<User> = await prisma.user.findFirst();
+        await controller.updatePaymentHistory(user.name, falso.randUuid(), {
+          order_status: "Failed",
+        });
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("should be throw not found exception if the payment history doesn't exist", async () => {
+      try {
+        const user: Awaited<User> = await prisma.user.findFirst();
+        await controller.updatePaymentHistory(user.name, falso.randUuid(), {
+          order_status: "Failed",
+        });
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.notFound(
+            "Sorry, the requested payment history could not be found."
+          )
+        );
+      }
+    });
+    it("should be return 200 status code", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.code).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.status).toBe("OK");
+    });
+    it("owner response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.owner).toBeDefined();
+    });
+    it("updated field response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.updated_field).toBeDefined();
+    });
+    it("updated history response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.updated_history).toBeDefined();
+    });
+    it("updated history status response data should be 'Failed'", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          {
+            order_status: "Failed",
+          }
+        );
+
+      expect(response.updated_history.status).toBe("Failed");
+    });
+    it("updated field response data should be equal to request payload", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const payload: UpdatePaymentHistoryRequestDTO = {
+        order_status: "Failed",
+      };
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          payload
+        );
+
+      expect(response.updated_field).toEqual({ status: payload.order_status });
+    });
+    it("owner response data should be match to requested user", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const paymentHistory: Awaited<PaymentsHistory> =
+        await prisma.paymentsHistory.findFirst({
+          where: { user_id: user.id },
+        });
+      const payload: UpdatePaymentHistoryRequestDTO = {
+        order_status: "Failed",
+      };
+      const response: Awaited<UpdatePaymentHistoryResponseDTO> =
+        await controller.updatePaymentHistory(
+          user.name,
+          paymentHistory.order_id,
+          payload
+        );
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
     });
   });
 });
