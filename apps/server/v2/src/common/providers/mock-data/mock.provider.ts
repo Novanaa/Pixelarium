@@ -4,7 +4,15 @@ import * as crypto from "crypto";
 import * as falso from "@ngneat/falso";
 import { Injectable } from "@nestjs/common";
 import { PictureConstant } from "@/constant/picture.constant";
-import { EmbedLinks, Picture, PictureType, User } from "@prisma/client";
+import {
+  EmbedLinks,
+  OrderStatus,
+  PaymentsHistory,
+  Picture,
+  PictureType,
+  User,
+  UserPlan,
+} from "@prisma/client";
 import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import { GeneratedClientKeysCredentials } from "@/cores/client-keys/providers/credentials/credentials";
 
@@ -101,6 +109,20 @@ export class MockDataProvider {
     return picture;
   }
 
+  public generateRandomPaymentHistory(): Partial<PaymentsHistory> {
+    return {
+      order_id: falso.randUuid(),
+      plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+      order_date: new Date(),
+      interval_count: falso.randNumber(),
+      status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+      amount: {
+        USD: falso.randNumber(),
+        IDR: falso.randNumber(),
+      },
+    };
+  }
+
   public async createRandomUser(): Promise<User> {
     try {
       return await this.prisma.user.create({
@@ -121,6 +143,11 @@ export class MockDataProvider {
                   },
                 },
               },
+            },
+          },
+          payment_history: {
+            create: {
+              ...(this.generateRandomPaymentHistory() as PaymentsHistory),
             },
           },
           favorite: {
