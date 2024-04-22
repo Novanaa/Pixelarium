@@ -17,4 +17,8 @@ export class UserRepository {
   public async deleteByName(name: string): Promise<void> {
     await this.prisma.user.delete({ where: { name } });
   }
+
+  public async usernameAlreadyTaken(name: string): Promise<boolean> {
+    return (await this.prisma.user.count({ where: { name } })) > 0;
+  }
 }
