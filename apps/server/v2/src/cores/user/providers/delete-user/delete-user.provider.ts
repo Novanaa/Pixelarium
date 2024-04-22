@@ -1,23 +1,19 @@
 import * as fs from "fs";
 import * as path from "path";
-import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { DeleteUserResponseDto } from "./delete-user.dto";
 import { RetrieveUserProvider } from "../retrieve-user/retrieve-user.provider";
 import { RetrieveUserResponseDto } from "../retrieve-user/retrieve-user.dto";
 import { StaticDirectoryProvider } from "@/common/providers/static-directoty/static-directory.provider";
+import { UserRepository } from "../../user.repository";
 
 @Injectable()
 export class DeleteUserProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
+    private readonly userRepo: UserRepository,
     private readonly retrieveUserService: RetrieveUserProvider,
     private readonly staticDirectory: StaticDirectoryProvider
   ) {}
-
-  public async deleteSingleUser(name: string): Promise<void> {
-    await this.prisma.user.delete({ where: { name } });
-  }
 
   public async deleteUser(name: string): Promise<DeleteUserResponseDto> {
     const { user }: Awaited<RetrieveUserResponseDto> =
@@ -29,7 +25,7 @@ export class DeleteUserProvider {
 
     if (fs.existsSync(dirpath)) fs.unlinkSync(dirpath);
 
-    await this.deleteSingleUser(name);
+    await this.userRepo.deleteByName(name);
 
     return {
       deleted_user: user,
