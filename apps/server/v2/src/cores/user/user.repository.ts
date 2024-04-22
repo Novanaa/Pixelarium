@@ -13,4 +13,8 @@ export class UserRepository {
   public async findByOriginCode(origin_code: number): Promise<User> {
     return await this.prisma.user.findUnique({ where: { origin_code } });
   }
+
+  public async deleteByName(name: string): Promise<void> {
+    await this.prisma.user.delete({ where: { name } });
+  }
 }
