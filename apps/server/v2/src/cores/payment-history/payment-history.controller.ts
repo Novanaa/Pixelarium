@@ -8,6 +8,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
   UseFilters,
 } from "@nestjs/common";
@@ -16,16 +17,16 @@ import {
   RetrieveUserPaymentHistoryProvider,
   UpdatePaymentHistoryProvider,
 } from "./providers";
+import {
+  UpdatePaymentHistoryRequestDTO,
+  UpdatePaymentHistoryResponseDTO,
+} from "./providers/update-history/update-history.dto";
 import { PrismaProvider } from "@/libs/providers";
 import { ValidationPipe } from "@/pipe/validation.pipe";
 import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { AddUserPaymentHistoryRequestDTO } from "./providers/add-history/add-history.dto";
 import { RetrieveUserPaymentHistoryResponseDTO } from "./providers/retrieve-history/retrieve-history.dto";
 import { PaymentHistoryValidation } from "./payment-history.validation";
-import {
-  UpdatePaymentHistoryRequestDTO,
-  UpdatePaymentHistoryResponseDTO,
-} from "./providers/update-history/update-history.dto";
 
 @Controller("payment-history")
 export class PaymentHistoryController {
@@ -71,7 +72,7 @@ export class PaymentHistoryController {
     }
   }
 
-  @Post("/:name/:orderId")
+  @Patch("/:name/:orderId")
   @Header("Content-Type", "application/json")
   @Header("Accept", "application/json")
   @UseFilters(ApplicationExceptionFilter)
