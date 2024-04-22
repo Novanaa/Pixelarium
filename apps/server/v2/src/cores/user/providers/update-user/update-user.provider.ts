@@ -18,17 +18,16 @@ import {
 } from "@/common/providers";
 import * as fs from "fs";
 import * as path from "path";
-import { User } from "@prisma/client";
 import { ValidationResult } from "joi";
-import { PrismaProvider } from "@/libs/providers/prisma-client/prisma.provider";
 import { UserValidation } from "../../user.validation";
 import { RetrieveUserProvider } from "../retrieve-user/retrieve-user.provider";
 import { RetrieveUserResponseDto } from "../retrieve-user/retrieve-user.dto";
+import { UserRepository } from "../../user.repository";
 
 @Injectable()
 export class UpdateUserProvider {
   constructor(
-    private readonly prisma: PrismaProvider,
+    private readonly userRepo: UserRepository,
     private readonly error: ErrorProvider,
     private readonly retrieveUserService: RetrieveUserProvider,
     private readonly validation: ValidationProvider,
@@ -37,14 +36,6 @@ export class UpdateUserProvider {
   ) {}
 
   private readonly MAX_FILESIZE: number = 1; // maximum file size in mb
-
-  public async updateUserByName(name: string, payload: Partial<User>) {
-    return await this.prisma.user.update({ where: { name }, data: payload });
-  }
-
-  private async usernameAlreadyTaken(name: string): Promise<boolean> {
-    return (await this.prisma.user.count({ where: { name } })) > 0;
-  }
 
   public async updateUser({
     name,
@@ -73,7 +64,7 @@ export class UpdateUserProvider {
       );
 
     if (value.name && value.name !== user.name) {
-      if (await this.usernameAlreadyTaken(value.name))
+      if (await this.userRepo.usernameAlreadyTaken(value.name))
         throw new BadRequestException(
           this.error.badRequest(
             "The name is already taken, please choose another name!"
@@ -89,7 +80,7 @@ export class UpdateUserProvider {
     }
 
     if (!avatar) {
-      await this.updateUserByName(name, value);
+      await this.userRepo.updateByName(name, value);
 
       return {
         updated_field: payload,
@@ -141,7 +132,7 @@ export class UpdateUserProvider {
         )
       );
 
-    await this.updateUserByName(name, { ...value, avatar: avatarUrlpath });
+    await this.userRepo.updateByName(name, { ...value, avatar: avatarUrlpath });
 
     fs.writeFileSync(avatarDirpath, avatar.buffer);
 
