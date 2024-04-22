@@ -9,35 +9,34 @@ import { HttpException, HttpStatus } from "@nestjs/common";
 import { ErrorProvider } from "@/common/providers/error/error.provider";
 import { MockDataProvider } from "@/common/providers/mock-data/mock.provider";
 import { DeleteUserResponseDto } from "../providers/delete-user/delete-user.dto";
-import { UpdateUserProvider } from "../providers/update-user/update-user.provider";
-import { DeleteUserProvider } from "../providers/delete-user/delete-user.provider";
-import { RetrieveUserProvider } from "../providers/retrieve-user/retrieve-user.provider";
 import { RetrieveUserResponseDto } from "../providers/retrieve-user/retrieve-user.dto";
 import { PrismaProvider } from "@/libs/providers";
 import { UpdateUserRequestDto } from "../providers/update-user/update-user.dto";
 import { LifecycleProvider } from "../../../../test/providers";
+import { UserRepository } from "../user.repository";
+import providers from "../providers";
 
 describe("User Controller", () => {
   let controller: UserController;
   let errorService: ErrorProvider;
   let mockData: MockDataProvider;
-  let retrieveUser: RetrieveUserProvider;
   let prisma: PrismaProvider;
   let testLifecycle: LifecycleProvider;
+  let userRepo: UserRepository;
 
   beforeAll(async () => {
     const app: Awaited<TestingModule> = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [RetrieveUserProvider, DeleteUserProvider, UpdateUserProvider],
+      providers: [...providers, UserRepository],
       imports: [CommonModule, LibsModule, TestModule],
     }).compile();
 
     controller = app.get<UserController>(UserController);
     errorService = app.get<ErrorProvider>(ErrorProvider);
     mockData = app.get<MockDataProvider>(MockDataProvider);
-    retrieveUser = app.get<RetrieveUserProvider>(RetrieveUserProvider);
     prisma = app.get<PrismaProvider>(PrismaProvider);
     testLifecycle = app.get<LifecycleProvider>(LifecycleProvider);
+    userRepo = app.get<UserRepository>(UserRepository);
 
     await testLifecycle.ModuleTestInit();
   });
@@ -208,8 +207,7 @@ describe("User Controller", () => {
     it("the requested user should be deleted", async () => {
       const user: Awaited<User> = await mockData.createRandomUser();
       await controller.deleteUser(user.name);
-      const isUserDeleted: Awaited<User> =
-        await retrieveUser.retrieveUserByName(user.name);
+      const isUserDeleted: Awaited<User> = await userRepo.findByName(user.name);
 
       expect(isUserDeleted).toBeNull();
     });
