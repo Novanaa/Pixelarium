@@ -10,21 +10,26 @@ import { LifecycleProvider } from "../../../../test/providers";
 import { PrismaProvider } from "@/libs/providers";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { ResponseError } from "@/model/error.model";
-import { ErrorProvider } from "@/common/providers";
+import { ErrorProvider, MockDataProvider } from "@/common/providers";
 import { RetrieveUserPaymentHistoryResponseDTO } from "../providers/retrieve-history/retrieve-history.dto";
-import { PaymentsHistory, User } from "@prisma/client";
+import { OrderStatus, PaymentsHistory, User, UserPlan } from "@prisma/client";
 import { PaymentHistoryRepository } from "../payment-history.repository";
 import * as falso from "@ngneat/falso";
 import {
   UpdatePaymentHistoryRequestDTO,
   UpdatePaymentHistoryResponseDTO,
 } from "../providers/update-history/update-history.dto";
+import {
+  AddUserPaymentHistoryRequestDTO,
+  AddUserPaymentHistoryResponseDTO,
+} from "../providers/add-history/add-history.dto";
 
 describe("PaymentHistoryController", () => {
   let controller: PaymentHistoryController;
   let lifecycleTest: LifecycleProvider;
   let prisma: PrismaProvider;
   let errorService: ErrorProvider;
+  let mockData: MockDataProvider;
 
   beforeEach(async () => {
     const module: Awaited<TestingModule> = await Test.createTestingModule({
@@ -43,6 +48,7 @@ describe("PaymentHistoryController", () => {
     lifecycleTest = module.get<LifecycleProvider>(LifecycleProvider);
     prisma = module.get<PrismaProvider>(PrismaProvider);
     errorService = module.get<ErrorProvider>(ErrorProvider);
+    mockData = module.get<MockDataProvider>(MockDataProvider);
 
     await lifecycleTest.ModuleTestInit();
   });
@@ -144,6 +150,194 @@ describe("PaymentHistoryController", () => {
         await controller.retrieveHistories(user.name);
 
       expect(response.owner.password).toBeUndefined();
+    });
+  });
+
+  describe("POST /payment-history/:name", () => {
+    it("should be throw not found exception if the user doesn't exist", async () => {
+      try {
+        const payload: AddUserPaymentHistoryRequestDTO = {
+          status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+          plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+          order_id: falso.randUuid(),
+          order_date: new Date(),
+          interval_count: falso.randNumber(),
+          amount: {
+            IDR: falso.randNumber(),
+            USD: falso.randNumber(),
+          },
+        } satisfies AddUserPaymentHistoryRequestDTO;
+        await controller.addUserPaymentHistory("0", payload);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(errorService.notFound());
+      }
+    });
+    it("should be return 404 status code if the user doesn't exist", async () => {
+      try {
+        const payload: AddUserPaymentHistoryRequestDTO = {
+          status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+          plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+          order_id: falso.randUuid(),
+          order_date: new Date(),
+          interval_count: falso.randNumber(),
+          amount: {
+            IDR: falso.randNumber(),
+            USD: falso.randNumber(),
+          },
+        } satisfies AddUserPaymentHistoryRequestDTO;
+        await controller.addUserPaymentHistory("0", payload);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the payment history is already created", async () => {
+      try {
+        const user: Awaited<User> = await prisma.user.findFirst();
+        const dummyPaymentHistory: Partial<PaymentsHistory> =
+          mockData.generateRandomPaymentHistory();
+
+        const generatedPaymentHistory: Awaited<PaymentsHistory> =
+          await prisma.paymentsHistory.create({
+            data: {
+              ...dummyPaymentHistory,
+              user_id: user.id,
+            } as PaymentsHistory,
+          });
+        const payload: AddUserPaymentHistoryRequestDTO = {
+          status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+          plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+          order_id: generatedPaymentHistory.order_id,
+          order_date: new Date(),
+          interval_count: falso.randNumber(),
+          amount: {
+            IDR: falso.randNumber(),
+            USD: falso.randNumber(),
+          },
+        } satisfies AddUserPaymentHistoryRequestDTO;
+
+        await controller.addUserPaymentHistory(user.name, payload);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be return 403 status code if the payment history is already created", async () => {
+      try {
+        const user: Awaited<User> = await prisma.user.findFirst();
+        const dummyPaymentHistory: Partial<PaymentsHistory> =
+          mockData.generateRandomPaymentHistory();
+
+        const generatedPaymentHistory: Awaited<PaymentsHistory> =
+          await prisma.paymentsHistory.create({
+            data: {
+              ...dummyPaymentHistory,
+              user_id: user.id,
+            } as PaymentsHistory,
+          });
+        const payload: AddUserPaymentHistoryRequestDTO = {
+          status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+          plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+          order_id: generatedPaymentHistory.order_id,
+          order_date: new Date(),
+          interval_count: falso.randNumber(),
+          amount: {
+            IDR: falso.randNumber(),
+            USD: falso.randNumber(),
+          },
+        } satisfies AddUserPaymentHistoryRequestDTO;
+
+        await controller.addUserPaymentHistory(user.name, payload);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.FORBIDDEN);
+        expect(err.getStatus()).toBe(HttpStatus.FORBIDDEN);
+      }
+    });
+    it("should be throw forbidden exception if the payment history is already created", async () => {
+      try {
+        const user: Awaited<User> = await prisma.user.findFirst();
+        const dummyPaymentHistory: Partial<PaymentsHistory> =
+          mockData.generateRandomPaymentHistory();
+
+        const generatedPaymentHistory: Awaited<PaymentsHistory> =
+          await prisma.paymentsHistory.create({
+            data: {
+              ...dummyPaymentHistory,
+              user_id: user.id,
+            } as PaymentsHistory,
+          });
+        const payload: AddUserPaymentHistoryRequestDTO = {
+          status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+          plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+          order_id: generatedPaymentHistory.order_id,
+          order_date: new Date(),
+          interval_count: falso.randNumber(),
+          amount: {
+            IDR: falso.randNumber(),
+            USD: falso.randNumber(),
+          },
+        } satisfies AddUserPaymentHistoryRequestDTO;
+
+        await controller.addUserPaymentHistory(user.name, payload);
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.forbidden(
+            "The payment history order id cannot used twice"
+          )
+        );
+      }
+    });
+    it("should be return 200 status code", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.code).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.status).toBe("OK");
     });
   });
 
