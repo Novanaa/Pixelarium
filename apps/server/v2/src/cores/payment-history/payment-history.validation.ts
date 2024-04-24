@@ -10,7 +10,9 @@ export class PaymentHistoryValidation {
     joi.object({
       plan: joi
         .string()
-        .valid(...SubscriptionConstant.USERPLAN)
+        .valid(
+          ...SubscriptionConstant.USERPLAN.filter((plan) => plan !== "None")
+        )
         .required(),
       interval_count: joi.number().default(1),
       order_date: joi.date().required(),
