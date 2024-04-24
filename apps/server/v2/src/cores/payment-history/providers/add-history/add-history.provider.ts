@@ -10,6 +10,7 @@ import { RetrieveUserResponseDto } from "@/cores/user/providers/retrieve-user/re
 import { SubscriptionConstant } from "@/constant/subscription.constant";
 import { PaymentsHistory, Prisma } from "@prisma/client";
 import { OrderAmount, createPaymentHistoryParam } from "./add-history";
+import { UserPaymentHistory } from "@/model/app";
 
 @Injectable()
 export class AddUserPaymentHistoryProvider {
@@ -72,7 +73,8 @@ export class AddUserPaymentHistoryProvider {
       });
 
     return {
-      history: paymentHistory,
+      // @ts-expect-error interface conflicts
+      history: paymentHistory as UserPaymentHistory,
       owner: user,
       code: HttpStatus.CREATED,
       status: "OK",

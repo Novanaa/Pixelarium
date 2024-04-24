@@ -111,7 +111,7 @@ export class MockDataProvider {
 
   public generateRandomPaymentHistory(): Partial<PaymentsHistory> {
     return {
-      order_id: falso.randUuid(),
+      order_id: "plxmoid-" + falso.randUuid(),
       plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
       order_date: new Date(),
       interval_count: falso.randNumber(),
