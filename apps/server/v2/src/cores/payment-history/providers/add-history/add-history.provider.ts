@@ -36,9 +36,11 @@ export class AddUserPaymentHistoryProvider {
     userId: string,
     orderId: string
   ): Promise<boolean> {
-    return !(await this.prisma.paymentsHistory.count({
-      where: { user_id: userId, order_id: orderId },
-    }));
+    return (
+      (await this.prisma.paymentsHistory.count({
+        where: { user_id: userId, order_id: orderId },
+      })) > 0
+    );
   }
 
   public async addHistory(
@@ -48,7 +50,7 @@ export class AddUserPaymentHistoryProvider {
     const { user }: Awaited<RetrieveUserResponseDto> =
       await this.retrieveUserService.retrieveSingleUser(name);
 
-    if (this.isHistoryAlreadyCreated(user.id, body.order_id))
+    if (await this.isHistoryAlreadyCreated(user.id, body.order_id))
       throw new ForbiddenException(
         this.errorService.forbidden(
           "The payment history order id cannot used twice"
