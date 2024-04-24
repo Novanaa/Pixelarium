@@ -60,6 +60,7 @@ export class PaymentHistoryController {
   public async addUserPaymentHistory(
     @Param("name") name: string,
     @Body(
+      EmptyPayloadValidationPipe,
       new ValidationPipe<AddUserPaymentHistoryRequestDTO>(
         PaymentHistoryValidation.ADD_PAYMENT_HISTORY
       )
