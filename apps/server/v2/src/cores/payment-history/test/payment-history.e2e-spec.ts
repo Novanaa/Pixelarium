@@ -16,6 +16,7 @@ import {
   UpdatePaymentHistoryRequestDTO,
   UpdatePaymentHistoryResponseDTO,
 } from "../providers/update-history/update-history.dto";
+import * as falso from "@ngneat/falso";
 
 describe("PaymentHistoryController (e2e)", () => {
   let app: INestApplication;
@@ -184,6 +185,153 @@ describe("PaymentHistoryController (e2e)", () => {
         response.body as RetrieveUserPaymentHistoryResponseDTO;
 
       expect(body.owner.password).toBeUndefined();
+    });
+  });
+
+  describe("POST /payment-history/:name", () => {
+    it("should be throw bad request exception if the request payload is empty", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post("/payment-history/0");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.badRequest(
+          "The request you made is missing the required request body. Please provide the necessary data in the request body to proceed."
+        )
+      );
+    });
+    it("should be return 400 status code if the request payload is empty", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post("/payment-history/0");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the request payload is empty", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer()).post("/payment-history/0");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw bad request exception if the request payload is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "Gold",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(error.badRequest("test is not allowed"));
+    });
+    it("should be return 400 status code if the request payload is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "Gold",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the request payload is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "Gold",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("should be return 400 status code if the request payload user plan is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "none",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the request payload user plan is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "none",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be throw bad request exception if the request payload user plan is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "none",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.badRequest("plan must be one of [Diamond, Gold, Netherite]")
+      );
+    });
+    it("should be return 400 status code if the request payload user plan is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "none",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the request payload user plan is invalid", async () => {
+      const response: Awaited<supertest.Request | supertest.Response> =
+        await supertest(app.getHttpServer())
+          .post("/payment-history/0")
+          .send({
+            plan: "none",
+            order_date: new Date(),
+            order_id: "plxmoid-" + falso.randUuid(),
+            test: "test",
+          });
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
     });
   });
 
