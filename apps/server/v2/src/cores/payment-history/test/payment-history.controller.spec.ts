@@ -23,6 +23,7 @@ import {
   AddUserPaymentHistoryRequestDTO,
   AddUserPaymentHistoryResponseDTO,
 } from "../providers/add-history/add-history.dto";
+import { SubscriptionConstant } from "@/constant/subscription.constant";
 
 describe("PaymentHistoryController", () => {
   let controller: PaymentHistoryController;
@@ -301,7 +302,7 @@ describe("PaymentHistoryController", () => {
         );
       }
     });
-    it("should be return 200 status code", async () => {
+    it("should be return 201 status code", async () => {
       const user: Awaited<User> = await prisma.user.findFirst();
       const payload: AddUserPaymentHistoryRequestDTO = {
         status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
@@ -318,7 +319,7 @@ describe("PaymentHistoryController", () => {
       const response: Awaited<AddUserPaymentHistoryResponseDTO> =
         await controller.addUserPaymentHistory(user.name, payload);
 
-      expect(response.code).toBe(HttpStatus.OK);
+      expect(response.code).toBe(HttpStatus.CREATED);
     });
     it("status response should be 'OK'", async () => {
       const user: Awaited<User> = await prisma.user.findFirst();
@@ -338,6 +339,147 @@ describe("PaymentHistoryController", () => {
         await controller.addUserPaymentHistory(user.name, payload);
 
       expect(response.status).toBe("OK");
+    });
+    it("owner response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.owner).toBeDefined();
+    });
+    it("owner response data should be match to requested user", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      delete user.email;
+      delete user.password;
+
+      expect(JSON.stringify(response.owner)).toMatch(JSON.stringify(user));
+    });
+    it("history response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.history).toBeDefined();
+    });
+    it("history amount response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.history.amount).toBeDefined();
+    });
+    it("history amount.USD response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.history.amount.USD).toBeDefined();
+    });
+    it("history amount.IDR response data should be defined", async () => {
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: falso.rand<UserPlan>(["Diamond", "Gold", "Netherite"]),
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: falso.randNumber(),
+        amount: {
+          IDR: falso.randNumber(),
+          USD: falso.randNumber(),
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.history.amount.IDR).toBeDefined();
+    });
+    it("history amount.USD response data should be equal to usd amount times interval count", async () => {
+      const usdAmount: number = falso.randNumber();
+      const intervalCount: number = falso.randNumber();
+      const userPlan: UserPlan = "Gold";
+      const user: Awaited<User> = await prisma.user.findFirst();
+      const payload: AddUserPaymentHistoryRequestDTO = {
+        status: falso.rand<OrderStatus>(["Failed", "Pending", "Success"]),
+        plan: userPlan,
+        order_id: falso.randUuid(),
+        order_date: new Date(),
+        interval_count: intervalCount,
+        amount: {
+          IDR: falso.randNumber(),
+          USD: usdAmount,
+        },
+      } satisfies AddUserPaymentHistoryRequestDTO;
+
+      const response: Awaited<AddUserPaymentHistoryResponseDTO> =
+        await controller.addUserPaymentHistory(user.name, payload);
+
+      expect(response.history.amount.USD).toEqual(
+        SubscriptionConstant.PLAN_PRICES[userPlan.toLowerCase()] * intervalCount
+      );
     });
   });
 
