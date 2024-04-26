@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   Header,
   HttpCode,
@@ -10,6 +11,7 @@ import {
   UseFilters,
 } from "@nestjs/common";
 import {
+  DeletePictureProvider,
   DownloadUserPictureProvider,
   RetrieveUserPictureProvider,
 } from "./providers";
@@ -18,13 +20,15 @@ import { PrismaProvider } from "@/libs/providers";
 import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { RetrieveUserPictureResponseDTO } from "./providers/retrieve-picture/retrieve-picture.dto";
 import { DownloadUserPicture } from "./providers/download-picture/download-picture";
+import { DeletePictureResponseDTO } from "./providers/delete-picture/delete-picture.dto";
 
 @Controller("picture")
 export class PictureController {
   constructor(
     private readonly prisma: PrismaProvider,
     private readonly retrieveUserPictureService: RetrieveUserPictureProvider,
-    private readonly downloadUserPictureService: DownloadUserPictureProvider
+    private readonly downloadUserPictureService: DownloadUserPictureProvider,
+    private readonly deletePictureService: DeletePictureProvider
   ) {}
 
   @Get("/:pictureId")
@@ -60,6 +64,21 @@ export class PictureController {
         `attachment; filename=${response.filename}`
       );
       return res.status(HttpStatus.OK).send(response.binary);
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
+
+  @Delete("/:pictureId")
+  @UseFilters(ApplicationExceptionFilter)
+  @Header("Content-Type", "application/json")
+  @Header("Accept", "application/json")
+  @HttpCode(HttpStatus.OK)
+  public async deletePicture(
+    @Param("pictureId", ParseUUIDPipe) pictureId: string
+  ): Promise<DeletePictureResponseDTO> {
+    try {
+      return await this.deletePictureService.deletePicture(pictureId);
     } finally {
       await this.prisma.$disconnect();
     }
