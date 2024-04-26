@@ -21,4 +21,10 @@ export class PictureRepository {
       where: { id: pictureId },
     });
   }
+
+  public async removesPictures(galleryId: string): Promise<void> {
+    await this.prisma.picture.deleteMany({
+      where: { gallery_id: galleryId },
+    });
+  }
 }

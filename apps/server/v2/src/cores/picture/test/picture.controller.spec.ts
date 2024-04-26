@@ -20,6 +20,7 @@ import { OutgoingHttpHeaders } from "http";
 import { PictureRepository } from "../picture.repository";
 import * as falso from "@ngneat/falso";
 import { DeletePictureResponseDTO } from "../providers/delete-picture/delete-picture.dto";
+import { GalleryModule } from "@/cores/gallery/gallery.module";
 
 describe("Picturecontroller", () => {
   let controller: PictureController;
@@ -36,6 +37,7 @@ describe("Picturecontroller", () => {
         CommonModule,
         TestModule,
         EmbedLinkModule,
+        GalleryModule
       ],
       controllers: [PictureController],
       providers: [...providers, PictureRepository],
