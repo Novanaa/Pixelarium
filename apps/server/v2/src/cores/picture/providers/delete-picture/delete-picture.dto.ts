@@ -1,6 +1,10 @@
-import { Picture } from "@prisma/client";
+import { Picture, User } from "@prisma/client";
 import { WebResponse } from "@/model/app.model";
 
 export class DeletePictureResponseDTO extends WebResponse {
   deleted_picture: Picture;
+}
+
+export class RemovesPicturesResponseDTO extends WebResponse {
+  owner: User;
 }
