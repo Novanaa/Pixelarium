@@ -14,6 +14,7 @@ import { ErrorProvider } from "@/common/providers";
 import { EmbedLinks, Picture } from "@prisma/client";
 import { RetrieveUserPictureResponseDTO } from "../providers/retrieve-picture/retrieve-picture.dto";
 import { DeletePictureResponseDTO } from "../providers/delete-picture/delete-picture.dto";
+import { GalleryModule } from "@/cores/gallery/gallery.module";
 
 describe("Picturecontroller", () => {
   let app: INestApplication;
@@ -29,6 +30,7 @@ describe("Picturecontroller", () => {
         LibsModule,
         CommonModule,
         TestModule,
+        GalleryModule,
       ],
     }).compile();
 
