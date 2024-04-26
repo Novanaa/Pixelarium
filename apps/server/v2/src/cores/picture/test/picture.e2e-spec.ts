@@ -13,6 +13,7 @@ import { ResponseError } from "@/model/error.model";
 import { ErrorProvider } from "@/common/providers";
 import { EmbedLinks, Picture } from "@prisma/client";
 import { RetrieveUserPictureResponseDTO } from "../providers/retrieve-picture/retrieve-picture.dto";
+import { DeletePictureResponseDTO } from "../providers/delete-picture/delete-picture.dto";
 
 describe("Picturecontroller", () => {
   let app: INestApplication;
@@ -395,6 +396,117 @@ describe("Picturecontroller", () => {
           });
 
       expect(Buffer.isBuffer(response.body)).toBe(true);
+    });
+  });
+
+  describe("DELETE /picture/:pictureId", () => {
+    it("should be throw bad request exception if the pictureId is not a UUID", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete("/picture/test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.badRequest("Validation failed (uuid is expected)")
+      );
+    });
+    it("should be return 400 status code if the pictureId is not a UUID", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete("/picture/test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+    });
+    it("status response should be 'KO' if the pictureId is not a UUID", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete("/picture/test");
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("status response should be 'KO' if the picture doesn't exist", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete(
+          "/picture/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.status).toBe("KO");
+    });
+    it("should be return 404 status code if the picture doesn't exist", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete(
+          "/picture/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body.code).toBe(HttpStatus.NOT_FOUND);
+      expect(response.status).toBe(HttpStatus.NOT_FOUND);
+    });
+    it("should be throw not found exception if the picture doesn't exist", async () => {
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete(
+          "/picture/" + falso.randUuid()
+        );
+      const body: ResponseError = response.body as ResponseError;
+
+      expect(body).toEqual(
+        error.notFound("Sorry, the requested picture could not be found.")
+      );
+    });
+    it("should be return 200 status code", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete("/picture/" + picture.id);
+      const body: DeletePictureResponseDTO =
+        response.body as DeletePictureResponseDTO;
+
+      expect(body.code).toBe(HttpStatus.OK);
+      expect(response.status).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer()).delete("/picture/" + picture.id);
+      const body: DeletePictureResponseDTO =
+        response.body as DeletePictureResponseDTO;
+
+      expect(body.status).toBe("OK");
+    });
+    it("make sure it can accept application/json", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .delete("/picture/" + picture.id)
+          .set("Content-Type", "application/json");
+      const body: DeletePictureResponseDTO =
+        response.body as DeletePictureResponseDTO;
+
+      expect(body.status).toBe("OK");
+    });
+    it("deleted_picture should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .delete("/picture/" + picture.id)
+          .set("Content-Type", "application/json");
+      const body: DeletePictureResponseDTO =
+        response.body as DeletePictureResponseDTO;
+
+      expect(body.deleted_picture).toBeDefined();
+    });
+    it("deleted_picture should be match to requested picture", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<supertest.Response | supertest.Request> =
+        await supertest(app.getHttpServer())
+          .delete("/picture/" + picture.id)
+          .set("Content-Type", "application/json");
+      const body: DeletePictureResponseDTO =
+        response.body as DeletePictureResponseDTO;
+
+      expect(JSON.stringify(body.deleted_picture)).toMatch(
+        JSON.stringify(picture)
+      );
     });
   });
 });
