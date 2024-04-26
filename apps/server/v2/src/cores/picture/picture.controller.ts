@@ -87,7 +87,7 @@ export class PictureController {
     }
   }
 
-  @Delete("/:name")
+  @Delete("/removes/:name")
   @Header("Content-Type", "application/json")
   @Header("Accept", "application/json")
   @HttpCode(HttpStatus.OK)
