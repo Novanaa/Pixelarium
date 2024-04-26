@@ -1,6 +1,9 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { PictureRepository } from "../../picture.repository";
-import { DeletePictureResponseDTO } from "./delete-picture.dto";
+import {
+  DeletePictureResponseDTO,
+  RemovesPicturesResponseDTO,
+} from "./delete-picture.dto";
 import { RetrieveUserPictureProvider } from "../retrieve-picture/retrieve-picture.provider";
 import { RetrieveUserPictureResponseDTO } from "../retrieve-picture/retrieve-picture.dto";
 
@@ -24,5 +27,11 @@ export class DeletePictureProvider {
       code: HttpStatus.OK,
       status: "OK",
     };
+  }
+
+  public async RemovesPictures(
+    name: string
+  ): Promise<RemovesPicturesResponseDTO> {
+    return null;
   }
 }
