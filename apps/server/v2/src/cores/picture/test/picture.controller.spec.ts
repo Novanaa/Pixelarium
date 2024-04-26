@@ -18,6 +18,8 @@ import * as httpMock from "node-mocks-http";
 import { Response } from "express";
 import { OutgoingHttpHeaders } from "http";
 import { PictureRepository } from "../picture.repository";
+import * as falso from "@ngneat/falso";
+import { DeletePictureResponseDTO } from "../providers/delete-picture/delete-picture.dto";
 
 describe("Picturecontroller", () => {
   let controller: PictureController;
@@ -305,6 +307,74 @@ describe("Picturecontroller", () => {
       const header: OutgoingHttpHeaders = response.getHeaders();
 
       expect(header["content-disposition"].includes("attachment")).toBe(true);
+    });
+  });
+
+  describe("DELETE /picture/:pictureId", () => {
+    it("should be throw not found error if the picture doesn't exist", async () => {
+      try {
+        await controller.deletePicture(falso.randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response).toEqual(
+          errorService.notFound(
+            "Sorry, the requested picture could not be found."
+          )
+        );
+      }
+    });
+    it("should be return 404 status code if the picture doesn't exist", async () => {
+      try {
+        await controller.deletePicture(falso.randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.code).toBe(HttpStatus.NOT_FOUND);
+        expect(err.getStatus()).toBe(HttpStatus.NOT_FOUND);
+      }
+    });
+    it("status response should be 'KO' if the picture doesn't exist", async () => {
+      try {
+        await controller.deletePicture(falso.randUuid());
+      } catch (error) {
+        const err: HttpException = error as HttpException;
+        const response: ResponseError = err.getResponse() as ResponseError;
+
+        expect(response.status).toBe("KO");
+      }
+    });
+    it("should be return 200 status code", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<DeletePictureResponseDTO> =
+        await controller.deletePicture(picture.id);
+
+      expect(response.code).toBe(HttpStatus.OK);
+    });
+    it("status response should be 'OK'", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<DeletePictureResponseDTO> =
+        await controller.deletePicture(picture.id);
+
+      expect(response.status).toBe("OK");
+    });
+    it("deleted_picture response data should be defined", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<DeletePictureResponseDTO> =
+        await controller.deletePicture(picture.id);
+
+      expect(response.deleted_picture).toBeDefined();
+    });
+    it("deleted_picture response data should be match to requested picture", async () => {
+      const picture: Awaited<Picture> = await prisma.picture.findFirst();
+      const response: Awaited<DeletePictureResponseDTO> =
+        await controller.deletePicture(picture.id);
+
+      expect(JSON.stringify(response.deleted_picture)).toMatch(
+        JSON.stringify(picture)
+      );
     });
   });
 });
