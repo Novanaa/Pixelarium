@@ -20,7 +20,10 @@ import { PrismaProvider } from "@/libs/providers";
 import { ApplicationExceptionFilter } from "@/filter/error.filter";
 import { RetrieveUserPictureResponseDTO } from "./providers/retrieve-picture/retrieve-picture.dto";
 import { DownloadUserPicture } from "./providers/download-picture/download-picture";
-import { DeletePictureResponseDTO } from "./providers/delete-picture/delete-picture.dto";
+import {
+  DeletePictureResponseDTO,
+  RemovesPicturesResponseDTO,
+} from "./providers/delete-picture/delete-picture.dto";
 
 @Controller("picture")
 export class PictureController {
@@ -79,6 +82,20 @@ export class PictureController {
   ): Promise<DeletePictureResponseDTO> {
     try {
       return await this.deletePictureService.deletePicture(pictureId);
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
+
+  @Delete("/:name")
+  @Header("Content-Type", "application/json")
+  @Header("Accept", "application/json")
+  @HttpCode(HttpStatus.OK)
+  public async removesPictures(
+    @Param("name") name: string
+  ): Promise<RemovesPicturesResponseDTO> {
+    try {
+      return await this.deletePictureService.RemovesPictures(name);
     } finally {
       await this.prisma.$disconnect();
     }
